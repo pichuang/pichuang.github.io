@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="OpenAPI Specification, OAS隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。">
+<meta name="keywords" content="oas,openapi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="進擊的 OpenAPI!!!">
+<meta property="og:url" content="http://pichuang.github.io/20180723-openapi-and-oas/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="OpenAPI Specification, OAS隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-23T16:02:21.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="進擊的 OpenAPI!!!">
+<meta name="twitter:description" content="OpenAPI Specification, OAS隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://pichuang.github.io/20180723-openapi-and-oas/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>進擊的 OpenAPI!!! | Phil Workspace</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">21</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-who">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-record">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pichuang.github.io/20180723-openapi-and-oas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">進擊的 OpenAPI!!!
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-23 00:01:26" itemprop="dateCreated datePublished" datetime="2018-07-23T00:01:26+08:00">2018-07-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-24 00:02:21" itemprop="dateModified" datetime="2019-02-24T00:02:21+08:00">2019-02-24</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
+<a id="more"></a>
+<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
+<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
+<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf" target="_blank" rel="noopener">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table" target="_blank" rel="noopener">第一名</a>。</p>
+<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
+<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0" target="_blank" rel="noopener">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83" target="_blank" rel="noopener">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/" target="_blank" rel="noopener">幾個小條文，讓政府提供更好的數位服務</a>。</p>
+<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/" target="_blank" rel="noopener">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83" target="_blank" rel="noopener">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
+<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
+<ol>
+<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270" target="_blank" rel="noopener">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
+</li>
+<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677" target="_blank" rel="noopener">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
+<blockquote>
+<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
+</blockquote>
+</li>
+<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
+<blockquote>
+<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
+</blockquote>
+</li>
+</ol>
+<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
+<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification" target="_blank" rel="noopener">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270" target="_blank" rel="noopener">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/" target="_blank" rel="noopener">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
+<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter" target="_blank" rel="noopener">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
+<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/" target="_blank" rel="noopener">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/" target="_blank" rel="noopener">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/" target="_blank" rel="noopener">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
+<p>使用方式很簡單，以 Swagger 為例</p>
+<ol>
+<li>點開 <a href="https://petstore.swagger.io/" target="_blank" rel="noopener">petstore.swagger.io</a>  </li>
+<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+</ol>
+<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&amp;s=1762" target="_blank" rel="noopener">Open API 應用簡介 - 國家發展委員會</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0" target="_blank" rel="noopener">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83" target="_blank" rel="noopener">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83" target="_blank" rel="noopener">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
+<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/" target="_blank" rel="noopener">幾個小條文，讓政府提供更好的數位服務</a></li>
+<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270" target="_blank" rel="noopener">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
+<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a" target="_blank" rel="noopener">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
+<li><a href="https://www.openapis.org/" target="_blank" rel="noopener">Open API Initiative - Linux Foundation</a></li>
+<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677" target="_blank" rel="noopener">機關委託資訊服務廠商評選及計費辦法</a></li>
+<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
+<li><a href="https://data.gov.tw/" target="_blank" rel="noopener">政府資料開放平臺</a></li>
+<li><a href="https://www.3scale.net/" target="_blank" rel="noopener">3Scale by Red Hat</a></li>
+<li><a href="https://mermade.org.uk/openapi-converter" target="_blank" rel="noopener">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
+<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf" target="_blank" rel="noopener">2.0美國政府開放資料推動現況與執行經驗</a></li>
+<li><a href="https://index.okfn.org/place/#table" target="_blank" rel="noopener">Open Knowledge Foundation</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oas/" rel="tag"># oas</a>
+          
+            <a href="/tags/openapi/" rel="tag"># openapi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180622-suggestions_to_improve_your_ansible_playbook/" rel="next" title="幾個小建議改善你的 Ansible 技能">
+                <i class="fa fa-chevron-left"></i> 幾個小建議改善你的 Ansible 技能
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20180825-netdevops/" rel="prev" title="NetDevOps 風格之網路設備連接方式">
+                NetDevOps 風格之網路設備連接方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Phil Huang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenAPI-Specification-OAS"><span class="nav-number">1.</span> <span class="nav-text">OpenAPI Specification, OAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#誰是-API-提供者"><span class="nav-number">2.</span> <span class="nav-text">誰是 API 提供者?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#台灣政府於-Open-API-上的努力"><span class="nav-number">3.</span> <span class="nav-text">台灣政府於 Open API 上的努力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Dive-to-OpenAPI"><span class="nav-number">4.</span> <span class="nav-text">Deep Dive to OpenAPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何寫出符合-OAS-的文件"><span class="nav-number">4.1.</span> <span class="nav-text">如何寫出符合 OAS 的文件?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#驗證-OAS-格式正確與否"><span class="nav-number">4.2.</span> <span class="nav-text">驗證 OAS 格式正確與否</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swagger-OpenAPI-文件產生服務"><span class="nav-number">4.3.</span> <span class="nav-text">Swagger - OpenAPI 文件產生服務</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何管理這一堆-OpenAPI"><span class="nav-number">4.4.</span> <span class="nav-text">如何管理這一堆 OpenAPI ?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

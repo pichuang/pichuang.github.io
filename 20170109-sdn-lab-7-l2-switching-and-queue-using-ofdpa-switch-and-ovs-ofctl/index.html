@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="(Working…) Environment Switch IP: 192.168.11.2 Hardware Model Edgecore AS5712-54X     Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER   OF-DPA version ofdp">
+<meta name="keywords" content="sdn,ofdpa,ovs-ofctl,queue,openflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl">
+<meta property="og:url" content="http://pichuang.github.io/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="(Working…) Environment Switch IP: 192.168.11.2 Hardware Model Edgecore AS5712-54X     Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER   OF-DPA version ofdp">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-01-08T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl">
+<meta name="twitter:description" content="(Working…) Environment Switch IP: 192.168.11.2 Hardware Model Edgecore AS5712-54X     Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER   OF-DPA version ofdp">
+
+
+
+
+
+
+  <link rel="canonical" href="http://pichuang.github.io/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl | Phil Workspace</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">21</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-who">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-record">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pichuang.github.io/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-01-09 11:19:45 / Modified: 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-09T11:19:45+08:00">2017-01-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(Working…)</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Switch<ul>
+<li>IP: 192.168.11.2</li>
+<li>Hardware<ul>
+<li>Model<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&amp;cls2=8&amp;cls3=44&amp;id=15" target="_blank" rel="noopener">Edgecore AS5712-54X</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Software<ul>
+<li>ONL version<ul>
+<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER" target="_blank" rel="noopener">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
+</ul>
+</li>
+<li>OF-DPA version<ul>
+<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.3.1%2Baccton1.4~1-1_amd64.deb" target="_blank" rel="noopener">ofdpa_3.0 EA3</a></li>
+</ul>
+</li>
+<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet" target="_blank" rel="noopener">OF-DPA with ONL Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contorl VM<ul>
+<li>IP: 192.168.11.1</li>
+<li>OpenvSwitch<ul>
+<li>2.6.9</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Topology"><a href="#Topology" class="headerlink" title="Topology"></a>Topology</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+--------+   Port+-----------------------+Port   +--------+</span><br><span class="line">|        |      1|    AS5712-54X         |2      |        |</span><br><span class="line">| Host A +-------+    ONL: 2.0.0 Deb8    +-------+ Host B |</span><br><span class="line">|        |       |    OFDPA: 3.0.3 EA2   |       |        |</span><br><span class="line">+--------+       +-----------------------+       +--------+</span><br></pre></td></tr></table></figure>
+<h3 id="L2-Switching"><a href="#L2-Switching" class="headerlink" title="L2 Switching"></a>L2 Switching</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl</span><br></pre></td></tr></table></figure>
+<h2 id="Flow-tables-ID"><a href="#Flow-tables-ID" class="headerlink" title="Flow tables ID"></a>Flow tables ID</h2><table>
+<thead>
+<tr>
+<th>Table Name</th>
+<th>Table ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingress Port</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Port DSCP Trust</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Port PCP Trust</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Tunnel DSCP Trust</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Tunnel PCP Trust</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Injected OAM</td>
+<td>9</td>
+</tr>
+<tr>
+<td>VLAN</td>
+<td>10</td>
+</tr>
+<tr>
+<td>VLAN 1</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Ingress Maintenance Point</td>
+<td>12</td>
+</tr>
+<tr>
+<td>MPLS L2 Port</td>
+<td>13</td>
+</tr>
+<tr>
+<td>MPLS DSCP Trust</td>
+<td>15</td>
+</tr>
+<tr>
+<td>MPLS PCP Trust</td>
+<td>16</td>
+</tr>
+<tr>
+<td>L2 Policer</td>
+<td>18</td>
+</tr>
+<tr>
+<td>L2 Policer Actions</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Termination MAC</td>
+<td>20</td>
+</tr>
+<tr>
+<td>L3 Type</td>
+<td>21</td>
+</tr>
+<tr>
+<td>MPLS 0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>MPLS 1</td>
+<td>24</td>
+</tr>
+<tr>
+<td>MPLS 2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>MPLS-TP Maintenance Point</td>
+<td>26</td>
+</tr>
+<tr>
+<td>MPLS L3 Type</td>
+<td>27</td>
+</tr>
+<tr>
+<td>MPLS Label Trust</td>
+<td>28</td>
+</tr>
+<tr>
+<td>MPLS Type</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Unicast Routing</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Multicast Routing</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Bridging</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Policy ACL</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Color Based Actions</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Egress VLAN</td>
+<td>210</td>
+</tr>
+<tr>
+<td>Egress VLAN 1</td>
+<td>211</td>
+</tr>
+<tr>
+<td>Egress Maintenance Point</td>
+<td>226</td>
+</tr>
+<tr>
+<td>Egress DSCP PCP Remark</td>
+<td>230</td>
+</tr>
+<tr>
+<td>Egress TPID</td>
+<td>235</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://github.com/open-switch/ops/blob/master/docs/ofdpa_hybrid_functionality_guide.md#overview" target="_blank" rel="noopener">OF-DPA OpenFlow Hybrid Switch Functionality Guide</a></li>
+<li><a href="http://blog.pichuang.com.tw/ovs-ofctl-and-ofdpa" target="_blank" rel="noopener">OpenvSwitch ovs-ofctl and OF-DPA</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sdn/" rel="tag"># sdn</a>
+          
+            <a href="/tags/ofdpa/" rel="tag"># ofdpa</a>
+          
+            <a href="/tags/ovs-ofctl/" rel="tag"># ovs-ofctl</a>
+          
+            <a href="/tags/queue/" rel="tag"># queue</a>
+          
+            <a href="/tags/openflow/" rel="tag"># openflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20170106-ovs-ofctl-and-ofdpa/" rel="next" title="OpenvSwitch ovs-ofctl and OF-DPA">
+                <i class="fa fa-chevron-left"></i> OpenvSwitch ovs-ofctl and OF-DPA
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20170124-upgrade-intel-drivers-on-vmware-esxi/" rel="prev" title="Upgrade Intel Drivers on VMWare ESXi">
+                Upgrade Intel Drivers on VMWare ESXi <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Phil Huang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment"><span class="nav-number">1.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Topology"><span class="nav-number">2.</span> <span class="nav-text">Topology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L2-Switching"><span class="nav-number">2.1.</span> <span class="nav-text">L2 Switching</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flow-tables-ID"><span class="nav-number">3.</span> <span class="nav-text">Flow tables ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Setting"><span class="nav-number">4.</span> <span class="nav-text">Setting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
