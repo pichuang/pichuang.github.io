@@ -128,22 +128,22 @@
 
 
 
-  <meta name="description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性 Dataplane 則統一都是用 FD.i">
+  <meta name="description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
 <meta name="keywords" content="cncf,nfv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cloud Native Network Functions (CNF) Testbed 心得感想">
 <meta property="og:url" content="http://blog.pichuang.com.tw/20190319-cnf-testbed/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性 Dataplane 則統一都是用 FD.i">
+<meta property="og:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/cnf-1.png">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/cnf-2.png">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/cnf-3.png">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/cnf-4.png">
-<meta property="og:updated_time" content="2019-03-07T14:48:06.623Z">
+<meta property="og:updated_time" content="2019-03-07T14:53:54.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cloud Native Network Functions (CNF) Testbed 心得感想">
-<meta name="twitter:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性 Dataplane 則統一都是用 FD.i">
+<meta name="twitter:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
 <meta name="twitter:image" content="http://blog.pichuang.com.tw/images/cnf-1.png">
 
 
@@ -278,7 +278,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">23</span></a>
 
   </li>
         
@@ -420,7 +420,7 @@
                 
               
 
-              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:48:06" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
+              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:53:54" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
             
 
             
@@ -460,6 +460,7 @@
 
       
         <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
+<a id="more"></a>
 <p>Dataplane 則統一都是用 FD.io VPP (Vector Packet Processing) 技術來做到，至於為什麼可以參考一下 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_102" target="_blank" rel="noopener">Why This Was a Challenging Project: OpenStack</a> 及 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_108" target="_blank" rel="noopener">Why This Was a Challenging Project: Kubernetes</a> 兩張簡報的底下說明</p>
 <h2 id="架構演進"><a href="#架構演進" class="headerlink" title="架構演進"></a>架構演進</h2><p>下圖表示了整個從 ONAP Amsterdam -&gt; ONAP Casablanca -&gt; Future 的架構演進<br><img src="/images/cnf-1.png" alt></p>
 <h2 id="CNF-Testbed-High-Overview"><a href="#CNF-Testbed-High-Overview" class="headerlink" title="CNF Testbed High Overview"></a>CNF Testbed High Overview</h2><p>目前是混搭 OpenStack + Kubernetes 的平台，若想要更深入了解平台的技術細節可以參考 <a href="https://github.com/cncf/cnf-testbed/tree/master/comparison/kubecon18-chained_nf_test" target="_blank" rel="noopener">Comparing chained network function CNF deployment models</a></p>
@@ -521,6 +522,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20190317-openshift-and-nsx-t/" rel="prev" title="20190317-openshift-and-nsx-t">
+                20190317-openshift-and-nsx-t <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -589,7 +594,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

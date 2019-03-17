@@ -269,7 +269,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">23</span></a>
 
   </li>
         
@@ -368,6 +368,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/20190317-openshift-and-nsx-t/" class="post-title-link" itemprop="url">20190317-openshift-and-nsx-t</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-17 20:40:52" itemprop="dateCreated datePublished" datetime="2019-03-17T20:40:52+08:00">2019-03-17</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.pichuang.com.tw/20190319-cnf-testbed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -413,7 +551,7 @@
                 
               
 
-              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:48:06" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
+              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:53:54" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
             
 
             
@@ -453,24 +591,16 @@
 
       
         
+          <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
+          <!--noindex-->
           
-            <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
-<p>Dataplane 則統一都是用 FD.io VPP (Vector Packet Processing) 技術來做到，至於為什麼可以參考一下 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_102" target="_blank" rel="noopener">Why This Was a Challenging Project: OpenStack</a> 及 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_108" target="_blank" rel="noopener">Why This Was a Challenging Project: Kubernetes</a> 兩張簡報的底下說明</p>
-<h2 id="架構演進"><a href="#架構演進" class="headerlink" title="架構演進"></a>架構演進</h2><p>下圖表示了整個從 ONAP Amsterdam -&gt; ONAP Casablanca -&gt; Future 的架構演進<br><img src="/images/cnf-1.png" alt></p>
-<h2 id="CNF-Testbed-High-Overview"><a href="#CNF-Testbed-High-Overview" class="headerlink" title="CNF Testbed High Overview"></a>CNF Testbed High Overview</h2><p>目前是混搭 OpenStack + Kubernetes 的平台，若想要更深入了解平台的技術細節可以參考 <a href="https://github.com/cncf/cnf-testbed/tree/master/comparison/kubecon18-chained_nf_test" target="_blank" rel="noopener">Comparing chained network function CNF deployment models</a></p>
-<p><img src="/images/cnf-2.png" alt></p>
-<h2 id="Test-Cases"><a href="#Test-Cases" class="headerlink" title="Test Cases"></a>Test Cases</h2><p>基本的 Snake Test 是一定會有的，只是平台的部分有拆分成 OpenStack 跟 Kubernetes，但之後應該會隨著生態系的完善，項目會越來越多，後續要追蹤的話蠻建議看 <a href="https://github.com/cncf/cnf-testbed" target="_blank" rel="noopener">GitHub - cncf/cnf-testbed</a></p>
-<p><img src="/images/cnf-3.png" alt></p>
-<h2 id="vCPE-Use-Case"><a href="#vCPE-Use-Case" class="headerlink" title="vCPE Use Case"></a>vCPE Use Case</h2><p>詳細架構細節 <a href="https://wiki.onap.org/pages/viewpage.action?pageId=3246168" target="_blank" rel="noopener">Use Case: Residential Broadband vCPE (Approved)</a></p>
-<p><img src="/images/cnf-4.png" alt></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">CNCF Launches Cloud Native Network Functions (CNF) Testbed</a></li>
-<li><a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g5036f143e9_3_113" target="_blank" rel="noopener">CNF Testbed - Google Slide</a></li>
-<li><a href="https://schd.ws/hosted_files/kccna18/c1/KubeCon%20NA%202018%20Intro_%20Cloud%20Native%20Network%20Functions%20BoF%2012-12-2018%20FINAL.pdf" target="_blank" rel="noopener">Intro: Cloud Native Network Functions (CNF) BoF - North America 2018</a></li>
-<li><a href="https://github.com/cncf/cnf-testbed" target="_blank" rel="noopener">GitHub - cncf/cnf-testbed</a></li>
-</ul>
-
+            <div class="post-button text-center">
+              <a class="btn" href="/20190319-cnf-testbed/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
           
+          <!--/noindex-->
         
       
     </div>
@@ -1745,152 +1875,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.pichuang.com.tw/20170302-snaproute-flexswitch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20170302-snaproute-flexswitch/" class="post-title-link" itemprop="url">SnapRoute FlexSwitch</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-03-02 01:40:34" itemprop="dateCreated datePublished" datetime="2017-03-02T01:40:34+08:00">2017-03-02</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg" alt="SnapRoute Logo"></p>
-<h2 id="Introduction-to-SnapRoute"><a href="#Introduction-to-SnapRoute" class="headerlink" title="Introduction to SnapRoute"></a>Introduction to SnapRoute</h2><p>這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/20170302-snaproute-flexswitch/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1937,7 +1921,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
