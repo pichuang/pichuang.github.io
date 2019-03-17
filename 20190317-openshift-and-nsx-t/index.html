@@ -128,14 +128,19 @@
 
 
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="20190317-openshift-and-nsx-t">
+  <meta name="description" content="最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的整合文章及影片，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Red Hat OpenShift and VMWare NSX-T 架構點評">
 <meta property="og:url" content="http://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/index.html">
 <meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的整合文章及影片，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-17T12:40:52.901Z">
+<meta property="og:image" content="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png">
+<meta property="og:updated_time" content="2019-03-17T13:12:09.748Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="20190317-openshift-and-nsx-t">
+<meta name="twitter:title" content="Red Hat OpenShift and VMWare NSX-T 架構點評">
+<meta name="twitter:description" content="最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的整合文章及影片，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，">
+<meta name="twitter:image" content="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png">
 
 
 
@@ -152,7 +157,7 @@
   };
 </script>
 
-  <title>20190317-openshift-and-nsx-t | Phil Workspace</title>
+  <title>Red Hat OpenShift and VMWare NSX-T 架構點評 | Phil Workspace</title>
   
 
 
@@ -385,7 +390,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">20190317-openshift-and-nsx-t
+          <h1 class="post-title" itemprop="name headline">Red Hat OpenShift and VMWare NSX-T 架構點評
 
               
             
@@ -411,9 +416,13 @@
                 
               
 
-              <time title="Created: 2019-03-17 20:40:52" itemprop="dateCreated datePublished" datetime="2019-03-17T20:40:52+08:00">2019-03-17</time>
+              <time title="Created: 2019-03-17 20:40:52 / Modified: 21:12:09" itemprop="dateCreated datePublished" datetime="2019-03-17T20:40:52+08:00">2019-03-17</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -446,7 +455,20 @@
       
 
       
-        
+        <p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/" target="_blank" rel="noopener">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770" target="_blank" rel="noopener">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
+<a id="more"></a>
+<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt></p>
+<p>因為小弟工作關係和經驗，我會從 OpenShift 的觀點看待這個組合</p>
+<h2 id="Red-Hat-OpenShift"><a href="#Red-Hat-OpenShift" class="headerlink" title="Red Hat OpenShift"></a>Red Hat OpenShift</h2><p>Red Hat OpenShift 是一個企業級容器化容器平台 (Container Platform)，3.11 已經是 OpenShift v3 的長期支援版本 (Long-Term Support, LTS)，所以現行架構上也已經是非常清晰，包含三大節點角色：master / infra / compute，有興趣的可以參考一下小弟前陣子演講的投影片 - <a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122" target="_blank" rel="noopener">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></p>
+<p>OpenShift 除了有內建三個不同的 CNI Plugins (ovs-subnet / ovs-multitenant / ovs-networkpolicy) 可供使用以外，其實還有跟各大知名網路廠商有做 CNI 整合驗證，VMWare NSX-T 就是其中一個可選的方案。</p>
+<h2 id="VMWare-NSX-T"><a href="#VMWare-NSX-T" class="headerlink" title="VMWare NSX-T"></a>VMWare NSX-T</h2><p>討論 OpenShift 基礎平台資源 (Infrastructure)時，不外乎就還是 Compute / Network / Storage 這三個領域分別討論。因這個架構底層是採用 VMWare 為基底的技術，所以底層虛擬化、VM 毫無懸念都是由 VMWare vSphere 提供計算資源給上層 OS 使用。(有一個例外狀況，就是不考慮使用 VM 而用 BM 的方式部署，這邊不討論)</p>
+<p>網路資源的部分， VMWare NSX-T 基本上是針對網路虛擬化 Network Virtualization 的技術，因需要充分納管所有 OpenShift 所需要的三大 IP 網段 (host IP / Service IPs / Pod IPs)，所以這當中會需要對 OpenShift 本體的網路做抽換 CNI Plugin 及 vSwitch 的操作。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/" target="_blank" rel="noopener">NSX-T Integration with Openshift</a></li>
+<li><a href="https://www.youtube.com/watch?v=uEQ5UAgh770" target="_blank" rel="noopener">NSX-T Openshift 3.11 Installation/Integration demo</a></li>
+<li><a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122" target="_blank" rel="noopener">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></li>
+</ul>
+
       
     </div>
 
@@ -528,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -725,6 +756,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-OpenShift"><span class="nav-number">1.</span> <span class="nav-text">Red Hat OpenShift</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VMWare-NSX-T"><span class="nav-number">2.</span> <span class="nav-text">VMWare NSX-T</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
