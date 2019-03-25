@@ -129,7 +129,7 @@
 
 
   <meta name="description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
-<meta name="keywords" content="openshift,redhat,storage">
+<meta name="keywords" content="redhat,openshift,storage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat OpenShift v3.11 儲存類型建議">
 <meta property="og:url" content="http://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/index.html">
@@ -137,7 +137,7 @@
 <meta property="og:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/rook-1.png">
-<meta property="og:updated_time" content="2019-03-25T02:33:08.511Z">
+<meta property="og:updated_time" content="2019-03-25T15:22:34.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 儲存類型建議">
 <meta name="twitter:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
@@ -417,7 +417,7 @@
                 
               
 
-              <time title="Created: 2019-03-25 00:02:00 / Modified: 10:33:08" itemprop="dateCreated datePublished" datetime="2019-03-25T00:02:00+08:00">2019-03-25</time>
+              <time title="Created: 2019-03-25 00:02:00 / Modified: 23:22:34" itemprop="dateCreated datePublished" datetime="2019-03-25T00:02:00+08:00">2019-03-25</time>
             
 
             
@@ -533,6 +533,68 @@
 <p>Apps / Object 的欄位是 <code>Limited Recommended</code>，是因為建議直接在 Apps 層級上直接透過 API 或協定直接跟 Object Storage 溝通，而不是透過 PV / PVC 的作法來做掛載，因為現在 PV / PVC 僅有支援 Ceph RBD (Block)，而沒有 Ceph RGW (Object)</p>
 <p>那如果你真的很想…很想…要用 Ceph RGW (Object) 來當 PV 使用的話，請等前陣子 Red Hat 收購的一個專案 <a href="https://rook.io/" target="_blank" rel="noopener">Rook.io</a> 所推出的 Operator 作法，該專案現在也是 CNCF 的成員之一，詳細的內容等 TP (Tech Preview) 階段再來介紹</p>
 <p><img src="/images/rook-1.png" alt></p>
+<h2 id="Storage-Reommendation-for-Workload"><a href="#Storage-Reommendation-for-Workload" class="headerlink" title="Storage Reommendation for Workload"></a>Storage Reommendation for Workload</h2><p>下表僅供參考，請依自身 Workload 大小進行選擇</p>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>Exmaples</th>
+<th>Storage Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>etcd</td>
+<td>Etcd backing store</td>
+<td>hostPath</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td>Quay</td>
+<td>Object / File</td>
+</tr>
+<tr>
+<td>Logging</td>
+<td>ElasticSearch</td>
+<td>Block / hostPath</td>
+</tr>
+<tr>
+<td>Metrics</td>
+<td>Prometheus, Cassandra</td>
+<td>Block / hostPath</td>
+</tr>
+<tr>
+<td>Relational DBs</td>
+<td>MySQL, PGSQL</td>
+<td>Block / hostPath / File</td>
+</tr>
+<tr>
+<td>NoSQL DBs</td>
+<td>mongoDB, Couchbase</td>
+<td>Block / hostPath / File</td>
+</tr>
+<tr>
+<td>Web Server</td>
+<td>Nginx</td>
+<td>File</td>
+</tr>
+<tr>
+<td>Messaging Queue</td>
+<td>JBoss AMQ, Kafka</td>
+<td>File / Block</td>
+</tr>
+<tr>
+<td>In Memory/Caching</td>
+<td>Redis, JBoss Data Grid</td>
+<td>Block</td>
+</tr>
+<tr>
+<td>CD/CD Toolchain</td>
+<td>Jenkins, Mavan, CircleCI</td>
+<td>Block / File</td>
+</tr>
+</tbody>
+</table>
 <h2 id="常見-Q-amp-A"><a href="#常見-Q-amp-A" class="headerlink" title="常見 Q&amp;A"></a>常見 Q&amp;A</h2><h3 id="Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><a href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一" class="headerlink" title="Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?"></a>Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</h3><p>A1:<br>有兩個狀況</p>
 <ol>
 <li>如走自建 NFS 服務的話，不建議，但可以設定 (OS: 我相信99%的人都是走這個)</li>
@@ -570,9 +632,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/openshift/" rel="tag"># openshift</a>
-          
             <a href="/tags/redhat/" rel="tag"># redhat</a>
+          
+            <a href="/tags/openshift/" rel="tag"># openshift</a>
           
             <a href="/tags/storage/" rel="tag"># storage</a>
           
@@ -880,7 +942,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backend-Storage-Recommendation"><span class="nav-number">1.</span> <span class="nav-text">Backend Storage Recommendation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常見-Q-amp-A"><span class="nav-number">2.</span> <span class="nav-text">常見 Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><span class="nav-number">2.1.</span> <span class="nav-text">Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去"><span class="nav-number">2.2.</span> <span class="nav-text">Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法"><span class="nav-number">2.3.</span> <span class="nav-text">Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backend-Storage-Recommendation"><span class="nav-number">1.</span> <span class="nav-text">Backend Storage Recommendation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-Reommendation-for-Workload"><span class="nav-number">2.</span> <span class="nav-text">Storage Reommendation for Workload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常見-Q-amp-A"><span class="nav-number">3.</span> <span class="nav-text">常見 Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><span class="nav-number">3.1.</span> <span class="nav-text">Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去"><span class="nav-number">3.2.</span> <span class="nav-text">Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法"><span class="nav-number">3.3.</span> <span class="nav-text">Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
