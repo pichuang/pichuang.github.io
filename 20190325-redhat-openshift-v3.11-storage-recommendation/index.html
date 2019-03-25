@@ -137,7 +137,7 @@
 <meta property="og:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/rook-1.png">
-<meta property="og:updated_time" content="2019-03-24T18:03:04.960Z">
+<meta property="og:updated_time" content="2019-03-25T02:33:08.511Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 儲存類型建議">
 <meta name="twitter:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
@@ -417,7 +417,7 @@
                 
               
 
-              <time title="Created: 2019-03-25 00:02:00 / Modified: 02:03:04" itemprop="dateCreated datePublished" datetime="2019-03-25T00:02:00+08:00">2019-03-25</time>
+              <time title="Created: 2019-03-25 00:02:00 / Modified: 10:33:08" itemprop="dateCreated datePublished" datetime="2019-03-25T00:02:00+08:00">2019-03-25</time>
             
 
             
@@ -480,7 +480,7 @@
 <li>Data in a Host Volume</li>
 <li>Data in a Shared Storage</li>
 </ol>
-<p>但我那天沒講的事情是，這些 Backend Storage 的類型應該要選擇什麼是比較洽當的？所以下面整理了一下</p>
+<p>但我那天沒講的事情是，這些 Backend Storage 的類型應該要選擇什麼是比較恰當的？所以下面整理了一下</p>
 <a id="more"></a>
 <h2 id="Backend-Storage-Recommendation"><a href="#Backend-Storage-Recommendation" class="headerlink" title="Backend Storage Recommendation"></a>Backend Storage Recommendation</h2><p>如果連同 Cloud 和 On-premise 儲存解決方案總計下來，有太多廠牌的儲存名字需要條列，這邊就只取明確的四種 Storage Type (Block / File / Object / hostPath) 做整理</p>
 <p>順序由高到低為: <code>Recommended &gt; Configurable &gt; Not Configurable</code></p>
@@ -503,7 +503,6 @@
 <td>Recommended</td>
 <td>Recommended</td>
 <td>Recommended</td>
-<td></td>
 </tr>
 <tr>
 <td>File</td>
@@ -532,7 +531,7 @@
 </tbody>
 </table>
 <p>Apps / Object 的欄位是 <code>Limited Recommended</code>，是因為建議直接在 Apps 層級上直接透過 API 或協定直接跟 Object Storage 溝通，而不是透過 PV / PVC 的作法來做掛載，因為現在 PV / PVC 僅有支援 Ceph RBD (Block)，而沒有 Ceph RGW (Object)</p>
-<p>那如果你真的很想…很想…要用 Cepg RGW (Object) 來當 PV 使用的話，請等前陣子 Red Hat 收購的一個專案 <a href="https://rook.io/" target="_blank" rel="noopener">Rook.io</a> 所推出的 Operator 作法，該專案現在也是 CNCF 的成員之一，詳細的內容等 TP (Tech Preview) 階段再來介紹</p>
+<p>那如果你真的很想…很想…要用 Ceph RGW (Object) 來當 PV 使用的話，請等前陣子 Red Hat 收購的一個專案 <a href="https://rook.io/" target="_blank" rel="noopener">Rook.io</a> 所推出的 Operator 作法，該專案現在也是 CNCF 的成員之一，詳細的內容等 TP (Tech Preview) 階段再來介紹</p>
 <p><img src="/images/rook-1.png" alt></p>
 <h2 id="常見-Q-amp-A"><a href="#常見-Q-amp-A" class="headerlink" title="常見 Q&amp;A"></a>常見 Q&amp;A</h2><h3 id="Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><a href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一" class="headerlink" title="Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?"></a>Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</h3><p>A1:<br>有兩個狀況</p>
 <ol>
