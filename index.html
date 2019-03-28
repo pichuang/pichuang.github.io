@@ -430,7 +430,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-29 02:59:26" itemprop="dateModified" datetime="2019-03-29T02:59:26+08:00">2019-03-29</time>
+                <time title="Modified: 2019-03-29 03:01:14" itemprop="dateModified" datetime="2019-03-29T03:01:14+08:00">2019-03-29</time>
               
             
           </span>
@@ -483,64 +483,20 @@
 
       
         
-          
-            <p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured" target="_blank" rel="noopener">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
+          <p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured" target="_blank" rel="noopener">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4" target="_blank" rel="noopener">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
 </ul>
-<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色</p>
-<ul>
-<li>控制誰 Who =&gt; Inventory</li>
-<li>做什麼 Do What =&gt; Ansible Workflow</li>
-<li>怎麼做 How to do =&gt; Ansible Playbook</li>
-</ul>
-<h2 id="常見Q-amp-A"><a href="#常見Q-amp-A" class="headerlink" title="常見Q&amp;A"></a>常見Q&amp;A</h2><h3 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h3><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130" target="_blank" rel="noopener">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
-<p>然而一本 Playbook 劇本通常裡面包含了:</p>
-<ul>
-<li>主角 (Inventory)</li>
-<li>劇情 (Tasks)</li>
-<li>道具 (Modules)</li>
-</ul>
-<p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
-<p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates" target="_blank" rel="noopener">Workflow 工作流</a></p>
-<h3 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h3><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
-<ol>
-<li>On Succesful (綠線)</li>
-<li>On Failure (紅線)</li>
-<li>Always (藍線)</li>
-</ol>
-<p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
-<p><img src="/images/workflow-1.jpg" alt></p>
-<h3 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h3><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
-<p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
-<ul>
-<li>IaC, Infrastructure as Code</li>
-<li>ZTP, Zero Touch Provisioning</li>
-<li>DevOps: Automation / Measuring</li>
-</ul>
-<p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
-<p>意者請洽詢台灣紅帽 XD </p>
-<h3 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h3><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
-<p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('nodes') &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"><span class="attr">    fail:</span></span><br><span class="line"><span class="attr">      msg:</span> <span class="string">"openshift_kubelet_name_override Cannot be defined for new hosts"</span></span><br><span class="line"><span class="attr">    when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line"><span class="attr">  vars:</span></span><br><span class="line"><span class="attr">    l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">    l_repo_hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('oo_all_hosts') &#125;&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">| default(False))</span></span><br></pre></td></tr></table></figure>
-<p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
-<p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 [openshift/openshift-ansible] 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
-<p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
-<p><img src="/images/workflow-2.png" alt></p>
-<p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html" target="_blank" rel="noopener"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4" target="_blank" rel="noopener">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 1) - Provision Web Application (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 2) - Adding Web App Server (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 3) - Decommission Web Application (Catalog)</a></li>
-<li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130" target="_blank" rel="noopener">Ansible 技術概觀介紹_20190130</a></li>
-<li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates" target="_blank" rel="noopener">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
-<li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">GitHub - openshift/openshift-ansible</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html" target="_blank" rel="noopener">Ansible Galaxy</a></li>
-</ul>
-
+<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
