@@ -138,7 +138,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/workflow-1.jpg">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/workflow-2.png">
-<meta property="og:updated_time" content="2019-03-29T01:08:34.838Z">
+<meta property="og:updated_time" content="2019-03-29T03:15:12.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理">
 <meta name="twitter:description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower   這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
@@ -276,7 +276,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">27</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">28</span></a>
 
   </li>
         
@@ -435,7 +435,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-29 09:08:34" itemprop="dateModified" datetime="2019-03-29T09:08:34+08:00">2019-03-29</time>
+                <time title="Modified: 2019-03-29 11:15:12" itemprop="dateModified" datetime="2019-03-29T11:15:12+08:00">2019-03-29</time>
               
             
           </span>
@@ -499,7 +499,7 @@
 <li>做什麼 Do What =&gt; Ansible Workflow</li>
 <li>怎麼做 How to do =&gt; Ansible Playbook</li>
 </ul>
-<h2 id="常見Q-amp-A"><a href="#常見Q-amp-A" class="headerlink" title="常見Q&amp;A"></a>常見Q&amp;A</h2><h3 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h3><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130" target="_blank" rel="noopener">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
+<h2 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h2><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130" target="_blank" rel="noopener">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
 <p>然而一本 Playbook 劇本通常裡面包含了:</p>
 <ul>
 <li>主角 (Inventory)</li>
@@ -508,7 +508,7 @@
 </ul>
 <p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
 <p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates" target="_blank" rel="noopener">Workflow 工作流</a></p>
-<h3 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h3><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
+<h2 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h2><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
 <ol>
 <li>On Succesful (綠線)</li>
 <li>On Failure (紅線)</li>
@@ -516,7 +516,7 @@
 </ol>
 <p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
 <p><img src="/images/workflow-1.jpg" alt></p>
-<h3 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h3><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
+<h2 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h2><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
 <p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
 <ul>
 <li>IaC, Infrastructure as Code</li>
@@ -525,7 +525,7 @@
 </ul>
 <p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
 <p>意者請洽詢台灣紅帽 XD </p>
-<h3 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h3><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
+<h2 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h2><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
 <p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('nodes') &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"><span class="attr">    fail:</span></span><br><span class="line"><span class="attr">      msg:</span> <span class="string">"openshift_kubelet_name_override Cannot be defined for new hosts"</span></span><br><span class="line"><span class="attr">    when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line"><span class="attr">  vars:</span></span><br><span class="line"><span class="attr">    l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">    l_repo_hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('oo_all_hosts') &#125;&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">| default(False))</span></span><br></pre></td></tr></table></figure>
 <p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
@@ -595,6 +595,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/" rel="prev" title="Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合">
+                Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -662,7 +666,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -806,7 +810,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">54</span>
+                      
+                    
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -882,7 +888,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常見Q-amp-A"><span class="nav-number">1.</span> <span class="nav-text">常見Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-什麼是-Ansible-Workflow"><span class="nav-number">1.1.</span> <span class="nav-text">Q1: 什麼是 Ansible Workflow?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><span class="nav-number">1.2.</span> <span class="nav-text">Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><span class="nav-number">1.3.</span> <span class="nav-text">Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-那我硬刻-Workflow-總可以吧"><span class="nav-number">1.4.</span> <span class="nav-text">Q4: 那我硬刻 Workflow 總可以吧?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">2.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q1-什麼是-Ansible-Workflow"><span class="nav-number">1.</span> <span class="nav-text">Q1: 什麼是 Ansible Workflow?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><span class="nav-number">2.</span> <span class="nav-text">Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><span class="nav-number">3.</span> <span class="nav-text">Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q4-那我硬刻-Workflow-總可以吧"><span class="nav-number">4.</span> <span class="nav-text">Q4: 那我硬刻 Workflow 總可以吧?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>

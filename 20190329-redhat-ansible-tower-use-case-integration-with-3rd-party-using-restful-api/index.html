@@ -128,27 +128,29 @@
 
 
 
-  <meta name="description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
-<meta name="keywords" content="openshift,redhat,storage">
+  <meta name="description" content="有些長官看完 Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理 後說:Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？">
+<meta name="keywords" content="redhat,ansible,restful,openapi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Red Hat OpenShift v3.11 儲存類型建議">
-<meta property="og:url" content="http://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/index.html">
+<meta property="og:title" content="Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合">
+<meta property="og:url" content="http://blog.pichuang.com.tw/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
+<meta property="og:description" content="有些長官看完 Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理 後說:Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://blog.pichuang.com.tw/images/rook-1.png">
-<meta property="og:updated_time" content="2019-03-25T15:22:34.330Z">
+<meta property="og:image" content="http://blog.pichuang.com.tw/images/restful-api.png">
+<meta property="og:image" content="http://blog.pichuang.com.tw/images/ci_cd_redhatsummit_2016.png">
+<meta property="og:image" content="http://blog.pichuang.com.tw/images/restful-api-1.jpg">
+<meta property="og:updated_time" content="2019-03-29T09:18:22.635Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Red Hat OpenShift v3.11 儲存類型建議">
-<meta name="twitter:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
-<meta name="twitter:image" content="http://blog.pichuang.com.tw/images/rook-1.png">
+<meta name="twitter:title" content="Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合">
+<meta name="twitter:description" content="有些長官看完 Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理 後說:Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？">
+<meta name="twitter:image" content="http://blog.pichuang.com.tw/images/restful-api.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/">
+  <link rel="canonical" href="http://blog.pichuang.com.tw/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/">
 
 
 
@@ -158,7 +160,7 @@
   };
 </script>
 
-  <title>Red Hat OpenShift v3.11 儲存類型建議 | Phil Workspace</title>
+  <title>Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合 | Phil Workspace</title>
   
 
 
@@ -374,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/">
+    <link itemprop="mainEntityOfPage" href="http://blog.pichuang.com.tw/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
@@ -391,7 +393,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Red Hat OpenShift v3.11 儲存類型建議
+          <h1 class="post-title" itemprop="name headline">Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合
 
               
             
@@ -417,7 +419,7 @@
                 
               
 
-              <time title="Created: 2019-03-25 00:02:00 / Modified: 23:22:34" itemprop="dateCreated datePublished" datetime="2019-03-25T00:02:00+08:00">2019-03-25</time>
+              <time title="Created: 2019-03-29 02:31:00 / Modified: 17:18:22" itemprop="dateCreated datePublished" datetime="2019-03-29T02:31:00+08:00">2019-03-29</time>
             
 
             
@@ -439,7 +441,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
 
                 
                 
@@ -474,140 +476,73 @@
       
 
       
-        <p>在小弟先前的演講中 <a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao" target="_blank" rel="noopener">20190218_OpenShift Storage 架構思考</a>，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：</p>
-<ol>
-<li>Data in the Container</li>
-<li>Data in a Host Volume</li>
-<li>Data in a Shared Storage</li>
-</ol>
-<p>但我那天沒講的事情是，這些 Backend Storage 的類型應該要選擇什麼是比較恰當的？所以下面整理了一下</p>
+        <p>有些長官看完 <a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a> 後說:<br><code>Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？</code></p>
 <a id="more"></a>
-<h2 id="Backend-Storage-Recommendation"><a href="#Backend-Storage-Recommendation" class="headerlink" title="Backend Storage Recommendation"></a>Backend Storage Recommendation</h2><p>如果連同 Cloud 和 On-premise 儲存解決方案總計下來，有太多廠牌的儲存名字需要條列，這邊就只取明確的四種 Storage Type (Block / File / Object / hostPath) 做整理</p>
-<p>順序由高到低為: <code>Recommended &gt; Configurable &gt; Not Configurable</code></p>
-<table>
-<thead>
-<tr>
-<th>Storage Type</th>
-<th>Single Registry</th>
-<th>Scaled Registry</th>
-<th>Metrics</th>
-<th>Logging</th>
-<th>Apps</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Block</td>
-<td>Configurable</td>
-<td>Not Configurable</td>
-<td>Recommended</td>
-<td>Recommended</td>
-<td>Recommended</td>
-</tr>
-<tr>
-<td>File</td>
-<td>Configurable</td>
-<td>Configurable</td>
-<td>Configurable</td>
-<td>Configurable</td>
-<td>Recommended</td>
-</tr>
-<tr>
-<td>Object</td>
-<td>Recommended</td>
-<td>Recommended</td>
-<td>Not Configurable</td>
-<td>Not Configurable</td>
-<td>Limited Recommended</td>
-</tr>
-<tr>
-<td>hostPath</td>
-<td>Configurable</td>
-<td>Configurable</td>
-<td>Recommended</td>
-<td>Recommended</td>
-<td>Configurable</td>
-</tr>
-</tbody>
-</table>
-<p>Apps / Object 的欄位是 <code>Limited Recommended</code>，是因為建議直接在 Apps 層級上直接透過 API 或協定直接跟 Object Storage 溝通，而不是透過 PV / PVC 的作法來做掛載，因為現在 PV / PVC 僅有支援 Ceph RBD (Block)，而沒有 Ceph RGW (Object)</p>
-<p>那如果你真的很想…很想…要用 Ceph RGW (Object) 來當 PV 使用的話，請等前陣子 Red Hat 收購的一個專案 <a href="https://rook.io/" target="_blank" rel="noopener">Rook.io</a> 所推出的 Operator 作法，該專案現在也是 CNCF 的成員之一，詳細的內容等 TP (Tech Preview) 階段再來介紹</p>
-<p><img src="/images/rook-1.png" alt></p>
-<h2 id="Storage-Reommendation-for-Workload"><a href="#Storage-Reommendation-for-Workload" class="headerlink" title="Storage Reommendation for Workload"></a>Storage Reommendation for Workload</h2><p>下表僅供參考，請依自身 Workload 大小進行選擇</p>
-<table>
-<thead>
-<tr>
-<th>Workload</th>
-<th>Exmaples</th>
-<th>Storage Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>etcd</td>
-<td>Etcd backing store</td>
-<td>hostPath</td>
-</tr>
-<tr>
-<td>Registry</td>
-<td>Quay</td>
-<td>Object / File</td>
-</tr>
-<tr>
-<td>Logging</td>
-<td>ElasticSearch</td>
-<td>Block / hostPath</td>
-</tr>
-<tr>
-<td>Metrics</td>
-<td>Prometheus, Cassandra</td>
-<td>Block / hostPath</td>
-</tr>
-<tr>
-<td>Relational DBs</td>
-<td>MySQL, PGSQL</td>
-<td>Block / hostPath / File</td>
-</tr>
-<tr>
-<td>NoSQL DBs</td>
-<td>mongoDB, Couchbase</td>
-<td>Block / hostPath / File</td>
-</tr>
-<tr>
-<td>Web Server</td>
-<td>Nginx</td>
-<td>File</td>
-</tr>
-<tr>
-<td>Messaging Queue</td>
-<td>JBoss AMQ, Kafka</td>
-<td>File / Block</td>
-</tr>
-<tr>
-<td>In Memory/Caching</td>
-<td>Redis, JBoss Data Grid</td>
-<td>Block</td>
-</tr>
-<tr>
-<td>CD/CD Toolchain</td>
-<td>Jenkins, Mavan, CircleCI</td>
-<td>Block / File</td>
-</tr>
-</tbody>
-</table>
-<h2 id="常見-Q-amp-A"><a href="#常見-Q-amp-A" class="headerlink" title="常見 Q&amp;A"></a>常見 Q&amp;A</h2><h3 id="Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><a href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一" class="headerlink" title="Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?"></a>Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</h3><p>A1:<br>有兩個狀況</p>
+<p><a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured" target="_blank" rel="noopener">eanylin 哥</a>剛好也分享出一系列影片: <code>用 Service Catalog 系統戳 Ansible Tower 內建的 RESTful API</code></p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24" target="_blank" rel="noopener">透過 Service Catalog 部署 Web Application</a></li>
+<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU" target="_blank" rel="noopener">透過 Service Catalog 新增 Web Server</a></li>
+<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0" target="_blank" rel="noopener">透過 Service Catalog 下版 Web Application</a></li>
+</ul>
+<p><img src="/images/restful-api.png" alt></p>
+<h2 id="Q1-具體-RESTful-API-有哪些功能可以使用"><a href="#Q1-具體-RESTful-API-有哪些功能可以使用" class="headerlink" title="Q1: 具體 RESTful API 有哪些功能可以使用?"></a>Q1: 具體 RESTful API 有哪些功能可以使用?</h2><p>Red Hat 秉持著專門撰寫<code>鉅細彌遺地巨擘等級文件</code>的精神，請參考這邊 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html" target="_blank" rel="noopener">Ansible Tower API Guide v3.4.3</a></p>
+<p>而具體對技術來講，這份 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html" target="_blank" rel="noopener">Tower API Reference Guide</a> 是最重要的，裡面完全遵循標準 OpenAPI 的 Swagger 2.0 格式，讓其他平台要接入的時候，有充分的資訊可以使用</p>
+<p>我知道你內心想問 OpenAPI 是蝦米哇歌，傳送門: <a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!! - Phil Huang</a></p>
+<h2 id="Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼"><a href="#Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼" class="headerlink" title="Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?"></a>Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?</h2><p>以 Ansible Tower 為核心，分為南北向的資訊流的話，北向就是 RESTful API，而南向就是 Ad-hoc / Playbook / Workflow 等等具體跟其他設備對接的腳本</p>
+<p><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html" target="_blank" rel="noopener">Tower API Reference Guide</a> 有列舉所有你可能會用到的 RESTful API，但其實真正可以讓你去執行 Ad-hoc / Playbook / Workflow 能操作其他系統的只需了解三大項:</p>
 <ol>
-<li>如走自建 NFS 服務的話，不建議，但可以設定 (OS: 我相信99%的人都是走這個)</li>
-<li>若走特定企業儲存廠商的話，建議，可以設定</li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands" target="_blank" rel="noopener">Ad Hoc Commands</a> =&gt; 操作 Ad-hoc</li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates" target="_blank" rel="noopener">Job Template</a> =&gt; 操作 Playbook</li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates" target="_blank" rel="noopener">Workflow Job Templates</a> =&gt;操作 Workflow</li>
 </ol>
-<p>Workload Loading 如果不算高的話，其實還是可以用 NFS，但若是屬於 High Disk I/O 類型的，譬如說 Metrics / Logging / Database 這類的，就不太建議了，應該要考量其他的作法</p>
-<h3 id="Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去"><a href="#Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去" class="headerlink" title="Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?"></a>Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?</h3><p>A2: 建議在 Applicaions 層級上用 Object Storage 所提供的 S3/S3A API 做正常資料的存取</p>
-<h3 id="Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法"><a href="#Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法" class="headerlink" title="Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?"></a>Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?</h3><p>A3: 先把這篇 <a href="https://www.hwchiu.com/kubernetes-concept.html" target="_blank" rel="noopener">你到底知不知道什麼是 Kubernetes? - hwchiu</a> 看完後，應該就能回答這題了 XD</p>
+<h2 id="Q3-哎呦-那看起來很簡單啊-那可不可以硬刻"><a href="#Q3-哎呦-那看起來很簡單啊-那可不可以硬刻" class="headerlink" title="Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?"></a>Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?</h2><p>技術上當然可以，但你最少要了解以下幾個東西</p>
+<ul>
+<li>OpenAPI Specification</li>
+<li>Ansible module integration</li>
+<li>Fronend Service Implementation / Design</li>
+<li>Backend Service Implementation / Design</li>
+<li>System Administrator and Management knowledge / integration</li>
+<li>Integration Testing/QA</li>
+<li>所有前後端網頁常識</li>
+<li>Maintainance / Update process</li>
+<li>Project Roadmap</li>
+<li>&lt;會寫 js 這語言的各位大大…真的太偉大了&gt;</li>
+<li>&lt;我真心不了解前端的世界&gt;</li>
+<li>&lt;抱歉我天生不是前端的料，我是來騙行數的&gt;</li>
+<li>…</li>
+</ul>
+<p>有沒有發現你在做一個全新大專案出來</p>
+<h2 id="Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳"><a href="#Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳" class="headerlink" title="Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?"></a>Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?</h2><p>是的，這當然是沒什麼問題，在那個不能說的客戶們跟這個也不能說的客戶們有些是以 <code>Jenkins</code> + <code>Ansible Tower</code> 當作整個 CICD 核心引擎進行驅動</p>
+<p>寫這麼多不如來看個演講 <a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ" target="_blank" rel="noopener">Red Hat Summit Demo CI/CD deployment</a> (但我知道你不想看，所以可以看下圖 XD)</p>
+<p><img src="/images/ci_cd_redhatsummit_2016.png" alt></p>
+<h2 id="Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色"><a href="#Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色" class="headerlink" title="Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?"></a>Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?</h2><p>因為 Ansible Tower 不是單單只會被開發團隊的 Jenkins 拿來寫在 Jenkinsfile 裡面做使用，同時之間還可以搭配 Workflow 同時進行其他的事情，類似下圖</p>
+<p><img src="/images/restful-api-1.jpg" alt></p>
+<p> 如果論工程差異的話，除了角色上有差異，功能性也會差異點，Ansible Tower 相比 Jenkins</p>
+<ul>
+<li>自帶能做定期排程工作</li>
+<li>RBAC 權限細粒度佳</li>
+<li>可依據不同環境分配和管理不同的 serects 和 credentials</li>
+<li>多了個 Workflow 可以用</li>
+<li>能委派工作給特定的機器使用 (防火牆內)</li>
+<li>集中化控管</li>
+<li>版本控制</li>
+<li>新手上手容易</li>
+</ul>
+<p>額外閱讀: <a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process" target="_blank" rel="noopener">Integrating Ansible with Jenkins in a CI/CD process - Red Hat Blog</a></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p><code>所有服務皆 API 化</code> 這個想法讓系統整合廠商多了無限整合可能，若能好好地善用 RESTful API + Ansible Workflow 可以讓你節省掉很多的系統整合風險和持續保有優秀的架構解隅性，但又不會失去可控性</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://docs.openshift.com/container-platform/3.11/scaling_performance/optimizing_storage.html#back-end-recommendations" target="_blank" rel="noopener">Optimizing persistent storage - OpenShift v3.11 docs</a> </li>
-<li><a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao" target="_blank" rel="noopener">20190218_OpenShift Storage 架構思考 - Phil Huang</a></li>
-<li><a href="https://rook.io/" target="_blank" rel="noopener">rook.io - File, Block, and Object Storage Services for your Cloud-Native Environments</a></li>
-<li><a href="https://www.hwchiu.com/kubernetes-concept.html" target="_blank" rel="noopener">你到底知不知道什麼是 Kubernetes? - hwchiu</a></li>
+<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 1) - Provision Web Application (Catalog)</a></li>
+<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 2) - Adding Web App Server (Catalog)</a></li>
+<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 3) - Decommission Web Application (Catalog)</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html" target="_blank" rel="noopener">Ansible Tower API Guide v3.4.3</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html" target="_blank" rel="noopener">Tower API Reference Guide</a></li>
+<li><a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!!</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates" target="_blank" rel="noopener">Tower API Reference Guide - Job Template</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates" target="_blank" rel="noopener">Tower API Reference Guide - Workflow Job Templates</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands" target="_blank" rel="noopener">Tower API Reference Guide - Ad Hoc Commands</a></li>
+<li><a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ" target="_blank" rel="noopener">Red Hat Summit Demo CI/CD deployment</a></li>
+<li><a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process" target="_blank" rel="noopener">Integrating Ansible with Jenkins in a CI/CD process</a></li>
 </ul>
 
       
@@ -632,11 +567,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/openshift/" rel="tag"># openshift</a>
-          
             <a href="/tags/redhat/" rel="tag"># redhat</a>
           
-            <a href="/tags/storage/" rel="tag"># storage</a>
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+            <a href="/tags/restful/" rel="tag"># restful</a>
+          
+            <a href="/tags/openapi/" rel="tag"># openapi</a>
           
         </div>
       
@@ -649,8 +586,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20190321-reach-out-services-and-pods-from-outside-into-openshift/" rel="next" title="從 Red Hat OpenShift 外部訪問 Services 或 Pods">
-                <i class="fa fa-chevron-left"></i> 從 Red Hat OpenShift 外部訪問 Services 或 Pods
+              <a href="/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/" rel="next" title="Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理">
+                <i class="fa fa-chevron-left"></i> Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理
               </a>
             
           </div>
@@ -658,10 +595,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/" rel="prev" title="Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理">
-                Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -952,7 +885,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backend-Storage-Recommendation"><span class="nav-number">1.</span> <span class="nav-text">Backend Storage Recommendation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-Reommendation-for-Workload"><span class="nav-number">2.</span> <span class="nav-text">Storage Reommendation for Workload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常見-Q-amp-A"><span class="nav-number">3.</span> <span class="nav-text">常見 Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-針對開發人員寫-Applications-時，到底-NFS-能不能成為-Backend-Storage-的選擇之一"><span class="nav-number">3.1.</span> <span class="nav-text">Q1: 針對開發人員寫 Applications 時，到底 NFS 能不能成為 Backend Storage 的選擇之一?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去"><span class="nav-number">3.2.</span> <span class="nav-text">Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法"><span class="nav-number">3.3.</span> <span class="nav-text">Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q1-具體-RESTful-API-有哪些功能可以使用"><span class="nav-number">1.</span> <span class="nav-text">Q1: 具體 RESTful API 有哪些功能可以使用?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼"><span class="nav-number">2.</span> <span class="nav-text">Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q3-哎呦-那看起來很簡單啊-那可不可以硬刻"><span class="nav-number">3.</span> <span class="nav-text">Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳"><span class="nav-number">4.</span> <span class="nav-text">Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色"><span class="nav-number">5.</span> <span class="nav-text">Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">6.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
