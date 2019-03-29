@@ -138,7 +138,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/ngc-openshift.png">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/ngc-openshift-1.png">
-<meta property="og:updated_time" content="2019-03-29T16:31:25.306Z">
+<meta property="og:updated_time" content="2019-03-29T16:37:09.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nvidia DGX 和 Red Hat OpenShift 會產生什麼火花?">
 <meta name="twitter:description" content="一日江湖行走，路上撿到一個問題：Nvidia DGX 要怎麼跟透過容器化調度應用呀? 然後我就開始了一連串的研究探索…">
@@ -418,7 +418,7 @@
                 
               
 
-              <time title="Created: 2019-03-30 00:30:00 / Modified: 00:31:25" itemprop="dateCreated datePublished" datetime="2019-03-30T00:30:00+08:00">2019-03-30</time>
+              <time title="Created: 2019-03-30 00:30:00 / Modified: 00:37:09" itemprop="dateCreated datePublished" datetime="2019-03-30T00:30:00+08:00">2019-03-30</time>
             
 
             
@@ -508,10 +508,10 @@
 </ul>
 <h2 id="所以雙方到底會是什麼火花？"><a href="#所以雙方到底會是什麼火花？" class="headerlink" title="所以雙方到底會是什麼火花？"></a>所以雙方到底會是什麼火花？</h2><p>這影片 <a href="https://www.youtube.com/watch?v=9iVYjA_WJgU" target="_blank" rel="noopener">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a> 充分表達了<code>如何使用 OpenShift 部署 NGC 的容器服務，進而控制 DGX-1 的運算資源</code></p>
 <div class="video-container"><iframe src="//www.youtube.com/embed/9iVYjA_WJgU" frameborder="0" allowfullscreen></iframe></div>
-<ul>
+<ol>
 <li>OpenShift Service Catalog 選取已經定義好的 Container (TensorFlow, PyTorch, MXNet, TensorRT, …) 要多少 GPU 來做運算</li>
 <li>從 OpenShift 已經開起來的 Pod 中，來調度 DGX-1 裡面的資源利用</li>
-</ul>
+</ol>
 <h2 id="怎麼做到的"><a href="#怎麼做到的" class="headerlink" title="怎麼做到的?"></a>怎麼做到的?</h2><p>這份投影片 <a href="https://blog.openshift.com/wp-content/uploads/Nvidia-RedHat-Commons-Kubecon-2018.pdf" target="_blank" rel="noopener">Deep Learning Inference on Openshift with GPUs</a> 其實介紹蠻詳細的，尤其是下圖</p>
 <p><img src="/images/ngc-openshift-1.png" alt></p>
 <ul>
@@ -523,13 +523,16 @@
 <li>DGX-1 目前 N 家官方是支援 Red Hat Enterprise Linux 7.5+，詳細可以參考 <a href="https://blogs.nvidia.com/blog/2018/10/23/red-hat-enterprise-linux-dgx-1/" target="_blank" rel="noopener">NVIDIA, Red Hat certify NVIDIA DGX-1 for Red Hat Enterprise Linux</a></li>
 </ul>
 </li>
-<li>Preview of TensorRT Inferencing on OpenShift</li>
+<li>Preview of TensorRT Inferencing on OpenShift<ul>
+<li>請自行觀看 <a href="https://github.com/NVIDIA/tensorrt-inference-server" target="_blank" rel="noopener">GitHub - NVIDIA/tensorrt-inference-server</a></li>
+</ul>
+</li>
 <li>GPU Sharing, Heterogeneous Clusters, GPU Topology, Install experience with Operators<ul>
 <li>各位可以期待一下 <a href="https://github.com/NVIDIA/gpu-operator" target="_blank" rel="noopener"><code>GPU-Operator</code></a>，你問什麼是 Operator？傳送門在這邊 <a href="https://operatorhub.io/what-is-an-operator" target="_blank" rel="noopener">What is an Operator? - Operatorhub.io</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>那個影片後來發現其實在去年的 supercomputing 2018 的會議上，就有被拿出來 Demo 了，從那之後 Red Hat 跟 Nvidia 在 AI/HPC 上的合作就越來越多了，前者出基礎架構平台，後者出 GPU 跟運算框架，在不久的將來應該還可以看到越來越多這樣的使用方式出來</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>那個影片後來發現其實在去年的 <a href="https://sc18.supercomputing.org" target="_blank" rel="noopener">SuperComputing 2018 (SC18)</a> 的會議上，就有被拿出來 Demo 了，從那之後 Red Hat 跟 Nvidia 在 AI/HPC 上的合作就越來越多了，前者出基礎架構平台，後者出 GPU 跟運算框架，在不久的將來應該還可以看到越來越多 GPU + Container 的使用方式出來</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.youtube.com/watch?v=9iVYjA_WJgU" target="_blank" rel="noopener">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a></li>
 <li><a href="https://www.nvidia.com/zh-tw/data-center/tesla-v100/" target="_blank" rel="noopener">NVIDIA Tesla V100 Tensor</a></li>
