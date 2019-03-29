@@ -128,20 +128,20 @@
 
 
 
-  <meta name="description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower  這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
+  <meta name="description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower   這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
 <meta name="keywords" content="redhat,ansible,tower,iac,ztp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理">
 <meta property="og:url" content="http://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower  這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
+<meta property="og:description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower   這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/workflow-1.jpg">
 <meta property="og:image" content="http://blog.pichuang.com.tw/images/workflow-2.png">
-<meta property="og:updated_time" content="2019-03-28T19:01:14.835Z">
+<meta property="og:updated_time" content="2019-03-29T01:08:34.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理">
-<meta name="twitter:description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower  這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
+<meta name="twitter:description" content="最近強者我朋友 eanylin 哥分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看  Multi-Network Devices Configuration Management Using Ansible Tower   這影片有個核心技術關鍵，就是工作流 (Ansible Workflow) 概念，而這裡面包含幾個角色…">
 <meta name="twitter:image" content="http://blog.pichuang.com.tw/images/workflow-1.jpg">
 
 
@@ -435,7 +435,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-29 03:01:14" itemprop="dateModified" datetime="2019-03-29T03:01:14+08:00">2019-03-29</time>
+                <time title="Modified: 2019-03-29 09:08:34" itemprop="dateModified" datetime="2019-03-29T09:08:34+08:00">2019-03-29</time>
               
             
           </span>
@@ -491,6 +491,7 @@
 <ul>
 <li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4" target="_blank" rel="noopener">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
 </ul>
+<div class="video-container"><iframe src="//www.youtube.com/embed/UHXNen1ZXq4" frameborder="0" allowfullscreen></iframe></div>
 <p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
 <a id="more"></a>
 <ul>
@@ -529,15 +530,12 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('nodes') &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"><span class="attr">    fail:</span></span><br><span class="line"><span class="attr">      msg:</span> <span class="string">"openshift_kubelet_name_override Cannot be defined for new hosts"</span></span><br><span class="line"><span class="attr">    when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line"><span class="attr">  vars:</span></span><br><span class="line"><span class="attr">    l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">    l_repo_hosts:</span> <span class="string">"<span class="template-variable">&#123;&#123; l_scale_up_hosts | default('oo_all_hosts') &#125;&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">| default(False))</span></span><br></pre></td></tr></table></figure>
 <p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
 <p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 [openshift/openshift-ansible] 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">openshift/openshift-ansible</a> 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
 <p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
 <p><img src="/images/workflow-2.png" alt></p>
 <p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html" target="_blank" rel="noopener"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4" target="_blank" rel="noopener">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 1) - Provision Web Application (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 2) - Adding Web App Server (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0" target="_blank" rel="noopener">CloudForms/API Driven Workflow with Ansible Tower (Part 3) - Decommission Web Application (Catalog)</a></li>
 <li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130" target="_blank" rel="noopener">Ansible 技術概觀介紹_20190130</a></li>
 <li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates" target="_blank" rel="noopener">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
 <li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11" target="_blank" rel="noopener">GitHub - openshift/openshift-ansible</a></li>
