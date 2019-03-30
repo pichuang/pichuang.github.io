@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190330-nvidia-dgx-and-redhat-openshift-integration/</loc>
+    
+    <lastmod>2019-03-29T16:38:49.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/</loc>
+    
+    <lastmod>2019-03-29T15:27:37.341Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</loc>
+    
+    <lastmod>2019-03-29T03:15:12.478Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
+    
+    <lastmod>2019-03-25T15:22:34.330Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
+    
+    <lastmod>2019-03-24T18:07:31.718Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/</loc>
+    
+    <lastmod>2019-03-24T18:07:19.867Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180825-netdevops/</loc>
+    
+    <lastmod>2019-03-24T18:07:16.244Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
+    
+    <lastmod>2019-03-24T18:07:12.545Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
+    
+    <lastmod>2019-03-24T18:06:58.204Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/</loc>
+    
+    <lastmod>2019-03-24T18:03:20.390Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
+    
+    <lastmod>2019-03-07T14:53:54.425Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    
+    <lastmod>2019-02-23T16:49:22.724Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
+    
+    <lastmod>2019-02-23T16:27:30.355Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20140712-windows-7-usb-download-tool/</loc>
+    
+    <lastmod>2019-02-23T16:06:33.387Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/</loc>
+    
+    <lastmod>2018-06-21T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170717-install-centos-7-without-VGA/</loc>
+    
+    <lastmod>2017-07-17T02:09:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20160514-upgrade-onos-cluster/</loc>
+    
+    <lastmod>2017-04-18T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170413-how-to-contribute-on-github/</loc>
+    
+    <lastmod>2017-04-13T11:32:57.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170331-Install-i40e-driver-into-VMWare-ESXi/</loc>
+    
+    <lastmod>2017-03-31T08:06:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170329-how-do-I-use-docker-and-docker-compose/</loc>
+    
+    <lastmod>2017-03-29T01:34:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170106-ovs-ofctl-and-ofdpa/</loc>
+    
+    <lastmod>2017-03-20T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170302-snaproute-flexswitch/</loc>
+    
+    <lastmod>2017-03-01T17:40:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170301-sff-notes/</loc>
+    
+    <lastmod>2017-03-01T01:37:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170124-upgrade-intel-drivers-on-vmware-esxi/</loc>
+    
+    <lastmod>2017-01-23T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</loc>
+    
+    <lastmod>2017-01-08T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20170104-ofdpa-with-onl-cheat-sheet/</loc>
+    
+    <lastmod>2017-01-03T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20160423-open-networking-summit-2016/</loc>
+    
+    <lastmod>2016-04-22T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    
+    <lastmod>2015-07-26T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    
+    <lastmod>2015-07-26T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20150726-pki-lab-1-create-root-ca/</loc>
+    
+    <lastmod>2015-07-25T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20140416-tscc/</loc>
+    
+    <lastmod>2014-04-16T12:21:00.000Z</lastmod>
+    
+  </url>
+  
+</urlset>
