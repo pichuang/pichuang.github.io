@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2019-04-03T20:00:31.213Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
     
     <lastmod>2019-03-30T16:29:00.161Z</lastmod>
@@ -191,14 +198,14 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
