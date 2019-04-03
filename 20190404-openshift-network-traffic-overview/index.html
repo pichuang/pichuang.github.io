@@ -128,13 +128,13 @@
 
 
 
-  <meta name="description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量">
+  <meta name="description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量   那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?">
 <meta name="keywords" content="openshift,redhat,networking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat OpenShift v3.11 東西南北向網路探討">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量">
+<meta property="og:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量   那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/network-traffic.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/openshift-network-traffic-1.png">
@@ -142,10 +142,10 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-firewall.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-router.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-static.png">
-<meta property="og:updated_time" content="2019-04-03T20:00:31.213Z">
+<meta property="og:updated_time" content="2019-04-03T20:17:54.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 東西南北向網路探討">
-<meta name="twitter:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量">
+<meta name="twitter:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量   那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?">
 <meta name="twitter:image" content="https://blog.pichuang.com.tw/images/network-traffic.png">
 
 
@@ -433,7 +433,7 @@
                 
               
 
-              <time title="Created: 2019-04-04 00:45:00 / Modified: 04:00:31" itemprop="dateCreated datePublished" datetime="2019-04-04T00:45:00+08:00">2019-04-04</time>
+              <time title="Created: 2019-04-04 00:45:00 / Modified: 04:17:54" itemprop="dateCreated datePublished" datetime="2019-04-04T00:45:00+08:00">2019-04-04</time>
             
 
             
@@ -496,8 +496,8 @@
 <li>東西向 (East-West Traffic): Server 與 Server 之間的網路流量</li>
 </ul>
 <p><img src="/images/network-traffic.png" alt></p>
-<a id="more"></a>
 <p>那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?</p>
+<a id="more"></a>
 <h2 id="Red-Hat-OpenShift-東西南北向網路流"><a href="#Red-Hat-OpenShift-東西南北向網路流" class="headerlink" title="Red Hat OpenShift 東西南北向網路流"></a>Red Hat OpenShift 東西南北向網路流</h2><p>首先先來張常見的架構圖</p>
 <p><img src="/images/openshift-network-traffic-1.png" alt></p>
 <p>以 Red Hat OpenShift 為核心視角，可以分為三段網路</p>
