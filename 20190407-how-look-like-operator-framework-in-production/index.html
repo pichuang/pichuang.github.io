@@ -128,25 +128,30 @@
 
 
 
-  <meta name="description" content="雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 HashiCorp Terraform and Red Hat Ansible Automation">
-<meta name="keywords" content="redhat,terraform,ansible">
+  <meta name="description" content="打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？">
+<meta name="keywords" content="openshift,redhat,operator">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Red Hat Ansible 和 HashiCorp Terraform 結合作法">
-<meta property="og:url" content="https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/index.html">
+<meta property="og:title" content="到底 Operator Framework 用起來會長得如何?">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20190407-how-look-like-operator-framework-in-production/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 HashiCorp Terraform and Red Hat Ansible Automation">
+<meta property="og:description" content="打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-24T18:03:20.390Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-0.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-3.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-2.png">
+<meta property="og:updated_time" content="2019-04-09T15:27:00.686Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Red Hat Ansible 和 HashiCorp Terraform 結合作法">
-<meta name="twitter:description" content="雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 HashiCorp Terraform and Red Hat Ansible Automation">
+<meta name="twitter:title" content="到底 Operator Framework 用起來會長得如何?">
+<meta name="twitter:description" content="打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/operator-0.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/">
+  <link rel="canonical" href="https://blog.pichuang.com.tw/20190407-how-look-like-operator-framework-in-production/">
 
 
 
@@ -156,7 +161,7 @@
   };
 </script>
 
-  <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法 | Phil Workspace</title>
+  <title>到底 Operator Framework 用起來會長得如何? | Phil Workspace</title>
   
 
 
@@ -383,7 +388,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190407-how-look-like-operator-framework-in-production/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
@@ -400,7 +405,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Red Hat Ansible 和 HashiCorp Terraform 結合作法
+          <h1 class="post-title" itemprop="name headline">到底 Operator Framework 用起來會長得如何?
 
               
             
@@ -426,24 +431,12 @@
                 
               
 
-              <time title="Created: 2019-03-20 02:03:00" itemprop="dateCreated datePublished" datetime="2019-03-20T02:03:00+08:00">2019-03-20</time>
+              <time title="Created: 2019-04-09 22:49:00 / Modified: 23:27:00" itemprop="dateCreated datePublished" datetime="2019-04-09T22:49:00+08:00">2019-04-09</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-03-25 02:03:20" itemprop="dateModified" datetime="2019-03-25T02:03:20+08:00">2019-03-25</time>
               
             
           </span>
@@ -460,7 +453,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
 
                 
                 
@@ -495,29 +488,63 @@
       
 
       
-        <p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview" target="_blank" rel="noopener">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
+        <p>打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？</p>
+<p><img src="/images/operator-0.png" alt></p>
 <a id="more"></a>
-<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
+<h2 id="為什麼我需要了解-Operator-Framework"><a href="#為什麼我需要了解-Operator-Framework" class="headerlink" title="為什麼我需要了解 Operator Framework?"></a>為什麼我需要了解 Operator Framework?</h2><p>一般來說透過 Kubernetes / OpenShift 這類容器平台管理無狀態應用服務 (Stateless Apps) 是容易的，不需要額外的狀態處理，可以很快速地做到 Scale-Out 或輕鬆地從故障 (Auto-Healing) 恢復，畢竟這是一開始設計的目標。而現實生活中，大多數都是有狀態應用服務 (Statefule Apps) 居多，包含資料庫、Cache System 等，這些系統需要各自領域的知識才能將服務做到 Scale-Out / Upgrade / Re-configuration。</p>
+<p>各位可以試想，一般部署的時候，是不是都是透過撰寫 YAML 檔將 Deployment / RC 等等不同類型的資源描述出來，遇到更新或需要修改設定檔的時候，基本上也都要一個一個地進行修改，而這件事是沒有問題的，但問題是… <code>你怎麼知道針對這些特定領域的系統，你所進行修改的檔案或升級的步驟是對的?</code>，這也是當初 Opeator 誕生的原因</p>
+<blockquote>
+<p>透過 Operator 將特定領域的系統知識或操作經驗，以 Source Code 的形式呈現；而這個 Source Code 的表述形式，則是用擴展 Kubernetes API 的方式: CRD (Custom Resource Definition) 來實現</p>
+</blockquote>
+<p>至於該專案誕生的其他故事，可以參考 <a href="http://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2019/01/08/kubernetes-api-and-operator-history.html" target="_blank" rel="noopener">Kubernetes API 与 Operator：不为人知的开发者战争（完整篇）</a></p>
+<h2 id="所以…-Operator-Fraemwrok-包含什麼"><a href="#所以…-Operator-Fraemwrok-包含什麼" class="headerlink" title="所以… Operator Fraemwrok 包含什麼?"></a>所以… Operator Fraemwrok 包含什麼?</h2><p><img src="/images/operator-1.png" alt></p>
+<p>Operator Framework 本身是一個框架，裡面包含 3 大部分:</p>
+<ul>
+<li>Operator SDK：針對開發人員，提供三種不同的 SDK：Go / Ansible / Helm</li>
+<li>Operator Lifecycle Management (OLM)：針對維運人員，帶有五種能力等級：Basic Install / Seamless Upgrades / Full Lifecyle / Deep Insights / Auto Pilot</li>
+<li>Operator Metering：針對維運人員，提供監控回報及數據，需搭配 OLM</li>
+</ul>
+<p>目前大多數的實作都還是落在利用 Operator SDK 實作出 OLM 所需的資源，還不到整合 Operator Metering 的階段</p>
+<h2 id="那-Operator-Lifycycle-Management-的生命週期指的是"><a href="#那-Operator-Lifycycle-Management-的生命週期指的是" class="headerlink" title="那 Operator Lifycycle Management 的生命週期指的是?"></a>那 Operator Lifycycle Management 的生命週期指的是?</h2><p><img src="/images/operator-3.png" alt></p>
+<p>主要分五個階段</p>
 <ol>
-<li>Red Hat Ansible + HashiCorp Terraform</li>
-<li>HashiCorp Terraform + Red Hat Ansible </li>
+<li>Basic Install: 最基本能力，可以自動部署相關程式和設定在容器平台上</li>
+<li>Seamless Upgrade: 可支援進行升級小版本和進行修補 patch</li>
+<li>Full Lifecycle: 具備 backup / failure / recovery 程式資料能力，也是現行各 Operator 實作上最多的階段</li>
+<li>Deep Insights: 支援 Metrics / Alerts / Log 等分析數據指標能力</li>
+<li>Auto-pilot: 可支援自動擴展和自動性能調教</li>
 </ol>
-<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
-<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html" target="_blank" rel="noopener">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html" target="_blank" rel="noopener">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">"aws_instance"</span> <span class="string">"web"</span> &#123;</span><br><span class="line">  provisioner <span class="string">"local-exec"</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">"ansible-playbook -u rhel -i hosts main.yml"</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">"remote-exec"</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">"ansible-playbook -u rhel -i hosts main.yml"</span>,</span><br><span class="line">      <span class="string">"..."</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
-<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview" target="_blank" rel="noopener">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
-<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html" target="_blank" rel="noopener">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">all</span></span><br><span class="line"><span class="attr">  gather_facts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  connection:</span> <span class="string">local</span></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">plan</span></span><br><span class="line"><span class="attr">    terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">apply</span></span><br><span class="line"><span class="attr">    terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">destroy</span></span><br><span class="line"><span class="attr">    terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
-<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
+<h2 id="什麼是-Operatorhub-io"><a href="#什麼是-Operatorhub-io" class="headerlink" title="什麼是 Operatorhub.io?"></a>什麼是 Operatorhub.io?</h2><p>假設我們都同意 <code>Operator</code> 是個好東西，想要試試看的話，那要從哪裡獲得到這些 operator 的集中化資訊? </p>
+<p>首先最常聽到的就是 <a href="https://github.com/operator-framework/awesome-operators" target="_blank" rel="noopener">operator-framework/awesome-operators - GitHub</a> 這個 Repos，收集了由社群貢獻的 operator 程式，但基本上就是一個條列清單供使用者直接去點選使用。但倘若想要做初期評估的話，想快速了解特定的 Operator 具備什麼樣子的能力、CRD 清單和描述，就會要花費一定的時間慢慢地研究個專案的 README。</p>
+<p>而 Red Hat 在前陣子放出了一個網站 <a href="https://operatorhub.io" target="_blank" rel="noopener"><code>operatorhub.io</code></a>，目的就是將這些 Operator 資訊集中化顯示在 WEB 上，可以方便各大 ISVs 、社群專案能夠在上面發布各自專案的資訊，詳細如下圖</p>
+<p><img src="/images/operator-2.png" alt></p>
+<p>現在 OperatorHub 也廣徵各式好手將自己的 Operator 放在上面做分享 <a href="https://operatorhub.io/contribute" target="_blank" rel="noopener">OperatorHub.io - Contibute</a>，這邊同時也分享教學影片 <a href="https://www.youtube.com/watch?v=-6dLnKOtgVY" target="_blank" rel="noopener">How to Add Operator to Operator Hub 2019</a></p>
+<h2 id="那在-Red-Hat-OpenShift-上會如何使用-Operator"><a href="#那在-Red-Hat-OpenShift-上會如何使用-Operator" class="headerlink" title="那在 Red Hat OpenShift 上會如何使用 Operator?"></a>那在 Red Hat OpenShift 上會如何使用 Operator?</h2><p>推薦將兩個 YouTube 的內容看過 <a href="https://www.youtube.com/watch?v=HzkE7CZU7Bg" target="_blank" rel="noopener">OpenShift 4 Red Hat Operators - YouTube</a> 和 <a href="https://www.youtube.com/watch?v=KNbHNXXHzFY" target="_blank" rel="noopener">OpenShift 4 ISV Operators - YouTube</a></p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/HzkE7CZU7Bg" frameborder="0" allowfullscreen></iframe></div>
+<h2 id="想要深入技術細節"><a href="#想要深入技術細節" class="headerlink" title="想要深入技術細節?"></a>想要深入技術細節?</h2><p>如果想要了解 Operator SDK for Helm / Ansible 的朋友歡迎點選下列兩個影片</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=1on_wRY2dzQ" target="_blank" rel="noopener">OpenShift Commons Briefing Helm Operators Deep Dive - OLM for Helm People Rob Szumski - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=iIvwhNiYKYE" target="_blank" rel="noopener">OpenShift Commons Briefing Operators For Ansible People - Michael Hrivnak @RedHat - YouTube</a></li>
+</ul>
+<p>若想要嘗試用 go 寫人生第一個 Operator 的話，可以參考強者我朋友 Samina 的文章 - <a href="https://bestsamina.github.io/posts/2019-02-04-first-operator-sdk-helm/" target="_blank" rel="noopener">第一次玩 operator-sdk 就上手 - Life &amp; Technological Journey of Samina</a></p>
+<p>既然 Operator 可以做到狀態管理，那有沒有人做 Operator of Operator? 不是開玩笑的，還真的有 - <a href="https://www.youtube.com/watch?v=GgEKEYH9MMM" target="_blank" rel="noopener">OpenShift Commons Briefing All Things Operators State of Operators with Daniel Messer - YouTube</a></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview" target="_blank" rel="noopener">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
-<li><a href="https://www.ansible.com/" target="_blank" rel="noopener">Automation for everyone</a></li>
-<li><a href="https://www.terraform.io/" target="_blank" rel="noopener">Terraform by HashiCorp</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html" target="_blank" rel="noopener">Terraform remote-exec Provisioner</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html" target="_blank" rel="noopener">Terraform local-exec Provisioner</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html" target="_blank" rel="noopener">Ansible Module - terraform</a></li>
-<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html" target="_blank" rel="noopener">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
+<li><a href="https://www.youtube.com/watch?v=HzkE7CZU7Bg" target="_blank" rel="noopener">OpenShift 4 Red Hat Operators - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=KNbHNXXHzFY" target="_blank" rel="noopener">OpenShift 4 ISV Operators - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=GgEKEYH9MMM" target="_blank" rel="noopener">OpenShift Commons Briefing All Things Operators State of Operators with Daniel Messer - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=1on_wRY2dzQ" target="_blank" rel="noopener">OpenShift Commons Briefing Helm Operators Deep Dive - OLM for Helm People Rob Szumski - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=iIvwhNiYKYE" target="_blank" rel="noopener">OpenShift Commons Briefing Operators For Ansible People - Michael Hrivnak @RedHat - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=kQJxGtsqphk" target="_blank" rel="noopener">Installing OpenShift 4 on AWS with operatorhub.io integration - YouTube</a></li>
+<li><a href="https://operatorhub.io/" target="_blank" rel="noopener">OperatorHub.io</a></li>
+<li><a href="https://speakerdeck.com/pichuang/after-coreos-20190214?slide=22" target="_blank" rel="noopener">After CoreOS_20190214 - Phil Huang</a></li>
+<li><a href="https://k2r2bai.com/2018/06/23/devops/prometheus/prometheus-operator/" target="_blank" rel="noopener">Prometheus Operator 介紹與安裝 - KaiRen’s Blog</a></li>
+<li><a href="https://bestsamina.github.io/posts/2019-02-04-first-operator-sdk-helm/" target="_blank" rel="noopener">第一次玩 operator-sdk 就上手 - Life &amp; Technological Journey of Samina</a></li>
+<li><a href="https://www.ithome.com.tw/news/122842" target="_blank" rel="noopener">CoreOS釋出Operators開發框架，助自動化管理Kubernetes應用程式 - iThome</a></li>
+<li><a href="http://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2019/01/08/kubernetes-api-and-operator-history.html" target="_blank" rel="noopener">Kubernetes API 与 Operator：不为人知的开发者战争（完整篇）</a></li>
+<li><a href="https://github.com/operator-framework/awesome-operators" target="_blank" rel="noopener">operator-framework/awesome-operators - GitHub</a></li>
+<li><a href="https://operatorhub.io" target="_blank" rel="noopener">OperatorHub.io</a></li>
+<li><a href="https://operatorhub.io/contribute" target="_blank" rel="noopener">OperatorHub.io - Contibute</a></li>
+<li><a href="https://www.youtube.com/watch?v=-6dLnKOtgVY" target="_blank" rel="noopener">OpenShift Commons Operator Framework SIG Mtg Rob Szumski How to Add Operator to Operator Hub 2019</a></li>
 </ul>
 
       
@@ -542,11 +569,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/openshift/" rel="tag"># openshift</a>
+          
             <a href="/tags/redhat/" rel="tag"># redhat</a>
           
-            <a href="/tags/terraform/" rel="tag"># terraform</a>
-          
-            <a href="/tags/ansible/" rel="tag"># ansible</a>
+            <a href="/tags/operator/" rel="tag"># operator</a>
           
         </div>
       
@@ -559,8 +586,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20190317-openshift-and-nsx-t/" rel="next" title="Red Hat OpenShift and VMWare NSX-T 架構點評">
-                <i class="fa fa-chevron-left"></i> Red Hat OpenShift and VMWare NSX-T 架構點評
+              <a href="/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/" rel="next" title="Oracle WebLogic 正式支援跑在 Red Hat OpenShift 上">
+                <i class="fa fa-chevron-left"></i> Oracle WebLogic 正式支援跑在 Red Hat OpenShift 上
               </a>
             
           </div>
@@ -568,10 +595,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20190321-reach-out-services-and-pods-from-outside-into-openshift/" rel="prev" title="從 Red Hat OpenShift 外部訪問 Services 或 Pods">
-                從 Red Hat OpenShift 外部訪問 Services 或 Pods <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -884,7 +907,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Terraform-Invoking-Ansible"><span class="nav-number">1.</span> <span class="nav-text">Terraform Invoking Ansible</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-Invoking-Terraform"><span class="nav-number">2.</span> <span class="nav-text">Ansible Invoking Terraform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#到底哪個方案比較好"><span class="nav-number">3.</span> <span class="nav-text">到底哪個方案比較好?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#為什麼我需要了解-Operator-Framework"><span class="nav-number">1.</span> <span class="nav-text">為什麼我需要了解 Operator Framework?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以…-Operator-Fraemwrok-包含什麼"><span class="nav-number">2.</span> <span class="nav-text">所以… Operator Fraemwrok 包含什麼?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Operator-Lifycycle-Management-的生命週期指的是"><span class="nav-number">3.</span> <span class="nav-text">那 Operator Lifycycle Management 的生命週期指的是?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Operatorhub-io"><span class="nav-number">4.</span> <span class="nav-text">什麼是 Operatorhub.io?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那在-Red-Hat-OpenShift-上會如何使用-Operator"><span class="nav-number">5.</span> <span class="nav-text">那在 Red Hat OpenShift 上會如何使用 Operator?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想要深入技術細節"><span class="nav-number">6.</span> <span class="nav-text">想要深入技術細節?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>

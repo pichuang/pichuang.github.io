@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190407-how-look-like-operator-framework-in-production/</loc>
+    
+    <lastmod>2019-04-09T15:27:00.686Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/</loc>
     
     <lastmod>2019-04-07T12:34:25.416Z</lastmod>
