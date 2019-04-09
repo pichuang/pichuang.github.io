@@ -1804,169 +1804,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20150727-pki-lab-3-create-single-domain-ssl-certificate/" class="post-title-link" itemprop="url">PKI Lab$3 Create Single domain SSL Certificate</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2015-07-27 00:00:00" itemprop="dateCreated datePublished" datetime="2015-07-27T00:00:00+08:00">2015-07-27</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>採用 <figure class="highlight plain"><figcaption><span>來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Step by Step</span><br><span class="line">- Setting vars for Root CA</span><br><span class="line">&gt; export KEY_SIZE=2048  </span><br><span class="line">export CA_EXPIRE=365  </span><br><span class="line">export KEY_EXPIRE=365  </span><br><span class="line">export KEY_COUNTRY=&quot;TW&quot;  </span><br><span class="line">export KEY_PROVINCE=&quot;Taiwan&quot;  </span><br><span class="line">export KEY_CITY=&quot;HsinChu&quot;  </span><br><span class="line">export KEY_ORG=&quot;Night9 Studios&quot;  </span><br><span class="line">export KEY_EMAIL=&quot;roan@night9.cc&quot;  </span><br><span class="line">export KEY_OU=&quot;www.night9.cc&quot;  </span><br><span class="line">export KEY_NAME=&quot;&quot;  </span><br><span class="line">export KEY_CN=&quot;roan.night9.cc&quot;  </span><br><span class="line"></span><br><span class="line">  - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars)</span><br><span class="line">  - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>Create Key</p>
-<blockquote>
-<p>source ./vars<br>./build-key-server roan.night9.cc<br>\&lt;enter>…\&lt;enter>  </p>
-</blockquote>
-</li>
-<li><p>Check key and crt</p>
-<blockquote>
-<p>ls -la ./keys/roan.night9.cc.{key,crt}</p>
-</blockquote>
-</li>
-<li><p>Check roan.night9.cc crt Info</p>
-<blockquote>
-<p>openssl x509 -in roan.night9.crt -text -noout</p>
-</blockquote>
-</li>
-<li><p>Show<br><img src="https://lh3.googleusercontent.com/jEjmgkHRcXctCtCis_yvaNSvPZpAa7Sp4eG6oVaRUSQ=w1034-h1278-no" width="600" height="700"></p>
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/" target="_blank" rel="noopener">OpenSSL PKI Tutorial</a></li>
-<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/" target="_blank" rel="noopener">How To Setup a CA</a></li>
-<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html" target="_blank" rel="noopener">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2070,6 +1907,169 @@
 </blockquote>
 </li>
 <li><p>Show<br><img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700"></p>
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/" target="_blank" rel="noopener">OpenSSL PKI Tutorial</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/" target="_blank" rel="noopener">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html" target="_blank" rel="noopener">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/20150727-pki-lab-3-create-single-domain-ssl-certificate/" class="post-title-link" itemprop="url">PKI Lab$3 Create Single domain SSL Certificate</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2015-07-27 00:00:00" itemprop="dateCreated datePublished" datetime="2015-07-27T00:00:00+08:00">2015-07-27</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>採用 <figure class="highlight plain"><figcaption><span>來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Step by Step</span><br><span class="line">- Setting vars for Root CA</span><br><span class="line">&gt; export KEY_SIZE=2048  </span><br><span class="line">export CA_EXPIRE=365  </span><br><span class="line">export KEY_EXPIRE=365  </span><br><span class="line">export KEY_COUNTRY=&quot;TW&quot;  </span><br><span class="line">export KEY_PROVINCE=&quot;Taiwan&quot;  </span><br><span class="line">export KEY_CITY=&quot;HsinChu&quot;  </span><br><span class="line">export KEY_ORG=&quot;Night9 Studios&quot;  </span><br><span class="line">export KEY_EMAIL=&quot;roan@night9.cc&quot;  </span><br><span class="line">export KEY_OU=&quot;www.night9.cc&quot;  </span><br><span class="line">export KEY_NAME=&quot;&quot;  </span><br><span class="line">export KEY_CN=&quot;roan.night9.cc&quot;  </span><br><span class="line"></span><br><span class="line">  - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars)</span><br><span class="line">  - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>Create Key</p>
+<blockquote>
+<p>source ./vars<br>./build-key-server roan.night9.cc<br>\&lt;enter>…\&lt;enter>  </p>
+</blockquote>
+</li>
+<li><p>Check key and crt</p>
+<blockquote>
+<p>ls -la ./keys/roan.night9.cc.{key,crt}</p>
+</blockquote>
+</li>
+<li><p>Check roan.night9.cc crt Info</p>
+<blockquote>
+<p>openssl x509 -in roan.night9.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show<br><img src="https://lh3.googleusercontent.com/jEjmgkHRcXctCtCis_yvaNSvPZpAa7Sp4eG6oVaRUSQ=w1034-h1278-no" width="600" height="700"></p>
 </li>
 </ul>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
