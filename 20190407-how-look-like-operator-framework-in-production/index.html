@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-1.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-3.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/operator-2.png">
-<meta property="og:updated_time" content="2019-04-09T15:33:57.729Z">
+<meta property="og:updated_time" content="2019-04-10T14:49:34.014Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="到底 Operator Framework 用起來會長得如何?">
 <meta name="twitter:description" content="打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？">
@@ -448,7 +448,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-09 23:33:57" itemprop="dateModified" datetime="2019-04-09T23:33:57+08:00">2019-04-09</time>
+                <time title="Modified: 2019-04-10 22:49:34" itemprop="dateModified" datetime="2019-04-10T22:49:34+08:00">2019-04-10</time>
               
             
           </span>
@@ -533,6 +533,33 @@
 <p>現在 OperatorHub 也廣徵各式好手將自己的 Operator 放在上面做分享 <a href="https://operatorhub.io/contribute" target="_blank" rel="noopener">OperatorHub.io - Contibute</a>，這邊同時也分享教學影片 <a href="https://www.youtube.com/watch?v=-6dLnKOtgVY" target="_blank" rel="noopener">How to Add Operator to Operator Hub 2019</a></p>
 <h2 id="那在-Red-Hat-OpenShift-上會如何使用-Operator"><a href="#那在-Red-Hat-OpenShift-上會如何使用-Operator" class="headerlink" title="那在 Red Hat OpenShift 上會如何使用 Operator?"></a>那在 Red Hat OpenShift 上會如何使用 Operator?</h2><p>推薦將兩個 YouTube 的內容看過 <a href="https://www.youtube.com/watch?v=HzkE7CZU7Bg" target="_blank" rel="noopener">OpenShift 4 Red Hat Operators - YouTube</a> 和 <a href="https://www.youtube.com/watch?v=KNbHNXXHzFY" target="_blank" rel="noopener">OpenShift 4 ISV Operators - YouTube</a></p>
 <div class="video-container"><iframe src="//www.youtube.com/embed/HzkE7CZU7Bg" frameborder="0" allowfullscreen></iframe></div>
+<h2 id="各-Operator-SDK-比較表"><a href="#各-Operator-SDK-比較表" class="headerlink" title="各 Operator-SDK 比較表"></a>各 Operator-SDK 比較表</h2><p>節錄 <a href="https://operatorhub.io/getting-started#How-do-I-start-writing-an-Operator?" target="_blank" rel="noopener">How do I start writing an Operator?</a> 內容</p>
+<table>
+<thead>
+<tr>
+<th>Operator Type</th>
+<th>What the SDK Generates</th>
+<th>What you need to define</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Go Operator</td>
+<td>- General go program structure<br>- Boilerplate code to talk to the Kubernetes API<br>- Boilerplate code to watch for Kubernetes objects of interest<br>- An entry point to the reconciliation loop<br>- An example YAML files based on CRDs</td>
+<td>- Custom objects via CRDs<br>- Control loop logic in Go<br>- Potentially artistic stunts only possible by talking directly to the API from Go</td>
+</tr>
+<tr>
+<td>Ansible Operator</td>
+<td>- A Go program that runs an Ansible playbook or role every time a certain type of object is detected / modified</td>
+<td>- Ansible playbook or role<br>- Custom objects via CRD</td>
+</tr>
+<tr>
+<td>Helm Operator</td>
+<td>- A custom object via CRD containing the same properties as the chart’s values.yaml<br>- A Go program that reads a helm chart and deploys all its resources<br>- Watch statements to detect changes in the custom objects specification, re-deploying all resources with updated values</td>
+<td>- The location / repository of the helm chart</td>
+</tr>
+</tbody>
+</table>
 <h2 id="想要深入技術細節"><a href="#想要深入技術細節" class="headerlink" title="想要深入技術細節?"></a>想要深入技術細節?</h2><p>如果想要了解 Operator SDK for Helm / Ansible 的朋友歡迎點選下列兩個影片</p>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=1on_wRY2dzQ" target="_blank" rel="noopener">OpenShift Commons Briefing Helm Operators Deep Dive - OLM for Helm People Rob Szumski - YouTube</a></li>
@@ -557,6 +584,7 @@
 <li><a href="https://operatorhub.io" target="_blank" rel="noopener">OperatorHub.io</a></li>
 <li><a href="https://operatorhub.io/contribute" target="_blank" rel="noopener">OperatorHub.io - Contibute</a></li>
 <li><a href="https://www.youtube.com/watch?v=-6dLnKOtgVY" target="_blank" rel="noopener">OpenShift Commons Operator Framework SIG Mtg Rob Szumski How to Add Operator to Operator Hub 2019</a></li>
+<li><a href="https://operatorhub.io/getting-started#How-do-I-start-writing-an-Operator?" target="_blank" rel="noopener">How do I start writing an Operator?</a></li>
 </ul>
 
       
@@ -919,7 +947,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#為什麼我需要了解-Operator-Framework"><span class="nav-number">1.</span> <span class="nav-text">為什麼我需要了解 Operator Framework?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以…-Operator-Fraemwrok-包含什麼"><span class="nav-number">2.</span> <span class="nav-text">所以… Operator Fraemwrok 包含什麼?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Operator-Lifycycle-Management-的生命週期指的是"><span class="nav-number">3.</span> <span class="nav-text">那 Operator Lifycycle Management 的生命週期指的是?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Operatorhub-io"><span class="nav-number">4.</span> <span class="nav-text">什麼是 Operatorhub.io?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那在-Red-Hat-OpenShift-上會如何使用-Operator"><span class="nav-number">5.</span> <span class="nav-text">那在 Red Hat OpenShift 上會如何使用 Operator?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想要深入技術細節"><span class="nav-number">6.</span> <span class="nav-text">想要深入技術細節?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#為什麼我需要了解-Operator-Framework"><span class="nav-number">1.</span> <span class="nav-text">為什麼我需要了解 Operator Framework?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以…-Operator-Fraemwrok-包含什麼"><span class="nav-number">2.</span> <span class="nav-text">所以… Operator Fraemwrok 包含什麼?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Operator-Lifycycle-Management-的生命週期指的是"><span class="nav-number">3.</span> <span class="nav-text">那 Operator Lifycycle Management 的生命週期指的是?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-Operatorhub-io"><span class="nav-number">4.</span> <span class="nav-text">什麼是 Operatorhub.io?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那在-Red-Hat-OpenShift-上會如何使用-Operator"><span class="nav-number">5.</span> <span class="nav-text">那在 Red Hat OpenShift 上會如何使用 Operator?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各-Operator-SDK-比較表"><span class="nav-number">6.</span> <span class="nav-text">各 Operator-SDK 比較表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想要深入技術細節"><span class="nav-number">7.</span> <span class="nav-text">想要深入技術細節?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
