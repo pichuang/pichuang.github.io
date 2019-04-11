@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190411-container-bare-metal-for-networking-references-architecture/</loc>
+    
+    <lastmod>2019-04-11T15:42:47.145Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/</loc>
     
     <lastmod>2019-04-10T14:56:54.653Z</lastmod>
