@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
+    
+    <lastmod>2019-04-13T06:17:55.021Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190411-container-bare-metal-for-networking-references-architecture/</loc>
     
     <lastmod>2019-04-11T15:42:47.145Z</lastmod>
@@ -226,14 +233,14 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
