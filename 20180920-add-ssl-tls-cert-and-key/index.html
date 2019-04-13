@@ -136,12 +136,12 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="動機大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://blog.pichuang.com.tw/wp-content/uploads/2018/09/Screen-Shot-2018-09-20-at-01.31.40-1024x997.png">
-<meta property="og:updated_time" content="2019-04-13T06:17:55.021Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ssl-1.png">
+<meta property="og:updated_time" content="2019-04-13T06:43:00.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新增 SSL&#x2F;TLS 憑證和金鑰">
 <meta name="twitter:description" content="動機大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?">
-<meta name="twitter:image" content="https://blog.pichuang.com.tw/wp-content/uploads/2018/09/Screen-Shot-2018-09-20-at-01.31.40-1024x997.png">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/ssl-1.png">
 
 
 
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-13 14:17:55" itemprop="dateModified" datetime="2019-04-13T14:17:55+08:00">2019-04-13</time>
+                <time title="Modified: 2019-04-13 14:43:00" itemprop="dateModified" datetime="2019-04-13T14:43:00+08:00">2019-04-13</time>
               
             
           </span>
@@ -501,7 +501,7 @@
 <a id="more"></a>
 <h2 id="實際做法"><a href="#實際做法" class="headerlink" title="實際做法"></a>實際做法</h2><h3 id="SSL-TLS-Self-Signed-Certificate-and-Key"><a href="#SSL-TLS-Self-Signed-Certificate-and-Key" class="headerlink" title="SSL/TLS Self-Signed Certificate and Key"></a>SSL/TLS Self-Signed Certificate and Key</h3><p>若想要一行產生出 Self-Signed Certificate 和 Key 可使用下列指令:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt</span><br></pre></td></tr></table></figure>
-<p>最重要的是 Common Name (CN) 的內容要寫對</p>
+<p>最重要的是 Common Name (CN) 的內容要寫對<br><img src="/images/ssl-1.png" alt></p>
 <h3 id="SSL-TLS-Signed-by-Intermediate-Certificate-and-Key"><a href="#SSL-TLS-Signed-by-Intermediate-Certificate-and-Key" class="headerlink" title="SSL/TLS Signed by Intermediate Certificate and Key"></a>SSL/TLS Signed by Intermediate Certificate and Key</h3><p>通常建立一個僅限 Intranet 使用的 Root &amp; Intermediate CA 不外乎有以下的事情要處理：</p>
 <ol>
 <li>建立 Root CA 及 Intermediate CA</li>
@@ -516,7 +516,6 @@
 <li><code>/tmp/pki/intermediate/certs/wildcard.pichuang.local.crt</code> 給 Server side 使用或給 Client 端系統認證用</li>
 <li><code>/tmp/pki/intermediate/keys/wildcard.pichuang.local.key</code> 給 Server side 使用</li>
 </ol>
-<p>最後的結果應該會類似 Google Chrome 點選憑證後畫面<br><img src="https://blog.pichuang.com.tw/wp-content/uploads/2018/09/Screen-Shot-2018-09-20-at-01.31.40-1024x997.png" alt></p>
 <h2 id="僅供參考用的-SSL-Certificate-等級"><a href="#僅供參考用的-SSL-Certificate-等級" class="headerlink" title="僅供參考用的 SSL Certificate 等級"></a>僅供參考用的 SSL Certificate 等級</h2><p>因應各家的系統規模都不盡相同，所切分的 Class 可能也會有不同<br>大體上可分為</p>
 <ol>
 <li>Class 1 for individuals, intended for email.</li>
