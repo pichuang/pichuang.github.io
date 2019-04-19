@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
+    
+    <lastmod>2019-04-19T19:49:04.882Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
     
     <lastmod>2019-04-13T07:01:29.550Z</lastmod>
