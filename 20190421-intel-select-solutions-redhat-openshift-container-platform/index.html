@@ -136,7 +136,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="最近 Intel 不知道吹什麼風，發了一個 Intel® Select Solutions for Red Hat OpenShift Container Platform - April, 2019 出來，這篇文章蠻適合當作 Hardware Configuration 的指南進行基礎探討">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-20T18:39:29.583Z">
+<meta property="og:updated_time" content="2019-04-20T19:21:49.841Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Intel Select Solutions: Red Hat OpenShift Container Platform">
 <meta name="twitter:description" content="最近 Intel 不知道吹什麼風，發了一個 Intel® Select Solutions for Red Hat OpenShift Container Platform - April, 2019 出來，這篇文章蠻適合當作 Hardware Configuration 的指南進行基礎探討">
@@ -426,7 +426,7 @@
                 
               
 
-              <time title="Created: 2019-04-21 01:54:00 / Modified: 02:39:29" itemprop="dateCreated datePublished" datetime="2019-04-21T01:54:00+08:00">2019-04-21</time>
+              <time title="Created: 2019-04-21 01:54:00 / Modified: 03:21:49" itemprop="dateCreated datePublished" datetime="2019-04-21T01:54:00+08:00">2019-04-21</time>
             
 
             
@@ -494,19 +494,19 @@
 <li>Plus</li>
 </ul>
 <p>其中 Plus 可以提供 2.25 倍以上的並發工作負載 (concurrent workloads) 和 1.9 倍以上的同時上線用戶 (concurrent users)，響應速度提高 2 倍 (response times)</p>
-<p>文件主要推薦配置為:</p>
+<p>Intel + Red Hat 聯名文件主要推薦配置為以下 (以 Base 最小等級為例):</p>
 <ul>
-<li>Control-plane<ul>
-<li>Bastion node * 1</li>
-<li>Master nodes * 3</li>
+<li>Control-plane nodes (20c / 192GB RAM / 480G for boot / X710 Dual Port SFP+)<ul>
+<li>Bation node * 1 </li>
+<li>Master nodes * 3 </li>
 <li>Infrastructure nodes * 2</li>
 </ul>
 </li>
-<li>Applications<ul>
-<li>Compute/Apps nodes * 4</li>
+<li>Applications nodes (20c / 256GB RAM / 480G for boot / 4TB for data / X710 Dual Port SFP+)<ul>
+<li>Applications nodes * 4</li>
 </ul>
 </li>
-<li>Storage<ul>
+<li>(Optional) Storage nodes (20c / 256G RAM / 480G for boot / 16 * 3.8TB for data / X710 Dula Port SFP+)<ul>
 <li>Storage nodes * 3</li>
 </ul>
 </li>
