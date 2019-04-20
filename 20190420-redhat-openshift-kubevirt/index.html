@@ -129,7 +129,7 @@
 
 
   <meta name="description" content="Kubevirt 是由 Red Hat 於 2017 年初發起的一個容器虛擬化技術 Container-native Virtulaization (CNV) 專案，主要功能是以 Kubernetes 管理容器的角度來管理 VM  Kubervirt: Add virtual machines as you know them to your OpenShift projects">
-<meta name="keywords" content="openshift,redhat,cnv,kubevirt">
+<meta name="keywords" content="redhat,openshift,cnv,kubevirt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat OpenShift 把 VM 當 Container 管!?">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/index.html">
@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/kubevirt.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/kubevirt-1.png">
 <meta property="og:image" content="https://github.com/kubevirt/kubevirt/raw/master/docs/architecture.png">
-<meta property="og:updated_time" content="2019-04-19T19:49:04.882Z">
+<meta property="og:updated_time" content="2019-04-20T12:23:11.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift 把 VM 當 Container 管!?">
 <meta name="twitter:description" content="Kubevirt 是由 Red Hat 於 2017 年初發起的一個容器虛擬化技術 Container-native Virtulaization (CNV) 專案，主要功能是以 Kubernetes 管理容器的角度來管理 VM  Kubervirt: Add virtual machines as you know them to your OpenShift projects">
@@ -431,7 +431,7 @@
                 
               
 
-              <time title="Created: 2019-04-20 02:24:00 / Modified: 03:49:04" itemprop="dateCreated datePublished" datetime="2019-04-20T02:24:00+08:00">2019-04-20</time>
+              <time title="Created: 2019-04-20 02:24:00 / Modified: 20:23:11" itemprop="dateCreated datePublished" datetime="2019-04-20T02:24:00+08:00">2019-04-20</time>
             
 
             
@@ -494,7 +494,7 @@
 <p>Kubervirt: Add virtual machines as you know them to your OpenShift projects</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="Why-Kubevirt"><a href="#Why-Kubevirt" class="headerlink" title="Why Kubevirt?"></a>Why Kubevirt?</h2><p>如同<a href="https://kubevirt.io/" target="_blank" rel="noopener">官網</a>所說，這個專案的主要目的是認為說不是所有的服務都適合進行容器化 (Containerized)，但卻享有 Container Platform 原生所帶來的彈性調度能力，所以才會誕生出這麼一個專案，讓開發團隊在同一個 Container Platform 上依據不同的需求放置 VM 或 Container</p>
+<h2 id="Why-Kubevirt"><a href="#Why-Kubevirt" class="headerlink" title="Why Kubevirt?"></a>Why Kubevirt?</h2><p>如同<a href="https://kubevirt.io/" target="_blank" rel="noopener">官網</a>所說，這個專案的主要目的是認為說雖然不是所有的原生在 VM  上的服務都適合進行容器化 (Containerized)，但卻又想要享有 Container Platform 原生所帶來的彈性調度能力，所以才會誕生出這麼一個專案，讓開發團隊在同一個 Container Platform 上依據不同的需求放置 VM 或 Container</p>
 <h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/images/kubevirt.png" alt></p>
 <p>從底層開始，依然是需要依靠 Bare Metal / OS / Kubernetes 建立基本 Container Platform 的能力，但原先上層所乘載的 Pod 裡面的型態應該是 Container，但現在有了 Kubevirt 這樣的專案後，可以在一個 Pod 裡面起 VM 來讓使用者做使用</p>
 <p>技術上來說這個 VM Instance 的實作是採用 <code>KVM/QEMU</code> 的方式進行使用，而他的資源配置則是採用跟 Container 的方式依樣用 YAML 描繪資源需求，有趣的事情是 CNV 掛載硬碟的方式也是要透過 OpenShift PV/PVC 機制來進行使用</p>
@@ -554,9 +554,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/openshift/" rel="tag"># openshift</a>
-          
             <a href="/tags/redhat/" rel="tag"># redhat</a>
+          
+            <a href="/tags/openshift/" rel="tag"># openshift</a>
           
             <a href="/tags/cnv/" rel="tag"># cnv</a>
           
