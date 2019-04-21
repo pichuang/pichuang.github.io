@@ -137,7 +137,7 @@
 <meta property="og:description" content="最近 Intel 不知道吹什麼風，發了一個 Intel® Select Solutions for Red Hat OpenShift Container Platform - April, 2019 出來，這篇文章蠻適合當作 Hardware Configuration 的指南進行基礎探討">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/intel-openshift.png">
-<meta property="og:updated_time" content="2019-04-21T01:11:39.021Z">
+<meta property="og:updated_time" content="2019-04-21T01:18:09.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Intel Select Solutions: Red Hat OpenShift Container Platform">
 <meta name="twitter:description" content="最近 Intel 不知道吹什麼風，發了一個 Intel® Select Solutions for Red Hat OpenShift Container Platform - April, 2019 出來，這篇文章蠻適合當作 Hardware Configuration 的指南進行基礎探討">
@@ -428,7 +428,7 @@
                 
               
 
-              <time title="Created: 2019-04-21 01:54:00 / Modified: 09:11:39" itemprop="dateCreated datePublished" datetime="2019-04-21T01:54:00+08:00">2019-04-21</time>
+              <time title="Created: 2019-04-21 01:54:00 / Modified: 09:18:09" itemprop="dateCreated datePublished" datetime="2019-04-21T01:54:00+08:00">2019-04-21</time>
             
 
             
@@ -498,7 +498,8 @@
 <li><a href="https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/">Red Hat OpenShift v3.11 東西南北向網路探討</a></li>
 <li><a href="https://docs.openshift.com/container-platform/3.11/release_notes/ocp_3_11_release_notes.html" target="_blank" rel="noopener">OpenShift Container Platform 3.11 Release Notes</a></li>
 </ul>
-<h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><h3 id="Hardware-Configuration"><a href="#Hardware-Configuration" class="headerlink" title="Hardware Configuration"></a>Hardware Configuration</h3><p>文件提供兩個不同的 Configuration:</p>
+<h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><p>下列章節摘錄 <a href="https://www.intel.com.tw/content/www/tw/zh/products/solutions/select-solutions/cloud/red-hat-openshift-container-platform.html" target="_blank" rel="noopener">適用於 Red Hat OpenShift Container Platform* 的 Intel® Select 解決方案之基本與加強組態</a> 一文</p>
+<h3 id="Hardware-Configuration"><a href="#Hardware-Configuration" class="headerlink" title="Hardware Configuration"></a>Hardware Configuration</h3><p>文件提供兩個不同的 Configuration:</p>
 <ul>
 <li>Base</li>
 <li>Plus</li>
@@ -522,41 +523,6 @@
 </li>
 </ul>
 <p>至於詳細的 BOM (Bill Of Material) 表請參閱 <a href="https://www.intel.com.tw/content/www/tw/zh/products/docs/select-solutions/select-solutions-for-red-hat-openshift-container-platform-brief.html" target="_blank" rel="noopener">Intel® Select Solutions for Red Hat OpenShift Container Platform - April, 2019</a> </p>
-<h3 id="CPU-Selection-amp-Capability"><a href="#CPU-Selection-amp-Capability" class="headerlink" title="CPU Selection &amp; Capability"></a>CPU Selection &amp; Capability</h3><p>主要的 CPU 選擇是以 Intel Xeon Scalable Processors 為主，CPU 自帶以下能力 (翻中文怪怪的直接貼):</p>
-<ol>
-<li><p>Intel® Platform Trust Technology (Intel PTT) or a discrete Trusted Platform Module (TPM) 2.0</p>
-<ul>
-<li>Protects the system start-up process by ensuring the boot hardware is tamper-free and provides secured storage for sensitive data.</li>
-</ul>
-</li>
-<li><p>Intel®Hyper-ThreadingTechnology (Intel HT Technology)</p>
-<ul>
-<li>Ensures that systems use processor resources more efficiently and increases processor throughput to improve overall performance on threaded software.</li>
-</ul>
-</li>
-<li><p>Intel Turbo Boost Technology</p>
-<ul>
-<li>Accelerates processor and graphics performance for peak loads.</li>
-</ul>
-</li>
-<li><p>Intel Speed Shift technology</p>
-<ul>
-<li>Allows the processor to select its best operating frequency and voltage to deliver optimal performance and power efficiency.</li>
-</ul>
-</li>
-<li><p>Adaptive Double DRAM Device Correction (ADDDC)</p>
-<ul>
-<li>Offers an innovative approach in managing errors to extend DIMM longevity.</li>
-</ul>
-</li>
-<li><p>Advanced Error Detection and Correction (AEDC)</p>
-<ul>
-<li>Improves fault coverage by identifying and correcting errors.</li>
-</ul>
-</li>
-<li><p>Local Machine Check Exception (LMCE): Helps improve performance.</p>
-</li>
-</ol>
 <h3 id="Minimum-Performance-Capabilities"><a href="#Minimum-Performance-Capabilities" class="headerlink" title="Minimum Performance Capabilities"></a>Minimum Performance Capabilities</h3><p>主要量測的工具有 3 個</p>
 <ul>
 <li><a href="https://github.com/magento/magento2/tree/2.3-develop/setup/performance-toolkit" target="_blank" rel="noopener">Magento 2.2.2</a></li>
@@ -573,22 +539,22 @@
 </thead>
 <tbody>
 <tr>
-<td>Minimum number of magento instances workloads deployed to all applications nodes</td>
+<td>部署至所有應用程式節點的 Magento* 實例工作負載之最小數量</td>
 <td>32</td>
 <td>72</td>
 </tr>
 <tr>
-<td>Number of sysbench pods (deployed to two infra nodes)</td>
+<td>Sysbench* Pods 的數量（部署至兩個基礎架構節點）</td>
 <td>32</td>
 <td>72</td>
 </tr>
 <tr>
-<td>Minimum number of concurrent users (Apache JMeter benchmark user web traffic from bastion node)</td>
+<td>並行使用者的最小數量（Apache Jmeter* 效能標竿 [使用者網路流量] 部署至 Bastion 節點）</td>
 <td>725</td>
 <td>1400</td>
 </tr>
 <tr>
-<td>Application throughput (Average number of transactions per second)</td>
+<td>應用程式輸送量（每秒平均異動數量）</td>
 <td>310</td>
 <td>620</td>
 </tr>
@@ -616,6 +582,7 @@
 <li><a href="https://lenovopress.com/lp0968.pdf" target="_blank" rel="noopener">Reference Architecture: Red Hat OpenShift Container Platform on Lenovo ThinkSystem Servers</a></li>
 <li><a href="https://blog.openshift.com/openshift-partner-reference-architectures/" target="_blank" rel="noopener">OpenShift Partner Reference Architectures</a></li>
 <li><a href="https://blog.openshift.com/openshift-container-platform-reference-architecture-implementation-guides/" target="_blank" rel="noopener">OpenShift Container Platform Reference Architecture Implementation Guides</a></li>
+<li><a href="https://www.intel.com.tw/content/www/tw/zh/products/solutions/select-solutions/cloud/red-hat-openshift-container-platform.html" target="_blank" rel="noopener">適用於 Red Hat OpenShift Container Platform* 的 Intel® Select 解決方案之基本與加強組態</a></li>
 </ul>
 
       
@@ -1016,7 +983,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-Intel-Select-Solutions"><span class="nav-number">1.</span> <span class="nav-text">What are Intel Select Solutions?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-OpenShift-Container-Platform-3-11"><span class="nav-number">2.</span> <span class="nav-text">Red Hat OpenShift Container Platform 3.11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">3.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware-Configuration"><span class="nav-number">3.1.</span> <span class="nav-text">Hardware Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-Selection-amp-Capability"><span class="nav-number">3.2.</span> <span class="nav-text">CPU Selection &amp; Capability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimum-Performance-Capabilities"><span class="nav-number">3.3.</span> <span class="nav-text">Minimum Performance Capabilities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同場加映-OpenShift-Partner-Reference-Architectures"><span class="nav-number">3.4.</span> <span class="nav-text">同場加映: OpenShift Partner Reference Architectures</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-Intel-Select-Solutions"><span class="nav-number">1.</span> <span class="nav-text">What are Intel Select Solutions?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-OpenShift-Container-Platform-3-11"><span class="nav-number">2.</span> <span class="nav-text">Red Hat OpenShift Container Platform 3.11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">3.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware-Configuration"><span class="nav-number">3.1.</span> <span class="nav-text">Hardware Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimum-Performance-Capabilities"><span class="nav-number">3.2.</span> <span class="nav-text">Minimum Performance Capabilities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同場加映-OpenShift-Partner-Reference-Architectures"><span class="nav-number">3.3.</span> <span class="nav-text">同場加映: OpenShift Partner Reference Architectures</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
