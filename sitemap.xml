@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
+    
+    <lastmod>2019-04-21T14:30:25.174Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
     
     <lastmod>2019-04-21T01:54:22.040Z</lastmod>
@@ -89,13 +96,6 @@
     <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
     
     <lastmod>2019-04-04T18:11:21.331Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
-    
-    <lastmod>2019-03-30T16:29:00.161Z</lastmod>
     
   </url>
   

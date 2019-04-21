@@ -129,7 +129,7 @@
 
 
   <meta name="description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
-<meta name="keywords" content="openshift,redhat,storage">
+<meta name="keywords" content="redhat,openshift,storage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat OpenShift v3.11 儲存類型建議">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/index.html">
@@ -137,7 +137,7 @@
 <meta property="og:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/rook-1.png">
-<meta property="og:updated_time" content="2019-03-30T16:29:00.161Z">
+<meta property="og:updated_time" content="2019-04-21T14:30:25.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 儲存類型建議">
 <meta name="twitter:description" content="在小弟先前的演講中 20190218_OpenShift Storage 架構思考，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：  Data in the Container Data in a Host Volume Data in a Shared Storage  但我那天沒講的事情是，這些 Backend S">
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-31 00:29:00" itemprop="dateModified" datetime="2019-03-31T00:29:00+08:00">2019-03-31</time>
+                <time title="Modified: 2019-04-21 22:30:25" itemprop="dateModified" datetime="2019-04-21T22:30:25+08:00">2019-04-21</time>
               
             
           </span>
@@ -624,6 +624,7 @@
 <li>若走特定企業儲存廠商的話，建議，可以設定</li>
 </ol>
 <p>Workload Loading 如果不算高的話，其實還是可以用 NFS，但若是屬於 High Disk I/O 類型的，譬如說 Metrics / Logging / Database 這類的，就不太建議了，應該要考量其他的作法</p>
+<p>詳細技術可以參考 <a href="https://www.hwchiu.com/kubernetes-storage-ii.html" target="_blank" rel="noopener">NFS 於 Kubernetes 內的各種應用 - hwchiu</a></p>
 <h3 id="Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去"><a href="#Q2-那我用-Object-Stroage-的話，要怎麼把-Applications-所產生的資料放進去" class="headerlink" title="Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?"></a>Q2: 那我用 Object Stroage 的話，要怎麼把 Applications 所產生的資料放進去?</h3><p>A2: 建議在 Applicaions 層級上用 Object Storage 所提供的 S3/S3A API 做正常資料的存取</p>
 <h3 id="Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法"><a href="#Q3-是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法" class="headerlink" title="Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?"></a>Q3: 是不是用了容器平台後，所有儲存問題都可以獲得到完美的解法?</h3><p>A3: 先把這篇 <a href="https://www.hwchiu.com/kubernetes-concept.html" target="_blank" rel="noopener">你到底知不知道什麼是 Kubernetes? - hwchiu</a> 看完後，應該就能回答這題了 XD</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
@@ -631,6 +632,7 @@
 <li><a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao" target="_blank" rel="noopener">20190218_OpenShift Storage 架構思考 - Phil Huang</a></li>
 <li><a href="https://rook.io/" target="_blank" rel="noopener">rook.io - File, Block, and Object Storage Services for your Cloud-Native Environments</a></li>
 <li><a href="https://www.hwchiu.com/kubernetes-concept.html" target="_blank" rel="noopener">你到底知不知道什麼是 Kubernetes? - hwchiu</a></li>
+<li><a href="https://www.hwchiu.com/kubernetes-storage-ii.html" target="_blank" rel="noopener">NFS 於 Kubernetes 內的各種應用 - hwchiu</a></li>
 </ul>
 
       
@@ -655,9 +657,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/openshift/" rel="tag"># openshift</a>
-          
             <a href="/tags/redhat/" rel="tag"># redhat</a>
+          
+            <a href="/tags/openshift/" rel="tag"># openshift</a>
           
             <a href="/tags/storage/" rel="tag"># storage</a>
           
