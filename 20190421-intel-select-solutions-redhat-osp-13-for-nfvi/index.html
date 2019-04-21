@@ -138,7 +138,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ffu.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/osp-nfv.png">
-<meta property="og:updated_time" content="2019-04-21T00:52:37.609Z">
+<meta property="og:updated_time" content="2019-04-21T01:54:22.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi">
 <meta name="twitter:description" content="承上篇 導讀 Intel Select Solutions: Red Hat OpenShift Container Platform，本篇同時收錄 Red Hat OpenStack 13 代號 Queens 的推薦硬體 BOM 表 Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release">
@@ -429,7 +429,7 @@
                 
               
 
-              <time title="Created: 2019-04-21 07:54:00 / Modified: 08:52:37" itemprop="dateCreated datePublished" datetime="2019-04-21T07:54:00+08:00">2019-04-21</time>
+              <time title="Created: 2019-04-21 07:54:00 / Modified: 09:54:22" itemprop="dateCreated datePublished" datetime="2019-04-21T07:54:00+08:00">2019-04-21</time>
             
 
             
@@ -525,7 +525,12 @@
 <p>至於詳細的 BOM (Bill Of Material) 表跟硬體效能指標內容請參閱 <a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf" target="_blank" rel="noopener">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></p>
 <h3 id="Software-Configuration"><a href="#Software-Configuration" class="headerlink" title="Software Configuration"></a>Software Configuration</h3><p>毫無懸念地，你可以參考 <a href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/network_functions_virtualization_product_guide/index" target="_blank" rel="noopener">Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide</a> 這裡面的文件來了解 NFVi 的架構是長得如何，下圖是基於標準 NFV ETSI 架構，以 Red Hat 現行產品進行對應的圖表</p>
 <p><img src="/images/osp-nfv.png" alt></p>
-<p>一般來說 IaaS 的部分是以 Red Hat OpenStack 為主這點是沒錯的，Storage 的技術選型現行是以 Ceph 為優先考量，同時也跟 OpenStack 不同類型的 storage backend project (swift/cinder/glance/…)整合性最好。當然也是可以替換成第三方廠商的方案，並沒有說一定要選擇某個技術才能運行。而網路的部分，因為牽扯到實體網路的整合及最大化利用網路頻寬議題，通常都會在搭配一家 SDN 廠商在內進行 Overlay + Underlay 網路整合</p>
+<p>一般來說 IaaS 的部分是以 Red Hat OpenStack 為主這點是沒錯的，Storage 的技術選型現行是以 Ceph 為優先考量，同時也跟 OpenStack 不同類型的 storage backend project (swift/cinder/glance/…)整合性最好。當然也是可以替換成第三方廠商的方案，並沒有說一定要選擇某個技術才能運行。而網路的部分，因為牽扯到實體網路的整合及最大化利用網路頻寬議題，通常都會在搭配一家 SDN 廠商在內進行 Overlay + Underlay 網路整合，例如以下幾家都是不錯的組合</p>
+<ul>
+<li>Cisco ACI</li>
+<li>Juniper Contrail</li>
+<li>BigSwitch BCF</li>
+</ul>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/">導讀 Intel Select Solutions: Red Hat OpenShift Container Platform</a></li>
 <li><a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf" target="_blank" rel="noopener">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></li>
