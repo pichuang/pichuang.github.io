@@ -128,30 +128,27 @@
 
 
 
-  <meta name="description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
-<meta name="keywords" content="cncf,nfv">
+  <meta name="description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cloud Native Network Functions (CNF) Testbed 心得感想">
-<meta property="og:url" content="https://blog.pichuang.com.tw/20190319-cnf-testbed/index.html">
+<meta property="og:title" content="導讀 Reference Architecture: Red Hat Ceph Storage">
+<meta property="og:url" content="https://blog.pichuang.com.tw/導讀-Reference-Architecture-Red-Hat-Ceph-Storage/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
+<meta property="og:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/cnf-1.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/cnf-2.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/cnf-3.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/cnf-4.png">
-<meta property="og:updated_time" content="2019-03-07T14:53:54.425Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-1.png">
+<meta property="og:updated_time" content="2019-04-26T20:25:36.712Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cloud Native Network Functions (CNF) Testbed 心得感想">
-<meta name="twitter:description" content="2019/2/24 CNCF 宣布發展 CNF Testbed，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性">
-<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/cnf-1.png">
+<meta name="twitter:title" content="導讀 Reference Architecture: Red Hat Ceph Storage">
+<meta name="twitter:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/ceph.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">
+  <link rel="canonical" href="https://blog.pichuang.com.tw/導讀-Reference-Architecture-Red-Hat-Ceph-Storage/">
 
 
 
@@ -161,7 +158,7 @@
   };
 </script>
 
-  <title>Cloud Native Network Functions (CNF) Testbed 心得感想 | Phil Workspace</title>
+  <title>導讀 Reference Architecture: Red Hat Ceph Storage | Phil Workspace</title>
   
 
 
@@ -388,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/導讀-Reference-Architecture-Red-Hat-Ceph-Storage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
@@ -405,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Cloud Native Network Functions (CNF) Testbed 心得感想
+          <h1 class="post-title" itemprop="name headline">導讀 Reference Architecture: Red Hat Ceph Storage
 
               
             
@@ -431,7 +428,7 @@
                 
               
 
-              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:53:54" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
+              <time title="Created: 2019-04-27 01:37:31 / Modified: 04:25:36" itemprop="dateCreated datePublished" datetime="2019-04-27T01:37:31+08:00">2019-04-27</time>
             
 
             
@@ -470,21 +467,87 @@
       
 
       
-        <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
+        <p>本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 <a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide" target="_blank" rel="noopener">Brief: How to configure Red Hat Ceph Storage</a> 和 <a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage" target="_blank" rel="noopener">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a> 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 <a href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/3.2/html-single/release_notes/index" target="_blank" rel="noopener">v3.2</a></p>
+<p><img src="/images/ceph.png" alt></p>
 <a id="more"></a>
-<p>Dataplane 則統一都是用 FD.io VPP (Vector Packet Processing) 技術來做到，至於為什麼可以參考一下 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_102" target="_blank" rel="noopener">Why This Was a Challenging Project: OpenStack</a> 及 <a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g4fe85c61a7_48_108" target="_blank" rel="noopener">Why This Was a Challenging Project: Kubernetes</a> 兩張簡報的底下說明</p>
-<h2 id="架構演進"><a href="#架構演進" class="headerlink" title="架構演進"></a>架構演進</h2><p>下圖表示了整個從 ONAP Amsterdam -&gt; ONAP Casablanca -&gt; Future 的架構演進<br><img src="/images/cnf-1.png" alt></p>
-<h2 id="CNF-Testbed-High-Overview"><a href="#CNF-Testbed-High-Overview" class="headerlink" title="CNF Testbed High Overview"></a>CNF Testbed High Overview</h2><p>目前是混搭 OpenStack + Kubernetes 的平台，若想要更深入了解平台的技術細節可以參考 <a href="https://github.com/cncf/cnf-testbed/tree/master/comparison/kubecon18-chained_nf_test" target="_blank" rel="noopener">Comparing chained network function CNF deployment models</a></p>
-<p><img src="/images/cnf-2.png" alt></p>
-<h2 id="Test-Cases"><a href="#Test-Cases" class="headerlink" title="Test Cases"></a>Test Cases</h2><p>基本的 Snake Test 是一定會有的，只是平台的部分有拆分成 OpenStack 跟 Kubernetes，但之後應該會隨著生態系的完善，項目會越來越多，後續要追蹤的話蠻建議看 <a href="https://github.com/cncf/cnf-testbed" target="_blank" rel="noopener">GitHub - cncf/cnf-testbed</a></p>
-<p><img src="/images/cnf-3.png" alt></p>
-<h2 id="vCPE-Use-Case"><a href="#vCPE-Use-Case" class="headerlink" title="vCPE Use Case"></a>vCPE Use Case</h2><p>詳細架構細節 <a href="https://wiki.onap.org/pages/viewpage.action?pageId=3246168" target="_blank" rel="noopener">Use Case: Residential Broadband vCPE (Approved)</a></p>
-<p><img src="/images/cnf-4.png" alt></p>
+<h2 id="Red-Hat-Ceph-Storage"><a href="#Red-Hat-Ceph-Storage" class="headerlink" title="Red Hat Ceph Storage"></a>Red Hat Ceph Storage</h2><p>一座 Ceph 集群會具備以下五種角色:</p>
+<ul>
+<li>Management/Dashboard node (ceph-mgr)</li>
+<li>Monitor nodes (ceph-mon / ceph-osd-container)</li>
+<li>Object Gateway nodes (ceph-radosgw / ceph-radosgw-container)</li>
+<li>MDS nodes (ceph-mds / ceph-mds-container)</li>
+<li>OSD nodes (ceph-osd / ceph-osd-container)</li>
+</ul>
+<p>一般討論最多的就是 OSD nodes 的原始空間大小及可用空間大小 (因要推算硬體規格及評估效能)，其餘角色都是使用或維運時會使用</p>
+<h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><h3 id="規模定義"><a href="#規模定義" class="headerlink" title="規模定義"></a>規模定義</h3><p>基本上只要是屬於 OSD Node 角色的，每一台主機都會配置一個 OSD (Object Storage Daemon)，用戶主要是將資料存取於此使用。而空間定義上主要分為原始空間 (Raw Capacity) 跟依據不同集群優化策略 (3 * Replication / Erasure Coding) 推算後的可用空間 (Usuable Capacity)</p>
+<table>
+<thead>
+<tr>
+<th>規模</th>
+<th>可用空間大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small</td>
+<td>250 TB+</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>1 PB - 2 PB</td>
+</tr>
+<tr>
+<td>Large</td>
+<td>2 PB+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="集群優化定義"><a href="#集群優化定義" class="headerlink" title="集群優化定義"></a>集群優化定義</h3><table>
+<thead>
+<tr>
+<th>集群優化定義</th>
+<th>特性</th>
+<th>舉例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IOPS 優化</td>
+<td>- Lowest cost per IOPS <br> - Highest IOPS per GB <br>- 99% latency consistency</td>
+<td>- Block storage <br>- 3 x replication<br>- MySQL on OpenStack Clouds</td>
+</tr>
+<tr>
+<td>Throughput 優化</td>
+<td>- Lowest cost per MBps (throughput) <br>- Highest MBps per TB<br>- Highest MBps per BTU<br>- Highest MBps per Watt<br>- 97% latency consistency</td>
+<td>- Block or Object storage<br>- 3 x replication<br>- Streaming media/data/images</td>
+</tr>
+<tr>
+<td>Cost/Capacity 優化</td>
+<td>- Lowest cost per TB<br>- Lowest BTU per TB<br>- Lowest Watts required per TB</td>
+<td>- Object storage<br>- Erasure coding<br>- Object archive</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Hardware-Configuration"><a href="#Hardware-Configuration" class="headerlink" title="Hardware Configuration"></a>Hardware Configuration</h3><p>建議於最小規模 (Small) 最少需三台實體機，而每台 Ceph Server 最小規格，可參考 Red Hat Partner 推薦型號</p>
+<ul>
+<li><a href="http://go.qct.io/solutions/software-defined-storage/qxstor-red-hat-ceph-storage-edition/" target="_blank" rel="noopener">QCT: QxStor Red Hat Ceph Storage Edition - QxStor RCT-200</a></li>
+<li><a href="https://downloads.dell.com/solutions/cloud-solution-resources/Dell_R730xd_RedHat_Ceph_Performance_SizingGuide_WhitePaper.pdf" target="_blank" rel="noopener">Dell PowerEdge R730xd Performance and Sizing Guide for Red Hat Ceph Storage</a></li>
+<li><a href="https://www.cisco.com/c/en/us/products/collateral/servers-unified-computing/ucs-s-series-storage-servers/Whitepaper_c11-738915.html" target="_blank" rel="noopener">Cisco UCS S3260 Storage Server and Red Hat Ceph Storage Performance</a></li>
+</ul>
+<p>倘若想自行精算配置的話，則可參考此篇 <a href="https://www.redhat.com/cms/managed-files/st-ceph-storage-intel-configuration-guide-technology-detail-f11532-201804-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs</a> 推算硬體規格</p>
+<p>另因 Red Hat Ceph Storage 3.2 宣布可使用 <code>BlueStore</code> 方式部署，故整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快</p>
+<p>From <a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a><br><img src="/images/ceph-1.png" alt="BlueStore Unleashed"> </p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">CNCF Launches Cloud Native Network Functions (CNF) Testbed</a></li>
-<li><a href="https://docs.google.com/presentation/d/1nsPINvxQwZZR_7E4mAzr-50eFCBhbCHsmik6DI_yFA0/edit#slide=id.g5036f143e9_3_113" target="_blank" rel="noopener">CNF Testbed - Google Slide</a></li>
-<li><a href="https://schd.ws/hosted_files/kccna18/c1/KubeCon%20NA%202018%20Intro_%20Cloud%20Native%20Network%20Functions%20BoF%2012-12-2018%20FINAL.pdf" target="_blank" rel="noopener">Intro: Cloud Native Network Functions (CNF) BoF - North America 2018</a></li>
-<li><a href="https://github.com/cncf/cnf-testbed" target="_blank" rel="noopener">GitHub - cncf/cnf-testbed</a></li>
+<li><a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide" target="_blank" rel="noopener">Brief: How to configure Red Hat Ceph Storage</a></li>
+<li><a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage" target="_blank" rel="noopener">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a></li>
+<li><a href="http://go.qct.io/solutions/software-defined-storage/qxstor-red-hat-ceph-storage-edition/" target="_blank" rel="noopener">QCT: QxStor Red Hat Ceph Storage Edition</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/st-complete-openstack-storage-f13309wg-201807-en_0.pdf" target="_blank" rel="noopener">Complete OpenStack Storage from Red Hat</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/st-data-data-analytics-infrastructure-technology-detail-f14280-201811-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Data Analytics Infrastructure Solution</a></li>
+<li><a href="https://www.redhat.com/en/blog/why-spark-ceph-part-3-3" target="_blank" rel="noopener">RED HAT BLOG - Why Spark on Ceph? (Part 3 of 3)</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/3/html/red_hat_ceph_storage_hardware_selection_guide/ceph-hardware-min-recommend" target="_blank" rel="noopener">Red Hat Ceph Storage Hardware Selection Guide - CHAPTER 6. RECOMMENDED MINIMUM HARDWARE</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/st-ceph-storage-intel-configuration-guide-technology-detail-f11532-201804-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs</a></li>
+<li><a href="https://ceph.com/use-cases/#red-hat-ceph-storage-on-intel-processors-and-ssds" target="_blank" rel="noopener">Ceph USE CASES / REFERENCE ARCHITECTURES</a></li>
+<li><a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a></li>
 </ul>
 
       
@@ -507,14 +570,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/cncf/" rel="tag"># cncf</a>
-          
-            <a href="/tags/nfv/" rel="tag"># nfv</a>
-          
-        </div>
-      
 
       
       
@@ -524,8 +579,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20180918-skopeo/" rel="next" title="Skopeo: 管理 Container 映像檔及倉庫的方式">
-                <i class="fa fa-chevron-left"></i> Skopeo: 管理 Container 映像檔及倉庫的方式
+              <a href="/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/" rel="next" title="導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi">
+                <i class="fa fa-chevron-left"></i> 導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi
               </a>
             
           </div>
@@ -533,10 +588,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20190317-openshift-and-nsx-t/" rel="prev" title="Red Hat OpenShift and VMWare NSX-T 架構點評">
-                Red Hat OpenShift and VMWare NSX-T 架構點評 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -883,7 +934,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架構演進"><span class="nav-number">1.</span> <span class="nav-text">架構演進</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNF-Testbed-High-Overview"><span class="nav-number">2.</span> <span class="nav-text">CNF Testbed High Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-Cases"><span class="nav-number">3.</span> <span class="nav-text">Test Cases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vCPE-Use-Case"><span class="nav-number">4.</span> <span class="nav-text">vCPE Use Case</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-Ceph-Storage"><span class="nav-number">1.</span> <span class="nav-text">Red Hat Ceph Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">2.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#規模定義"><span class="nav-number">2.1.</span> <span class="nav-text">規模定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群優化定義"><span class="nav-number">2.2.</span> <span class="nav-text">集群優化定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware-Configuration"><span class="nav-number">2.3.</span> <span class="nav-text">Hardware Configuration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
