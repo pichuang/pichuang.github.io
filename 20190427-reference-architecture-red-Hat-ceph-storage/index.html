@@ -137,7 +137,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-1.png">
-<meta property="og:updated_time" content="2019-04-26T20:29:12.380Z">
+<meta property="og:updated_time" content="2019-04-29T14:37:54.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Reference Architecture: Red Hat Ceph Storage">
 <meta name="twitter:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
@@ -428,12 +428,24 @@
                 
               
 
-              <time title="Created: 2019-04-27 01:37:31 / Modified: 04:29:12" itemprop="dateCreated datePublished" datetime="2019-04-27T01:37:31+08:00">2019-04-27</time>
+              <time title="Created: 2019-04-27 01:37:31" itemprop="dateCreated datePublished" datetime="2019-04-27T01:37:31+08:00">2019-04-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-29 22:37:54" itemprop="dateModified" datetime="2019-04-29T22:37:54+08:00">2019-04-29</time>
               
             
           </span>
@@ -479,6 +491,7 @@
 <li>OSD nodes (ceph-osd / ceph-osd-container)</li>
 </ul>
 <p>一般討論最多的就是 OSD nodes 的原始空間大小及可用空間大小 (因要推算硬體規格及評估效能)，其餘角色都是使用或維運時會使用</p>
+<p>對於角色作用可以參考 <a href="https://k2r2bai.com/2015/11/19/ceph/ceph-intro/" target="_blank" rel="noopener">Ceph 分散式儲存系統介紹 - KaiRen’s Blog</a> 的內容</p>
 <h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><h3 id="規模定義"><a href="#規模定義" class="headerlink" title="規模定義"></a>規模定義</h3><p>基本上只要是屬於 OSD Node 角色的，每一台主機都會配置一個 OSD (Object Storage Daemon)，用戶主要是將資料存取於此使用。而空間定義上主要分為原始空間 (Raw Capacity) 跟依據不同集群優化策略 (3 * Replication / Erasure Coding) 推算後的可用空間 (Usuable Capacity)</p>
 <table>
 <thead>
@@ -548,6 +561,7 @@
 <li><a href="https://www.redhat.com/cms/managed-files/st-ceph-storage-intel-configuration-guide-technology-detail-f11532-201804-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs</a></li>
 <li><a href="https://ceph.com/use-cases/#red-hat-ceph-storage-on-intel-processors-and-ssds" target="_blank" rel="noopener">Ceph USE CASES / REFERENCE ARCHITECTURES</a></li>
 <li><a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a></li>
+<li><a href="https://k2r2bai.com/2015/11/19/ceph/ceph-intro/" target="_blank" rel="noopener">Ceph 分散式儲存系統介紹 - KaiRen’s Blog</a></li>
 </ul>
 
       
