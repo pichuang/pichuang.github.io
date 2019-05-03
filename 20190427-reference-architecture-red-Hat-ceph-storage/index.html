@@ -136,8 +136,10 @@
 <meta property="og:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-2.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-1.png">
-<meta property="og:updated_time" content="2019-04-29T14:37:54.630Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-3.png">
+<meta property="og:updated_time" content="2019-05-03T14:05:46.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Reference Architecture: Red Hat Ceph Storage">
 <meta name="twitter:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
@@ -445,7 +447,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-29 22:37:54" itemprop="dateModified" datetime="2019-04-29T22:37:54+08:00">2019-04-29</time>
+                <time title="Modified: 2019-05-03 22:05:46" itemprop="dateModified" datetime="2019-05-03T22:05:46+08:00">2019-05-03</time>
               
             
           </span>
@@ -548,8 +550,12 @@
 <li><a href="https://www.cisco.com/c/en/us/products/collateral/servers-unified-computing/ucs-s-series-storage-servers/Whitepaper_c11-738915.html" target="_blank" rel="noopener">Cisco UCS S3260 Storage Server and Red Hat Ceph Storage Performance</a></li>
 </ul>
 <p>倘若想自行精算配置的話，則可參考此篇 <a href="https://www.redhat.com/cms/managed-files/st-ceph-storage-intel-configuration-guide-technology-detail-f11532-201804-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs</a> 推算硬體規格</p>
-<p>另因 Red Hat Ceph Storage 3.2 宣布可使用 <code>BlueStore</code> 方式部署，故整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快</p>
+<h1 id="About-BlueStore"><a href="#About-BlueStore" class="headerlink" title="About BlueStore"></a>About BlueStore</h1><p>另因 Red Hat Ceph Storage 3.2 宣布可使用 <code>BlueStore</code> 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較</p>
+<p><img src="/images/ceph-2.png" alt></p>
+<p>整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快</p>
 <p>From <a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a><br><img src="/images/ceph-1.png" alt="BlueStore Unleashed"> </p>
+<p>除了硬體以外，Ceph 參數調教得當的話可以，讓系統 Latency 及 IOPS 的表現都會非常好</p>
+<p><img src="/images/ceph-3.png" alt></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide" target="_blank" rel="noopener">Brief: How to configure Red Hat Ceph Storage</a></li>
 <li><a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage" target="_blank" rel="noopener">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a></li>
@@ -562,6 +568,7 @@
 <li><a href="https://ceph.com/use-cases/#red-hat-ceph-storage-on-intel-processors-and-ssds" target="_blank" rel="noopener">Ceph USE CASES / REFERENCE ARCHITECTURES</a></li>
 <li><a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a></li>
 <li><a href="https://k2r2bai.com/2015/11/19/ceph/ceph-intro/" target="_blank" rel="noopener">Ceph 分散式儲存系統介紹 - KaiRen’s Blog</a></li>
+<li><a href="https://ceph.com/community/bluestore-default-vs-tuned-performance-comparison/" target="_blank" rel="noopener">BlueStore (Default vs. Tuned) Performance Comparison</a></li>
 </ul>
 
       
@@ -948,7 +955,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-Ceph-Storage"><span class="nav-number">1.</span> <span class="nav-text">Red Hat Ceph Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">2.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#規模定義"><span class="nav-number">2.1.</span> <span class="nav-text">規模定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群優化定義"><span class="nav-number">2.2.</span> <span class="nav-text">集群優化定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬體規格"><span class="nav-number">2.3.</span> <span class="nav-text">硬體規格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-Ceph-Storage"><span class="nav-number">1.</span> <span class="nav-text">Red Hat Ceph Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">2.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#規模定義"><span class="nav-number">2.1.</span> <span class="nav-text">規模定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群優化定義"><span class="nav-number">2.2.</span> <span class="nav-text">集群優化定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬體規格"><span class="nav-number">2.3.</span> <span class="nav-text">硬體規格</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#About-BlueStore"><span class="nav-number"></span> <span class="nav-text">About BlueStore</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></li></div>
             
 
           </div>
