@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[導讀 Reference Architecture: Red Hat Ceph Storage]]></title>
     <url>%2F20190427-reference-architecture-red-Hat-ceph-storage%2F</url>
-    <content type="text"><![CDATA[本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2 Red Hat Ceph Storage一座 Ceph 集群會具備以下五種角色: Management/Dashboard node (ceph-mgr) Monitor nodes (ceph-mon / ceph-osd-container) Object Gateway nodes (ceph-radosgw / ceph-radosgw-container) MDS nodes (ceph-mds / ceph-mds-container) OSD nodes (ceph-osd / ceph-osd-container) 一般討論最多的就是 OSD nodes 的原始空間大小及可用空間大小 (因要推算硬體規格及評估效能)，其餘角色都是使用或維運時會使用 對於角色作用可以參考 Ceph 分散式儲存系統介紹 - KaiRen’s Blog 的內容 Total Solution規模定義基本上只要是屬於 OSD Node 角色的，每一台主機都會配置一個 OSD (Object Storage Daemon)，用戶主要是將資料存取於此使用。而空間定義上主要分為原始空間 (Raw Capacity) 跟依據不同集群優化策略 (3 * Replication / Erasure Coding) 推算後的可用空間 (Usuable Capacity) 規模 可用空間大小 Small 250 TB+ Medium 1 PB - 2 PB Large 2 PB+ 集群優化定義 集群優化定義 特性 舉例 IOPS 優化 - Lowest cost per IOPS - Highest IOPS per GB - 99% latency consistency - Block storage - 3 x replication- MySQL on OpenStack Clouds Throughput 優化 - Lowest cost per MBps (throughput) - Highest MBps per TB- Highest MBps per BTU- Highest MBps per Watt- 97% latency consistency - Block or Object storage- 3 x replication- Streaming media/data/images Cost/Capacity 優化 - Lowest cost per TB- Lowest BTU per TB- Lowest Watts required per TB - Object storage- Erasure coding- Object archive 硬體規格建議於最小規模 (Small) 最少需三台實體機，而每台 Ceph Server 最小規格，可參考 Red Hat Partner 推薦型號 QCT: QxStor Red Hat Ceph Storage Edition - QxStor RCT-200 Dell PowerEdge R730xd Performance and Sizing Guide for Red Hat Ceph Storage Cisco UCS S3260 Storage Server and Red Hat Ceph Storage Performance 倘若想自行精算配置的話，則可參考此篇 Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs 推算硬體規格 About BlueStore另因 Red Hat Ceph Storage 3.2 宣布可使用 BlueStore 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較 整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快 From BlueStore Unleashed 除了硬體以外，Ceph 參數調教得當的話可以，讓系統 Latency 及 IOPS 的表現都會非常好 References Brief: How to configure Red Hat Ceph Storage Reference Architecture: Red Hat Ceph Storage hardware selection guide QCT: QxStor Red Hat Ceph Storage Edition Complete OpenStack Storage from Red Hat Technical Detail: Red Hat Data Analytics Infrastructure Solution RED HAT BLOG - Why Spark on Ceph? (Part 3 of 3) Red Hat Ceph Storage Hardware Selection Guide - CHAPTER 6. RECOMMENDED MINIMUM HARDWARE Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs Ceph USE CASES / REFERENCE ARCHITECTURES BlueStore Unleashed Ceph 分散式儲存系統介紹 - KaiRen’s Blog BlueStore (Default vs. Tuned) Performance Comparison]]></content>
+    <content type="text"><![CDATA[本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2 Red Hat Ceph Storage一座 Ceph 集群會具備以下五種角色: Management/Dashboard node (ceph-mgr) Monitor nodes (ceph-mon / ceph-osd-container) Object Gateway nodes (ceph-radosgw / ceph-radosgw-container) MDS nodes (ceph-mds / ceph-mds-container) OSD nodes (ceph-osd / ceph-osd-container) 一般討論最多的就是 OSD nodes 的原始空間大小及可用空間大小 (因要推算硬體規格及評估效能)，其餘角色都是使用或維運時會使用 對於角色作用可以參考 Ceph 分散式儲存系統介紹 - KaiRen’s Blog 的內容 Total Solution規模定義基本上只要是屬於 OSD Node 角色的，每一台主機都會配置一個 OSD (Object Storage Daemon)，用戶主要是將資料存取於此使用。而空間定義上主要分為原始空間 (Raw Capacity) 跟依據不同集群優化策略 (3 * Replication / Erasure Coding) 推算後的可用空間 (Usuable Capacity) 規模 可用空間大小 Small 250 TB+ Medium 1 PB - 2 PB Large 2 PB+ 集群優化定義 集群優化定義 特性 舉例 IOPS 優化 - Lowest cost per IOPS - Highest IOPS per GB - 99% latency consistency - Block storage - 3 x replication- MySQL on OpenStack Clouds Throughput 優化 - Lowest cost per MBps (throughput) - Highest MBps per TB- Highest MBps per BTU- Highest MBps per Watt- 97% latency consistency - Block or Object storage- 3 x replication- Streaming media/data/images Cost/Capacity 優化 - Lowest cost per TB- Lowest BTU per TB- Lowest Watts required per TB - Object storage- Erasure coding- Object archive 硬體規格建議於最小規模 (Small) 最少需三台實體機，而每台 Ceph Server 最小規格，可參考 Red Hat Partner 推薦型號 QCT: QxStor Red Hat Ceph Storage Edition - QxStor RCT-200 Dell PowerEdge R730xd Performance and Sizing Guide for Red Hat Ceph Storage Cisco UCS S3260 Storage Server and Red Hat Ceph Storage Performance Lenovo Reference Architecture: Red Hat Ceph Storage 倘若想自行精算配置的話，則可參考此篇 Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs 推算硬體規格 About BlueStore另因 Red Hat Ceph Storage 3.2 宣布可使用 BlueStore 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較 整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快 From BlueStore Unleashed 除了硬體以外，Ceph 參數調教得當的話可以，讓系統 Latency 及 IOPS 的表現都會非常好 References Brief: How to configure Red Hat Ceph Storage Reference Architecture: Red Hat Ceph Storage hardware selection guide QCT: QxStor Red Hat Ceph Storage Edition Complete OpenStack Storage from Red Hat Technical Detail: Red Hat Data Analytics Infrastructure Solution RED HAT BLOG - Why Spark on Ceph? (Part 3 of 3) Red Hat Ceph Storage Hardware Selection Guide - CHAPTER 6. RECOMMENDED MINIMUM HARDWARE Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs Ceph USE CASES / REFERENCE ARCHITECTURES BlueStore Unleashed Ceph 分散式儲存系統介紹 - KaiRen’s Blog BlueStore (Default vs. Tuned) Performance Comparison]]></content>
   </entry>
   <entry>
     <title><![CDATA[導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi]]></title>
@@ -28,8 +28,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -40,8 +40,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>cnv</tag>
         <tag>kubevirt</tag>
       </tags>
@@ -70,8 +70,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>operator</tag>
       </tags>
   </entry>
@@ -83,8 +83,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
         <tag>operator</tag>
@@ -98,8 +98,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>juniper</tag>
         <tag>contrail</tag>
       </tags>
@@ -112,8 +112,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>networking</tag>
       </tags>
   </entry>
@@ -125,8 +125,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>nvidia</tag>
         <tag>dgx</tag>
         <tag>tesla</tag>
@@ -171,8 +171,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>storage</tag>
       </tags>
   </entry>
@@ -184,8 +184,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>router</tag>
         <tag>services</tag>
         <tag>pods</tag>
@@ -457,9 +457,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
@@ -467,9 +467,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
