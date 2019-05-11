@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</loc>
+    
+    <lastmod>2019-05-11T16:50:12.182Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
     
     <lastmod>2019-05-06T18:26:20.111Z</lastmod>
