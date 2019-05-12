@@ -139,7 +139,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-2.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-1.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ceph-3.png">
-<meta property="og:updated_time" content="2019-05-12T16:03:37.961Z">
+<meta property="og:updated_time" content="2019-05-12T16:11:10.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="導讀 Reference Architecture: Red Hat Ceph Storage">
 <meta name="twitter:description" content="本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-13 00:03:37" itemprop="dateModified" datetime="2019-05-13T00:03:37+08:00">2019-05-13</time>
+                <time title="Modified: 2019-05-13 00:11:10" itemprop="dateModified" datetime="2019-05-13T00:11:10+08:00">2019-05-13</time>
               
             
           </span>
@@ -552,12 +552,17 @@
 <li><a href="https://www.micron.com/-/media/client/global/documents/products/other-documents/5210_9200_amd_ceph_reference_architecture.pdf?la=en" target="_blank" rel="noopener">Micron RA: 9200 MAX NVMeTM With 5210 QLC SATA SSDs for Red Hat® Ceph Storage 3.2 and BlueStore on AMD EPYCTM</a></li>
 </ul>
 <p>倘若想自行精算配置的話，則可參考此篇 <a href="https://www.redhat.com/cms/managed-files/st-ceph-storage-intel-configuration-guide-technology-detail-f11532-201804-en.pdf" target="_blank" rel="noopener">Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs</a> 推算硬體規格</p>
-<h1 id="About-BlueStore"><a href="#About-BlueStore" class="headerlink" title="About BlueStore"></a>About BlueStore</h1><p>另因 Red Hat Ceph Storage 3.2 宣布可使用 <code>BlueStore</code> 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較</p>
+<h2 id="About-BlueStore"><a href="#About-BlueStore" class="headerlink" title="About BlueStore"></a>About BlueStore</h2><p>另因 Red Hat Ceph Storage 3.2 宣布可使用 <code>BlueStore</code> 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較</p>
 <p><img src="/images/ceph-2.png" alt></p>
 <p>整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快</p>
 <p>From <a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a><br><img src="/images/ceph-1.png" alt="BlueStore Unleashed"> </p>
 <p>除了硬體以外，Ceph 參數調教得當的話可以，讓系統 Latency 及 IOPS 的表現都會非常好</p>
 <p><img src="/images/ceph-3.png" alt></p>
+<h3 id="Red-Hat-Ceph-Storage-3-2-PoC-評測文"><a href="#Red-Hat-Ceph-Storage-3-2-PoC-評測文" class="headerlink" title="Red Hat Ceph Storage 3.2 PoC 評測文"></a>Red Hat Ceph Storage 3.2 PoC 評測文</h3><ul>
+<li><a href="https://ceph.com/community/bluestore-default-vs-tuned-performance-comparison/" target="_blank" rel="noopener">Part - 1: BlueStore (Default vs. Tuned) Performance Comparison</a></li>
+<li><a href="https://ceph.com/community/ceph-block-storage-performance-on-all-flash-cluster-with-bluestore-backend/" target="_blank" rel="noopener">Part - 2: Ceph Block Storage Performance on All-Flash Cluster with BlueStore backend</a></li>
+<li><a href="https://ceph.com/community/part-3-rhcs-bluestore-performance-scalability-3-vs-5-nodes/" target="_blank" rel="noopener">Part - 3: RHCS Bluestore performance Scalability (3 vs 5 nodes)</a></li>
+</ul>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide" target="_blank" rel="noopener">Brief: How to configure Red Hat Ceph Storage</a></li>
 <li><a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage" target="_blank" rel="noopener">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a></li>
@@ -570,12 +575,13 @@
 <li><a href="https://ceph.com/use-cases/#red-hat-ceph-storage-on-intel-processors-and-ssds" target="_blank" rel="noopener">Ceph USE CASES / REFERENCE ARCHITECTURES</a></li>
 <li><a href="https://f2.svbtle.com/ceph-bluestore-unleashed" target="_blank" rel="noopener">BlueStore Unleashed</a></li>
 <li><a href="https://k2r2bai.com/2015/11/19/ceph/ceph-intro/" target="_blank" rel="noopener">Ceph 分散式儲存系統介紹 - KaiRen’s Blog</a></li>
-<li><a href="https://ceph.com/community/bluestore-default-vs-tuned-performance-comparison/" target="_blank" rel="noopener">BlueStore (Default vs. Tuned) Performance Comparison</a></li>
 <li><a href="https://lenovopress.com/lp1147.pdf" target="_blank" rel="noopener">Lenovo Reference Architecture: Red Hat Ceph Storage</a></li>
 <li><a href="https://www.micron.com/solutions/micron-accelerated-solutions/micron-accelerated-solutions-for-ceph-storage" target="_blank" rel="noopener">Micron Accelerated Solutions for Red Hat Ceph Storage</a></li>
 <li><a href="https://www.micron.com/-/media/client/global/documents/products/other-documents/5210_9200_amd_ceph_reference_architecture.pdf?la=en" target="_blank" rel="noopener">Reference Architecture: Micron® 9200 MAX NVMeTM With 5210 QLC SATA SSDs for Red Hat® Ceph Storage 3.2 and BlueStore on AMD EPYCTM</a></li>
+<li><a href="https://ceph.com/community/bluestore-default-vs-tuned-performance-comparison/" target="_blank" rel="noopener">Part - 1: BlueStore (Default vs. Tuned) Performance Comparison</a></li>
+<li><a href="https://ceph.com/community/ceph-block-storage-performance-on-all-flash-cluster-with-bluestore-backend/" target="_blank" rel="noopener">Part - 2: Ceph Block Storage Performance on All-Flash Cluster with BlueStore backend</a></li>
+<li><a href="https://ceph.com/community/part-3-rhcs-bluestore-performance-scalability-3-vs-5-nodes/" target="_blank" rel="noopener">Part - 3: RHCS Bluestore performance Scalability (3 vs 5 nodes)</a></li>
 </ul>
-<p>[21]: </p>
 
       
     </div>
@@ -965,7 +971,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-Ceph-Storage"><span class="nav-number">1.</span> <span class="nav-text">Red Hat Ceph Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">2.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#規模定義"><span class="nav-number">2.1.</span> <span class="nav-text">規模定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群優化定義"><span class="nav-number">2.2.</span> <span class="nav-text">集群優化定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Referencea-Archtictures-RAs"><span class="nav-number">2.3.</span> <span class="nav-text">Referencea Archtictures (RAs)</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#About-BlueStore"><span class="nav-number"></span> <span class="nav-text">About BlueStore</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-Ceph-Storage"><span class="nav-number">1.</span> <span class="nav-text">Red Hat Ceph Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Total-Solution"><span class="nav-number">2.</span> <span class="nav-text">Total Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#規模定義"><span class="nav-number">2.1.</span> <span class="nav-text">規模定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群優化定義"><span class="nav-number">2.2.</span> <span class="nav-text">集群優化定義</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Referencea-Archtictures-RAs"><span class="nav-number">2.3.</span> <span class="nav-text">Referencea Archtictures (RAs)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#About-BlueStore"><span class="nav-number">3.</span> <span class="nav-text">About BlueStore</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Red-Hat-Ceph-Storage-3-2-PoC-評測文"><span class="nav-number">3.1.</span> <span class="nav-text">Red Hat Ceph Storage 3.2 PoC 評測文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
