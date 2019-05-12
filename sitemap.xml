@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
+    
+    <lastmod>2019-05-12T16:03:37.961Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
     
     <lastmod>2019-05-12T15:59:27.836Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://blog.pichuang.com.tw/about/index.html</loc>
     
     <lastmod>2019-05-12T03:37:59.521Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
-    
-    <lastmod>2019-05-06T18:26:20.111Z</lastmod>
     
   </url>
   
