@@ -128,29 +128,27 @@
 
 
 
-  <meta name="description" content="Introduction to SnapRoute這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。">
-<meta name="keywords" content="sdn,snaproute,flexswitch">
+  <meta name="description" content="頻寬 (Bandwidth)：水管的大小   吞吐量 (Throughput)：從水管實際流出的水量   延遲 (Latency)：水從一端到另一端所花費的時間">
+<meta name="keywords" content="misc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SnapRoute FlexSwitch">
-<meta property="og:url" content="https://blog.pichuang.com.tw/20170302-snaproute-flexswitch/index.html">
+<meta property="og:title" content="Bandwidth &amp; Throughput">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="Introduction to SnapRoute這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。">
+<meta property="og:description" content="頻寬 (Bandwidth)：水管的大小   吞吐量 (Throughput)：從水管實際流出的水量   延遲 (Latency)：水從一端到另一端所花費的時間">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg">
-<meta property="og:image" content="https://lh3.googleusercontent.com/5KzExo8JTIMKfZEnLtsCHcRphWCMzG4Tk5Bxhfo2swc3lElhuZJGnoVslycPlpV2IFvdYXmutnplvL00cKbG6xaL5MODPq2dmWztFghMhrPd4pXLrM0TotzGcyWjqhPLXsz7RZhf-0sIeUzIs010LdW0PI_8Q1S4848guBDjlHuxCYSn4DtNngVSLWFm43dZQJS4qhn3XKrVB6yGwjnOsAG_6Uc9u093k6511QYPRTT6sPW2Hnio-uXLrlDwnZ7utRDepXzMmyUwLmuZQ-S_dILTaHrOE63Yy_f9RAGswG6cYdFpb00GzrsSvOKaWqvqrrCL7VNENutA6PzXzl8w69fexVLJagDKaowrWIuaUFRkhG7UauHwO2FFXKj5uAWnCdXwjnno-H-mJXFc_fwX3IPxOzvXCBGJzCHIaStL7uTJS9Y7WRKebw283aHdJ_9aXoPOZGYIdj2qY6Y-wfBj9xqC8hFBRXqiwgqmKjDDgZpm5yWEdjeVsAP2WYYSeDbV1yK2pZs1xkVNLL4ETEqht_8ltmNiTHWPiXf5u8nsRsyN0vxen81_GCucfnegnLuX-AuXI2_-fte46NS1578ZNLt-t_ySaZ-dY1syhYisO75HGFhft0NGXg=w1948-h626-no">
-<meta property="og:image" content="https://lh3.googleusercontent.com/KizynpieyTlykuyk-po1tgasnVI4Oxl9_vPXXpHYyj_JiUc0V5bRb8lHxGpZDQiTqMNCn_A6NqF-4Gx8KMex8XsjgdCGByIqtIpKBc4TvQoUtNtXf0RK_eBf2pwm8wNJRiWXfkz3vf6Tf465o2vzmH2G4iR28kf_Wc_ADeqDJDfQQlV0XTtQcSBBRG2N-zs1ue6dhg38lMoO47n0-SI6yl3x-HhyRIK8penHyHXe0i9q08IDqYEdtMGyKExcihESNthqc4r74kceAJUYhfqsFRpGLteEMXDkShC74r79Frr5aVwsYml0x1WVHkmXbxLZB381B0gkJWUXaoCeCC8rdeYtb6vn60vLsNYgYLRI0wT0VjEbJTCgcHUbNk8sBkXEiATLTKQiES5VcIEJ9nQ7FYTxsF8BiB7exUxr0b3kfTLVJF2RBqc0hpHojoiMh-nL-OY30a9rgf1vr4n-44sDGfa8-f7xWX3JEe-7RgNjwZ5glxGM1lkrf2_MHwbgVRNd2tzUrxmRNmMrVpFog-NcByDo824K8GJLxyLq0Dg12jkx90uOBKmhAE-_JUL5iIYzzUUKGJu1-ORReKmYR63UvTeUvwtxSEKUnpax4co6s6dQoS2f5bB37Q=w1652-h590-no">
-<meta property="og:updated_time" content="2017-03-01T17:40:34.000Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/throughput-bandwidth.png">
+<meta property="og:updated_time" content="2019-05-27T03:59:30.887Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SnapRoute FlexSwitch">
-<meta name="twitter:description" content="Introduction to SnapRoute這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。">
-<meta name="twitter:image" content="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg">
+<meta name="twitter:title" content="Bandwidth &amp; Throughput">
+<meta name="twitter:description" content="頻寬 (Bandwidth)：水管的大小   吞吐量 (Throughput)：從水管實際流出的水量   延遲 (Latency)：水從一端到另一端所花費的時間">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/throughput-bandwidth.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://blog.pichuang.com.tw/20170302-snaproute-flexswitch/">
+  <link rel="canonical" href="https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/">
 
 
 
@@ -160,7 +158,7 @@
   };
 </script>
 
-  <title>SnapRoute FlexSwitch | Phil Workspace</title>
+  <title>Bandwidth & Throughput | Phil Workspace</title>
   
 
 
@@ -387,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20170302-snaproute-flexswitch/">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
@@ -404,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SnapRoute FlexSwitch
+          <h1 class="post-title" itemprop="name headline">Bandwidth & Throughput
 
               
             
@@ -430,12 +428,34 @@
                 
               
 
-              <time title="Created: 2017-03-02 01:40:34" itemprop="dateCreated datePublished" datetime="2017-03-02T01:40:34+08:00">2017-03-02</time>
+              <time title="Created: 2019-05-27 11:42:00 / Modified: 11:59:30" itemprop="dateCreated datePublished" datetime="2019-05-27T11:42:00+08:00">2019-05-27</time>
             
 
+            
+              
+
+              
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -465,67 +485,15 @@
       
 
       
-        <p><img src="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg" alt="SnapRoute Logo"></p>
-<h2 id="Introduction-to-SnapRoute"><a href="#Introduction-to-SnapRoute" class="headerlink" title="Introduction to SnapRoute"></a>Introduction to SnapRoute</h2><p>這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。</p>
+        <p><img src="/images/throughput-bandwidth.png" alt></p>
+<ul>
+<li>頻寬 (Bandwidth)：水管的大小  </li>
+<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
+<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
+</ul>
 <a id="more"></a>
-<p>這專案已經開放 L2/L3 Protocol 相關的原始碼跟其架構貢獻給 <a href="http://opencompute.org/" target="_blank" rel="noopener">Open Comupter Project, OCP</a>，也把 Spec 公開在網路上 <a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf" target="_blank" rel="noopener">FlexSwitch OCP Specification v0.1</a> 供大家參閱。當然若要理解 FlexSwitch 目前的架構，最準的還是以 <a href="https://github.com/OpenSnaproute" target="_blank" rel="noopener">GitHub</a> 上的為主 </p>
-<p>最近他們跟 Dell/EMC 及另一個 Linux Foundation 底下的專案 <a href="http://www.openswitch.net/" target="_blank" rel="noopener">OpenSwitch</a> 在進行一些<a href="https://www.linuxfoundation.org/announcements/snaproute-and-dell-emc-to-help-advance-linux-foundation%E2%80%99s-openswitch-project" target="_blank" rel="noopener">整合</a>，這兩個專案之所以可以整合的原因是，SnapRoute 其實本身只是個 Debian Package，目前是建立在 <a href="https://opennetlinux.org/" target="_blank" rel="noopener">Open Network Linux, ONL</a> 之上，而 OpenSwitch 則跟 ONL 地位相當，故 SnapRoute 理論上可以疊加在 OpenSwitch 之上運行，但 OpenSwitch 跟 SnapRoute L2/L3 功能互有重疊，不知道實際上要怎麼整，等後續他們的消息吧</p>
-<p><a href="http://36kr.com/coop/yidian/post/5063241.html" target="_blank" rel="noopener">SnapRoute 成立的小趣事</a></p>
-<h2 id="Support-Platform"><a href="#Support-Platform" class="headerlink" title="Support Platform"></a>Support Platform</h2><p>依據 <a href="https://github.com/OpenSnaproute/reltools/blob/master/pkgInfo.json#L7" target="_blank" rel="noopener">Source code - reltools/pkgInfo.json</a>，目前 OpenSource 支援以下平台:</p>
-<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&amp;cls2=8&amp;cls3=44&amp;id=15" target="_blank" rel="noopener">Accton/Edgecore AS5712-54X</a></li>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&amp;cls2=7&amp;cls3=57&amp;id=110" target="_blank" rel="noopener">Accton/Edgecore Wedge40</a></li>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&amp;cls2=5&amp;cls3=67&amp;id=128" target="_blank" rel="noopener">Accton/Edgecore Wedge100</a></li>
-<li>Celestica Redstone</li>
-<li>Docker</li>
-</ul>
-<p>商業版本請參考 <a href="http://docs.snaproute.com/hcl/index.html" target="_blank" rel="noopener">FlexSwitch - Hardware Compatibility List</a></p>
-<!--more-->
-<h2 id="Installation-Process"><a href="#Installation-Process" class="headerlink" title="Installation Process"></a>Installation Process</h2><p>既然這專案是 OpenSource 想當然爾是可以自己動手編譯的，參考文件順序如下:</p>
-<ol>
-<li><p><a href="https://opensnaproute.github.io/docs/build.html#building-flexswitch-from-source" target="_blank" rel="noopener">Building FlexSwitch from source</a></p>
-</li>
-<li><p><a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev" target="_blank" rel="noopener">GitHub - OpenSnaproute/vagrantFlexSwitchDev</a></p>
-<ul>
-<li>如果不想用 Vagrant 的話，請自行解析 <a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev/blob/master/Vagrantfile#L67-L81" target="_blank" rel="noopener">Vagrantfile</a></li>
-</ul>
-</li>
-<li><p><a href="https://github.com/OpenSnaproute/reltools" target="_blank" rel="noopener">GitHub - OpenSnaproute/reltools</a></p>
-<ul>
-<li>Main Project，執行 <code>fab setupDevEnv</code><ul>
-<li>如果遇到 rake last_comment 問題，起因是 <a href="https://github.com/OpenSnaproute/reltools/blob/master/fabfile.py#L212" target="_blank" rel="noopener">Apache Thrift</a> 專案的這行 <a href="https://github.com/apache/thrift/blob/master/lib/rb/thrift.gemspec#L35" target="_blank" rel="noopener">code</a>，遇到 rake version 大於 11.0.1 才會遇到，解法是請把 rake version 鎖定在 11.0</li>
-<li>注意 PATH 的內容，建議是 ~/.bashrc 跟 /root/.bashrc 裡的變數要一樣</li>
-<li>如果遇到一些 git clone 問題，username 請填 <code>OpenSnapRoute</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>編譯</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python makePkg.py</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Show Debian Packages</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pichuang@workstation-vm  ~/git/reltools (master*)</span><br><span class="line">$ ls -a |grep deb</span><br><span class="line">flexswitch_accton_wedge100-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_accton_wedge40-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_cel_redstone-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_docker-pichuang_1.0.0.171.44_amd64.deb</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Install Debian Package on AS5712-54</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb &amp;&amp; apt install -f</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Open Network Linux 版本建議 <code>2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3</code></li>
-</ul>
-</li>
-<li><p>WEB UI</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://&lt;ip&gt;:8080/api-docs/#</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><img src="https://lh3.googleusercontent.com/5KzExo8JTIMKfZEnLtsCHcRphWCMzG4Tk5Bxhfo2swc3lElhuZJGnoVslycPlpV2IFvdYXmutnplvL00cKbG6xaL5MODPq2dmWztFghMhrPd4pXLrM0TotzGcyWjqhPLXsz7RZhf-0sIeUzIs010LdW0PI_8Q1S4848guBDjlHuxCYSn4DtNngVSLWFm43dZQJS4qhn3XKrVB6yGwjnOsAG_6Uc9u093k6511QYPRTT6sPW2Hnio-uXLrlDwnZ7utRDepXzMmyUwLmuZQ-S_dILTaHrOE63Yy_f9RAGswG6cYdFpb00GzrsSvOKaWqvqrrCL7VNENutA6PzXzl8w69fexVLJagDKaowrWIuaUFRkhG7UauHwO2FFXKj5uAWnCdXwjnno-H-mJXFc_fwX3IPxOzvXCBGJzCHIaStL7uTJS9Y7WRKebw283aHdJ_9aXoPOZGYIdj2qY6Y-wfBj9xqC8hFBRXqiwgqmKjDDgZpm5yWEdjeVsAP2WYYSeDbV1yK2pZs1xkVNLL4ETEqht_8ltmNiTHWPiXf5u8nsRsyN0vxen81_GCucfnegnLuX-AuXI2_-fte46NS1578ZNLt-t_ySaZ-dY1syhYisO75HGFhft0NGXg=w1948-h626-no" alt="FlexSwitch Screen Shot"></p>
-<p>More: <a href="https://drive.google.com/open?id=0B19ucAmtemIQYkZhX2FUYi13QTA" target="_blank" rel="noopener">FlexSwitch API</a></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://snaproute.com/" target="_blank" rel="noopener">SnapRoute</a></li>
-<li><a href="http://opencompute.org/" target="_blank" rel="noopener">Open Compute Project</a></li>
-<li><a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf" target="_blank" rel="noopener">FlexSwitch OCP Specification v0.1</a></li>
-<li><a href="https://github.com/OpenSnaproute" target="_blank" rel="noopener">GitHub - OpenSnapRoute</a></li>
-<li><a href="http://packetpushers.net/virtual-toolbox/list-network-operating-systems/" target="_blank" rel="noopener">List of Network Operating Systems</a></li>
-</ul>
-<h2 id="社群服務"><a href="#社群服務" class="headerlink" title="社群服務"></a>社群服務</h2><p>本人的文章大多都會發布在 <a href="https://www.facebook.com/groups/sdnds.tw/" target="_blank" rel="noopener">SDNDS-TW</a>。這社團文章都跟 SDN/NFV 國內外產業新聞或資訊有關，有任何技術問題也歡迎在上面詢問。<br><img src="https://lh3.googleusercontent.com/KizynpieyTlykuyk-po1tgasnVI4Oxl9_vPXXpHYyj_JiUc0V5bRb8lHxGpZDQiTqMNCn_A6NqF-4Gx8KMex8XsjgdCGByIqtIpKBc4TvQoUtNtXf0RK_eBf2pwm8wNJRiWXfkz3vf6Tf465o2vzmH2G4iR28kf_Wc_ADeqDJDfQQlV0XTtQcSBBRG2N-zs1ue6dhg38lMoO47n0-SI6yl3x-HhyRIK8penHyHXe0i9q08IDqYEdtMGyKExcihESNthqc4r74kceAJUYhfqsFRpGLteEMXDkShC74r79Frr5aVwsYml0x1WVHkmXbxLZB381B0gkJWUXaoCeCC8rdeYtb6vn60vLsNYgYLRI0wT0VjEbJTCgcHUbNk8sBkXEiATLTKQiES5VcIEJ9nQ7FYTxsF8BiB7exUxr0b3kfTLVJF2RBqc0hpHojoiMh-nL-OY30a9rgf1vr4n-44sDGfa8-f7xWX3JEe-7RgNjwZ5glxGM1lkrf2_MHwbgVRNd2tzUrxmRNmMrVpFog-NcByDo824K8GJLxyLq0Dg12jkx90uOBKmhAE-_JUL5iIYzzUUKGJu1-ORReKmYR63UvTeUvwtxSEKUnpax4co6s6dQoS2f5bB37Q=w1652-h590-no" alt="SDNDS-TW Facebook Group"></p>
+<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 Gbps = 1024 Mbps = 128 MBps = 0.125 GBps</span><br><span class="line">7 Gbps = 7168 Mbps = 896 MBps = 0.875 GBps</span><br><span class="line">25 Gbps = 25600 Mbps = 3200 MBps = 3.125 GBps</span><br><span class="line">40 Gbps = 40960 Mbps = 5120 MBps = 5 GBps</span><br><span class="line">50 Gbps = 51200 Mbps = 6400 MBps = 6.25 GBps</span><br></pre></td></tr></table></figure>
+<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
 
       
     </div>
@@ -549,11 +517,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/sdn/" rel="tag"># sdn</a>
-          
-            <a href="/tags/snaproute/" rel="tag"># snaproute</a>
-          
-            <a href="/tags/flexswitch/" rel="tag"># flexswitch</a>
+            <a href="/tags/misc/" rel="tag"># misc</a>
           
         </div>
       
@@ -566,8 +530,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20170301-sff-notes/" rel="next" title="Small Form Factor Notes">
-                <i class="fa fa-chevron-left"></i> Small Form Factor Notes
+              <a href="/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/" rel="next" title="OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap ">
+                <i class="fa fa-chevron-left"></i> OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap 
               </a>
             
           </div>
@@ -575,10 +539,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20170329-how-do-I-use-docker-and-docker-compose/" rel="prev" title="How do I use docker and docker-compose">
-                How do I use docker and docker-compose <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -927,7 +887,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction-to-SnapRoute"><span class="nav-number">1.</span> <span class="nav-text">Introduction to SnapRoute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Support-Platform"><span class="nav-number">2.</span> <span class="nav-text">Support Platform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation-Process"><span class="nav-number">3.</span> <span class="nav-text">Installation Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社群服務"><span class="nav-number">5.</span> <span class="nav-text">社群服務</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#理論值頻寬-Bandwidth-換算"><span class="nav-number">1.</span> <span class="nav-text">理論值頻寬 (Bandwidth) 換算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資料傳輸換算"><span class="nav-number">2.</span> <span class="nav-text">資料傳輸換算</span></a></li></ol></div>
             
 
           </div>

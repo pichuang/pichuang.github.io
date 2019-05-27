@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Bandwidth & Throughput]]></title>
+    <url>%2F20190527-bandwidth-and-throughput%2F</url>
+    <content type="text"><![CDATA[頻寬 (Bandwidth)：水管的大小 吞吐量 (Throughput)：從水管實際流出的水量 延遲 (Latency)：水從一端到另一端所花費的時間 理論值頻寬 (Bandwidth) 換算123451 Gbps = 1024 Mbps = 128 MBps = 0.125 GBps7 Gbps = 7168 Mbps = 896 MBps = 0.875 GBps25 Gbps = 25600 Mbps = 3200 MBps = 3.125 GBps40 Gbps = 40960 Mbps = 5120 MBps = 5 GBps50 Gbps = 51200 Mbps = 6400 MBps = 6.25 GBps 資料傳輸換算理論傳輸公式：Time (s) = File Size / Bandwidth實際傳輸公式：Time (s) = File Size / Throughput]]></content>
+      <categories>
+        <category>network</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap]]></title>
     <url>%2F20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap%2F</url>
     <content type="text"><![CDATA[就在前陣子 Red Hat 於 Boston 舉辦一年一度的 Red Hat Summit 2019 大會，在大會的前一天還特別舉辦了 OpenShift Commons Gathering 的活動，特別分享各大企業使用 OpenShift 的使用案例及技術經驗談 What is OpenShift Commons? Where users, partners, customers, and contributors come together to collaborate and work together on OpenShift OpenShift Commons 主要是由 Red Hat 所維護的社群組織，主要目的是歡迎各式各樣的基於 OpenShift 的開發、使用案例、系統整合等等的分享，同時也有相對於 Kubernetes SIG 的組織 - OpenShift Special Inerest Groups (SIG)，針對不同的主題有特別做分享 此外 OpenShift Commons 的分享大多都是線上分享，同時也會被錄影起來放到 Youtube - OpenShift Commons 頻道內做分享，所以想要了解任何技術的部分可以直接透過 YouTube 做自我學習，尤其是大多數的用戶因為某些原因不能上到公有雲，而落地端環境的資訊相較缺乏，這邊就是一個不錯的管道可以吸收知識 版主小精選VMWare State of OpenShift on VMWare 主要是 VMWare 宣布之後 VMWare SDDC + Red Hat OpenShift 可以獲得到雙方的架構認可，High Level 架構如下圖，詳細內容蠻多的之後另開一篇分享 Royal Bank of Canada (RBC)如果你想了解 Spark on Kubernetes/OpenShift 的話，可以參考世界第15大的加拿大皇家銀行的分享 Containerized Spark at RBC，然後蠻推薦看一下簡報裡面的逐字搞 XD Operator Framework去年講了一整年的 Operator Framework，而這份簡報 State of the Operators: Framework, SDKs, Hubs and Beyond 是目前公開介紹性質最完整的，這不是曇花一現而已，之後在技術層面上只會看到越來越多的 Operator Framework 應用跟開發分享 UPS世界最大的快遞貨運業 UPS 出來分享在 OpenShift Infrastructure 維運的經驗，內文蠻值得一看的 UPS and OpenShift: A Roadmap of Cloud Native Software Upgrade Delivery OpenShift, Kubernetes and Beyond 未來展望 這篇 The Road Ahead: OpenShift, Kubernetes and Beyond 雖然沒什麼技術內容，但有幾張簡報蠻值得大家思考整個容器平台的非技術性問題 首先，容器技術不單單只是平台而已，還有上面一票技術需要考慮進去的，無論你今天是用 Kubernetes、OpenShift 或其他廠商的平台方案，都一定要思考平台建完之後的議題，譬如 如何撰寫可以在容器平台上運行的 Contrainer App 亦或者是 如何優化容器化程式開發過程 等一些跟平台無關的問題 這張圖是表示從 Kubernetes Community Project Release 到各家廠商的 Commercial Product Release Time 間隔時間 更多資訊如果你想看其他的使用案例內容，NASA、Volkswagen、Sabre、Thyssenkrupp Elevators、Best Buy，可以參考英文全文 OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides] References OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides] VMware and Red Hat bring Red Hat OpenShift to the VMware SDDC]]></content>
@@ -25,8 +36,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>redhat</tag>
         <tag>nfv</tag>
+        <tag>redhat</tag>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -430,9 +441,9 @@
       <tags>
         <tag>sdn</tag>
         <tag>ofdpa</tag>
-        <tag>ovs-ofctl</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
+        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
@@ -468,9 +479,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
@@ -478,9 +489,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
