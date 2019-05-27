@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Bandwidth & Throughput]]></title>
     <url>%2F20190527-bandwidth-and-throughput%2F</url>
-    <content type="text"><![CDATA[頻寬 (Bandwidth)：水管的大小 吞吐量 (Throughput)：從水管實際流出的水量 延遲 (Latency)：水從一端到另一端所花費的時間 理論值頻寬 (Bandwidth) 換算123451 Gbps = 1024 Mbps = 128 MBps = 0.125 GBps7 Gbps = 7168 Mbps = 896 MBps = 0.875 GBps25 Gbps = 25600 Mbps = 3200 MBps = 3.125 GBps40 Gbps = 40960 Mbps = 5120 MBps = 5 GBps50 Gbps = 51200 Mbps = 6400 MBps = 6.25 GBps 資料傳輸換算理論傳輸公式：Time (s) = File Size / Bandwidth實際傳輸公式：Time (s) = File Size / Throughput]]></content>
+    <content type="text"><![CDATA[頻寬 (Bandwidth)：水管的大小 吞吐量 (Throughput)：從水管實際流出的水量 延遲 (Latency)：水從一端到另一端所花費的時間 理論值頻寬 (Bandwidth) 換算123456781 Gbps = 1024 Mbps = 128 MBps = 0.125 GBps7 Gbps = 7168 Mbps = 896 MBps = 0.875 GBps10 Gbps = 10240 Mbps = 1280 MBps = 1.25 GBps20 Gbps = 20480 Mbps = 2560 MBps = 2.5 GBps25 Gbps = 25600 Mbps = 3200 MBps = 3.125 GBps40 Gbps = 40960 Mbps = 5120 MBps = 5 GBps50 Gbps = 51200 Mbps = 6400 MBps = 6.25 GBps100 Gbps = 102400 Mbps = 12800 MBps = 12.5 GBps 資料傳輸換算理論傳輸公式：Time (s) = File Size / Bandwidth實際傳輸公式：Time (s) = File Size / Throughput]]></content>
       <categories>
         <category>network</category>
       </categories>
@@ -77,8 +77,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>nfv</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
