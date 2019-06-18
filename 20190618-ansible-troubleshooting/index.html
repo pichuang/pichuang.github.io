@@ -132,7 +132,7 @@
 <meta name="keywords" content="ansible,troubleshooting">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ansible 如何除錯? 誰可以救救我?">
-<meta property="og:url" content="https://blog.pichuang.com.tw/Ansible-troubleshooting/index.html">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20190618-ansible-troubleshooting/index.html">
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省">
 <meta property="og:locale" content="en">
@@ -142,7 +142,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-modules-debug.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-dry-run.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-debugger.png">
-<meta property="og:updated_time" content="2019-06-18T04:00:33.000Z">
+<meta property="og:updated_time" content="2019-06-18T04:11:49.300Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible 如何除錯? 誰可以救救我?">
 <meta name="twitter:description" content="可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.pichuang.com.tw/Ansible-troubleshooting/">
+  <link rel="canonical" href="https://blog.pichuang.com.tw/20190618-ansible-troubleshooting/">
 
 
 
@@ -390,7 +390,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/Ansible-troubleshooting/">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190618-ansible-troubleshooting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
@@ -433,7 +433,7 @@
                 
               
 
-              <time title="Created: 2019-06-18 10:29:00 / Modified: 12:00:33" itemprop="dateCreated datePublished" datetime="2019-06-18T10:29:00+08:00">2019-06-18</time>
+              <time title="Created: 2019-06-18 10:29:00 / Modified: 12:11:49" itemprop="dateCreated datePublished" datetime="2019-06-18T10:29:00+08:00">2019-06-18</time>
             
 
             
@@ -501,7 +501,7 @@
 <p>開起來的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">stdout_callback = debug</span><br></pre></td></tr></table></figure>
 <h3 id="愛用-debug-模組：其實就是多噴點資訊"><a href="#愛用-debug-模組：其實就是多噴點資訊" class="headerlink" title="愛用 debug 模組：其實就是多噴點資訊"></a>愛用 debug 模組：其實就是多噴點資訊</h3><p>若在 Ansible 執行過程中，你想要了解某一個變數裡面的值是什麼，可以使用 <a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html" target="_blank" rel="noopener"><code>debug</code></a> 模組來獲取運行中的 Ansible 執行變數資訊。要留意的事情是，這邊的 debug 是一個 Ansible 模組 (Modules)，上面章節所提起的則是 Callback 外掛當中一個模組，兩者不一樣。</p>
-<p>通常 <code>debug</code> 模組都會搭配 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html?highlight=register#registering-variables" target="_blank" rel="noopener"><code>reigister</code></a> 一併使用，<code>register</code> 最主要功用是將單一 Task 結果輸出指派給 <code>register</code> 所定義好的變數，如下程式碼</p>
+<p>通常 <code>debug</code> 模組都會搭配 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html?highlight=register#registering-variables" target="_blank" rel="noopener"><code>register</code></a> 一併使用，<code>register</code> 最主要功用是將單一 Task 結果輸出指派給 <code>register</code> 所定義好的變數，如下程式碼</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Test connectivity</span><br><span class="line">      ping:</span><br><span class="line">      register: result</span><br><span class="line">      </span><br><span class="line">    - name: Print result</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; result &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
 <p>可以很清楚的看到，第一個 Task 將會執行 <code>ping</code> 模組，而它產生出來的結果將會被指向 register 所定義的 <code>result</code> 變數裡面，而第二個 Task 將會執行 <code>debug</code> 模組，將裡面 <code>result</code> 的結果倒出來顯示在如下畫面</p>
 <p><img src="/images/ansible-modules-debug.png" alt></p>
