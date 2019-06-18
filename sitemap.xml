@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/Ansible-troubleshooting/</loc>
+    
+    <lastmod>2019-06-18T04:00:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
     
     <lastmod>2019-06-03T06:43:12.399Z</lastmod>

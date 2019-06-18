@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省">
+<meta name="keywords" content="ansible,troubleshooting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible 如何除錯? 誰可以救救我?">
+<meta property="og:url" content="https://blog.pichuang.com.tw/Ansible-troubleshooting/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-logo.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-callback-debug-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-callback-debug-2.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-modules-debug.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-dry-run.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-debugger.png">
+<meta property="og:updated_time" content="2019-06-18T04:00:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ansible 如何除錯? 誰可以救救我?">
+<meta name="twitter:description" content="可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/ansible-logo.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.pichuang.com.tw/Ansible-troubleshooting/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Ansible 如何除錯? 誰可以救救我? | Phil Workspace</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=[object Object]"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-90856047-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">45</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-who">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-record">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/Ansible-troubleshooting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ansible 如何除錯? 誰可以救救我?
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-18 10:29:00 / Modified: 12:00:33" itemprop="dateCreated datePublished" datetime="2019-06-18T10:29:00+08:00">2019-06-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/ansible-logo.png" alt></p>
+<p>可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 <a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst" target="_blank" rel="noopener">Release Note</a></p>
+<p>就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作  <a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9" target="_blank" rel="noopener">讓您安心執行-ansible-playbook-的小技巧-1</a> 、<a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898" target="_blank" rel="noopener">讓您安心執行-ansible-playbook-的小技巧-2</a></p>
+<a id="more"></a>
+<h2 id="經驗分享"><a href="#經驗分享" class="headerlink" title="經驗分享"></a>經驗分享</h2><h3 id="改成工程師看得懂的除錯訊息：不打迷糊仗"><a href="#改成工程師看得懂的除錯訊息：不打迷糊仗" class="headerlink" title="改成工程師看得懂的除錯訊息：不打迷糊仗"></a>改成工程師看得懂的除錯訊息：不打迷糊仗</h3><p>預設狀況下，Ansible 輸出的格式是以 JSON 格式為主，然後通常輸出的時候都會如下圖顯示變成一坨不知道在寫什麼的訊息，十分難以判讀</p>
+<p><img src="/images/ansible-callback-debug-1.png" alt></p>
+<p>但 <a href="https://docs.ansible.com/ansible/latest/plugins/callback.html" target="_blank" rel="noopener">Ansible Callback Plugins</a> 有支援一個外掛模組叫做 <a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html" target="_blank" rel="noopener"><code>debug</code></a>，主要是協助把上面那一坨東西的 stdout 及 stderr 格式化 (Format) 成下圖，讓你清晰地了解錯誤訊息在寫什麼</p>
+<p><img src="/images/ansible-callback-debug-2.png" alt></p>
+<p>開起來的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">stdout_callback = debug</span><br></pre></td></tr></table></figure>
+<h3 id="愛用-debug-模組：其實就是多噴點資訊"><a href="#愛用-debug-模組：其實就是多噴點資訊" class="headerlink" title="愛用 debug 模組：其實就是多噴點資訊"></a>愛用 debug 模組：其實就是多噴點資訊</h3><p>若在 Ansible 執行過程中，你想要了解某一個變數裡面的值是什麼，可以使用 <a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html" target="_blank" rel="noopener"><code>debug</code></a> 模組來獲取運行中的 Ansible 執行變數資訊。要留意的事情是，這邊的 debug 是一個 Ansible 模組 (Modules)，上面章節所提起的則是 Callback 外掛當中一個模組，兩者不一樣。</p>
+<p>通常 <code>debug</code> 模組都會搭配 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html?highlight=register#registering-variables" target="_blank" rel="noopener"><code>reigister</code></a> 一併使用，<code>register</code> 最主要功用是將單一 Task 結果輸出指派給 <code>register</code> 所定義好的變數，如下程式碼</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Test connectivity</span><br><span class="line">      ping:</span><br><span class="line">      register: result</span><br><span class="line">      </span><br><span class="line">    - name: Print result</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; result &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>可以很清楚的看到，第一個 Task 將會執行 <code>ping</code> 模組，而它產生出來的結果將會被指向 register 所定義的 <code>result</code> 變數裡面，而第二個 Task 將會執行 <code>debug</code> 模組，將裡面 <code>result</code> 的結果倒出來顯示在如下畫面</p>
+<p><img src="/images/ansible-modules-debug.png" alt></p>
+<h3 id="實際執行前先跑-Dry-Run-看看：永保安康"><a href="#實際執行前先跑-Dry-Run-看看：永保安康" class="headerlink" title="實際執行前先跑 Dry Run 看看：永保安康"></a>實際執行前先跑 Dry Run 看看：永保安康</h3><p>蠻多工程師因為不熟 Ansible，很擔心會不會一執行錯誤的指令下去，就會導致災難這樣，所以 Ansible 提供一個檢查模式 <a href="https://docs.ansible.com/ansible/2.8/user_guide/playbooks_checkmode.html" target="_blank" rel="noopener"><code>dry-run</code></a>，供工程師在正式執行前可以透過模擬指令的方式協助檢查一下當前執行的 Playbook 裡面打算要做什麼事</p>
+<p>一般作法應該是在下 <code>ansible-playbook</code> 指令的後面多帶 <code>--check</code> 指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 起手式</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check</span><br><span class="line"></span><br><span class="line"># 嫌資訊太少時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check -v</span><br><span class="line"></span><br><span class="line"># 想要一個一個 Tasks 慢慢看時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --step --check</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ansible-dry-run.png" alt></p>
+<h3 id="Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…"><a href="#Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…" class="headerlink" title="Playbook Debugger：當你想要成為 Ansible 超高級寫手時…"></a>Playbook Debugger：當你想要成為 Ansible 超高級寫手時…</h3><p>在先前的社群分享中，筆者有多次提到目前把 Ansible Playbook 寫的第一無敵複雜的範例就是 <a href="https://github.com/openshift/openshift-ansible" target="_blank" rel="noopener">GitHub - openshift/openshift-ansible</a> 這個專案了，雖然整個安裝只需要跑兩三行指令，但只要變數寫錯或者是忘記寫，就要反覆跑好幾次，而跑一次大概就要花上好幾個半小時的光陰。</p>
+<p>而先前為了抓 <code>openshift-ansible</code> 安裝時的其中一個很弔詭的問題，最後動用了 <code>debugger</code> 才找到一個神奇的字串問題。正常沒寫到這麼複雜的狀況下，其他上述所列的方式其實就很夠日常維運用了。</p>
+<p>開啟 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html" target="_blank" rel="noopener">Playbook Debugger</a> 的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">strategy = debug</span><br></pre></td></tr></table></figure>
+<p>開啟之後， debugger 會在遇到 <code>Task Failed</code> 的時候，自動切換到 debug mode，詳細操作可以參考一下 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html#available-commands" target="_blank" rel="noopener">Available Commands</a></p>
+<p><img src="/images/ansible-debugger.png" alt></p>
+<h2 id="後言"><a href="#後言" class="headerlink" title="後言"></a>後言</h2><p>Ansible 本質上是遵循三大要素：Simple、Agentless、Powerful，撰寫邏輯上是，能寫得簡單就盡量寫的單純，不要寫得太過複雜。依據不同的情境之下，相信大家都會將越來越多的情境考慮進去，以至於 Ansible Playbook 越來越大，不太容易進行基本除錯，故希望本篇能幫助到各位快速上手除錯技巧。而如果你對於其他 Ansible 撰寫技能有興趣的話，也可以參考一下去年拙作  <a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a>。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9" target="_blank" rel="noopener">讓您安心執行-ansible-playbook-的小技巧-1 - Chengwei Chen</a></li>
+<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898" target="_blank" rel="noopener">讓您安心執行-ansible-playbook-的小技巧-2 - Chengwei Chen</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback.html" target="_blank" rel="noopener">Ansible Callback Plugins List</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html" target="_blank" rel="noopener">Ansible Callback Plugins - Debug</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html" target="_blank" rel="noopener">Ansible Modules - Debug</a></li>
+<li><a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst" target="_blank" rel="noopener">Ansible 2.8 Release Note</a></li>
+<li><a href="https://github.com/openshift/openshift-ansible" target="_blank" rel="noopener">GitHub - openshift/openshif-ansible</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html" target="_blank" rel="noopener">Ansible Strategy - Playbook Debugger</a></li>
+<li><a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+            <a href="/tags/troubleshooting/" rel="tag"># troubleshooting</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20190527-bandwidth-and-throughput/" rel="next" title="Bandwidth & Throughput">
+                <i class="fa fa-chevron-left"></i> Bandwidth & Throughput
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Phil Huang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#經驗分享"><span class="nav-number">1.</span> <span class="nav-text">經驗分享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#改成工程師看得懂的除錯訊息：不打迷糊仗"><span class="nav-number">1.1.</span> <span class="nav-text">改成工程師看得懂的除錯訊息：不打迷糊仗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#愛用-debug-模組：其實就是多噴點資訊"><span class="nav-number">1.2.</span> <span class="nav-text">愛用 debug 模組：其實就是多噴點資訊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實際執行前先跑-Dry-Run-看看：永保安康"><span class="nav-number">1.3.</span> <span class="nav-text">實際執行前先跑 Dry Run 看看：永保安康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…"><span class="nav-number">1.4.</span> <span class="nav-text">Playbook Debugger：當你想要成為 Ansible 超高級寫手時…</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#後言"><span class="nav-number">2.</span> <span class="nav-text">後言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
