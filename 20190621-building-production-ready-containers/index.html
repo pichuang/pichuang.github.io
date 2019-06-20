@@ -137,6 +137,7 @@
 <meta property="og:description" content="Red Hat 官方前陣子推出 Red Hat Enterprise Linux 8 (RHEL8)，裡面包含一個很大的變化就是針對 Linux 容器技術有非常大的改進和變化。應對 Docker 商業策略上的變化，由 Google、Red Hat、SUSE、IBM、Intel 攜手一起開發了一個專門對 Kubernetes 進行優化的容器運行環境 (Container Runtime) 的專案">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-logo.jpg">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/container-challenge.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-level.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/application-delivery.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/Commandent-1-standardize.png">
@@ -145,7 +146,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/Commandent-4-focus-on-automation.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/Commandent-5-iterate.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/xkcd.png">
-<meta property="og:updated_time" content="2019-06-20T16:28:40.588Z">
+<meta property="og:updated_time" content="2019-06-20T16:42:18.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="設計出 Production-Ready Container 的 5 條戒律">
 <meta name="twitter:description" content="Red Hat 官方前陣子推出 Red Hat Enterprise Linux 8 (RHEL8)，裡面包含一個很大的變化就是針對 Linux 容器技術有非常大的改進和變化。應對 Docker 商業策略上的變化，由 Google、Red Hat、SUSE、IBM、Intel 攜手一起開發了一個專門對 Kubernetes 進行優化的容器運行環境 (Container Runtime) 的專案">
@@ -453,7 +454,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-21 00:28:40" itemprop="dateModified" datetime="2019-06-21T00:28:40+08:00">2019-06-21</time>
+                <time title="Modified: 2019-06-21 00:42:18" itemprop="dateModified" datetime="2019-06-21T00:42:18+08:00">2019-06-21</time>
               
             
           </span>
@@ -508,6 +509,18 @@
         <p><img src="/images/rhel8-logo.jpg" alt></p>
 <p>Red Hat 官方前陣子推出 Red Hat Enterprise Linux 8 (RHEL8)，裡面包含一個很大的變化就是針對 Linux 容器技術有非常大的改進和變化。應對 Docker 商業策略上的變化，由 Google、Red Hat、SUSE、IBM、Intel 攜手一起開發了一個<code>專門對 Kubernetes 進行優化</code>的容器運行環境 (Container Runtime) 的專案 <a href="https://cri-o.io/" target="_blank" rel="noopener">CRI-O</a> (Container Runtime Interface Orchestrator)。故 RHEL 8 內建的容器技術將以 CRI-O 為核心，連帶對應的容器工具 Podman、Buildah、Skopeo 一起往未來發展。而今天要分享的是如何設計出生產環境等級的容器映像檔 (Container Images)，基於 Red Hat Summit 2019 分享出的簡報 <a href="http://crunchtools.com/files/2019/05/Summit-2019_-Building-Production-Ready-Containers.pdf" target="_blank" rel="noopener">Building Production-Ready Containers - Scott McCarty &amp; Ben Breard</a> 撰寫，一位是專職的 Linux Container Product Manager，另一位是 CoreOS Product Manager</p>
 <a id="more"></a>
+<h2 id="容器在生產環境中真正的挑戰是什麼"><a href="#容器在生產環境中真正的挑戰是什麼" class="headerlink" title="容器在生產環境中真正的挑戰是什麼?"></a>容器在生產環境中真正的挑戰是什麼?</h2><blockquote>
+<p>Container is NOT magic, it is technical skill</p>
+</blockquote>
+<p><img src="/images/container-challenge.png" alt></p>
+<p>True 的欄位就不用看了，我替大家翻譯右邊常見誤解</p>
+<ul>
+<li>每個人都可以做他們想做的事情，而開發人員將可以自己做所有的事情，不需要有專家的存在…?</li>
+<li>完全可移植性：建構一次，隨處運行…?</li>
+<li>容器是非常簡單的，開發人員只要使用它們，不用擔心太多…?</li>
+<li>你必須要完全解構掉你既有的應用程式…?</li>
+<li>忘掉你所學到的一切，這都是魔法…?</li>
+</ul>
 <h2 id="你我的容器映像檔"><a href="#你我的容器映像檔" class="headerlink" title="你我的容器映像檔?"></a>你我的容器映像檔?</h2><blockquote>
 <p>金玉其外，或許…敗絮其內?</p>
 </blockquote>
@@ -515,7 +528,7 @@
 <ul>
 <li>混亂不明的依賴性</li>
 <li>不知道為什麼會在那邊的 Process (ex: sshd、telenetd)</li>
-<li>發線 CVE 的時候不知道要怎麼修怎麼更新</li>
+<li>發現 CVE 的時候不知道要怎麼修怎麼更新</li>
 </ul>
 <p>以上三個狀況是平時維運或使用容器技術時最常見的狀況：升級障礙、誤設計、資安修補</p>
 <h2 id="情境思考"><a href="#情境思考" class="headerlink" title="情境思考"></a>情境思考</h2><p>其實，設計容器映像檔分層 (Layers) 的技術選型，就像你買一台伺服器回家，你還是得要思考上面要裝什麼 OS、要切多少磁區、要裝什麼軟體等等，裝完之後還是要持續維護、更新等操作維護面的事情，一點都沒有例外，故需要的是<code>如何選擇一個穩定且安全的基礎映像檔當作你的 Base Image</code> (其實就像是選作業系統一樣) 和<code>優良的容器化設計</code> (這跟軟體系統設計也很類似)。</p>
@@ -986,7 +999,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#你我的容器映像檔"><span class="nav-number">1.</span> <span class="nav-text">你我的容器映像檔?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情境思考"><span class="nav-number">2.</span> <span class="nav-text">情境思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一個容器映像檔的設計難度-理想與現實的距離"><span class="nav-number">3.</span> <span class="nav-text">一個容器映像檔的設計難度? 理想與現實的距離</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#應用程式交付就跟組樂高積木一樣"><span class="nav-number">4.</span> <span class="nav-text">應用程式交付就跟組樂高積木一樣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器構建的原則"><span class="nav-number">5.</span> <span class="nav-text">容器構建的原則</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一戒律：Standardize"><span class="nav-number">5.1.</span> <span class="nav-text">第一戒律：Standardize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二戒律：Minimize"><span class="nav-number">5.2.</span> <span class="nav-text">第二戒律：Minimize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三戒律：Delegate"><span class="nav-number">5.3.</span> <span class="nav-text">第三戒律：Delegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四戒律：Process-and-Automation"><span class="nav-number">5.4.</span> <span class="nav-text">第四戒律：Process and Automation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五戒律：Iterate"><span class="nav-number">5.5.</span> <span class="nav-text">第五戒律：Iterate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附錄-與自動化的距離"><span class="nav-number">6.</span> <span class="nav-text">附錄: 與自動化的距離</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器在生產環境中真正的挑戰是什麼"><span class="nav-number">1.</span> <span class="nav-text">容器在生產環境中真正的挑戰是什麼?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你我的容器映像檔"><span class="nav-number">2.</span> <span class="nav-text">你我的容器映像檔?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情境思考"><span class="nav-number">3.</span> <span class="nav-text">情境思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一個容器映像檔的設計難度-理想與現實的距離"><span class="nav-number">4.</span> <span class="nav-text">一個容器映像檔的設計難度? 理想與現實的距離</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#應用程式交付就跟組樂高積木一樣"><span class="nav-number">5.</span> <span class="nav-text">應用程式交付就跟組樂高積木一樣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器構建的原則"><span class="nav-number">6.</span> <span class="nav-text">容器構建的原則</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一戒律：Standardize"><span class="nav-number">6.1.</span> <span class="nav-text">第一戒律：Standardize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二戒律：Minimize"><span class="nav-number">6.2.</span> <span class="nav-text">第二戒律：Minimize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三戒律：Delegate"><span class="nav-number">6.3.</span> <span class="nav-text">第三戒律：Delegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四戒律：Process-and-Automation"><span class="nav-number">6.4.</span> <span class="nav-text">第四戒律：Process and Automation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五戒律：Iterate"><span class="nav-number">6.5.</span> <span class="nav-text">第五戒律：Iterate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附錄-與自動化的距離"><span class="nav-number">7.</span> <span class="nav-text">附錄: 與自動化的距離</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
