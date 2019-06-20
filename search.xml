@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[設計出 Production-Ready Container 的 5 條戒律]]></title>
+    <url>%2F20190621-building-production-ready-containers%2F</url>
+    <content type="text"><![CDATA[Red Hat 官方前陣子推出 Red Hat Enterprise Linux 8 (RHEL8)，裡面包含一個很大的變化就是針對 Linux 容器技術有非常大的改進和變化。應對 Docker 商業策略上的變化，由 Google、Red Hat、SUSE、IBM、Intel 攜手一起開發了一個專門對 Kubernetes 進行優化的容器運行環境 (Container Runtime) 的專案 CRI-O (Container Runtime Interface Orchestrator)。故 RHEL 8 內建的容器技術將以 CRI-O 為核心，連帶對應的容器工具 Podman、Buildah、Skopeo 一起往未來發展。而今天要分享的是如何設計出生產環境等級的容器映像檔 (Container Images)，基於 Red Hat Summit 2019 分享出的簡報 Building Production-Ready Containers - Scott McCarty &amp; Ben Breard 撰寫，一位是專職的 Linux Container Product Manager，另一位是 CoreOS Product Manager 你我的容器映像檔? 金玉其外，或許…敗絮其內? 很多所被建構出來的容器映像檔 (Container Images)，實際上使用可以用，但內部卻是亂糟糟的，譬如： 混亂不明的依賴性 不知道為什麼會在那邊的 Process (ex: sshd、telenetd) 發線 CVE 的時候不知道要怎麼修怎麼更新 以上三個狀況是平時維運或使用容器技術時最常見的狀況：升級障礙、誤設計、資安修補 情境思考其實，設計容器映像檔分層 (Layers) 的技術選型，就像你買一台伺服器回家，你還是得要思考上面要裝什麼 OS、要切多少磁區、要裝什麼軟體等等，裝完之後還是要持續維護、更新等操作維護面的事情，一點都沒有例外，故需要的是如何選擇一個穩定且安全的基礎映像檔當作你的 Base Image (其實就像是選作業系統一樣) 和優良的容器化設計 (這跟軟體系統設計也很類似)。 有些人會說：把程式包成容器映像檔後，不就變成不可變動 (Immutable) 的狀態，有必要做維護嗎? 有這些疑問的可以參考一下這篇新聞 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome，當你發現你的映像檔有潛在資安風險，能不更新繼續上線對外使用嗎？答案應該是蠻明顯的，故需要的是一個如何順暢進行更新容器映像檔的作法。 一個容器映像檔的設計難度? 理想與現實的距離 一般容器設計考慮大概要盡量維持在 Easy 和 Moderate 這當中的距離，如果要做到 Difficult 等級的設計的話，倒不如直接使用虛擬機 (VM) 還比較適當，可參考 Red Hat OpenShift 把 VM 當 Container 管!? 了解其細節。 應用程式交付就跟組樂高積木一樣 各位可以把容器映像檔想成樂高積木來看待 容器平台 (Container Platform) = 樂高積木平台 容器映像檔 (Container Images) = 樂高積木 應用程式定義 (Application Definition)= 產出物設計圖 應用程式 (Application) = 產出物 以容器為主體的應用程式交付，應該要盡量地做到類似於組樂高積木，容器能方便重複利用，可依據不同的程式設計，在容器平台上組出想要的應用程式。當然，要做到應用程式交付不單單只是要把容器映像檔做出來而已，還有一些額外的事情需要考慮： 映像檔建構指引 (Image Build Instructions) 映像檔來源控制 (Container Registries) 編排定義 (Orchestration Definitions) 維運 (Operators) 這當中有非常多層面的需要去考慮，那有沒有一個簡單明白的容器構建原則呢? 容器構建的原則以下的 5 條戒律的討論基礎是基於所有內容、工作都視為可以從原始碼 (Source Code) 構建，具體內容為以下： 標準化 (Standardize)：盡可能確保每一個人都使用相同的基礎映像檔 (Base Images) 最小化 (Minimize)：映像檔僅裝載實際工作負載所需的內容 委派 (Delegate)：保持映像檔各分層 (Layers) 由各具備專門技術的人負責 過程和自動化 (Process and Automation)：透過 Helm Charts、Ansible Playbooks 或 Operators 等部署方式，盡可能做到自動化佈建 迭代 (Iterate)：盡可能在迭代過程修正任何發現的原始碼錯誤 第一戒律：Standardize 好的基礎是成功的一半 基礎映像檔的選擇一般會有三個路徑： 從 Dockerhub library/* 選一個帶有 OS 基底往上疊 從 Scratch 自己慢慢刻 拿別人的 Middleware 映像檔當作自己的基礎映像檔往上疊 而 Red Hat 近期隨 RHEL8 釋出後，推出了一個比較通盤性的工具選擇： 紅帽通用基礎映像檔 (Red Hat Universal Base Image, UBI)，但這以後再開一篇介紹，這邊不贅述。 第二戒律：Minimize 太小不一定好 最小化不完全代表是檔案大小的最小化的意思，應是盡力減少不必要的依賴庫或者是程式在容器裡面，減少外部攻擊面為主，這邊推薦以下兩個連結學習如何構建出最小化容器的技術 Building Small Containers (Kubernetes Best Practices - YouTube) Best practices for building containers - Google Cloud 第三戒律：Delegate 人的一天只有 1440 分鐘 雖然每一個人拿到的 Base Image 是相同，但所要實作的程式卻不盡相同，有些人會想要用 Python、有些人需要是 Java，然而這些不同領域的經驗差距是非常大的，譬如程式庫相依性管理，所以建議是要將這類的中間層設計委任給有經驗的人維護或構造 第四戒律：Process and Automation 專注在真的需要你關心的工作上 盡可能地將反覆操作的流程自動化，無論你是自建 CICD Pipeline 、寫 Ansible Playbook 亦或者是用 Operator Framework 作為自動化的實踐都沒有關係，主要方向是要將構建的時間縮短，不要有太多無謂的人為操作 第五戒律：Iterate 及早發現 及早治療 透過流程自動化後，大幅縮短迭代時間，讓改變或修補的過程變為更為清晰，而做變更管理 (Change Management) 的時候也相對會有比較強的信心去做應對 關於容器平台 Day-2 Operations 的思考 附錄: 與自動化的距離 References 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome CRI-O official website Building Production-Ready Containers - Scott McCarty &amp; Ben Breard Linux Container Intermals - how they really work Red Hat OpenShift 把 VM 當 Container 管!? Building Small Containers (Kubernetes Best Practices - Google) Best practices for building containers]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Ansible 如何除錯? 誰可以救救我?]]></title>
     <url>%2F20190618-ansible-troubleshooting%2F</url>
     <content type="text"><![CDATA[可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 Release Note 就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作 讓您安心執行-ansible-playbook-的小技巧-1 、讓您安心執行-ansible-playbook-的小技巧-2 經驗分享改成工程師看得懂的除錯訊息：不打迷糊仗預設狀況下，Ansible 輸出的格式是以 JSON 格式為主，然後通常輸出的時候都會如下圖顯示變成一坨不知道在寫什麼的訊息，十分難以判讀 但 Ansible Callback Plugins 有支援一個外掛模組叫做 debug，主要是協助把上面那一坨東西的 stdout 及 stderr 格式化 (Format) 成下圖，讓你清晰地了解錯誤訊息在寫什麼 開起來的方式很簡單，開啟 ansible.cfg，填入以下內容即可 123[default]...stdout_callback = debug 愛用 debug 模組：其實就是多噴點資訊若在 Ansible 執行過程中，你想要了解某一個變數裡面的值是什麼，可以使用 debug 模組來獲取運行中的 Ansible 執行變數資訊。要留意的事情是，這邊的 debug 是一個 Ansible 模組 (Modules)，上面章節所提起的則是 Callback 外掛當中一個模組，兩者不一樣。 通常 debug 模組都會搭配 register 一併使用，register 最主要功用是將單一 Task 結果輸出指派給 register 所定義好的變數，如下程式碼 12345678910---- hosts: all tasks: - name: Test connectivity ping: register: result - name: Print result debug: msg: &quot;&#123;&#123; result &#125;&#125;&quot; 可以很清楚的看到，第一個 Task 將會執行 ping 模組，而它產生出來的結果將會被指向 register 所定義的 result 變數裡面，而第二個 Task 將會執行 debug 模組，將裡面 result 的結果倒出來顯示在如下畫面 實際執行前先跑 Dry Run 看看：永保安康蠻多工程師因為不熟 Ansible，很擔心會不會一執行錯誤的指令下去，就會導致災難這樣，所以 Ansible 提供一個檢查模式 dry-run，供工程師在正式執行前可以透過模擬指令的方式協助檢查一下當前執行的 Playbook 裡面打算要做什麼事 一般作法應該是在下 ansible-playbook 指令的後面多帶 --check 指令 12345678# 起手式$ ansible-playbook -i pichuang.yml --check# 嫌資訊太少時$ ansible-playbook -i pichuang.yml --check -v# 想要一個一個 Tasks 慢慢看時$ ansible-playbook -i pichuang.yml --step --check Playbook Debugger：當你想要成為 Ansible 超高級寫手時…在先前的社群分享中，筆者有多次提到目前把 Ansible Playbook 寫的第一無敵複雜的範例就是 GitHub - openshift/openshift-ansible 這個專案了，雖然整個安裝只需要跑兩三行指令，但只要變數寫錯或者是忘記寫，就要反覆跑好幾次，而跑一次大概就要花上好幾個半小時的光陰。 而先前為了抓 openshift-ansible 安裝時的其中一個很弔詭的問題，最後動用了 debugger 才找到一個神奇的字串問題。正常沒寫到這麼複雜的狀況下，其他上述所列的方式其實就很夠日常維運用了。 開啟 Playbook Debugger 的方式很簡單，開啟 ansible.cfg，填入以下內容即可 123[default]...strategy = debug 開啟之後， debugger 會在遇到 Task Failed 的時候，自動切換到 debug mode，詳細操作可以參考一下 Available Commands 後言Ansible 本質上是遵循三大要素：Simple、Agentless、Powerful，撰寫邏輯上是，能寫得簡單就盡量寫的單純，不要寫得太過複雜。依據不同的情境之下，相信大家都會將越來越多的情境考慮進去，以至於 Ansible Playbook 越來越大，不太容易進行基本除錯，故希望本篇能幫助到各位快速上手除錯技巧。而如果你對於其他 Ansible 撰寫技能有興趣的話，也可以參考一下去年拙作 幾個小建議改善你的 Ansible 技能 - Phil Huang。 References 讓您安心執行-ansible-playbook-的小技巧-1 - Chengwei Chen 讓您安心執行-ansible-playbook-的小技巧-2 - Chengwei Chen Ansible Callback Plugins List Ansible Callback Plugins - Debug Ansible Modules - Debug Ansible 2.8 Release Note GitHub - openshift/openshif-ansible Ansible Strategy - Playbook Debugger 幾個小建議改善你的 Ansible 技能 - Phil Huang]]></content>
@@ -48,8 +59,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>redhat</tag>
         <tag>nfv</tag>
+        <tag>redhat</tag>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -89,8 +100,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>nfv</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
@@ -306,8 +317,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>container</tag>
+        <tag>openshift</tag>
         <tag>12apps</tag>
       </tags>
   </entry>

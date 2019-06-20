@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190621-building-production-ready-containers/</loc>
+    
+    <lastmod>2019-06-20T16:23:20.590Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190618-ansible-troubleshooting/</loc>
     
     <lastmod>2019-06-18T04:11:49.300Z</lastmod>
