@@ -100,8 +100,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>nfv</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
@@ -245,8 +245,8 @@
       </categories>
       <tags>
         <tag>redhat</tag>
-        <tag>ansible</tag>
         <tag>terraform</tag>
+        <tag>ansible</tag>
       </tags>
   </entry>
   <entry>
