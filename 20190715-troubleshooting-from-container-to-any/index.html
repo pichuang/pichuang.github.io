@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-within-os.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/k8s-networking.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/run-on-openshift.png">
-<meta property="og:updated_time" content="2019-07-14T17:46:06.746Z">
+<meta property="og:updated_time" content="2019-07-15T00:29:30.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Troubleshooting from Container to Any">
 <meta name="twitter:description" content="建立好一座 Kubernetes / OpenShift 集群後，大部分的疑難排解文章都是教你如何從 Kubernetes / OpenShift 的角度，透過 Kubernetes 的 kubectl 或 OpenShift 的 oc 指令來進行一系列的偵查，而這個查詢的結果都是基於 kube-apiserver 為核心的結果，中間已經抽象過很多層，距離底層資訊已有段距離。 若今天想要特意建立一">
@@ -431,7 +431,7 @@
                 
               
 
-              <time title="Created: 2019-07-15 00:12:00 / Modified: 01:46:06" itemprop="dateCreated datePublished" datetime="2019-07-15T00:12:00+08:00">2019-07-15</time>
+              <time title="Created: 2019-07-15 00:12:00 / Modified: 08:29:30" itemprop="dateCreated datePublished" datetime="2019-07-15T00:12:00+08:00">2019-07-15</time>
             
 
             
@@ -525,6 +525,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image=quay.io/pichuang/debug-container \</span><br><span class="line">   --restart=Never --attach -i --tty --rm</span><br></pre></td></tr></table></figure>
 <p>倘若想要將 Pod 跑在指定的節點上，則要利用 <code>nodeSelector</code> 的概念指定在特定主機上面</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image=quay.io/pichuang/debug-container \</span><br><span class="line">   --restart=Never --attach -i --tty --rm \</span><br><span class="line">   --overrides=&apos;&#123; &quot;apiVersion&quot;: &quot;v1&quot;, &quot;spec&quot;: &#123; &quot;nodeSelector&quot;:&#123;&quot;&lt;KEY&gt;&quot;:&quot;&lt;VALUE&gt;&quot;&#125;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure>
+<p>記得自己要把 KEY 和 VALUE 換成自己環境的設定，關於 Label 的資訊可以從 <code>oc get node --show-labels=true</code> 這邊找</p>
 <p><img src="/images/run-on-openshift.png" alt></p>
 <h2 id="所以我說那個原始碼和環境呢"><a href="#所以我說那個原始碼和環境呢" class="headerlink" title="所以我說那個原始碼和環境呢?"></a>所以我說那個原始碼和環境呢?</h2><p>以下是關於本文使用到的原始碼和 Image 位置: </p>
 <ol>
