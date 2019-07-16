@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-within-os.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/k8s-networking.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/run-on-openshift.png">
-<meta property="og:updated_time" content="2019-07-15T00:38:42.082Z">
+<meta property="og:updated_time" content="2019-07-16T04:04:53.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Troubleshooting from Container to Any">
 <meta name="twitter:description" content="建立好一座 Kubernetes / OpenShift 集群後，大部分的疑難排解文章都是教你如何從 Kubernetes / OpenShift 的角度，透過 Kubernetes 的 kubectl 或 OpenShift 的 oc 指令來進行一系列的偵查，而這個查詢的結果都是基於 kube-apiserver 為核心的結果，中間已經抽象過很多層，距離底層資訊已有段距離。 若今天想要特意建立一">
@@ -431,12 +431,24 @@
                 
               
 
-              <time title="Created: 2019-07-15 00:12:00 / Modified: 08:38:42" itemprop="dateCreated datePublished" datetime="2019-07-15T00:12:00+08:00">2019-07-15</time>
+              <time title="Created: 2019-07-15 00:12:00" itemprop="dateCreated datePublished" datetime="2019-07-15T00:12:00+08:00">2019-07-15</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-16 12:04:53" itemprop="dateModified" datetime="2019-07-16T12:04:53+08:00">2019-07-16</time>
               
             
           </span>
@@ -539,7 +551,11 @@
 <li>Container Platform: Red Hat OpenShift Container Platform v3.11</li>
 </ol>
 <p>理論上來說，觀念上是適用於其他以 Docker 及 Kubernetes 為主的容器平台，所以可以自行在家試試看</p>
-<h2 id="同場加映-sysdig"><a href="#同場加映-sysdig" class="headerlink" title="同場加映: sysdig"></a>同場加映: sysdig</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name=sysdig --privileged=true \</span><br><span class="line">          --volume=/var/run/docker.sock:/host/var/run/docker.sock \</span><br><span class="line">          --volume=/dev:/host/dev \</span><br><span class="line">          --volume=/proc:/host/proc:ro \</span><br><span class="line">          --volume=/boot:/host/boot:ro \</span><br><span class="line">          --volume=/lib/modules:/host/lib/modules:ro \</span><br><span class="line">          --volume=/usr:/host/usr:ro \</span><br><span class="line">          sysdig/sysdig</span><br></pre></td></tr></table></figure>
+<h2 id="同場加映-Part-1-sysdig"><a href="#同場加映-Part-1-sysdig" class="headerlink" title="同場加映 Part 1: sysdig"></a>同場加映 Part 1: sysdig</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name=sysdig --privileged=true \</span><br><span class="line">          --volume=/var/run/docker.sock:/host/var/run/docker.sock \</span><br><span class="line">          --volume=/dev:/host/dev \</span><br><span class="line">          --volume=/proc:/host/proc:ro \</span><br><span class="line">          --volume=/boot:/host/boot:ro \</span><br><span class="line">          --volume=/lib/modules:/host/lib/modules:ro \</span><br><span class="line">          --volume=/usr:/host/usr:ro \</span><br><span class="line">          sysdig/sysdig</span><br></pre></td></tr></table></figure>
+<h2 id="同場加映-Part-2-netshoot"><a href="#同場加映-Part-2-netshoot" class="headerlink" title="同場加映 Part 2: netshoot"></a>同場加映 Part 2: netshoot</h2><ul>
+<li><a href="https://github.com/nicolaka/netshoot" target="_blank" rel="noopener">nicolaka/netshoot - GitHub</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Container&apos;s Network Namesapce</span><br><span class="line">docker run -it --net container:&lt;container_name&gt; nicolaka/netshoot</span><br><span class="line"></span><br><span class="line"># Host&apos;s Network namesapce</span><br><span class="line">docker run -it --net host nicolaka/netshoot</span><br><span class="line"></span><br><span class="line"># Networks&apos;s Network namespace</span><br><span class="line"># Use `nsenter`</span><br><span class="line"></span><br><span class="line"># K8s&apos;s network debugging</span><br><span class="line">kubectl run tmp-shell --rm -i --tty --image nicolaka/netshoot -- /bin/bash</span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
     </div>
 
@@ -938,7 +954,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#這樣做的動機是"><span class="nav-number">1.</span> <span class="nav-text">這樣做的動機是?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#當我有一個-OS…"><span class="nav-number">2.</span> <span class="nav-text">當我有一個 OS…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#當我有一個容器平台…"><span class="nav-number">3.</span> <span class="nav-text">當我有一個容器平台…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以我說那個原始碼和環境呢"><span class="nav-number">4.</span> <span class="nav-text">所以我說那個原始碼和環境呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同場加映-sysdig"><span class="nav-number">5.</span> <span class="nav-text">同場加映: sysdig</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#這樣做的動機是"><span class="nav-number">1.</span> <span class="nav-text">這樣做的動機是?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#當我有一個-OS…"><span class="nav-number">2.</span> <span class="nav-text">當我有一個 OS…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#當我有一個容器平台…"><span class="nav-number">3.</span> <span class="nav-text">當我有一個容器平台…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以我說那個原始碼和環境呢"><span class="nav-number">4.</span> <span class="nav-text">所以我說那個原始碼和環境呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同場加映-Part-1-sysdig"><span class="nav-number">5.</span> <span class="nav-text">同場加映 Part 1: sysdig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同場加映-Part-2-netshoot"><span class="nav-number">6.</span> <span class="nav-text">同場加映 Part 2: netshoot</span></a></li></ol></div>
             
 
           </div>
