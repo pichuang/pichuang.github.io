@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
+    
+    <lastmod>2019-07-21T15:27:50.573Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/</loc>
     
     <lastmod>2019-07-16T04:04:53.106Z</lastmod>
@@ -75,13 +82,6 @@
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/</loc>
     
     <lastmod>2019-04-21T01:18:09.671Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
-    
-    <lastmod>2019-04-20T12:23:11.806Z</lastmod>
     
   </url>
   
