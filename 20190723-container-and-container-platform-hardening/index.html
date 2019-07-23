@@ -128,21 +128,21 @@
 
 
 
-  <meta name="description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點  一座">
+  <meta name="description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
 <meta name="keywords" content="container,openshift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="容器與容器平台強固化保護思路">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點  一座">
+<meta property="og:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-platform-technology-stack.png">
 <meta property="og:image" content="https://landscape.cncf.io/images/landscape.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/docker-dig.png">
-<meta property="og:updated_time" content="2019-07-23T15:53:03.275Z">
+<meta property="og:updated_time" content="2019-07-23T15:55:58.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器與容器平台強固化保護思路">
-<meta name="twitter:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點  一座">
+<meta name="twitter:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
 <meta name="twitter:image" content="https://blog.pichuang.com.tw/images/container-platform-technology-stack.png">
 
 
@@ -430,7 +430,7 @@
                 
               
 
-              <time title="Created: 2019-07-23 23:59:00 / Modified: 23:53:03" itemprop="dateCreated datePublished" datetime="2019-07-23T23:59:00+08:00">2019-07-23</time>
+              <time title="Created: 2019-07-23 23:59:00 / Modified: 23:55:58" itemprop="dateCreated datePublished" datetime="2019-07-23T23:59:00+08:00">2019-07-23</time>
             
 
             
@@ -489,6 +489,7 @@
       
         <p>不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點</p>
 <p><img src="/images/container-platform-technology-stack.png" alt></p>
+<a id="more"></a>
 <h2 id="一座-Kubenetes-最小技術棧"><a href="#一座-Kubenetes-最小技術棧" class="headerlink" title="一座 Kubenetes 最小技術棧?"></a>一座 Kubenetes 最小技術棧?</h2><p>剔除掉多出的上層整合功能部分，最小情況下任何說自己是 Kubernetes 的平台方案，<code>最少</code>皆須具備以下的技術棧：</p>
 <ol>
 <li>Operating System (如： Ubuntu、CentOS、RHEL、Fedora CoreOS)</li>
