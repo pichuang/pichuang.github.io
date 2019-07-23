@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/</loc>
+    
+    <lastmod>2019-07-23T15:53:03.275Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
     
-    <lastmod>2019-07-21T15:27:50.573Z</lastmod>
+    <lastmod>2019-07-21T15:34:05.582Z</lastmod>
     
   </url>
   
