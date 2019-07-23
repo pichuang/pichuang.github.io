@@ -139,7 +139,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-platform-technology-stack.png">
 <meta property="og:image" content="https://landscape.cncf.io/images/landscape.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/docker-dig.png">
-<meta property="og:updated_time" content="2019-07-23T16:08:15.849Z">
+<meta property="og:updated_time" content="2019-07-23T16:15:52.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器與容器平台強固化保護思路">
 <meta name="twitter:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-24 00:08:15" itemprop="dateModified" datetime="2019-07-24T00:08:15+08:00">2019-07-24</time>
+                <time title="Modified: 2019-07-24 00:15:52" itemprop="dateModified" datetime="2019-07-24T00:15:52+08:00">2019-07-24</time>
               
             
           </span>
@@ -572,6 +572,12 @@
 <p>好的開始是成功的一半，好的映像檔能讓你睡眠品質提升</p>
 </blockquote>
 <p>真心不知道怎麼開始的話，建議就先從 <code>第一戒律：Standardize</code> 開始慢慢做起吧</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><ul>
+<li>我最一開始只是想強調的是 OS 真的是很重要，請不要忽視他 XD</li>
+<li>呈上，整體系統整合穩定度也是一樣很重要，還記得木桶理論嗎?</li>
+<li>Multus 穩定釋出後，對於所有規劃容器平台網路的人都會是一個 __ 的開始，Container Network Function (CNF) 笑而不語中</li>
+<li>感謝 iThome 讓我充實了很多版面</li>
+</ul>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.ithome.com.tw/article/129426" target="_blank" rel="noopener">【關鍵資安議題：容器安全】剖析容器的資安風險與防護 - iThome</a></li>
 <li><a href="https://snyk.io/blog/10-docker-image-security-best-practices/" target="_blank" rel="noopener">10 Docker Image Security Best Practices - synk</a></li>
@@ -1002,7 +1008,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一座-Kubenetes-最小技術棧"><span class="nav-number">1.</span> <span class="nav-text">一座 Kubenetes 最小技術棧?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OS-在這邊重要嗎"><span class="nav-number">2.</span> <span class="nav-text">OS 在這邊重要嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Kubernetes-也同樣有類似的規範可依循嗎"><span class="nav-number">3.</span> <span class="nav-text">那 Kubernetes 也同樣有類似的規範可依循嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Kubernetes-裝完就可以不需升級了嗎"><span class="nav-number">4.</span> <span class="nav-text">那 Kubernetes 裝完就可以不需升級了嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNI-Plugin-可以亂選嗎"><span class="nav-number">5.</span> <span class="nav-text">CNI Plugin 可以亂選嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的容器映像檔乾淨嗎"><span class="nav-number">6.</span> <span class="nav-text">我的容器映像檔乾淨嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一座-Kubenetes-最小技術棧"><span class="nav-number">1.</span> <span class="nav-text">一座 Kubenetes 最小技術棧?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OS-在這邊重要嗎"><span class="nav-number">2.</span> <span class="nav-text">OS 在這邊重要嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Kubernetes-也同樣有類似的規範可依循嗎"><span class="nav-number">3.</span> <span class="nav-text">那 Kubernetes 也同樣有類似的規範可依循嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那-Kubernetes-裝完就可以不需升級了嗎"><span class="nav-number">4.</span> <span class="nav-text">那 Kubernetes 裝完就可以不需升級了嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNI-Plugin-可以亂選嗎"><span class="nav-number">5.</span> <span class="nav-text">CNI Plugin 可以亂選嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的容器映像檔乾淨嗎"><span class="nav-number">6.</span> <span class="nav-text">我的容器映像檔乾淨嗎?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">7.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
