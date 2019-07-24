@@ -139,7 +139,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-platform-technology-stack.png">
 <meta property="og:image" content="https://landscape.cncf.io/images/landscape.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/docker-dig.png">
-<meta property="og:updated_time" content="2019-07-24T01:59:37.157Z">
+<meta property="og:updated_time" content="2019-07-24T02:00:06.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器平台強固化保護思路">
 <meta name="twitter:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-24 09:59:37" itemprop="dateModified" datetime="2019-07-24T09:59:37+08:00">2019-07-24</time>
+                <time title="Modified: 2019-07-24 10:00:06" itemprop="dateModified" datetime="2019-07-24T10:00:06+08:00">2019-07-24</time>
               
             
           </span>
@@ -560,7 +560,7 @@
 </ol>
 <p>實務上，常見選擇帶有 <code>NetworkPolicy</code> 能力的 CNI Plugin，因可基於策略 (Policy) 來隔離 Pod/Namespace 等級的內部流量或者是外部來減少攻擊面</p>
 <h2 id="我的容器映像檔乾淨嗎"><a href="#我的容器映像檔乾淨嗎" class="headerlink" title="我的容器映像檔乾淨嗎?"></a>我的容器映像檔乾淨嗎?</h2><p><img src="/images/docker-dig.png" alt></p>
-<p><a href="https://www.ithome.com.tw/news/123887" target="_blank" rel="noopener">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a> 這新聞應該是最實際的例子，塞了挖礦程式的映像黨存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 <a href="https://www.ithome.com.tw/news/129018" target="_blank" rel="noopener">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a> 等漏洞存在在映像檔內等情事發生。</p>
+<p><a href="https://www.ithome.com.tw/news/123887" target="_blank" rel="noopener">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a> 這新聞應該是最實際的例子，塞了挖礦程式的容器映像檔存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 <a href="https://www.ithome.com.tw/news/129018" target="_blank" rel="noopener">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a> 等漏洞存在在映像檔內等情事發生。</p>
 <p>為了避免類似情況發生，會有以下 3 種建議作法：</p>
 <ol>
 <li>只用官方提供的映像檔: DockerHub library/*、Red Hat Container Catalog (RHCC) 等</li>
