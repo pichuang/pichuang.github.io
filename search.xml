@@ -97,8 +97,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
       </tags>
   </entry>
   <entry>
@@ -109,8 +109,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>cnv</tag>
         <tag>kubevirt</tag>
       </tags>
@@ -124,8 +124,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>nfv</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
@@ -139,8 +139,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>operator</tag>
       </tags>
   </entry>
@@ -152,8 +152,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
         <tag>operator</tag>
@@ -167,8 +167,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>juniper</tag>
         <tag>contrail</tag>
       </tags>
@@ -181,8 +181,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
       </tags>
   </entry>
@@ -194,8 +194,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>nvidia</tag>
         <tag>dgx</tag>
         <tag>tesla</tag>
@@ -240,8 +240,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>storage</tag>
       </tags>
   </entry>
@@ -253,8 +253,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>openshift</tag>
         <tag>router</tag>
         <tag>services</tag>
         <tag>pods</tag>
@@ -526,9 +526,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
@@ -536,9 +536,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc\&lt;enter>…\&lt;enter> Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc\&lt;enter>…\&lt;enter> Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
