@@ -129,7 +129,7 @@
 
 
   <meta name="description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
-<meta name="keywords" content="container,openshift">
+<meta name="keywords" content="openshift,container">
 <meta property="og:type" content="article">
 <meta property="og:title" content="容器平台強固化保護思路">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/index.html">
@@ -139,7 +139,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-platform-technology-stack.png">
 <meta property="og:image" content="https://landscape.cncf.io/images/landscape.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/docker-dig.png">
-<meta property="og:updated_time" content="2019-07-24T11:19:16.856Z">
+<meta property="og:updated_time" content="2019-08-17T16:15:11.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器平台強固化保護思路">
 <meta name="twitter:description" content="不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-24 19:19:16" itemprop="dateModified" datetime="2019-07-24T19:19:16+08:00">2019-07-24</time>
+                <time title="Modified: 2019-08-18 00:15:11" itemprop="dateModified" datetime="2019-08-18T00:15:11+08:00">2019-08-18</time>
               
             
           </span>
@@ -554,7 +554,7 @@
 <ol>
 <li>Pure CNI Plugin: 可獨立運作，不需要深度依靠實體網路能力，絕大部分 CNI Plugins 皆屬此類，如 Calico、Flannel、OVN 等</li>
 <li>Hypervisor CNI Plugin: 基於 Hypervisor 提供的虛擬化技術，不需要深度依靠實體網路能力，提供整合能力，如 VMware NSX-T Container Plugin (NCP)</li>
-<li>Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 <a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">Juniper Contrail</a></li>
+<li>Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 <a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">Juniper Contrail</a>、<a href="https://github.com/sonaproject/sona-cni" target="_blank" rel="noopener">ONOS SONA-CNI</a></li>
 <li>Mixed CNI Plugin: 需與實體網路進行整合，如 Cisco ACI、BigSwitch Big Cloud Fabric (BCF)</li>
 <li>Proxy CNI Plugin: 可透過該網路介面再接其他的 CNI Plugin，以達到單 Pod 多網卡的需求，如 <a href="https://github.com/intel/multus-cni" target="_blank" rel="noopener">Intel Multus</a>、<a href="https://github.com/Huawei-PaaS/CNI-Genie" target="_blank" rel="noopener">Huawei Genie</a>、<a href="https://github.com/nokia/danm" target="_blank" rel="noopener">Nokia DAMN</a></li>
 </ol>
@@ -638,9 +638,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/container/" rel="tag"># container</a>
-          
             <a href="/tags/openshift/" rel="tag"># openshift</a>
+          
+            <a href="/tags/container/" rel="tag"># container</a>
           
         </div>
       

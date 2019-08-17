@@ -3,13 +3,13 @@
   <entry>
     <title><![CDATA[容器平台強固化保護思路]]></title>
     <url>%2F20190723-container-and-container-platform-hardening%2F</url>
-    <content type="text"><![CDATA[不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點 一座 Kubenetes 最小技術棧?剔除掉多出的上層整合功能部分，最小情況下任何說自己是 Kubernetes 的平台方案，最少皆須具備以下的技術棧： Operating System (如： Ubuntu、CentOS、RHEL、Fedora CoreOS) Container Runtime Interface (如：Docker、CRI-O) Container Network Interface (如：Calico、Flannel) Container Orchestration (如：Kubernetes、Docker Swarm) 如同上述所述，Kubenetes 是 CNCF 其中一個專案，且它需要很多不同的專案一同協作才能把它運行起來，包含像是操作系統 (Operating System, OS)。相關的專案都已經羅列在下面 CNCF Cloud Native Interactive Landscape 的大圖裡 若想要體驗全手工安裝過程來理解細節的話，可以參考 Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog，而從中可以透過手把手安裝可以清楚地了解到，其實 Kubernetes 不是真的只有 Kubernetes 一個專案 (Project) 而已，還有 CNI、Etcd、Container Runtime 等組件要做選擇 OS 在這邊重要嗎?蠻多看倌在使用 Kubernetes 的時候，都會不小心遺忘其實容器平台的相關技術是仰賴於操作系統的技術 cgroup、selinux、seccomp 等達成，所以 OS 本身的選型和組態強固化是非常重要的一環，並不是使用了容器平台就可以忽視其安全性。對於想要了解實際上容器技術的本質，可以參考 Linux Container Intermals - How They Really Work 以 RH 體系的套件管理系統為例，實務上，對於作業系統的加固，除了看到 CVE 要上修補 (Patch)、定期更新套件 yum --secure update，有時候也會依據各自公司政策上的不同會搭配合規性驗證 (Compliance Validation)，以確保於操作系統層級上，與其他的環境是保持一致的，也就是常講的系統強化或系統標準化 (Standard of Environment, SoE)。 而常見的稽核準則有下列 5 個標準可以參考： 美國聯邦資訊處理標準 (Federal Information Processing Standard, FIPS 140-2) 信用卡產業資料安全標準 (Payment Card Industray Data Security Standard, PCI DSS) 美國國家工業安全計畫操作手冊 (National Industrial Security Program Operating Manual, NISPOM, or DoD. 5220.22-M) 美國防禦資訊系統代理機構之安全性技術實作指南 (DISA Security Technical Implementation Guide, STIG) 美國政府組態基準 (United States Government Configuration Baseline, USGCB) 或者 OpenSCAP Security Guides 提出的參考基準： Red Hat Corporate Profile for Certified Cloud Providers (RH CCP) Standard System Security Profile for RHEL7 當然如果有各自公司有內部的稽核規則，也可以透過 Ansible + OpenSCAP 一併規劃使用，以達到 Security Automation 的效果 那 Kubernetes 也同樣有類似的規範可依循嗎?目前筆者知道的就以下 5 個規範： 應用容器資安手冊 (NIST SP 800-190. Application Container Security Guide) 互聯網安全中心 (The Center for Internet Security, CIS) Kubernetes Benchmark 資訊安全國際標準 ISO/IEC 27001:2013 美國聯邦資訊安全管理法 (Federal Information Security Management Act, FISMA) 信用卡產業資料安全標準 (Payment Card Industray Data Security Standard 3.2, PCI DSS 3.2) 因為 Kubernetes 所帶動的技術發展太快了，如果是一直衝非常前沿的技術基本上這個章節沒有參考價值，但如果是為了企業內長久穩定使用則可以參考一下這些不同的規範來做強固化依據 (工~商~時~間~) 目前 Red Hat OpenShift 3.11 截至今日為止共提供以下 3 個驗證規範手冊: Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2 Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013 那 Kubernetes 裝完就可以不需升級了嗎?Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome，Kubernetes 2018/12 發出了第一個重大漏洞 CVE-2018-1002105。該漏洞是可以在 Kubernetes 上直接提權殺到底層去，還不會留 Log。Common Vulnerability Scoring System (CVSS) 直接給了 9.8 分數 (滿分10分)，而解決的唯一辦法就是： 請升級 而今年初，容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome，CVE-2019-5736 - RunC Escape Vulnerability，CVSS 給了 7.7 分 依據 Kubenetes 這種發展神速的步調下去 (現在已經來到 1.15 了)，可以預期往後的 CVE 也會隨著大家越來越熟悉 Kubernetes 而慢慢多起來，故不可能完全避免資安風險。結論上，不是裝完 Kubernetes 就沒事了，得要考慮後續長期維護和升級的作法。當然，如果只是自用或可以做到短時間重建 (Re-build)，就不用考慮這麼遠就是了。 CNI Plugin 可以亂選嗎?容器網路介面 (Container Network Interface, CNI) 在 Kubernetes 來說是一個抽象的標準介面和規範，功能需額外實踐，而該介面是掌控 Kubernetes 網路的核心組件，在技術選型上就格外重要，詳細可參閱 常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu 及 CNI 常見問題整理 - hwchiu (編: Hwchiu 這人跑去美國爽，羨慕嫉妒) 而發展至今，以包含虛擬網路 (Overlay Networking)、實體網路 (Underlay Networking) 之整體網路觀點來看，可以區分以下 5 種類型 (編: 這邊的歸納名是自取，並非通用說法，雖然目前也沒有通用說法，歡迎修正)： Pure CNI Plugin: 可獨立運作，不需要深度依靠實體網路能力，絕大部分 CNI Plugins 皆屬此類，如 Calico、Flannel、OVN 等 Hypervisor CNI Plugin: 基於 Hypervisor 提供的虛擬化技術，不需要深度依靠實體網路能力，提供整合能力，如 VMware NSX-T Container Plugin (NCP) Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 Juniper Contrail Mixed CNI Plugin: 需與實體網路進行整合，如 Cisco ACI、BigSwitch Big Cloud Fabric (BCF) Proxy CNI Plugin: 可透過該網路介面再接其他的 CNI Plugin，以達到單 Pod 多網卡的需求，如 Intel Multus、Huawei Genie、Nokia DAMN 說 CNI 是整個 Kubernetes 的核心靈魂也不為過，為了 Kubernetes 平台系統穩定，通常建議是依下列項目依序考慮： 功能 整合穩定度 有否支援 實務上，常見選擇帶有 NetworkPolicy 能力的 CNI Plugin，因可基於策略 (Policy) 來隔離 Pod/Namespace 等級的內部流量或者是外部來減少攻擊面 我的容器映像檔乾淨嗎? Docker移除17個暗藏挖礦程式的惡意容器 - iThome 這新聞應該是最實際的例子，塞了挖礦程式的容器映像檔存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome 等漏洞存在在映像檔內等情事發生。 為了避免類似情況發生，會有以下 3 種建議作法： 只用官方提供的映像檔: DockerHub library/*、Red Hat Container Catalog (RHCC) 等 執行前要弱掃: Clair、KubeXray、Snyk 等 容器標準化 (Standardize) 除了筆者前陣子有分享過 設計出 Production-Ready Container 的 5 條戒律 - Phil Workspace，Red Hat 官方也針對 Container Security 提出了一套概念 Ten layers of container security - Red Hat。而當中針對容器標準化的基礎映像檔也提出了通用基礎映像檔 Universal Base Image, UBI 的設計思考。 好的開始是成功的一半，好的映像檔能讓你睡眠品質提升 真心不知道怎麼開始的話，建議就先從 第一戒律：Standardize 開始慢慢做起吧 結語 我最一開始只是想強調的是 OS 真的是很重要，請不要忽視他 XD 呈上，整體系統整合穩定度也是一樣很重要，還記得木桶理論嗎? Multus 穩定釋出後，對於所有規劃容器平台網路的人都會是一個 __ 的開始，Container Network Function (CNF) 笑而不語中 感謝 iThome 讓我充實了很多版面 References 【關鍵資安議題：容器安全】剖析容器的資安風險與防護 - iThome 10 Docker Image Security Best Practices - synk Technical Details - TEN LAYERS OF CONTAINER SECURITY Red Hat CNCF Cloud Native Interactive Landscape 33 Kubernetes security tools - Sysdig 聯邦資訊處理標準 - Wiki Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog Linux Container Intermals - How They Really Work Security Automation with Ansible 常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu How to deal second interface service discovery and load balancer in kubernetes CNI 常見問題整理 - hwchiu FISMA Compliance for the OpenShift Container Platform Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2 Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013 Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome The Kubernetes privilege escalation flaw: Innovation still needs IT security expertise CVE-2018-1002105: proxy request handling in kube-apiserver can leave vulnerable TCP connections #71411 - kubernetes/kubernetes CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H 容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome Runc and CVE-2019-5736 - Kubernetes CVE Details - Kubernetes Security Vulnerabilities Docker移除17個暗藏挖礦程式的惡意容器 - iThome 設計出 Production-Ready Container 的 5 條戒律 - Phil Huang Ten layers of container security - Red Hat Introducing the Red Hat Universal Base Image - Red Hat 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome 導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases]]></content>
+    <content type="text"><![CDATA[不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點 一座 Kubenetes 最小技術棧?剔除掉多出的上層整合功能部分，最小情況下任何說自己是 Kubernetes 的平台方案，最少皆須具備以下的技術棧： Operating System (如： Ubuntu、CentOS、RHEL、Fedora CoreOS) Container Runtime Interface (如：Docker、CRI-O) Container Network Interface (如：Calico、Flannel) Container Orchestration (如：Kubernetes、Docker Swarm) 如同上述所述，Kubenetes 是 CNCF 其中一個專案，且它需要很多不同的專案一同協作才能把它運行起來，包含像是操作系統 (Operating System, OS)。相關的專案都已經羅列在下面 CNCF Cloud Native Interactive Landscape 的大圖裡 若想要體驗全手工安裝過程來理解細節的話，可以參考 Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog，而從中可以透過手把手安裝可以清楚地了解到，其實 Kubernetes 不是真的只有 Kubernetes 一個專案 (Project) 而已，還有 CNI、Etcd、Container Runtime 等組件要做選擇 OS 在這邊重要嗎?蠻多看倌在使用 Kubernetes 的時候，都會不小心遺忘其實容器平台的相關技術是仰賴於操作系統的技術 cgroup、selinux、seccomp 等達成，所以 OS 本身的選型和組態強固化是非常重要的一環，並不是使用了容器平台就可以忽視其安全性。對於想要了解實際上容器技術的本質，可以參考 Linux Container Intermals - How They Really Work 以 RH 體系的套件管理系統為例，實務上，對於作業系統的加固，除了看到 CVE 要上修補 (Patch)、定期更新套件 yum --secure update，有時候也會依據各自公司政策上的不同會搭配合規性驗證 (Compliance Validation)，以確保於操作系統層級上，與其他的環境是保持一致的，也就是常講的系統強化或系統標準化 (Standard of Environment, SoE)。 而常見的稽核準則有下列 5 個標準可以參考： 美國聯邦資訊處理標準 (Federal Information Processing Standard, FIPS 140-2) 信用卡產業資料安全標準 (Payment Card Industray Data Security Standard, PCI DSS) 美國國家工業安全計畫操作手冊 (National Industrial Security Program Operating Manual, NISPOM, or DoD. 5220.22-M) 美國防禦資訊系統代理機構之安全性技術實作指南 (DISA Security Technical Implementation Guide, STIG) 美國政府組態基準 (United States Government Configuration Baseline, USGCB) 或者 OpenSCAP Security Guides 提出的參考基準： Red Hat Corporate Profile for Certified Cloud Providers (RH CCP) Standard System Security Profile for RHEL7 當然如果有各自公司有內部的稽核規則，也可以透過 Ansible + OpenSCAP 一併規劃使用，以達到 Security Automation 的效果 那 Kubernetes 也同樣有類似的規範可依循嗎?目前筆者知道的就以下 5 個規範： 應用容器資安手冊 (NIST SP 800-190. Application Container Security Guide) 互聯網安全中心 (The Center for Internet Security, CIS) Kubernetes Benchmark 資訊安全國際標準 ISO/IEC 27001:2013 美國聯邦資訊安全管理法 (Federal Information Security Management Act, FISMA) 信用卡產業資料安全標準 (Payment Card Industray Data Security Standard 3.2, PCI DSS 3.2) 因為 Kubernetes 所帶動的技術發展太快了，如果是一直衝非常前沿的技術基本上這個章節沒有參考價值，但如果是為了企業內長久穩定使用則可以參考一下這些不同的規範來做強固化依據 (工~商~時~間~) 目前 Red Hat OpenShift 3.11 截至今日為止共提供以下 3 個驗證規範手冊: Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2 Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013 那 Kubernetes 裝完就可以不需升級了嗎?Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome，Kubernetes 2018/12 發出了第一個重大漏洞 CVE-2018-1002105。該漏洞是可以在 Kubernetes 上直接提權殺到底層去，還不會留 Log。Common Vulnerability Scoring System (CVSS) 直接給了 9.8 分數 (滿分10分)，而解決的唯一辦法就是： 請升級 而今年初，容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome，CVE-2019-5736 - RunC Escape Vulnerability，CVSS 給了 7.7 分 依據 Kubenetes 這種發展神速的步調下去 (現在已經來到 1.15 了)，可以預期往後的 CVE 也會隨著大家越來越熟悉 Kubernetes 而慢慢多起來，故不可能完全避免資安風險。結論上，不是裝完 Kubernetes 就沒事了，得要考慮後續長期維護和升級的作法。當然，如果只是自用或可以做到短時間重建 (Re-build)，就不用考慮這麼遠就是了。 CNI Plugin 可以亂選嗎?容器網路介面 (Container Network Interface, CNI) 在 Kubernetes 來說是一個抽象的標準介面和規範，功能需額外實踐，而該介面是掌控 Kubernetes 網路的核心組件，在技術選型上就格外重要，詳細可參閱 常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu 及 CNI 常見問題整理 - hwchiu (編: Hwchiu 這人跑去美國爽，羨慕嫉妒) 而發展至今，以包含虛擬網路 (Overlay Networking)、實體網路 (Underlay Networking) 之整體網路觀點來看，可以區分以下 5 種類型 (編: 這邊的歸納名是自取，並非通用說法，雖然目前也沒有通用說法，歡迎修正)： Pure CNI Plugin: 可獨立運作，不需要深度依靠實體網路能力，絕大部分 CNI Plugins 皆屬此類，如 Calico、Flannel、OVN 等 Hypervisor CNI Plugin: 基於 Hypervisor 提供的虛擬化技術，不需要深度依靠實體網路能力，提供整合能力，如 VMware NSX-T Container Plugin (NCP) Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 Juniper Contrail、ONOS SONA-CNI Mixed CNI Plugin: 需與實體網路進行整合，如 Cisco ACI、BigSwitch Big Cloud Fabric (BCF) Proxy CNI Plugin: 可透過該網路介面再接其他的 CNI Plugin，以達到單 Pod 多網卡的需求，如 Intel Multus、Huawei Genie、Nokia DAMN 說 CNI 是整個 Kubernetes 的核心靈魂也不為過，為了 Kubernetes 平台系統穩定，通常建議是依下列項目依序考慮： 功能 整合穩定度 有否支援 實務上，常見選擇帶有 NetworkPolicy 能力的 CNI Plugin，因可基於策略 (Policy) 來隔離 Pod/Namespace 等級的內部流量或者是外部來減少攻擊面 我的容器映像檔乾淨嗎? Docker移除17個暗藏挖礦程式的惡意容器 - iThome 這新聞應該是最實際的例子，塞了挖礦程式的容器映像檔存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome 等漏洞存在在映像檔內等情事發生。 為了避免類似情況發生，會有以下 3 種建議作法： 只用官方提供的映像檔: DockerHub library/*、Red Hat Container Catalog (RHCC) 等 執行前要弱掃: Clair、KubeXray、Snyk 等 容器標準化 (Standardize) 除了筆者前陣子有分享過 設計出 Production-Ready Container 的 5 條戒律 - Phil Workspace，Red Hat 官方也針對 Container Security 提出了一套概念 Ten layers of container security - Red Hat。而當中針對容器標準化的基礎映像檔也提出了通用基礎映像檔 Universal Base Image, UBI 的設計思考。 好的開始是成功的一半，好的映像檔能讓你睡眠品質提升 真心不知道怎麼開始的話，建議就先從 第一戒律：Standardize 開始慢慢做起吧 結語 我最一開始只是想強調的是 OS 真的是很重要，請不要忽視他 XD 呈上，整體系統整合穩定度也是一樣很重要，還記得木桶理論嗎? Multus 穩定釋出後，對於所有規劃容器平台網路的人都會是一個 __ 的開始，Container Network Function (CNF) 笑而不語中 感謝 iThome 讓我充實了很多版面 References 【關鍵資安議題：容器安全】剖析容器的資安風險與防護 - iThome 10 Docker Image Security Best Practices - synk Technical Details - TEN LAYERS OF CONTAINER SECURITY Red Hat CNCF Cloud Native Interactive Landscape 33 Kubernetes security tools - Sysdig 聯邦資訊處理標準 - Wiki Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog Linux Container Intermals - How They Really Work Security Automation with Ansible 常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu How to deal second interface service discovery and load balancer in kubernetes CNI 常見問題整理 - hwchiu FISMA Compliance for the OpenShift Container Platform Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2 Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013 Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome The Kubernetes privilege escalation flaw: Innovation still needs IT security expertise CVE-2018-1002105: proxy request handling in kube-apiserver can leave vulnerable TCP connections #71411 - kubernetes/kubernetes CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H 容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome Runc and CVE-2019-5736 - Kubernetes CVE Details - Kubernetes Security Vulnerabilities Docker移除17個暗藏挖礦程式的惡意容器 - iThome 設計出 Production-Ready Container 的 5 條戒律 - Phil Huang Ten layers of container security - Red Hat Introducing the Red Hat Universal Base Image - Red Hat 報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome 導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases]]></content>
       <categories>
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -20,8 +20,8 @@
         <category>openshfit</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift</tag>
+        <tag>container</tag>
       </tags>
   </entry>
   <entry>
@@ -83,8 +83,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>nfv</tag>
         <tag>redhat</tag>
+        <tag>nfv</tag>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -97,8 +97,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -109,8 +109,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>cnv</tag>
         <tag>kubevirt</tag>
       </tags>
@@ -124,8 +124,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>nfv</tag>
         <tag>openshift</tag>
+        <tag>nfv</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
@@ -139,8 +139,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>operator</tag>
       </tags>
   </entry>
@@ -152,8 +152,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
         <tag>operator</tag>
@@ -167,8 +167,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>juniper</tag>
         <tag>contrail</tag>
       </tags>
@@ -181,8 +181,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>networking</tag>
       </tags>
   </entry>
@@ -194,8 +194,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>nvidia</tag>
         <tag>dgx</tag>
         <tag>tesla</tag>
@@ -211,10 +211,10 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
-        <tag>ansible</tag>
-        <tag>restful</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
+        <tag>redhat</tag>
+        <tag>restful</tag>
       </tags>
   </entry>
   <entry>
@@ -225,10 +225,10 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>ansible</tag>
-        <tag>tower</tag>
         <tag>iac</tag>
+        <tag>redhat</tag>
+        <tag>tower</tag>
         <tag>ztp</tag>
       </tags>
   </entry>
@@ -240,8 +240,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>storage</tag>
       </tags>
   </entry>
@@ -253,8 +253,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>redhat</tag>
         <tag>openshift</tag>
+        <tag>redhat</tag>
         <tag>router</tag>
         <tag>services</tag>
         <tag>pods</tag>
@@ -268,9 +268,9 @@
         <category>ansible</category>
       </categories>
       <tags>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>terraform</tag>
-        <tag>ansible</tag>
       </tags>
   </entry>
   <entry>
@@ -302,8 +302,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>skopeo</tag>
         <tag>container</tag>
+        <tag>skopeo</tag>
         <tag>images</tag>
       </tags>
   </entry>
@@ -341,8 +341,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift</tag>
+        <tag>container</tag>
         <tag>12apps</tag>
       </tags>
   </entry>
@@ -380,8 +380,8 @@
         <category>openapi</category>
       </categories>
       <tags>
-        <tag>openapi</tag>
         <tag>oas</tag>
+        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -392,9 +392,9 @@
         <category>ansible</category>
       </categories>
       <tags>
+        <tag>automation</tag>
         <tag>ansible</tag>
         <tag>iac</tag>
-        <tag>automation</tag>
       </tags>
   </entry>
   <entry>
@@ -487,8 +487,8 @@
     <content type="text"><![CDATA[GoalRemote control and management OF-DPA via ovs-ofctl Environment Switch IP: 192.168.13.14 Hardware Model Edgecore AS6712-32X Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER OF-DPA version ofdpa_3.0 EA4 You need launch ofappagent first. If you dont know how to start it. Please refer OF-DPA with ONL Cheat Sheet Command launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653 Contorl VM IP: 192.168.13.2 OpenvSwitch 2.7.0 In this case, we just use ovs-ofctl, and it’s also work if you want to use dpctl which CPqD provide How to Install OpenvSwitch Basic Command1ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653 UsageShow port information ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653 Output123456789101112131415161718$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7an_tables:23, n_buffers:0capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATSOFPST_PORT_DESC reply (OF1.3) (xid=0x3): 1(port1): addr:cc:37:ab:d0:d6:30 config: 0 state: LINK_DOWN current: 40GB-FD FIBER supported: 10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM speed: 40000 Mbps now, 40000 Mbps max 2(port2): addr:cc:37:ab:d0:d6:30 config: 0 state: LINK_DOWN current: 40GB-FD FIBER supported: 10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM speed: 40000 Mbps now, 40000 Mbps max... Show tables information ovs-ofctl dump-tables Output123456789101112131415161718192021222324252627$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653OFPST_TABLE reply (OF1.3) (xid=0x2): table 0: active=0, lookup=0, matched=0 table 5: ditto table 6: ditto table 7: ditto table 8: ditto table 10: ditto table 11: ditto table 13: ditto table 15: ditto table 16: ditto table 17: ditto table 20: ditto table 24: ditto table 28: ditto table 30: ditto table 40: ditto table 50: ditto table 60: ditto table 65: ditto table 210: ditto table 211: ditto table 230: ditto table 235: ditto Add flow entry ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller Show flow entries ovs-ofctl dump-flows Output123$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653OFPST_FLOW reply (OF1.3) (xid=0x2): cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535 Show queue stats ovs-ofctl queue-stats Output1234567$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s... Show group information ovs-ofctl dump-groups Show ports information ovs-ofcll dump-ports Output123456789101112131415$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports port 1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s... Reference ovs-ofctl Pica8 OVS Configuration Guide 2.8.0 Compile OpenvSwitch - pichuang ovs-ofctl help]]></content>
       <tags>
         <tag>sdn</tag>
-        <tag>ovs</tag>
         <tag>ofdpa</tag>
+        <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
       </tags>
@@ -499,9 +499,9 @@
     <content type="text"><![CDATA[Environment Hardware Model Edgecore AS5712-54X Software ONL version ONL-2.0.0-ONL-OS-DEB8-2017-07-18.1642-40fc82b OF-DPA version ofdpa_3.0 EA5 Set Base configuration vi /etc/network/interfaces123456auto ma1iface ma1 inet staticaddress 192.168.11.2netmask 255.255.255.0gateway 192.168.11.254dns-nameservers 192.168.100.1 Rate Limit Setting Rate Limit per queue client_queue_config &lt;queueId&gt; &lt;intIfNum&gt; &lt;minRate&gt; &lt;maxRate&gt; queyeID := [ 0 - 7 ] ex: client_queue_config 0 2 1 1000 Queue 0, Port 2, 1 means minimal 0.1%, 1000 means Maximum 100% Min and Max queue rates must range between 1-1000 Show Rate Limit per queue client_queue_config &lt;queueId&gt; &lt;intIfNum&gt; ex: client_queue_config 1 1 Show Queue 1, Port 1 min/Max rate OF Agent App Enable ofagentapp service via CLI launcher ofagentapp --controller=&lt;CONTROLLER_IP&gt;:6653 --listen=&lt;SWITCH_MA1_IP&gt;:6653 via INIT service ofagentd restart The ofagent.conf at /etc/ofagent/ofagent.conf More detailes How to enable debugging mode on OF-DPA Stop ofagentapp pkill ofagentapp Port Speed Change Port Speed per Port vi /etc/accton/ofdpa.conf12345678...# port_speed_&lt;port&gt;= Speed# Speed := &#123; 1000 | 10000 | 40000 &#125;...# Default value in AS5712-54X is port_speed=10000port_speed_3=1000 # front port 3port_speed_4=10000 # front port 4... Change Port Mode per Port vi /etc/accton/ofdpa.conf123456789...# port_mode_&lt;port&gt; = Speed_Type [Interface Type]# Speed_Type:= &#123; 1x40g | 4x10g &#125;# Interface Type := &#123; CR | CR4 | SR | SR4 | LR | LR4 | KR | KR4 | SFI | XFI | ... &#125;...port_mode_1=1x40gport_mode_2=1x40g if=SR4port_mode_3=4x10g #Breakout cable... Dump BRCM Informations Dump Port Table client_port_table_dump Dump Meter Table client_meter_dump Dump Flow Table client_flowtable_dump Dump Group Table client_grouptable_dump Dump Tunnel client_tunnel_dump Dump OAM client_oam_dump Dump Class Color Table client_classcolortable_dump Show physical port mapping client_drivport -a Enable sFlow client_sflow Purge all configuration client_cfg_purge BRCM Diag Shell with ONL NOTE: Please launch ofagentapp first in backaground Show processes status client_drivshell ps Show port config client_drivshell port &lt;port_number&gt; Show usage command client_drivshell help Redirect log to other devices (ex: /dev/console) client_drivshell log f=/dev/console You can use command tty to find your teletype device name currently Tips: client_drivshell log f=$(tty) NOS Information Show Platform Information with ONL onl-platform-show Show sysconfig with ONL onl-sysconfig Mount Disk Change w/r permission on disk vi /etc/mtab.yml onl-mount mount all Check mount status mount Check partition status df -h ONL Platform Information Show ONL information for human read onlpdump -r Show Hardware information onlpdump -s Show SFP information onlpdump -S Only launch OF-DPA without OpenFlow Start OF-DPA without OpenFlow agent 123KERNEL_MODS=/lib/modules/`uname -r`/ofdpainsmod $KERNEL_MODS/linux-kernel-bde.ko dmasize=32M maxpayload=128insmod $KERNEL_MODS/linux-user-bde.ko Check Status 12lsmodclient_drivshell ps Flow tables ID (OF-DPA 3.0.3) Table Name Table ID Ingress Port 0 Port DSCP Trust 5 Port PCP Trust 6 Tunnel DSCP Trust 7 Tunnel PCP Trust 8 Injected OAM 9 VLAN 10 VLAN 1 11 Ingress Maintenance Point 12 MPLS L2 Port 13 MPLS DSCP Trust 15 MPLS PCP Trust 16 L2 Policer 18 L2 Policer Actions 19 Termination MAC 20 L3 Type 21 MPLS 0 23 MPLS 1 24 MPLS 2 25 MPLS-TP Maintenance Point 26 MPLS L3 Type 27 MPLS Label Trust 28 MPLS Type 29 Unicast Routing 30 Multicast Routing 40 Bridging 50 Policy ACL 60 Color Based Actions 65 Egress VLAN 210 Egress VLAN 1 211 Egress Maintenance Point 226 Egress DSCP PCP Remark 230 Egress TPID 235 Reference OF-DPA文档读后感 How to enable debugging mode on OF-DPA]]></content>
       <tags>
         <tag>sdn</tag>
-        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
+        <tag>ofdpa</tag>
       </tags>
   </entry>
   <entry>
