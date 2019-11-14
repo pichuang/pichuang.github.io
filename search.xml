@@ -211,8 +211,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>openapi</tag>
         <tag>ansible</tag>
+        <tag>openapi</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -368,8 +368,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>netdevops</tag>
         <tag>ansible</tag>
+        <tag>netdevops</tag>
       </tags>
   </entry>
   <entry>
@@ -392,8 +392,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>automation</tag>
+        <tag>ansible</tag>
         <tag>iac</tag>
       </tags>
   </entry>
