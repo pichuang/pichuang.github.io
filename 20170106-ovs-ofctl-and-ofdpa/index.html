@@ -4,132 +4,59 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="en">
+<head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
   };
 </script>
 
-
-  
-
-
-
-
   <meta name="description" content="GoalRemote control and management OF-DPA via ovs-ofctl">
-<meta name="keywords" content="sdn,ofdpa,ovs-ofctl,ovs,switch">
+<meta name="keywords" content="sdn,ofdpa,ovs,switch,ovs-ofctl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenvSwitch ovs-ofctl and OF-DPA">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20170106-ovs-ofctl-and-ofdpa/index.html">
@@ -140,29 +67,23 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenvSwitch ovs-ofctl and OF-DPA">
 <meta name="twitter:description" content="GoalRemote control and management OF-DPA via ovs-ofctl">
-
-
-
-
-
-
   <link rel="canonical" href="https://blog.pichuang.com.tw/20170106-ovs-ofctl-and-ofdpa/">
 
 
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>OpenvSwitch ovs-ofctl and OF-DPA | Phil Workspace</title>
   
-
-
-
-
-  <script async src="//www.googletagmanager.com/gtag/js?id=[object Object]"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
   <script>
     var host = window.location.hostname;
     if (host !== "localhost" || !true) {
@@ -180,10 +101,8 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -192,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -209,29 +128,20 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-    
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Phil Workspace</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -244,229 +154,166 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
       
     
-
-    
+      
+      
+        
+          
+        
+      
+        
+      
+        
       
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">48</span></a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-who">
-
-    
-    
-    
+        <li class="menu-item menu-item-who">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-record">
-
-    
-    
-    
+        <li class="menu-item menu-item-record">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
 
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
-  
-  
-  
-  
-
-  
-
-  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
             
 
-          
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  
-
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20170106-ovs-ofctl-and-ofdpa/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">OpenvSwitch ovs-ofctl and OF-DPA
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">OpenvSwitch ovs-ofctl and OF-DPA
-
-              
-            
-          </h1>
-        
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2017-01-06 13:42:10" itemprop="dateCreated datePublished" datetime="2017-01-06T13:42:10+08:00">2017-01-06</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2017-03-21 00:00:00" itemprop="dateModified" datetime="2017-03-21T00:00:00+08:00">2017-03-21</time>
-              
+              </span>
             
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
           
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -474,17 +321,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
 <a id="more"></a>
+
 <h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
 <li>Switch<ul>
 <li>IP: 192.168.13.14</li>
 <li>Hardware<ul>
 <li>Model<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&amp;cls2=7&amp;cls3=43&amp;id=12" target="_blank" rel="noopener">Edgecore AS6712-32X</a></li>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=43&id=12" target="_blank" rel="noopener">Edgecore AS6712-32X</a></li>
 </ul>
 </li>
 </ul>
@@ -519,14 +364,17 @@
 </li>
 </ul>
 <h3 id="Basic-Command"><a href="#Basic-Command" class="headerlink" title="Basic Command"></a>Basic Command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br></pre></td></tr></table></figure>
+
 <h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h4 id="Show-port-information"><a href="#Show-port-information" class="headerlink" title="Show port information"></a>Show port information</h4><ul>
 <li><code>ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</code></li>
 <li>Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7a</span><br><span class="line">n_tables:23, n_buffers:0</span><br><span class="line">capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS</span><br><span class="line">OFPST_PORT_DESC reply (OF1.3) (xid=0x3):</span><br><span class="line"> 1(port1): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line"> 2(port2): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h4 id="Show-tables-information"><a href="#Show-tables-information" class="headerlink" title="Show tables information"></a>Show tables information</h4><ul>
 <li><code>ovs-ofctl dump-tables</code></li>
 <li>Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_TABLE reply (OF1.3) (xid=0x2):</span><br><span class="line">  table 0:</span><br><span class="line">    active=0, lookup=0, matched=0</span><br><span class="line"></span><br><span class="line">  table 5: ditto</span><br><span class="line">  table 6: ditto</span><br><span class="line">  table 7: ditto</span><br><span class="line">  table 8: ditto</span><br><span class="line">  table 10: ditto</span><br><span class="line">  table 11: ditto</span><br><span class="line">  table 13: ditto</span><br><span class="line">  table 15: ditto</span><br><span class="line">  table 16: ditto</span><br><span class="line">  table 17: ditto</span><br><span class="line">  table 20: ditto</span><br><span class="line">  table 24: ditto</span><br><span class="line">  table 28: ditto</span><br><span class="line">  table 30: ditto</span><br><span class="line">  table 40: ditto</span><br><span class="line">  table 50: ditto</span><br><span class="line">  table 60: ditto</span><br><span class="line">  table 65: ditto</span><br><span class="line">  table 210: ditto</span><br><span class="line">  table 211: ditto</span><br><span class="line">  table 230: ditto</span><br><span class="line">  table 235: ditto</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h4 id="Add-flow-entry"><a href="#Add-flow-entry" class="headerlink" title="Add flow entry"></a>Add flow entry</h4><ul>
@@ -535,11 +383,13 @@
 <h4 id="Show-flow-entries"><a href="#Show-flow-entries" class="headerlink" title="Show flow entries"></a>Show flow entries</h4><ul>
 <li><code>ovs-ofctl dump-flows</code></li>
 <li>Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_FLOW reply (OF1.3) (xid=0x2):</span><br><span class="line"> cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h4 id="Show-queue-stats"><a href="#Show-queue-stats" class="headerlink" title="Show queue stats"></a>Show queue stats</h4><ul>
 <li><code>ovs-ofctl queue-stats</code></li>
 <li>Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues</span><br><span class="line">  port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h4 id="Show-group-information"><a href="#Show-group-information" class="headerlink" title="Show group information"></a>Show group information</h4><ul>
@@ -548,6 +398,7 @@
 <h4 id="Show-ports-information"><a href="#Show-ports-information" class="headerlink" title="Show ports information"></a>Show ports information</h4><ul>
 <li><code>ovs-ofcll dump-ports</code></li>
 <li>Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports</span><br><span class="line">  port  1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
@@ -557,89 +408,70 @@
 <li><a href="https://gist.github.com/pichuang/a901ea8d9870728bf8eebaab548e037c" target="_blank" rel="noopener">ovs-ofctl help</a></li>
 </ul>
 
-      
     </div>
 
     
-
     
     
-    
-
-    
-
-    
+        
       
-    
-    
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
+      <footer class="post-footer">
           
-            <a href="/tags/sdn/" rel="tag"># sdn</a>
-          
-            <a href="/tags/ofdpa/" rel="tag"># ofdpa</a>
-          
-            <a href="/tags/ovs-ofctl/" rel="tag"># ovs-ofctl</a>
-          
-            <a href="/tags/ovs/" rel="tag"># ovs</a>
-          
-            <a href="/tags/switch/" rel="tag"># switch</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/20170104-ofdpa-with-onl-cheat-sheet/" rel="next" title="OF-DPA with ONL Cheat Sheet">
-                <i class="fa fa-chevron-left"></i> OF-DPA with ONL Cheat Sheet
-              </a>
+          
+          <div class="post-tags">
+            
+              <a href="/tags/sdn/" rel="tag"># sdn</a>
+            
+              <a href="/tags/ofdpa/" rel="tag"># ofdpa</a>
+            
+              <a href="/tags/ovs/" rel="tag"># ovs</a>
+            
+              <a href="/tags/switch/" rel="tag"># switch</a>
+            
+              <a href="/tags/ovs-ofctl/" rel="tag"># ovs-ofctl</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/" rel="prev" title="SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl">
-                SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/20170104-ofdpa-with-onl-cheat-sheet/" rel="next" title="OF-DPA with ONL Cheat Sheet">
+                  <i class="fa fa-chevron-left"></i> OF-DPA with ONL Cheat Sheet
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/" rel="prev" title="SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl">
+                  SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-      
-
-      
-      
-    </footer>
+        
+      </footer>
+    
   </div>
   
   
   
   </article>
 
-
   </div>
 
 
           </div>
           
 
-  
-
-
-
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -650,337 +482,112 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-
+        
+        
+        
+        
       
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.</span> <span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment"><span class="nav-number">2.</span> <span class="nav-text">Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Command"><span class="nav-number">2.1.</span> <span class="nav-text">Basic Command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">2.2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-port-information"><span class="nav-number">2.2.1.</span> <span class="nav-text">Show port information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-tables-information"><span class="nav-number">2.2.2.</span> <span class="nav-text">Show tables information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Add-flow-entry"><span class="nav-number">2.2.3.</span> <span class="nav-text">Add flow entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-flow-entries"><span class="nav-number">2.2.4.</span> <span class="nav-text">Show flow entries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-queue-stats"><span class="nav-number">2.2.5.</span> <span class="nav-text">Show queue stats</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-group-information"><span class="nav-number">2.2.6.</span> <span class="nav-text">Show group information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-ports-information"><span class="nav-number">2.2.7.</span> <span class="nav-text">Show ports information</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Phil Huang</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">48</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">categories</span>
-                  
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">82</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
-
+    
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.</span> <span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment"><span class="nav-number">2.</span> <span class="nav-text">Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Command"><span class="nav-number">2.1.</span> <span class="nav-text">Basic Command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">2.2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-port-information"><span class="nav-number">2.2.1.</span> <span class="nav-text">Show port information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-tables-information"><span class="nav-number">2.2.2.</span> <span class="nav-text">Show tables information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Add-flow-entry"><span class="nav-number">2.2.3.</span> <span class="nav-text">Add flow entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-flow-entries"><span class="nav-number">2.2.4.</span> <span class="nav-text">Show flow entries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-queue-stats"><span class="nav-number">2.2.5.</span> <span class="nav-text">Show queue stats</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-group-information"><span class="nav-number">2.2.6.</span> <span class="nav-text">Show group information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Show-ports-information"><span class="nav-number">2.2.7.</span> <span class="nav-text">Show ports information</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
-
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -991,27 +598,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
 
         
+
+
+
+
 
 
 
@@ -1023,132 +619,59 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
   
 
 
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-  
-  
-
-
-  
-
-
-  
 
 
 
 
-  
-
-  
-
-  
-  
-
-  
-  
-
-  
 
 
-  
 
-  
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
 
   
 

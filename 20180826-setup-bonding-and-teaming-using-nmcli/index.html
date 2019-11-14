@@ -4,129 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="en">
+<head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="前言過往我們多數會採用已不再維護的 net-tools 套件底下的 ifconfig 或具備比前者更豐富且有社群維護的 ip 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 nmcli 指令來設定 bonding 和 teamin">
 <meta name="keywords" content="nmcli,bonding,teaming,network">
@@ -140,29 +67,23 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 nmcli  設定 Bonding 或 Teaming">
 <meta name="twitter:description" content="前言過往我們多數會採用已不再維護的 net-tools 套件底下的 ifconfig 或具備比前者更豐富且有社群維護的 ip 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 nmcli 指令來設定 bonding 和 teamin">
-
-
-
-
-
-
   <link rel="canonical" href="https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/">
 
 
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>使用 nmcli  設定 Bonding 或 Teaming | Phil Workspace</title>
   
-
-
-
-
-  <script async src="//www.googletagmanager.com/gtag/js?id=[object Object]"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
   <script>
     var host = window.location.hostname;
     if (host !== "localhost" || !true) {
@@ -180,10 +101,8 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -192,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -209,29 +128,20 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-    
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Phil Workspace</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -244,221 +154,166 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
       
     
-
-    
+      
+      
+        
+          
+        
+      
+        
+      
+        
       
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">48</span></a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-who">
-
-    
-    
-    
+        <li class="menu-item menu-item-who">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-record">
-
-    
-    
-    
+        <li class="menu-item menu-item-record">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
 
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
-  
-  
-  
-  
-
-  
-
-  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
             
 
-          
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  
-
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">使用 nmcli  設定 Bonding 或 Teaming
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">使用 nmcli  設定 Bonding 或 Teaming
-
-              
-            
-          </h1>
-        
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-08-26 14:58:00" itemprop="dateCreated datePublished" datetime="2018-08-26T14:58:00+08:00">2018-08-26</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 14:59:45" itemprop="dateModified" datetime="2019-04-13T14:59:45+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/rhel/" itemprop="url" rel="index"><span itemprop="name">rhel</span></a></span>
 
@@ -469,22 +324,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -492,11 +334,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
 <a id="more"></a>
+
 <p>在 RHEL 7 裡，<code>nmcli</code> 可以提供你指令去操作 Network Manager Service (可用 <code>systemctl status NetworkManager.service</code> 來查詢狀態)，也可以透過此指令去產生正確的網路設定檔出來 (位置於 <code>/etc/sysconfig/network-scripts/*</code>)，若是不習慣純指令的方式，也可用 <code>nmtui</code> 呼叫文字使用介面 (Text Mode User Interface) 呼叫設定畫面出來</p>
 <p>本文將基於 <code>nmcli</code> 介紹如何設定</p>
 <ol>
@@ -506,27 +346,38 @@
 </ol>
 <h2 id="Get-Started"><a href="#Get-Started" class="headerlink" title="Get Started"></a>Get Started</h2><h3 id="獲得-Network-Device-的狀態"><a href="#獲得-Network-Device-的狀態" class="headerlink" title="獲得 Network Device 的狀態"></a>獲得 Network Device 的狀態</h3><p>看看現在 RHEL 7 認得的這些網卡狀態，想要了解各網卡介面的狀態可以看這裡</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli device status</span><br><span class="line">DEVICE      TYPE      STATE         CONNECTION</span><br><span class="line">eth0        ethernet  connected     eth0</span><br><span class="line">eth1        ethernet  disconnected  --</span><br><span class="line">eth2        ethernet  disconnected  --</span><br><span class="line">eth3        ethernet  disconnected  --</span><br></pre></td></tr></table></figure>
+
 <h3 id="新增-Ethernet-Interface"><a href="#新增-Ethernet-Interface" class="headerlink" title="新增 Ethernet Interface"></a>新增 Ethernet Interface</h3><p>本範例新增一個 connection profile 名字叫做 lab-eth1，指定 eth1 介面的 ip 跟 gateway</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli connection add con-name lab-eth1 ifname eth1 <span class="built_in">type</span> ethernet ip4 192.168.122.100/24 gw4 192.168.122.1</span><br><span class="line">Connection <span class="string">'lab-eth1'</span> (e93927d0-4ef6-4640-90c5-8dbcd24c00e0) successfully added.</span><br></pre></td></tr></table></figure>
+
 <p><code>nmcli</code> 會自動地建立 connection profile 出來，也就是大家比較熟悉的網路設定檔，詳細請參考下列輸出</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network-scripts/ifcfg-lab-eth1</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPADDR=192.168.122.100</span><br><span class="line">PREFIX=24</span><br><span class="line">GATEWAY=192.168.122.1</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=lab-eth1</span><br><span class="line">UUID=b1814873-05cf-4e18-9b82-4c8d09e9b4dd</span><br><span class="line">DEVICE=eth1</span><br><span class="line">ONBOOT=yes</span><br></pre></td></tr></table></figure>
+
 <p>依據 Connection Profile - lab-eth1 的描述啟動網路介面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli connection up lab-eth1</span><br><span class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/19)</span><br></pre></td></tr></table></figure>
+
 <h3 id="新增-Bonding-Interface"><a href="#新增-Bonding-Interface" class="headerlink" title="新增 Bonding Interface"></a>新增 Bonding Interface</h3><p>一樣師法新增 Ethernet Interface 的方式，來新增 Bonding Interface，目前有支援七種 bonding 模式</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  nmcli con add <span class="built_in">type</span> bond ifname bond0 mode [按tab]</span><br><span class="line">802.3ad        active-backup  balance-alb    balance-rr     balance-tlb    balance-xor    broadcast</span><br></pre></td></tr></table></figure>
+
 <p>本範例新增一個 bond0 介面，模式使用 802.3ad，nmcli 會自動產生一個 Connection Profile <code>bond-bond0</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  nmcli con add <span class="built_in">type</span> bond ifname bond0 mode 802.3ad</span><br><span class="line">Connection <span class="string">'bond-bond0'</span> (e817f31b-757e-4903-9230-4ac4eff7101b) successfully added.</span><br></pre></td></tr></table></figure>
+
 <p>將 eth2 及 eth3 加入至 bond0 裡面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$  nmcli con add <span class="built_in">type</span> bond-slave ifname eth2 master bond0</span><br><span class="line">Connection <span class="string">'bond-slave-eth2'</span> (cc06f17d-95b2-401e-a2d4-1748ff4f24b4) successfully added.</span><br><span class="line">$  nmcli con add <span class="built_in">type</span> bond-slave ifname eth3 master bond0</span><br><span class="line">Connection <span class="string">'bond-slave-eth3'</span> (1b2c4b31-7294-40fc-8f24-a33c98265625) successfully added.</span><br></pre></td></tr></table></figure>
+
 <p>啟動介面，順序從 Slave Interface 到 Bonding Interface</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli con up bond-slave-eth2</span><br><span class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/23)</span><br><span class="line">$ nmcli con up bond-slave-eth3</span><br><span class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/24)</span><br><span class="line">$ nmcli con up bond-bond0</span><br><span class="line">Connection successfully activated (master waiting <span class="keyword">for</span> slaves) (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/25)</span><br></pre></td></tr></table></figure>
+
 <p>記得要給 bond0 介面一個 ip</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli con mod bond-bond0 ipv4.addresses 192.168.122.101/24</span><br><span class="line">$ nmcli con mod bond-bond0 ipv4.method manual</span><br><span class="line">$ nmcli con up bond-bond0</span><br></pre></td></tr></table></figure>
+
 <p>因為 bonding 是實作於 kernel module 裡面，故若發現啟動失敗，可以透過 <code>lsmod |grep bonding</code> 來檢查有沒有正確 load module，這邊就不做過多闡述。若想要檢查 bonding interface 的狀況則可以去 <code>/proc/net/bonding/*</code> 底下檢查內容</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/net/bonding/bond0</span><br><span class="line">Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)</span><br><span class="line"></span><br><span class="line">Bonding Mode: IEEE 802.3ad Dynamic link aggregation</span><br><span class="line">Transmit Hash Policy: layer2 (0)</span><br><span class="line">MII Status: up</span><br><span class="line">MII Polling Interval (ms): 100</span><br><span class="line">Up Delay (ms): 0</span><br><span class="line">Down Delay (ms): 0</span><br><span class="line"></span><br><span class="line">802.3ad info</span><br><span class="line">LACP rate: slow</span><br><span class="line">Min links: 0</span><br><span class="line">Aggregator selection policy (ad_select): stable</span><br><span class="line">System priority: 65535</span><br><span class="line">System MAC address: 2c:c2:60:27:0a:9b</span><br><span class="line">Active Aggregator Info:</span><br><span class="line">        Aggregator ID: 1</span><br><span class="line">        Number of ports: 1</span><br><span class="line">        Actor Key: 0</span><br><span class="line">        Partner Key: 1</span><br><span class="line">        Partner Mac Address: 00:00:00:00:00:00</span><br><span class="line"></span><br><span class="line">Slave Interface: eth2</span><br><span class="line">MII Status: up</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 <h3 id="新增-Teaming-Interface"><a href="#新增-Teaming-Interface" class="headerlink" title="新增 Teaming Interface"></a>新增 Teaming Interface</h3><p>Network Teaming 技術來自於 <code>libteam</code> 這個模組，提供比既有 linux bonding 效能和功能還要好的服務，功能上是可以完全取代 linux bonding，主要的優勢在於 Data aggregation 和 failover 這兩者功能皆較為突出，詳細比較可以參閱官方比較表 <a href="https://github.com/jpirko/libteam/wiki/Bonding-vs.-Team-features" target="_blank" rel="noopener">Bonding vs. Team features - jpirko/libteam</a>，而 RHEL7 預設是<strong>建議</strong>採用此方案</p>
 <p>Network Teaming 使用 teamd.service 來進行 driver 控制及設定，故在使用該技術之前需要先安裝 teamd 這個模組</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y teamd</span><br><span class="line">$ systemctl list-unit-files | grep teamd</span><br><span class="line">teamd@.service                                static</span><br></pre></td></tr></table></figure>
+
 <p>產生 Teaming Interface Connection Profile 的方式跟 Bonding 不太一樣，主要是由 libtam 裡面的 Runner 來監控網路介面並依據所設定的演算法對此作出不同的行為。目前 Runner 有支援以下模式:</p>
 <ul>
 <li>broadcast</li>
@@ -537,10 +388,13 @@
 </ul>
 <p>詳細演算法可參閱 <a href="https://github.com/jpirko/libteam/wiki/Infrastructure-Specification#runners" target="_blank" rel="noopener">Infrastructure Specification - jpirko/libteam</a> 和鳥哥網站 <a href="http://dic.vbird.tw/linux_server/unit03.php" target="_blank" rel="noopener">第 3 堂課 - LACP 與 bonding/team 及 IPv6 簡易設定</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli con add <span class="built_in">type</span> team ifname team0 config <span class="string">'&#123;"runner":&#123;"name": "activebackup"&#125;&#125;'</span></span><br><span class="line">Connection <span class="string">'team-team0'</span> (f7b8627e-3847-4383-9f66-7d9c0dba1e5e) successfully added.</span><br></pre></td></tr></table></figure>
+
 <p>將 eth2 及 eth3 加入 team-team0 裡面，並分別產生 Connection profile team0-port1 及 team0-port2</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli connection add <span class="built_in">type</span> team-slave con-name team0-port1 ifname eth2 master team-team0</span><br><span class="line">Connection <span class="string">'team0-port1'</span> (075e1011-8772-459b-85ee-3213b3f74cc5) successfully added.</span><br><span class="line">$ nmcli connection add <span class="built_in">type</span> team-slave con-name team0-port2 ifname eth3 master team-team0</span><br><span class="line">Connection <span class="string">'team0-port2'</span> (2e9a8489-ce3f-4509-a305-4d250c77fa46) successfully added.</span><br></pre></td></tr></table></figure>
+
 <p>跟 bonding 啟動方式一樣，也是從 slave interface 開始啟動介面至 teaming interface</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ nmcli con mod team-team0 ipv4.addresses 192.168.122.101/24</span><br><span class="line">$ nmcli con mod team-team0 ipv4.method manual</span><br><span class="line">$ nmcli con up team0-port1</span><br><span class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/35)</span><br><span class="line">$ nmcli con up team0-port2</span><br><span class="line">Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/36)</span><br><span class="line">$ nmcli con up team-team0</span><br><span class="line">Connection successfully activated (master waiting <span class="keyword">for</span> slaves) (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/37)</span><br></pre></td></tr></table></figure>
+
 <p>若要觀察 teaming interface 的狀態，可使用 <code>teamdctl</code> 來進行觀測，請參閱 <a href="https://www.linux.org/docs/man8/teamnl.html" target="_blank" rel="noopener">man: Team Netlink Interface</a></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文介紹了如何透過 nmcli 指令產生出 connection profile，同時也點出了 bonding 及 teaming 在技術實作上是不同的，有興趣的人可以自行爬文研究 libteam，但筆者比較推薦把 <a href="http://dic.vbird.tw/linux_server/unit03.php" target="_blank" rel="noopener">第 3 堂課 - LACP 與 bonding/team 及 IPv6 簡易設定</a> 這文章先閱讀完，再參閱其他的文件</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
@@ -552,87 +406,68 @@
 <li><a href="http://dic.vbird.tw/linux_server/unit03.php" target="_blank" rel="noopener">第 3 堂課 - LACP 與 bonding/team 及 IPv6 簡易設定</a></li>
 </ul>
 
-      
     </div>
 
     
-
     
     
-    
-
-    
-
-    
+        
       
-    
-    
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
+      <footer class="post-footer">
           
-            <a href="/tags/nmcli/" rel="tag"># nmcli</a>
-          
-            <a href="/tags/bonding/" rel="tag"># bonding</a>
-          
-            <a href="/tags/teaming/" rel="tag"># teaming</a>
-          
-            <a href="/tags/network/" rel="tag"># network</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/20180821-review-twelve-factor-apps/" rel="next" title="再讀 Twelve-Factor Apps">
-                <i class="fa fa-chevron-left"></i> 再讀 Twelve-Factor Apps
-              </a>
+          
+          <div class="post-tags">
+            
+              <a href="/tags/nmcli/" rel="tag"># nmcli</a>
+            
+              <a href="/tags/bonding/" rel="tag"># bonding</a>
+            
+              <a href="/tags/teaming/" rel="tag"># teaming</a>
+            
+              <a href="/tags/network/" rel="tag"># network</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20180920-add-ssl-tls-cert-and-key/" rel="prev" title="新增 SSL/TLS 憑證和金鑰">
-                新增 SSL/TLS 憑證和金鑰 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/20180821-review-twelve-factor-apps/" rel="next" title="再讀 Twelve-Factor Apps">
+                  <i class="fa fa-chevron-left"></i> 再讀 Twelve-Factor Apps
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/20180920-add-ssl-tls-cert-and-key/" rel="prev" title="新增 SSL/TLS 憑證和金鑰">
+                  新增 SSL/TLS 憑證和金鑰 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-      
-
-      
-      
-    </footer>
+        
+      </footer>
+    
   </div>
   
   
   
   </article>
 
-
   </div>
 
 
           </div>
           
 
-  
-
-
-
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -643,337 +478,112 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-
+        
+        
+        
+        
       
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Started"><span class="nav-number">2.</span> <span class="nav-text">Get Started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#獲得-Network-Device-的狀態"><span class="nav-number">2.1.</span> <span class="nav-text">獲得 Network Device 的狀態</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Ethernet-Interface"><span class="nav-number">2.2.</span> <span class="nav-text">新增 Ethernet Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Bonding-Interface"><span class="nav-number">2.3.</span> <span class="nav-text">新增 Bonding Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Teaming-Interface"><span class="nav-number">2.4.</span> <span class="nav-text">新增 Teaming Interface</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Phil Huang</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">48</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">categories</span>
-                  
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">82</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
-
+    
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Started"><span class="nav-number">2.</span> <span class="nav-text">Get Started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#獲得-Network-Device-的狀態"><span class="nav-number">2.1.</span> <span class="nav-text">獲得 Network Device 的狀態</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Ethernet-Interface"><span class="nav-number">2.2.</span> <span class="nav-text">新增 Ethernet Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Bonding-Interface"><span class="nav-number">2.3.</span> <span class="nav-text">新增 Bonding Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-Teaming-Interface"><span class="nav-number">2.4.</span> <span class="nav-text">新增 Teaming Interface</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
-
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -984,27 +594,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
 
         
+
+
+
+
 
 
 
@@ -1016,132 +615,59 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
   
 
 
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-  
-  
-
-
-  
-
-
-  
 
 
 
 
-  
-
-  
-
-  
-  
-
-  
-  
-
-  
 
 
-  
 
-  
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
 
   
 

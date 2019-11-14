@@ -4,129 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="en">
+<head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="前言現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Imag">
 <meta name="keywords" content="container,skopeo,images">
@@ -142,29 +69,23 @@
 <meta name="twitter:title" content="Skopeo: 管理 Container 映像檔及倉庫的方式">
 <meta name="twitter:description" content="前言現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Imag">
 <meta name="twitter:image" content="https://blog.pichuang.com.tw/images/skopeo.png">
-
-
-
-
-
-
   <link rel="canonical" href="https://blog.pichuang.com.tw/20180918-skopeo/">
 
 
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>Skopeo: 管理 Container 映像檔及倉庫的方式 | Phil Workspace</title>
   
-
-
-
-
-  <script async src="//www.googletagmanager.com/gtag/js?id=[object Object]"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
   <script>
     var host = window.location.hostname;
     if (host !== "localhost" || !true) {
@@ -182,10 +103,8 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -194,7 +113,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -211,29 +130,20 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-    
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Phil Workspace</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -246,221 +156,166 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
       
     
-
-    
+      
+      
+        
+          
+        
+      
+        
+      
+        
       
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">48</span></a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-who">
-
-    
-    
-    
+        <li class="menu-item menu-item-who">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-record">
-
-    
-    
-    
+        <li class="menu-item menu-item-record">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
 
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
-  
-  
-  
-  
-
-  
-
-  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
             
 
-          
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  
-
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180918-skopeo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Skopeo: 管理 Container 映像檔及倉庫的方式
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Skopeo: 管理 Container 映像檔及倉庫的方式
-
-              
-            
-          </h1>
-        
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-11-20 14:53:00" itemprop="dateCreated datePublished" datetime="2018-11-20T14:53:00+08:00">2018-11-20</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 14:56:31" itemprop="dateModified" datetime="2019-04-13T14:56:31+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
 
@@ -471,22 +326,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -494,12 +336,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
 <p><img src="/images/skopeo.png" alt></p>
 <a id="more"></a>
+
+
 <h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/" target="_blank" rel="noopener">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
 <p>現有的常見功能有:</p>
 <ul>
@@ -511,98 +352,84 @@
 </li>
 </ul>
 <h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
 <p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
 <h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"Name"</span>: <span class="string">"docker.io/library/nginx"</span>,</span><br><span class="line">    <span class="string">"Digest"</span>: <span class="string">"sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3"</span>,</span><br><span class="line">    <span class="string">"RepoTags"</span>: [</span><br><span class="line">        <span class="string">"1-alpine-perl"</span>,</span><br><span class="line">        <span class="string">"1-alpine"</span>,</span><br><span class="line">        <span class="string">"1-perl"</span>,</span><br><span class="line">        <span class="string">"1.10-alpine"</span>,</span><br><span class="line">        <span class="string">"1.10.0-alpine"</span>,</span><br><span class="line">        <span class="string">"1.10.0"</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="http://cri-o.io/" target="_blank" rel="noopener">CRI-O</a></li>
 <li><a href="https://github.com/containers/skopeo" target="_blank" rel="noopener">GitHub - Container/Skopeo</a></li>
 <li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/" target="_blank" rel="noopener">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
 </ul>
 
-      
     </div>
 
     
-
     
     
-    
-
-    
-
-    
+        
       
-    
-    
 
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
+      <footer class="post-footer">
           
-            <a href="/tags/container/" rel="tag"># container</a>
-          
-            <a href="/tags/skopeo/" rel="tag"># skopeo</a>
-          
-            <a href="/tags/images/" rel="tag"># images</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/20180920-add-ssl-tls-cert-and-key/" rel="next" title="新增 SSL/TLS 憑證和金鑰">
-                <i class="fa fa-chevron-left"></i> 新增 SSL/TLS 憑證和金鑰
-              </a>
+          
+          <div class="post-tags">
+            
+              <a href="/tags/container/" rel="tag"># container</a>
+            
+              <a href="/tags/skopeo/" rel="tag"># skopeo</a>
+            
+              <a href="/tags/images/" rel="tag"># images</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20190319-cnf-testbed/" rel="prev" title="Cloud Native Network Functions (CNF) Testbed 心得感想">
-                Cloud Native Network Functions (CNF) Testbed 心得感想 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/20180920-add-ssl-tls-cert-and-key/" rel="next" title="新增 SSL/TLS 憑證和金鑰">
+                  <i class="fa fa-chevron-left"></i> 新增 SSL/TLS 憑證和金鑰
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/20190319-cnf-testbed/" rel="prev" title="Cloud Native Network Functions (CNF) Testbed 心得感想">
+                  Cloud Native Network Functions (CNF) Testbed 心得感想 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-      
-
-      
-      
-    </footer>
+        
+      </footer>
+    
   </div>
   
   
   
   </article>
 
-
   </div>
 
 
           </div>
           
 
-  
-
-
-
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -613,337 +440,112 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-
+        
+        
+        
+        
       
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介-Skopeo"><span class="nav-number">2.</span> <span class="nav-text">簡介 Skopeo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Day-2-Operation-探討"><span class="nav-number">3.</span> <span class="nav-text">Day 2 Operation 探討</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><span class="nav-number">3.1.</span> <span class="nav-text">1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><span class="nav-number">3.2.</span> <span class="nav-text">2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-如何從-Local-複製到某個-Repos-去"><span class="nav-number">3.3.</span> <span class="nav-text">3. 如何從 Local 複製到某個 Repos 去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-如何審視-Inspect-Image-Metadata"><span class="nav-number">3.4.</span> <span class="nav-text">4. 如何審視 (Inspect) Image Metadata?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-複製這件事沒有-Skopeo-之前是怎麼做的"><span class="nav-number">3.5.</span> <span class="nav-text">5. 複製這件事沒有 Skopeo 之前是怎麼做的?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Phil Huang</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">48</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">categories</span>
-                  
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">82</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
-
+    
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介-Skopeo"><span class="nav-number">2.</span> <span class="nav-text">簡介 Skopeo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Day-2-Operation-探討"><span class="nav-number">3.</span> <span class="nav-text">Day 2 Operation 探討</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><span class="nav-number">3.1.</span> <span class="nav-text">1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><span class="nav-number">3.2.</span> <span class="nav-text">2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-如何從-Local-複製到某個-Repos-去"><span class="nav-number">3.3.</span> <span class="nav-text">3. 如何從 Local 複製到某個 Repos 去?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-如何審視-Inspect-Image-Metadata"><span class="nav-number">3.4.</span> <span class="nav-text">4. 如何審視 (Inspect) Image Metadata?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-複製這件事沒有-Skopeo-之前是怎麼做的"><span class="nav-number">3.5.</span> <span class="nav-text">5. 複製這件事沒有 Skopeo 之前是怎麼做的?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
-
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -954,27 +556,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
 
         
+
+
+
+
 
 
 
@@ -986,132 +577,59 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
   
 
 
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-  
-  
-
-
-  
-
-
-  
 
 
 
 
-  
-
-  
-
-  
-  
-
-  
-  
-
-  
 
 
-  
 
-  
 
-  
 
-  
 
-  
 
-  
+
+
+
+
+
+
+
 
   
 

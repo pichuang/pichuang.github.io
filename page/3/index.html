@@ -4,129 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="en">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="en">
+<head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Phil Workspace">
@@ -135,29 +62,23 @@
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Phil Workspace">
-
-
-
-
-
-
   <link rel="canonical" href="https://blog.pichuang.com.tw/page/3/">
 
 
-
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>Phil Workspace</title>
   
-
-
-
-
-  <script async src="//www.googletagmanager.com/gtag/js?id=[object Object]"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
   <script>
     var host = window.location.hostname;
     if (host !== "localhost" || !true) {
@@ -175,10 +96,8 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -187,7 +106,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -204,30 +123,20 @@
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
-  page-home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-    
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Phil Workspace</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -240,223 +149,166 @@
 </div>
 
 
-
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
       
     
-
-    
+      
+      
+        
+          
+        
+      
+        
+      
+        
       
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">48</span></a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-who">
-
-    
-    
-    
+        <li class="menu-item menu-item-who">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-record">
-
-    
-    
-    
+        <li class="menu-item menu-item-record">
       
     
-
-    
+      
+      
+        
+      
+        
+      
+        
       
     
 
     <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
 
   </li>
+  </ul>
 
-      
-      
-    </ul>
-  
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
-  
-  
-  
-  
-
-  
-
-  <a href="https://github.com/pichuang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
-
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
             
 
-          
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
+  <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20190320-redhat-ansible-and-hashicorp-terraform-position/" class="post-title-link" itemprop="url">Red Hat Ansible 和 HashiCorp Terraform 結合作法</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20190320-redhat-ansible-and-hashicorp-terraform-position/" class="post-title-link" itemprop="url">Red Hat Ansible 和 HashiCorp Terraform 結合作法</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2019-03-20 02:03:00" itemprop="dateCreated datePublished" datetime="2019-03-20T02:03:00+08:00">2019-03-20</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-03-25 02:03:20" itemprop="dateModified" datetime="2019-03-25T02:03:20+08:00">2019-03-25</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
 
@@ -467,22 +319,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -490,10 +329,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview" target="_blank" rel="noopener">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
           <!--noindex-->
           
@@ -509,133 +344,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20190317-openshift-and-nsx-t/" class="post-title-link" itemprop="url">Red Hat OpenShift and VMWare NSX-T 架構點評</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20190317-openshift-and-nsx-t/" class="post-title-link" itemprop="url">Red Hat OpenShift and VMWare NSX-T 架構點評</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2019-03-17 20:40:52" itemprop="dateCreated datePublished" datetime="2019-03-17T20:40:52+08:00">2019-03-17</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-03-25 02:07:12" itemprop="dateModified" datetime="2019-03-25T02:07:12+08:00">2019-03-25</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
 
@@ -646,22 +421,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -669,10 +431,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/" target="_blank" rel="noopener">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770" target="_blank" rel="noopener">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
           <!--noindex-->
           
@@ -688,129 +446,65 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20190319-cnf-testbed/" class="post-title-link" itemprop="url">Cloud Native Network Functions (CNF) Testbed 心得感想</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20190319-cnf-testbed/" class="post-title-link" itemprop="url">Cloud Native Network Functions (CNF) Testbed 心得感想</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2019-03-07 22:04:00 / Modified: 22:53:54" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
+            </span>
           
             
+
             
-          
-
-          
-          
-
-          
-
           
 
           
 
         </div>
       </header>
-    
 
     
     
@@ -818,10 +512,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
           <!--noindex-->
           
@@ -837,133 +527,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180918-skopeo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180918-skopeo/" class="post-title-link" itemprop="url">Skopeo: 管理 Container 映像檔及倉庫的方式</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180918-skopeo/" class="post-title-link" itemprop="url">Skopeo: 管理 Container 映像檔及倉庫的方式</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-11-20 14:53:00" itemprop="dateCreated datePublished" datetime="2018-11-20T14:53:00+08:00">2018-11-20</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 14:56:31" itemprop="dateModified" datetime="2019-04-13T14:56:31+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
 
@@ -974,22 +604,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -997,10 +614,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
 <p><img src="/images/skopeo.png" alt></p>
           <!--noindex-->
@@ -1017,133 +630,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180920-add-ssl-tls-cert-and-key/" class="post-title-link" itemprop="url">新增 SSL/TLS 憑證和金鑰</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180920-add-ssl-tls-cert-and-key/" class="post-title-link" itemprop="url">新增 SSL/TLS 憑證和金鑰</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-11-20 14:13:00" itemprop="dateCreated datePublished" datetime="2018-11-20T14:13:00+08:00">2018-11-20</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 14:43:00" itemprop="dateModified" datetime="2019-04-13T14:43:00+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/rhel/" itemprop="url" rel="index"><span itemprop="name">rhel</span></a></span>
 
@@ -1154,22 +707,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1177,10 +717,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
           <!--noindex-->
           
@@ -1196,133 +732,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180826-setup-bonding-and-teaming-using-nmcli/" class="post-title-link" itemprop="url">使用 nmcli  設定 Bonding 或 Teaming</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180826-setup-bonding-and-teaming-using-nmcli/" class="post-title-link" itemprop="url">使用 nmcli  設定 Bonding 或 Teaming</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-08-26 14:58:00" itemprop="dateCreated datePublished" datetime="2018-08-26T14:58:00+08:00">2018-08-26</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 14:59:45" itemprop="dateModified" datetime="2019-04-13T14:59:45+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/rhel/" itemprop="url" rel="index"><span itemprop="name">rhel</span></a></span>
 
@@ -1333,22 +809,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1356,10 +819,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
           <!--noindex-->
           
@@ -1375,133 +834,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180821-review-twelve-factor-apps/" class="post-title-link" itemprop="url">再讀 Twelve-Factor Apps</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180821-review-twelve-factor-apps/" class="post-title-link" itemprop="url">再讀 Twelve-Factor Apps</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-08-21 15:00:00" itemprop="dateCreated datePublished" datetime="2018-08-21T15:00:00+08:00">2018-08-21</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-04-13 15:01:29" itemprop="dateModified" datetime="2019-04-13T15:01:29+08:00">2019-04-13</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a></span>
 
@@ -1512,22 +911,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1535,10 +921,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前陣子因為各種原因，被問及要如何在大型軟體開發專案中，在容器平台上有效避免程式發生相依性錯誤 (Dependency Hell)? 這問題的其實可以轉換成，有沒有一個容器構建規範是可以讓開發者可以參考的開發指南？</p>
 <p>其實早在好幾年前 SaaS 服務盛行時，Heroku 這公司就汲取了大量 Software-as-a-Service 的經驗，撰寫出 <a href="https://12factor.net/" target="_blank" rel="noopener">The 12-Factor Apps</a> 供開發者參考，幾年後 PaaS 服務盛行， Red Hat 也基於該原則之上，提出了額外考量點出來，供 OpenShift/k8s 的開發者設計參考，因 <a href="https://access.redhat.com/articles/1752483" target="_blank" rel="noopener">Optimizing Twelve-Factor Apps for OpenShift by Red Hat</a>並沒有寫得如同 12-factor app 詳細，故僅列出並帶點闡述。</p>
           <!--noindex-->
@@ -1555,133 +937,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180815-cloud-resource-sizing-reference/" class="post-title-link" itemprop="url">雲端大廠們的 VM 資源配置參考</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180815-cloud-resource-sizing-reference/" class="post-title-link" itemprop="url">雲端大廠們的 VM 資源配置參考</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-08-15 23:55:00" itemprop="dateCreated datePublished" datetime="2018-08-15T23:55:00+08:00">2018-08-15</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-03-25 02:07:19" itemprop="dateModified" datetime="2019-03-25T02:07:19+08:00">2019-03-25</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/misc/" itemprop="url" rel="index"><span itemprop="name">misc</span></a></span>
 
@@ -1692,22 +1014,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1715,10 +1024,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
           <!--noindex-->
           
@@ -1734,133 +1039,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180825-netdevops/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180825-netdevops/" class="post-title-link" itemprop="url">NetDevOps 風格之網路設備連接方式</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180825-netdevops/" class="post-title-link" itemprop="url">NetDevOps 風格之網路設備連接方式</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-08-05 23:57:15" itemprop="dateCreated datePublished" datetime="2018-08-05T23:57:15+08:00">2018-08-05</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-03-25 02:07:16" itemprop="dateModified" datetime="2019-03-25T02:07:16+08:00">2019-03-25</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
 
@@ -1871,22 +1116,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1894,10 +1126,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html" target="_blank" rel="noopener">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
           <!--noindex-->
           
@@ -1913,133 +1141,73 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-      
-
-  
-
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Phil Workspace">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/20180723-openapi-and-oas/" class="post-title-link" itemprop="url">進擊的 OpenAPI!!!</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/20180723-openapi-and-oas/" class="post-title-link" itemprop="url">進擊的 OpenAPI!!!</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2018-07-23 00:01:26" itemprop="dateCreated datePublished" datetime="2018-07-23T00:01:26+08:00">2018-07-23</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-03-25 02:07:31" itemprop="dateModified" datetime="2019-03-25T02:07:31+08:00">2019-03-25</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openapi/" itemprop="url" rel="index"><span itemprop="name">openapi</span></a></span>
 
@@ -2050,22 +1218,9 @@
           
 
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -2073,10 +1228,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
           <!--noindex-->
           
@@ -2092,41 +1243,20 @@
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </div>
   
   
   
   </article>
 
-
     
-  </section>
+  </div>
 
   
   <nav class="pagination">
@@ -2134,12 +1264,10 @@
   </nav>
 
 
-
           </div>
           
 
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -2150,311 +1278,105 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Phil Huang</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">48</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">categories</span>
-                  
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">82</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                  
-                    
-                  
-                  <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
       </div>
+      <!--/noindex-->
 
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
       
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+    
+  </div>
 
-      
+
+
+      </div>
 
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -2465,27 +1387,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-
-  
-
-  
 </div>
-
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
-
-
-
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
 
         
+
+
+
+
 
 
 
@@ -2497,33 +1408,39 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
   </div>
 
   
 
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
-
+  
 
 
 
@@ -2546,61 +1463,7 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
 
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/affix.js?v=7.0.0"></script>
-
-  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
-
-
-
-
-  
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-  
-  
-
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-  
-
-  
   
     
       
@@ -2623,25 +1486,6 @@
     
       
     
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
   
 
   
