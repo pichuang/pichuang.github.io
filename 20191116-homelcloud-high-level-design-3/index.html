@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019 大改造宅宅雲架構系列文-3">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-3.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-2.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-2.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-3.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-4.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-5.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/rack.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-6.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-7.png">
+<meta property="og:updated_time" content="2019-11-15T18:03:23.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-3">
+<meta name="twitter:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
+  <link rel="canonical" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>2019 大改造宅宅雲架構系列文-3 | Phil Workspace</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-90856047-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">51</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-who">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-info-circle"></i> <br>who</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-record">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/record" rel="section"><i class="menu-item-icon fa fa-fw fa-microphone"></i> <br>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">2019 大改造宅宅雲架構系列文-3
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-11-15 21:29:56" itemprop="dateCreated datePublished" datetime="2019-11-15T21:29:56+08:00">2019-11-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-16 02:03:23" itemprop="dateModified" datetime="2019-11-16T02:03:23+08:00">2019-11-16</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
+<ol>
+<li><a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1</a>：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標</li>
+<li><a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2</a>：介紹宅宅雲塔式伺服器硬體裝備</li>
+</ol>
+<p>而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的</p>
+<p><img src="/images/homecloud-1.png" alt></p>
+<a id="more"></a>
+
+<h2 id="1-台-2-埠雙臂網路架構"><a href="#1-台-2-埠雙臂網路架構" class="headerlink" title="1 台 2 埠雙臂網路架構"></a>1 台 2 埠雙臂網路架構</h2><p>雙臂網路 (Two-Arm) 需使用 2 個網路介面，Inbound/Outbound 分別走不同介面；單臂網路則是 (One-Arm) 僅使用 1 個網路介面，Inbound/Outbound 都走同一個介面，裡面的網路隔離是採用 802.1Q VLAN Subinterface 進行劃分，所以後者相較前者，Overlay Switch (這邊指的就是 Synology RT2600ac ) 需要多支援 VLAN 能力才有辦法做，但可惜它沒有，就保持做 Two-Arm 網路。而我自己經驗基本都是做 Two-Arm，單純好理解</p>
+<h3 id="最小-Port-數"><a href="#最小-Port-數" class="headerlink" title="最小 Port 數?"></a>最小 Port 數?</h3><p>關於服務器硬體規格可以看 <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2: 硬體菜單</a>，主要核心硬體需求是</p>
+<blockquote>
+<p>1 ~ 2 Port</p>
+</blockquote>
+<p>對…只要兩個 Port 就什麼都可以做，無論速率、無論架構皆可，但最小 1 Port 也可以做，只是雙臂架構概念會有點不太一樣，看角度，下面會詳細畫圖講一下。</p>
+<p>基本相同概念適用於實體機直上、VMware vSphere、Linux KVM、Red Hat Virtualization、Proxmox、Red Hat OpenStack 等等虛擬化平台都可以做。</p>
+<p>Q: Hyper-V 呢?</p>
+<p>Sorry，這個我沒研究，無法評論</p>
+<h3 id="vFW-vRouter"><a href="#vFW-vRouter" class="headerlink" title="vFW? vRouter?"></a>vFW? vRouter?</h3><p>主要網路轉發核心功能需求是</p>
+<blockquote>
+<p>NAT + VLAN Subinterface</p>
+</blockquote>
+<p>這邊採用的 vFirewall 是 <a href="https://www.pfsense.org/" target="_blank" rel="noopener">pfSense</a>，先前在 Edgecore Networks 機櫃環境是用 <a href="https://opnsense.org/" target="_blank" rel="noopener">OPNsense</a>，而我個人是比較偏好 OPNsense。</p>
+<p><img src="/images/pfsense.png" alt></p>
+<p>Q: 說好的 vRouter 不能搞嗎?</p>
+<p>先前也有嘗試用 [VyOS][<a href="https://vyos.io/]" target="_blank" rel="noopener">https://vyos.io/]</a> 當做虛擬路由器，但三年前測試的時候，它沒有支援 NAT 啊啊啊啊啊！就放棄回到 pfSense / OPNsesne 的懷抱中，不知道現在有沒有支援，徵求勇者試試</p>
+<p>Q: 疑? 這樣 iptables 土炮好像也很 ok 啊?</p>
+<p>無論是 Linux iptables / FreeBSD pf 系列的都可以做，技術上沒什麼問題，只是我懶得每次都在想 iptables 的 <code>masquerade</code> 跟 <code>Port Forwarding</code> 怎麼下</p>
+<h3 id="IP-Design"><a href="#IP-Design" class="headerlink" title="IP Design?"></a>IP Design?</h3><p>想當爾，要提供 WAN IP 給對應的網路介面，這邊假設以下：</p>
+<ol>
+<li>WAN IP: 192.168.99.250/24</li>
+<li>VLAN 100 Subnet: 10.100.0.0/24</li>
+<li>VLAN 200 Subnet: 10.200.0.0/24</li>
+<li>Rescue IP: 192.168.1.1/24</li>
+</ol>
+<p>目標上就是拿到 10.100.0.0/24 或 10.200.0.0/24 的 IP 都要能透過 WAN IP 走 SNAT 方式出去；反之，可以從 WAN IP 透過 DNAT 做 Port Forwarding 進 10.100.0.0/24 或 10.200.0.0/24  網段</p>
+<p>Q: Rescure IP?? 這幹嘛的</p>
+<p>關於 Rescue IP 的作用是救援用，假設我的 VLAN IP 或者是有什麼異常狀況不能透過正常設定好的網路進去修改，我會拔掉原先接在 LAN Port (eth1) 上的線，用自己筆電直連該 Port 進去修</p>
+<h3 id="1-vFW-雙臂直上實體機架構圖"><a href="#1-vFW-雙臂直上實體機架構圖" class="headerlink" title="1 . vFW 雙臂直上實體機架構圖"></a>1 . vFW 雙臂直上實體機架構圖</h3><blockquote>
+<p>一台 Server 直接裝 pfSense</p>
+</blockquote>
+<p><img src="/images/pfsense-1.png" alt></p>
+<p>這個架構缺點顯而易見，整台實體機資源都被 pfSense 咬走了，完全沒有用到任何虛擬化平台，但可以外接支援 VLAN Tagging/Untag 的交換器擴大可使用實體 Port 數</p>
+<p><img src="/images/pfsense-3.png" alt></p>
+<p>Q: 我家沒有具備 VLAN 功能的 Switch…</p>
+<p>如果家中有一台小小的電腦，剛好也有兩個 Port，就很適合做上圖， 而 eth1 不一定要用 VLAN Subinterface 處理，可以直接掛 IP 在上面使用，外面接 L2 Switch 起來用，擴大可使用實體 Port 數</p>
+<h3 id="2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><a href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖" class="headerlink" title="2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖"></a>2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</h3><blockquote>
+<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，不考慮外接其他設備</p>
+</blockquote>
+<p>下圖是以 VMware vSphere 作為範例</p>
+<p><img src="/images/pfsense-2.png" alt></p>
+<p>關於 Virtual Switch 的部分，無論是 vSS (virtual Standard Switch) /vDS (virtual Distributed Swtich) 皆可使用，詳細相關技術評估請洽友商 VMware。</p>
+<p>Q:  <code>vDS: WAN</code> 端的設定示意圖?</p>
+<p><img src="/images/vds-1.png" alt></p>
+<p>右邊那邊 Port Group 可以多加網卡做點事情，詳細功能請參考官方文件 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.networking.doc/GUID-B15C6A13-797E-4BCB-B9D9-5CBC5A60C3A6.html" target="_blank" rel="noopener">vSphere Distributed Switch Architecture</a>，左邊留意 <code>VLAN 識別碼</code> 為 <code>--</code>，但我不確定是不是代表是 <code>VLAN 1</code> 的意思，哪天遇到問題再研究</p>
+<p>Q: <code>vDS: Trunk</code> 端的也來一下</p>
+<p><img src="/images/vds-2.png" alt></p>
+<p>右邊留意 Port Group 是完全沒有實體網卡在裡面的，左邊則是針對 VLAN ID 設定個別的 <code>VM Network</code> (注：我忘記正確描述是什麼了，有錯請敲我更正)</p>
+<p>Q: 多問一句…有魔鬼嗎?</p>
+<p><img src="/images/vds-3.png" alt></p>
+<p>Of course！這個設定應該是有做過類似事情的朋友都會遇到的最大遺漏，那個被設定為 Trunk 的 VM Network… 要把混合模式 (Promiscuous Mode)開啟來，避免來自於各式各樣的網路的封包在 ESXi 層就被丟掉，具體技術文件請參照 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.security.doc/GUID-92F3AB1F-B4C5-4F25-A010-8820D7250350.html" target="_blank" rel="noopener">Promiscuous Mode Operation</a></p>
+<p>下圖是採用 libvirt 為主的技術架構</p>
+<p><img src="/images/pfsense-4.png" alt></p>
+<p>Q: 疑? 怎麼看起來都差不多?</p>
+<p>其實簡單來說就是透過 Bridge 技術搭橋把實體網卡和虛擬網卡塞在同一個 Linux Bridge ( or OVS Bridge) 裡面，就很像是多台虛擬 L2 交換機在虛擬化平台裡面，概念就是這麼簡單，因為 VMware vSS/vDS 設定方式比較特別，所以特別拉出來講</p>
+<h3 id="3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><a href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖" class="headerlink" title="3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖"></a>3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</h3><blockquote>
+<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，須考慮外接其他設備</p>
+</blockquote>
+<p><img src="/images/pfsense-5.png" alt></p>
+<p>這個就是先前在 Edgecore Networks Lab 最完整的架構，詳細投影片請參照 2017 年有一天不知道在哪裡講的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure</a> 投影片</p>
+<p>Q:  為什麼要特別做雙臂?</p>
+<p><img src="/images/rack.png" alt> </p>
+<p>因為完全是為了管理這整櫃機櫃裡面設備使用的，那時候有另外接兩台 Cumulus Linux + AS4610-54T 做 CLAG，讓底下設備只要可以咬 IP 的全部配發一個 IP，網段全部切開做 VLAN Routing 避免被廣播封包打爆</p>
+<p>Q: VLAN Routing !!! 是不是漏講了什麼? 那個 pfSense 裡面怎麼做的?</p>
+<p>第四篇，我覺得也蠻有趣的部份</p>
+<h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt></p>
+<p>這個很直覺，VLAN Routing + SNAT 搞定</p>
+<h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt></p>
+<p>這個也很直覺，DNAT 做 Port Forwarding，這邊提供一個小祕技，搭 <code>SSH ProxyCommand</code>蠻好用的，參照 <a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible?slide=12" target="_blank" rel="noopener">20190720 Better Practice  Day 2 Operaition with Ansible</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這年頭看到虛擬網路技術不用感到特別害怕，畫點圖，上個 IP，想像一下網路怎麼流，其實很多問題就能解決了，平時可以多多做點 Lab 培養觀落陰能力</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/20191115-homelcloud-high-level-design-2/" rel="next" title="2019 大改造宅宅雲架構系列文-2">
+                  <i class="fa fa-chevron-left"></i> 2019 大改造宅宅雲架構系列文-2
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-台-2-埠雙臂網路架構"><span class="nav-number">1.</span> <span class="nav-text">1 台 2 埠雙臂網路架構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最小-Port-數"><span class="nav-number">1.1.</span> <span class="nav-text">最小 Port 數?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vFW-vRouter"><span class="nav-number">1.2.</span> <span class="nav-text">vFW? vRouter?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-Design"><span class="nav-number">1.3.</span> <span class="nav-text">IP Design?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vFW-雙臂直上實體機架構圖"><span class="nav-number">1.4.</span> <span class="nav-text">1 . vFW 雙臂直上實體機架構圖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><span class="nav-number">1.5.</span> <span class="nav-text">2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><span class="nav-number">1.6.</span> <span class="nav-text">3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Traffic-分解圖"><span class="nav-number">2.</span> <span class="nav-text">Traffic 分解圖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SNAT-Traffic"><span class="nav-number">2.1.</span> <span class="nav-text">SNAT Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNAT-Traffic"><span class="nav-number">2.2.</span> <span class="nav-text">DNAT Traffic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/pichuang" title="Github &rarr; https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://www.facebook.com/paulintoro" title="FB Page &rarr; https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck &rarr; https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin &rarr; https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
