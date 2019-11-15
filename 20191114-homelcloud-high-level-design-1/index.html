@@ -72,7 +72,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-tower-approval.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-3.jpg">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/buildah-podman-skopeo.png">
-<meta property="og:updated_time" content="2019-11-14T17:48:54.112Z">
+<meta property="og:updated_time" content="2019-11-15T02:46:44.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-1">
 <meta name="twitter:description" content="最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。 本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。">
@@ -315,7 +315,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-15 01:48:54" itemprop="dateModified" datetime="2019-11-15T01:48:54+08:00">2019-11-15</time>
+                <time title="Modified: 2019-11-15 10:46:44" itemprop="dateModified" datetime="2019-11-15T10:46:44+08:00">2019-11-15</time>
               </span>
             
           
@@ -373,7 +373,7 @@
 <p><img src="/images/vpn-plus.png" alt></p>
 <p>Q: 那有沒有可以替代的方案呢?</p>
 <p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
-<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
+<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
 <p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
 <p><img src="/images/rhel7-poweron.jpg" alt></p>
 <p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
@@ -385,13 +385,13 @@
 <p>Q: 為什麼要點點點…</p>
 <p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/" target="_blank" rel="noopener">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
 <p>Q: VM 主要跑什麼?</p>
-<p>最主要是<code>Ansible 自動化</code>，過往我都是直接寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
+<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
 <p><img src="/images/homecloud-powerstate.png" alt></p>
 <p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
 <p><img src="/images/ansible-tower-approval.png" alt></p>
 <p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
 <h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt></p>
-<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container" target="_blank" rel="noopener">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://ithelp.ithome.com.tw/articles/10216880" target="_blank" rel="noopener">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
+<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container" target="_blank" rel="noopener">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html" target="_blank" rel="noopener">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
 <p><img src="/images/buildah-podman-skopeo.png" alt></p>
 <h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
 <p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
