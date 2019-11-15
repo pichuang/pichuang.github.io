@@ -72,7 +72,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-tower-approval.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-3.jpg">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/buildah-podman-skopeo.png">
-<meta property="og:updated_time" content="2019-11-15T05:20:52.393Z">
+<meta property="og:updated_time" content="2019-11-15T07:44:45.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-1">
 <meta name="twitter:description" content="最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。 本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。">
@@ -315,7 +315,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-15 13:20:52" itemprop="dateModified" datetime="2019-11-15T13:20:52+08:00">2019-11-15</time>
+                <time title="Modified: 2019-11-15 15:44:45" itemprop="dateModified" datetime="2019-11-15T15:44:45+08:00">2019-11-15</time>
               </span>
             
           
@@ -399,7 +399,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
 
 <p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
-<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD</p>
+<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
 
     </div>
