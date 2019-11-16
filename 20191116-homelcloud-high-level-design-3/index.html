@@ -76,7 +76,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/rack.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-6.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-7.png">
-<meta property="og:updated_time" content="2019-11-16T06:10:53.127Z">
+<meta property="og:updated_time" content="2019-11-16T08:11:50.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-3">
 <meta name="twitter:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
@@ -308,7 +308,7 @@
                 
               
 
-              <time title="Created: 2019-11-16 02:03:00 / Modified: 14:10:53" itemprop="dateCreated datePublished" datetime="2019-11-16T02:03:00+08:00">2019-11-16</time>
+              <time title="Created: 2019-11-16 02:03:00 / Modified: 16:11:50" itemprop="dateCreated datePublished" datetime="2019-11-16T02:03:00+08:00">2019-11-16</time>
             </span>
           
             
@@ -414,7 +414,7 @@
 <p><img src="/images/rack.png" alt> </p>
 <p>因為完全是為了管理這整櫃機櫃裡面設備使用的，那時候有另外接兩台 Cumulus Linux + AS4610-54T 做 CLAG，讓底下設備只要可以咬 IP 的全部配發一個 IP，網段全部切開做 VLAN Routing 避免被廣播封包打爆</p>
 <p>Q: VLAN Routing !!! 是不是漏講了什麼? 那個 pfSense 裡面怎麼做的?</p>
-<p>第四篇，我覺得也蠻有趣的部份</p>
+<p>第四篇，我覺得也蠻有趣的部份，傳送門 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/">2019 大改造宅宅雲架構系列文-4</a></p>
 <h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt></p>
 <p>這個很直覺，VLAN Routing + SNAT 搞定</p>
 <h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt></p>
