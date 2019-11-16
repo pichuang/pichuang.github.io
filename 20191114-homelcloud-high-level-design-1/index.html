@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Phil Workspace" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。 本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019 大改造宅宅雲架構系列文-1 總綱及裝備清單">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。 本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/vpn-plus.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel7-poweron.jpg">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-1.jpg">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-2.jpg">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/homecloud-powerstate.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-tower-approval.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/rhel8-3.jpg">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/buildah-podman-skopeo.png">
+<meta property="og:updated_time" content="2019-11-16T13:45:32.802Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-1 總綱及裝備清單">
+<meta name="twitter:description" content="最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。 本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單 | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">52</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2019 大改造宅宅雲架構系列文-1 總綱及裝備清單
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-14 23:39:00" itemprop="dateCreated datePublished" datetime="2019-11-14T23:39:00+08:00">2019-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-16 21:45:32" itemprop="dateModified" datetime="2019-11-16T21:45:32+08:00">2019-11-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/infra/" itemprop="url" rel="index">
+                    <span itemprop="name">infra</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
+<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
+<a id="more"></a>
+
+<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
+<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
+<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
+<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
+<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
+<li>所有服務，能虛擬化的全部採用虛擬化</li>
+<li>因為沒錢，所以不考慮任何高可用性的問題</li>
+<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
+<li>建立 Chat Center，用 bot 跟自己聊天</li>
+</ol>
+<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt></p>
+<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
+<ol>
+<li>SSL VPN: Synology RT2600ac</li>
+<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
+<li>Storage: Synology DS916+</li>
+<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
+</ol>
+<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
+<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
+<p>Q: 為什麼會說改造呢?</p>
+<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
+<p><img src="/images/vpn-plus.png" alt></p>
+<p>Q: 那有沒有可以替代的方案呢?</p>
+<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
+<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
+<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
+<p><img src="/images/rhel7-poweron.jpg" alt></p>
+<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
+<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
+<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt></p>
+<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/" target="_blank" rel="noopener">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt></p>
+<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
+<p>Q: 為什麼要點點點…</p>
+<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/" target="_blank" rel="noopener">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
+<p>Q: VM 主要跑什麼?</p>
+<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
+<p><img src="/images/homecloud-powerstate.png" alt></p>
+<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
+<p><img src="/images/ansible-tower-approval.png" alt></p>
+<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt></p>
+<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container" target="_blank" rel="noopener">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html" target="_blank" rel="noopener">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
+<p><img src="/images/buildah-podman-skopeo.png" alt></p>
+<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
+<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
+<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
+
+<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
+<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/20190723-container-and-container-platform-hardening/" rel="next" title="容器平台強固化保護思路">
+                  <i class="fa fa-chevron-left"></i> 容器平台強固化保護思路
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/20191115-homelcloud-high-level-design-2/" rel="prev" title="2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹">
+                  2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#宅宅雲總體戰略目標"><span class="nav-number">1.</span> <span class="nav-text">宅宅雲總體戰略目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HLD-架構圖"><span class="nav-number">2.</span> <span class="nav-text">HLD 架構圖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心硬體裝備"><span class="nav-number">3.</span> <span class="nav-text">核心硬體裝備</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-VPN-Synology-RT2600ac"><span class="nav-number">3.1.</span> <span class="nav-text">SSL VPN: Synology RT2600ac</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><span class="nav-number">3.2.</span> <span class="nav-text">Bastion: Lenovo T480s (Red Hat Employee Special Edition)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RHEL-7-7-重灌成-RHEL-8-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">RHEL 7.7 重灌成 RHEL 8.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RHEL-8-1-裝備-Cockpit-管理-VM"><span class="nav-number">3.2.2.</span> <span class="nav-text">RHEL 8.1 裝備 Cockpit 管理 VM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RHEL-8-1-裝備-Cockpit-管理-Container"><span class="nav-number">3.2.3.</span> <span class="nav-text">RHEL 8.1 裝備 Cockpit 管理 Container</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Storage-Synology-DS916"><span class="nav-number">3.3.</span> <span class="nav-text">Storage: Synology DS916+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#宅宅雲-自組塔式伺服器"><span class="nav-number">3.4.</span> <span class="nav-text">宅宅雲: 自組塔式伺服器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
