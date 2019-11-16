@@ -1,5 +1,7 @@
 /* global NexT, CONFIG, Velocity */
 
+if (window.$ && window.$.Velocity) window.Velocity = window.$.Velocity;
+
 NexT.motion = {};
 
 NexT.motion.integrator = {
@@ -150,11 +152,10 @@ NexT.motion.middleWares = {
   },
 
   sidebar: function(integrator) {
-    NexT.utils.updateSidebarPosition();
     var sidebarAffix = document.querySelector('.sidebar-inner');
     var sidebarAffixTransition = CONFIG.motion.transition.sidebar;
     // Only for Pisces | Gemini.
-    if (CONFIG.motion.transition.sidebar && (NexT.utils.isPisces() || NexT.utils.isGemini())) {
+    if (sidebarAffixTransition && (NexT.utils.isPisces() || NexT.utils.isGemini())) {
       Velocity(sidebarAffix, 'transition.' + sidebarAffixTransition, {
         display : null,
         duration: 200,
