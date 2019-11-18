@@ -148,7 +148,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">52</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">53</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -183,6 +183,98 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20150726-pki-lab-1-create-root-ca/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20150726-pki-lab-1-create-root-ca/" class="post-title-link" itemprop="url">PKI Lab$1 Create Root CA</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-07-26 00:00:00" itemprop="dateCreated datePublished" datetime="2015-07-26T00:00:00+08:00">2015-07-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>採用 <figure class="highlight plain"><figcaption><span>來建立 PKI CA</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Step by Step</span><br><span class="line">- Setting vars for Root CA</span><br><span class="line">&gt; export KEY_SIZE=2048  </span><br><span class="line">export CA_EXPIRE=3650  </span><br><span class="line">export KEY_EXPIRE=3650  </span><br><span class="line">export KEY_COUNTRY=&quot;TW&quot;  </span><br><span class="line">export KEY_PROVINCE=&quot;Taiwan&quot;  </span><br><span class="line">export KEY_CITY=&quot;HsinChu&quot;  </span><br><span class="line">export KEY_ORG=&quot;Night9 Studios&quot;  </span><br><span class="line">export KEY_EMAIL=&quot;root@night9.cc&quot;  </span><br><span class="line">export KEY_OU=&quot;www.night9.cc&quot;  </span><br><span class="line">export KEY_NAME=&quot;&quot;  </span><br><span class="line">export KEY_CN=&quot;Night9 Local Authority Root CA&quot;  </span><br><span class="line"></span><br><span class="line">  - [Source](https://github.com/pichuang/easy-rsa/blob/root_ca/vars)</span><br><span class="line">  - 上面的寫法參考許多現有的 Root CA 的寫法, 特別是 ```KEY_CN KEY_NAME</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>CA_EXPIRE KEY_EXPIRE 建議設長一點, 如果設太短, 只要 Root CA expire 底下的 key 就得全部重簽</li>
+</ul>
+<ul>
+<li><p>Create Root CA</p>
+<blockquote>
+<p>source ./vars<br>./build-ca<br>&lt;enter&gt;…&lt;enter&gt;  </p>
+</blockquote>
+</li>
+<li><p>Check Root CA key and crt</p>
+<blockquote>
+<p>ls -la ./keys/ca.{key,crt}</p>
+</blockquote>
+</li>
+<li><p>Check Root CA crt Info</p>
+<blockquote>
+<p>openssl x509 -in ca.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show</p>
+<img src="https://lh3.googleusercontent.com/BqIPGP-VpmBI0_6TJNqwt2klqYSdOwvwn5DlSESKo_g=w1044-h1278-no" width="600" height="700">
+- 因為 Root CA 已經是最上層的, 沒人可以幫他驗證, 所以只能自己簽自己
+
+
+
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/" target="_blank" rel="noopener">OpenSSL PKI Tutorial</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts" target="_blank" rel="noopener">Create a Public Key Infrastructure Using the easy-rsa Scripts</a></li>
+<li><a href="http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw" target="_blank" rel="noopener">作者：依瑪貓 http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/" target="_blank" rel="noopener">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html" target="_blank" rel="noopener">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -369,16 +461,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-count">85</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
