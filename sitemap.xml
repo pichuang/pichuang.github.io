@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
+    
+    <lastmod>2019-11-22T17:08:29.591Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20191118-self-defined-qcow2/</loc>
     
     <lastmod>2019-11-18T06:26:58.891Z</lastmod>
