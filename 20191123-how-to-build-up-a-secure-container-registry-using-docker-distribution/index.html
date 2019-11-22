@@ -54,10 +54,12 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="遇過非常多人使用 docekr-distribution 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 insecure-registries 來避掉，今天要來分享自簽憑證的作法">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-22T17:08:29.591Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/container-registry.png">
+<meta property="og:updated_time" content="2019-11-22T17:34:08.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Docker Distribution 建立第一個 TLS容器倉庫 ">
 <meta name="twitter:description" content="遇過非常多人使用 docekr-distribution 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 insecure-registries 來避掉，今天要來分享自簽憑證的作法">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/container-registry.png">
 
 <link rel="canonical" href="https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/">
 
@@ -216,7 +218,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-11-23 00:39:00 / Modified: 01:08:29" itemprop="dateCreated datePublished" datetime="2019-11-23T00:39:00+08:00">2019-11-23</time>
+              <time title="Created: 2019-11-23 00:39:00 / Modified: 01:34:08" itemprop="dateCreated datePublished" datetime="2019-11-23T00:39:00+08:00">2019-11-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,6 +274,8 @@
 
 <h3 id="驗證-Container-Registry"><a href="#驗證-Container-Registry" class="headerlink" title="驗證 Container Registry"></a>驗證 Container Registry</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install</span></span><br><span class="line">yum install -y skopeo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the image from DockerHub to on-premise container registry</span></span><br><span class="line">skopeo copy docker://docker.io/library/centos:7.7.1908 docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br><span class="line"></span><br><span class="line"><span class="comment"># Inspect the information of specific container </span></span><br><span class="line">skopeo inspect docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br></pre></td></tr></table></figure>
 
+<p><img src="/images/container-registry.png" alt></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整個過程其實蠻簡單的，大概不用半小時就可以建立完，但他能提供的功能，就是非常基本中的基本 - <code>放映像檔</code>，若要尋求多功能的 Container Registry，可以考慮使用紅帽宣布 <a href="https://www.redhat.com/en/blog/red-hat-introduces-open-source-project-quay-container-registry" target="_blank" rel="noopener">Red Hat Introduces open source Project Quay container registry</a> 的 Project Quay，比較符合現實世界。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://docs.docker.com/registry/insecure/" target="_blank" rel="noopener">Docker Official - insecure-registries</a></li>
 <li><a href="https://github.com/docker/distribution" target="_blank" rel="noopener">GitHub - docker/distribution</a></li>
@@ -340,7 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系統規格"><span class="nav-number">1.</span> <span class="nav-text">系統規格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝過程"><span class="nav-number">2.</span> <span class="nav-text">安裝過程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#準備-OS"><span class="nav-number">2.1.</span> <span class="nav-text">準備 OS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Distribution"><span class="nav-number">2.2.</span> <span class="nav-text">Docker Distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-docker-distribution"><span class="nav-number">2.2.1.</span> <span class="nav-text">安裝 docker-distribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-docker-distribution"><span class="nav-number">2.2.2.</span> <span class="nav-text">設定 docker-distribution</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自簽-OpenSSL"><span class="nav-number">2.3.</span> <span class="nav-text">自簽 OpenSSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟用-Firwall"><span class="nav-number">2.4.</span> <span class="nav-text">啟用 Firwall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#驗證-Container-Registry"><span class="nav-number">2.5.</span> <span class="nav-text">驗證 Container Registry</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系統規格"><span class="nav-number">1.</span> <span class="nav-text">系統規格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝過程"><span class="nav-number">2.</span> <span class="nav-text">安裝過程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#準備-OS"><span class="nav-number">2.1.</span> <span class="nav-text">準備 OS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Distribution"><span class="nav-number">2.2.</span> <span class="nav-text">Docker Distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-docker-distribution"><span class="nav-number">2.2.1.</span> <span class="nav-text">安裝 docker-distribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-docker-distribution"><span class="nav-number">2.2.2.</span> <span class="nav-text">設定 docker-distribution</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自簽-OpenSSL"><span class="nav-number">2.3.</span> <span class="nav-text">自簽 OpenSSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟用-Firwall"><span class="nav-number">2.4.</span> <span class="nav-text">啟用 Firwall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#驗證-Container-Registry"><span class="nav-number">2.5.</span> <span class="nav-text">驗證 Container Registry</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
