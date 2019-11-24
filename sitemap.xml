@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    
+    <lastmod>2019-11-24T09:47:29.650Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
     
     <lastmod>2019-11-23T02:45:00.204Z</lastmod>
@@ -110,13 +117,6 @@
     <loc>https://blog.pichuang.com.tw/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</loc>
     
     <lastmod>2019-05-12T03:40:25.360Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
-    
-    <lastmod>2019-05-12T03:37:59.521Z</lastmod>
     
   </url>
   
