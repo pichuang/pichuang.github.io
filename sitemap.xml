@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
-    <lastmod>2019-11-24T09:47:29.650Z</lastmod>
+    <lastmod>2019-12-31T02:02:34.865Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
     
-    <lastmod>2019-11-23T02:45:00.204Z</lastmod>
+    <lastmod>2019-11-28T03:01:59.816Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    
+    <lastmod>2019-11-24T09:47:29.650Z</lastmod>
     
   </url>
   
@@ -47,13 +54,6 @@
     <loc>https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/</loc>
     
     <lastmod>2019-11-16T13:45:32.802Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
-    
-    <lastmod>2019-11-14T07:10:37.215Z</lastmod>
     
   </url>
   
