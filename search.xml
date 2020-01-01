@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[部署 Workshop Terminal 於 Red Hat OpenShift 4]]></title>
+    <url>%2F20200101-deploy-workhsop-terminal-on-redhat-openshift-4%2F</url>
+    <content type="text"><![CDATA[當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? 本文將使用 Workshop Terminal 來當作 shell 來做使用 部署環境 Red Hat OpenShift 4.2.7 openshifthomeroom/workshop-terminal 3.4.2 部署 workshop-terminal以專案 terminal-admin 為例，很簡單，三行搞定 12345678# Change project name terminal-admin if you want oc project terminal-admin# Deploy workshop-terminal Templateoc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json# Obtain URL linkoc get route terminal View of Object Overview View of Object Resouces 移除 workshop-terminal12oc project terminal-adminoc delete all,serviceaccount,rolebinding,configmap -l app=terminal PS1 上色因為預設的 PS1 太難看了，上個色，好使用 1export PS1="\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ " 設定密碼上個 HTTP Basic authentication 用用 12# Change the USERNAME and PASSWORD if you wantoc set env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat 想要打包其他的程式進去?請參考 Creating a custom image 章節]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>terminal</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2019 年度個人回顧]]></title>
     <url>%2F20191231-2019-personal-review%2F</url>
     <content type="text"><![CDATA[完整的日曆年過了，來個年度回顧紀錄 2019 回顧 在紅帽工作生存 1y 9m 了，努力生存中 年度演講 13 場 年度文章 29 篇 參與各式各樣的社群到至今 10 年 (20歲 - 30歲)，獲得不少幫助 用我的人生 3 個月打案子，簡直 ooxx 憑實力失戀 1 次 MBPR 2013 陪我 7 年還活著，但你好像快要離我而去了 Q_Q/ 2020 展望 持續在外商存活 1y 持續尋找、提攜及培養有緣者，不用太多 2 位就好 多點時間寫 12 篇文章、深入研究 3 個不錯的技術 健身環 100 級，跟著結衣動次動 找 1 個地點定居，因為我想買電動升降桌 憑實力不失戀 1 次，每年都要正向樂觀看待 減重 1 KG 好了，最近覺得新陳代謝比較慢，肚子消得慢 我要上英文課!!! 拿下一個容器網路的案子回來做 結語其實還有一堆沒有寫，感覺年紀到了 30 歲後，一整個有初老現象，遇到一些事情內心越來越隨緣。 同步於 Facebook]]></content>
