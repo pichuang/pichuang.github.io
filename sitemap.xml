@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
+    
+    <lastmod>2020-01-02T06:31:00.886Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</loc>
     
     <lastmod>2020-01-01T07:09:45.736Z</lastmod>

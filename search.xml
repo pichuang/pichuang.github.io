@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Red Hat OpenShift 4 特定節點 Label 更新]]></title>
+    <url>%2F20200102-openshift-label-update%2F</url>
+    <content type="text"><![CDATA[以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種： Master Infra Worker 而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra 節點。本文將花點篇幅講一下轉法 Q: 如何辨識特定節點為何種角色?看標籤 (Label)，對於 Red Hat OpenShift 來講，三個角色分別對應的標籤名為： Master node-role.kubernetes.io/master=&quot;&quot; Infra node-role.kubernetes.io/infra=&quot;&quot; Worker node-role.kubernetes.io/worker=&quot;&quot; 只要看著標籤，就知道該節點是什麼角色。除此之外，同一個節點可以擁有多個角色 Q: 如何列舉所有節點名稱?123456789$ oc get nodesNAME STATUS ROLES AGE VERSIONip-10-0-135-207.us-east-2.compute.internal Ready master 23h v1.14.6+9fb2d5cf9ip-10-0-142-198.us-east-2.compute.internal Ready worker 22h v1.14.6+9fb2d5cf9ip-10-0-147-86.us-east-2.compute.internal Ready worker 22h v1.14.6+9fb2d5cf9ip-10-0-156-112.us-east-2.compute.internal Ready master 23h v1.14.6+9fb2d5cf9ip-10-0-172-190.us-east-2.compute.internal Ready master 23h v1.14.6+9fb2d5cf9ip-10-0-173-156.us-east-2.compute.internal Ready worker 22h v1.14.6+9fb2d5cf9 Q: 如何列舉特定節點的 Label 資訊?以 ip-10-0-142-198.us-east-2.compute.internal 為例： 12345678910111213# Example: oc label --list node &lt;node&gt;$ oc label --list node ip-10-0-142-198.us-east-2.compute.internalbeta.kubernetes.io/arch=amd64failure-domain.beta.kubernetes.io/region=us-east-2kubernetes.io/os=linuxnode-role.kubernetes.io/worker=beta.kubernetes.io/os=linuxfailure-domain.beta.kubernetes.io/zone=us-east-2anode.openshift.io/os_id=rhcoskubernetes.io/arch=amd64beta.kubernetes.io/instance-type=m5.2xlargekubernetes.io/hostname=ip-10-0-142-198 Q: 如何針對特定節點新增 Label以 ip-10-0-142-198.us-east-2.compute.internal 為例，新增 infra 標籤 1234# Example: oc label node &lt;node&gt; node-role.kubernetes.io/infra=""$ oc label node ip-10-0-142-198.us-east-2.compute.internal node-role.kubernetes.io/infra=""node/ip-10-0-142-198.us-east-2.compute.internal labeled 做完之後可以用 oc get nodes 或者是開 Web console 看一下狀態改變 Q: 如何針對特定節點移除 Label?以 ip-10-0-142-198.us-east-2.compute.internal 為例，移除 worker 標籤 1234# oc label node &lt;node-name&gt; node-role.kubernetes.io/worker-$ oc label node ip-10-0-142-198.us-east-2.compute.internal node-role.kubernetes.io/worker-node/ip-10-0-142-198.us-east-2.compute.internal labeled 做完之後可以用 oc get nodes 或者是開 Web console 看一下狀態改變 Q: 如何把 OpenShift Router 搬到 Infra 節點上去?要對 Operator 進行修改操作，不要直接修改 router 裡面的內容，會一直被 Operator 洗掉設定 1oc patch ingresscontroller/default --type=merge -n openshift-ingress-operator -p '&#123;"spec": &#123;"nodePlacement":&#123;"nodeSelector":&#123;"matchLabels":&#123;"node-role.kubernetes.io/infra": ""&#125;&#125;&#125;&#125;&#125;' 如果是要搬其他的服務，也是以此類推，或者是參考 Moving resources to infrastructure MachineSets References KB 4287111 - Creating an Infra Node in OpenShift v4 那些年的 OpenShift 3.11 容器平台技術選型_20190122 OpenShift 4 - Creating infrastructure MachineSets Moving resources to infrastructure MachineSets]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>label</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[部署 Workshop Terminal 於 Red Hat OpenShift 4]]></title>
     <url>%2F20200101-deploy-workhsop-terminal-on-redhat-openshift-4%2F</url>
     <content type="text"><![CDATA[當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? 本文將使用 Workshop Terminal 來當作 shell 來做使用 部署環境 Red Hat OpenShift 4.2.7 openshifthomeroom/workshop-terminal 3.4.2 部署 workshop-terminal以專案 terminal-admin 為例，很簡單，三行搞定 12345678# Change project name terminal-admin if you want oc project terminal-admin# Deploy workshop-terminal Templateoc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json# Obtain URL linkoc get route terminal View of Object Overview View of Object Resouces 移除 workshop-terminal12oc project terminal-adminoc delete all,serviceaccount,rolebinding,configmap -l app=terminal PS1 上色因為預設的 PS1 太難看了，上個色，好使用 1export PS1="\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ " 設定密碼上個 HTTP Basic authentication 用用 12# Change the USERNAME and PASSWORD if you wantoc set env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat 想要打包其他的程式進去?請參考 Creating a custom image 章節]]></content>
@@ -170,8 +182,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>nfv</tag>
         <tag>redhat</tag>
+        <tag>nfv</tag>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -241,9 +253,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
-        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
