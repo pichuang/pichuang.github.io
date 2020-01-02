@@ -60,7 +60,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-remove-2.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-remove-1.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-ceph-node.png">
-<meta property="og:updated_time" content="2020-01-02T17:17:17.330Z">
+<meta property="og:updated_time" content="2020-01-02T17:17:47.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift 4 特定節點 Label 更新">
 <meta name="twitter:description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master  Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-03 01:17:17" itemprop="dateModified" datetime="2020-01-03T01:17:17+08:00">2020-01-03</time>
+                <time title="Modified: 2020-01-03 01:17:47" itemprop="dateModified" datetime="2020-01-03T01:17:47+08:00">2020-01-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,7 +298,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oc patch ingresscontroller/default --<span class="built_in">type</span>=merge -n openshift-ingress-operator -p <span class="string">'&#123;"spec": &#123;"nodePlacement":&#123;"nodeSelector":&#123;"matchLabels":&#123;"node-role.kubernetes.io/infra": ""&#125;&#125;&#125;&#125;&#125;'</span></span><br></pre></td></tr></table></figure>
 
 <p>如果是要搬其他的服務，也是以此類推，或者是參考 <a href="https://docs.openshift.com/container-platform/4.2/machine_management/creating-infrastructure-machinesets.html#moving-resources-to-infrastructure-machinesets" target="_blank" rel="noopener">Moving resources to infrastructure MachineSets</a></p>
-<h2 id="Q-如果有除了-3-大角色以外的節點分類該怎麼辦"><a href="#Q-如果有除了-3-大角色以外的節點分類該怎麼辦" class="headerlink" title="Q: 如果有除了 3 大角色以外的節點分類該怎麼辦?"></a>Q: 如果有除了 3 大角色以外的節點分類該怎麼辦?</h2><p>假設你今天有 3 個節點，要準備跑特定的服務，譬如像是 Ceph，歸類角色為 <code>ceph</code>，依據 <code>同一個節點可以擁有多個角色</code> 的特性，可以執行如下指令：</p>
+<h2 id="Q-如果有除了-3-大角色以外的節點分類該怎麼辦"><a href="#Q-如果有除了-3-大角色以外的節點分類該怎麼辦" class="headerlink" title="Q: 如果有除了 3 大角色以外的節點分類該怎麼辦?"></a>Q: 如果有除了 3 大角色以外的節點分類該怎麼辦?</h2><p>假設你今天有 3 個節點，要準備跑特定的服務，譬如像是 Ceph，歸類角色為 <code>ceph-node</code>，依據 <code>同一個節點可以擁有多個角色</code> 的特性，可以執行如下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example: oc label node &lt;node&gt; node-role.kubernetes.io/ceph-node=""</span></span><br><span class="line">$ oc label node ip-10-0-150-37.us-east-2.compute.internal node-role.kubernetes.io/ceph-node=<span class="string">""</span></span><br><span class="line"></span><br><span class="line">node/ip-10-0-150-37.us-east-2.compute.internal labeled</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/label-ceph-node.png" alt></p>
