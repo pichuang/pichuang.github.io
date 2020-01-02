@@ -27,7 +27,7 @@
   <entry>
     <title><![CDATA[2019 年度個人回顧]]></title>
     <url>%2F20191231-2019-personal-review%2F</url>
-    <content type="text"><![CDATA[完整的日曆年過了，來個年度回顧紀錄 2019 回顧 在紅帽工作生存 1y 9m 了，努力生存中 年度演講 13 場 年度文章 29 篇 參與各式各樣的社群到至今 10 年 (20歲 - 30歲)，獲得不少幫助 用我的人生 3 個月打案子，簡直 ooxx 憑實力失戀 1 次 MBPR 2013 陪我 7 年還活著，但你好像快要離我而去了 Q_Q/ 2020 展望 持續在外商存活 1y 持續尋找、提攜及培養有緣者，不用太多 2 位就好 多點時間寫 12 篇文章、深入研究 3 個不錯的技術 健身環 100 級，跟著結衣動次動 找 1 個地點定居，因為我想買電動升降桌 憑實力不失戀 1 次，每年都要正向樂觀看待 減重 1 KG 好了，最近覺得新陳代謝比較慢，肚子消得慢 我要上英文課!!! 拿下一個容器網路的案子回來做 結語其實還有一堆沒有寫，感覺年紀到了 30 歲後，一整個有初老現象，遇到一些事情內心越來越隨緣。 同步於 Facebook]]></content>
+    <content type="text"><![CDATA[完整的日曆年過了，來個年度回顧紀錄 2019 回顧 在紅帽工作生存 1y 9m 了，努力生存中 年度演講 13 場 年度文章 29 篇 參與各式各樣的社群到至今 10 年 (20歲 - 30歲)，獲得不少幫助 用我的人生 3 個月打案子，簡直 ooxx 憑實力失戀 1 次 MBPR 2013 陪我 7 年還活著，但你好像快要離我而去了 Q_Q/ 人生第 1 次用年假，1 個人去西歐 (荷蘭、比利時、法國) 逛了 10 天 2020 展望 持續在外商存活 1y 持續尋找、提攜及培養有緣者，不用太多 2 位就好 多點時間寫 12 篇文章、深入研究 3 個不錯的技術 健身環 100 級，跟著結衣動次動 找 1 個地點定居，因為我想買電動升降桌 憑實力不失戀 1 次，每年都要正向樂觀看待 減重 1 KG 好了，最近覺得新陳代謝比較慢，肚子消得慢 我要上英文課!!! 拿下一個容器網路的案子回來做 結語其實還有一堆沒有寫，感覺年紀到了 30 歲後，一整個有初老現象，遇到一些事情內心越來越隨緣。 同步於 Facebook]]></content>
   </entry>
   <entry>
     <title><![CDATA[用 Docker Distribution 建立第一個 TLS 容器倉庫]]></title>
@@ -107,8 +107,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>container</tag>
+        <tag>openshift</tag>
       </tags>
   </entry>
   <entry>
@@ -119,8 +119,8 @@
         <category>openshfit</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>container</tag>
+        <tag>openshift</tag>
       </tags>
   </entry>
   <entry>
@@ -182,8 +182,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>redhat</tag>
         <tag>nfv</tag>
+        <tag>redhat</tag>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -223,8 +223,8 @@
       </categories>
       <tags>
         <tag>intel</tag>
-        <tag>openshift</tag>
         <tag>nfv</tag>
+        <tag>openshift</tag>
         <tag>networking</tag>
         <tag>cni</tag>
         <tag>multus-cni</tag>
@@ -253,9 +253,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
-        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
+        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
@@ -401,8 +401,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>skopeo</tag>
+        <tag>container</tag>
         <tag>images</tag>
       </tags>
   </entry>
@@ -440,8 +440,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift</tag>
         <tag>container</tag>
+        <tag>openshift</tag>
         <tag>12apps</tag>
       </tags>
   </entry>
@@ -573,8 +573,8 @@
     <url>%2F20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl%2F</url>
     <content type="text"><![CDATA[(Working…) Environment Switch IP: 192.168.11.2 Hardware Model Edgecore AS5712-54X Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER OF-DPA version ofdpa_3.0 EA3 You need launch ofappagent first. If you dont know how to start it. Please refer OF-DPA with ONL Cheat Sheet Contorl VM IP: 192.168.11.1 OpenvSwitch 2.6.9 Topology12345+--------+ Port+-----------------------+Port +--------+| | 1| AS5712-54X |2 | || Host A +-------+ ONL: 2.0.0 Deb8 +-------+ Host B || | | OFDPA: 3.0.3 EA2 | | |+--------+ +-----------------------+ +--------+ L2 Switching1ovs-ofctl Flow tables ID Table Name Table ID Ingress Port 0 Port DSCP Trust 5 Port PCP Trust 6 Tunnel DSCP Trust 7 Tunnel PCP Trust 8 Injected OAM 9 VLAN 10 VLAN 1 11 Ingress Maintenance Point 12 MPLS L2 Port 13 MPLS DSCP Trust 15 MPLS PCP Trust 16 L2 Policer 18 L2 Policer Actions 19 Termination MAC 20 L3 Type 21 MPLS 0 23 MPLS 1 24 MPLS 2 25 MPLS-TP Maintenance Point 26 MPLS L3 Type 27 MPLS Label Trust 28 MPLS Type 29 Unicast Routing 30 Multicast Routing 40 Bridging 50 Policy ACL 60 Color Based Actions 65 Egress VLAN 210 Egress VLAN 1 211 Egress Maintenance Point 226 Egress DSCP PCP Remark 230 Egress TPID 235 Setting12 References OF-DPA OpenFlow Hybrid Switch Functionality Guide OpenvSwitch ovs-ofctl and OF-DPA]]></content>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -585,8 +585,8 @@
     <url>%2F20170106-ovs-ofctl-and-ofdpa%2F</url>
     <content type="text"><![CDATA[GoalRemote control and management OF-DPA via ovs-ofctl Environment Switch IP: 192.168.13.14 Hardware Model Edgecore AS6712-32X Software ONL version ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER OF-DPA version ofdpa_3.0 EA4 You need launch ofappagent first. If you dont know how to start it. Please refer OF-DPA with ONL Cheat Sheet Command launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653 Contorl VM IP: 192.168.13.2 OpenvSwitch 2.7.0 In this case, we just use ovs-ofctl, and it’s also work if you want to use dpctl which CPqD provide How to Install OpenvSwitch Basic Command1ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653 UsageShow port information ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653 Output123456789101112131415161718$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7an_tables:23, n_buffers:0capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATSOFPST_PORT_DESC reply (OF1.3) (xid=0x3): 1(port1): addr:cc:37:ab:d0:d6:30 config: 0 state: LINK_DOWN current: 40GB-FD FIBER supported: 10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM speed: 40000 Mbps now, 40000 Mbps max 2(port2): addr:cc:37:ab:d0:d6:30 config: 0 state: LINK_DOWN current: 40GB-FD FIBER supported: 10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM speed: 40000 Mbps now, 40000 Mbps max... Show tables information ovs-ofctl dump-tables Output123456789101112131415161718192021222324252627$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653OFPST_TABLE reply (OF1.3) (xid=0x2): table 0: active=0, lookup=0, matched=0 table 5: ditto table 6: ditto table 7: ditto table 8: ditto table 10: ditto table 11: ditto table 13: ditto table 15: ditto table 16: ditto table 17: ditto table 20: ditto table 24: ditto table 28: ditto table 30: ditto table 40: ditto table 50: ditto table 60: ditto table 65: ditto table 210: ditto table 211: ditto table 230: ditto table 235: ditto Add flow entry ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller Show flow entries ovs-ofctl dump-flows Output123$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653OFPST_FLOW reply (OF1.3) (xid=0x2): cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535 Show queue stats ovs-ofctl queue-stats Output1234567$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s... Show group information ovs-ofctl dump-groups Show ports information ovs-ofcll dump-ports Output123456789101112131415$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports port 1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s port 4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0 tx pkts=0, bytes=0, drop=0, errs=?, coll=0 duration=0s... Reference ovs-ofctl Pica8 OVS Configuration Guide 2.8.0 Compile OpenvSwitch - pichuang ovs-ofctl help]]></content>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -597,10 +597,10 @@
     <url>%2F20170104-ofdpa-with-onl-cheat-sheet%2F</url>
     <content type="text"><![CDATA[Environment Hardware Model Edgecore AS5712-54X Software ONL version ONL-2.0.0-ONL-OS-DEB8-2017-07-18.1642-40fc82b OF-DPA version ofdpa_3.0 EA5 Set Base configuration vi /etc/network/interfaces123456auto ma1iface ma1 inet staticaddress 192.168.11.2netmask 255.255.255.0gateway 192.168.11.254dns-nameservers 192.168.100.1 Rate Limit Setting Rate Limit per queue client_queue_config &lt;queueId&gt; &lt;intIfNum&gt; &lt;minRate&gt; &lt;maxRate&gt; queyeID := [ 0 - 7 ] ex: client_queue_config 0 2 1 1000 Queue 0, Port 2, 1 means minimal 0.1%, 1000 means Maximum 100% Min and Max queue rates must range between 1-1000 Show Rate Limit per queue client_queue_config &lt;queueId&gt; &lt;intIfNum&gt; ex: client_queue_config 1 1 Show Queue 1, Port 1 min/Max rate OF Agent App Enable ofagentapp service via CLI launcher ofagentapp --controller=&lt;CONTROLLER_IP&gt;:6653 --listen=&lt;SWITCH_MA1_IP&gt;:6653 via INIT service ofagentd restart The ofagent.conf at /etc/ofagent/ofagent.conf More detailes How to enable debugging mode on OF-DPA Stop ofagentapp pkill ofagentapp Port Speed Change Port Speed per Port vi /etc/accton/ofdpa.conf12345678...# port_speed_&lt;port&gt;= Speed# Speed := &#123; 1000 | 10000 | 40000 &#125;...# Default value in AS5712-54X is port_speed=10000port_speed_3=1000 # front port 3port_speed_4=10000 # front port 4... Change Port Mode per Port vi /etc/accton/ofdpa.conf123456789...# port_mode_&lt;port&gt; = Speed_Type [Interface Type]# Speed_Type:= &#123; 1x40g | 4x10g &#125;# Interface Type := &#123; CR | CR4 | SR | SR4 | LR | LR4 | KR | KR4 | SFI | XFI | ... &#125;...port_mode_1=1x40gport_mode_2=1x40g if=SR4port_mode_3=4x10g #Breakout cable... Dump BRCM Informations Dump Port Table client_port_table_dump Dump Meter Table client_meter_dump Dump Flow Table client_flowtable_dump Dump Group Table client_grouptable_dump Dump Tunnel client_tunnel_dump Dump OAM client_oam_dump Dump Class Color Table client_classcolortable_dump Show physical port mapping client_drivport -a Enable sFlow client_sflow Purge all configuration client_cfg_purge BRCM Diag Shell with ONL NOTE: Please launch ofagentapp first in backaground Show processes status client_drivshell ps Show port config client_drivshell port &lt;port_number&gt; Show usage command client_drivshell help Redirect log to other devices (ex: /dev/console) client_drivshell log f=/dev/console You can use command tty to find your teletype device name currently Tips: client_drivshell log f=$(tty) NOS Information Show Platform Information with ONL onl-platform-show Show sysconfig with ONL onl-sysconfig Mount Disk Change w/r permission on disk vi /etc/mtab.yml onl-mount mount all Check mount status mount Check partition status df -h ONL Platform Information Show ONL information for human read onlpdump -r Show Hardware information onlpdump -s Show SFP information onlpdump -S Only launch OF-DPA without OpenFlow Start OF-DPA without OpenFlow agent 123KERNEL_MODS=/lib/modules/`uname -r`/ofdpainsmod $KERNEL_MODS/linux-kernel-bde.ko dmasize=32M maxpayload=128insmod $KERNEL_MODS/linux-user-bde.ko Check Status 12lsmodclient_drivshell ps Flow tables ID (OF-DPA 3.0.3) Table Name Table ID Ingress Port 0 Port DSCP Trust 5 Port PCP Trust 6 Tunnel DSCP Trust 7 Tunnel PCP Trust 8 Injected OAM 9 VLAN 10 VLAN 1 11 Ingress Maintenance Point 12 MPLS L2 Port 13 MPLS DSCP Trust 15 MPLS PCP Trust 16 L2 Policer 18 L2 Policer Actions 19 Termination MAC 20 L3 Type 21 MPLS 0 23 MPLS 1 24 MPLS 2 25 MPLS-TP Maintenance Point 26 MPLS L3 Type 27 MPLS Label Trust 28 MPLS Type 29 Unicast Routing 30 Multicast Routing 40 Bridging 50 Policy ACL 60 Color Based Actions 65 Egress VLAN 210 Egress VLAN 1 211 Egress Maintenance Point 226 Egress DSCP PCP Remark 230 Egress TPID 235 Reference OF-DPA文档读后感 How to enable debugging mode on OF-DPA]]></content>
       <tags>
-        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>
@@ -625,9 +625,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
@@ -635,9 +635,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;roan@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;roan.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/single/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```roan.night9.cc```, 但不能 match ```night9.cc``` ```xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 來建立 PKI CA, 必需要有 Root CA, 可參考 [PKI Lab$1 Create Root CA](http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/) 做建立的動作1234567891011121314151617### Step by Step- Setting vars for Root CA&gt; export KEY_SIZE=2048 export CA_EXPIRE=365 export KEY_EXPIRE=365 export KEY_COUNTRY=&quot;TW&quot; export KEY_PROVINCE=&quot;Taiwan&quot; export KEY_CITY=&quot;HsinChu&quot; export KEY_ORG=&quot;Night9 Studios&quot; export KEY_EMAIL=&quot;www@night9.cc&quot; export KEY_OU=&quot;www.night9.cc&quot; export KEY_NAME=&quot;&quot; export KEY_CN=&quot;*.night9.cc&quot; - [Source](https://github.com/pichuang/easy-rsa/blob/ucc/vars) - 重點在於 ```KEY_CN```, 此設定可以 match ```www.night9.cc``` ```roan.night9.cc```, 但不能 match ```night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <tags>
         <tag>infra</tag>
         <tag>easyrsa</tag>
