@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2020-01-05T11:54:02.479Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
     
     <lastmod>2020-01-02T17:17:47.312Z</lastmod>
@@ -215,13 +222,6 @@
     <loc>https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/</loc>
     
     <lastmod>2019-04-04T19:05:53.107Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
-    
-    <lastmod>2019-04-04T18:11:21.331Z</lastmod>
     
   </url>
   

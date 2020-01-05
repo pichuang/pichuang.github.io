@@ -60,7 +60,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-firewall.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-router.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-static.png">
-<meta property="og:updated_time" content="2019-04-04T18:11:21.331Z">
+<meta property="og:updated_time" content="2020-01-05T11:54:02.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 東西南北向網路探討">
 <meta name="twitter:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量   那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-04-05 02:11:21" itemprop="dateModified" datetime="2019-04-05T02:11:21+08:00">2019-04-05</time>
+                <time title="Modified: 2020-01-05 19:54:02" itemprop="dateModified" datetime="2020-01-05T19:54:02+08:00">2020-01-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,7 +313,34 @@
 </ol>
 <p><img src="/images/egress-firewall.png" alt><br><img src="/images/egress-router.png" alt><br><img src="/images/egress-static.png" alt></p>
 <p>其中 OpenShift Egress Routers 的技術細節跟上面所討論的 Ingress Controller: OpenShift Router 是很類似的，而模式上也有三種做法可以選擇，分別是 Redirect、HTTP Proxy、DNS Proxy</p>
-<p>   | Redirect mode | HTTP Proxy mode | DNS Proxy mode<br>—|—|—|—<br>Support Protocols | TCP/UDP | HTTP/HTTPS | TCP<br>Image | ose-pod | ose-egress-http-proxy | ose-egress-dns-proxy<br>Technology | Netfilter rules | Squid | HAProxy</p>
+<table>
+<thead>
+<tr>
+<th>分類</th>
+<th>Redirect mode</th>
+<th>HTTP Proxy mode</th>
+<th>DNS Proxy mode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Support Protocols</td>
+<td>TCP/UDP</td>
+<td>HTTP/HTTPS</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>ose-pod</td>
+<td>ose-egress-http-proxy</td>
+<td>ose-egress-dns-proxy</td>
+</tr>
+<tr>
+<td>Technology</td>
+<td>Netfilter rules</td>
+<td>Squid</td>
+<td>HAProxy</td>
+</tr>
+</tbody></table>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>無論是 Kubernetes / OpenShift 一般在討論容器平台網路的不外乎都是在討論 Pod / Service / NodePort 等等的應用，但實際上使用的時候會蠻推薦用資料流 (Data Flow) 的觀點下去做每一個點的討論，這樣在技術選型上才不會思考太久，當然整體網路考慮不會只有單單這一篇文章就可以全部講完的，其實有非常多細節可以做探討，尤其是如何跟現有網路做對接、防火牆環境隔離等等都得一併考慮進去。</p>
 <p>希望這篇能幫助大家用高視角的方式來理解整個 Red Hat OpenShift v3.11 網路流量走向</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
