@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master  Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra">
+  <meta name="description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra 節">
 <meta name="keywords" content="openshift,label">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Red Hat OpenShift 4 特定節點 Label 更新">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20200102-openshift-label-update/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master  Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra">
+<meta property="og:description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra 節">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-overview.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-change-1.png">
@@ -60,10 +60,10 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-remove-2.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-remove-1.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/label-ceph-node.png">
-<meta property="og:updated_time" content="2020-01-02T17:17:47.312Z">
+<meta property="og:updated_time" content="2020-01-31T03:46:32.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift 4 特定節點 Label 更新">
-<meta name="twitter:description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master  Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra">
+<meta name="twitter:description" content="以前的演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122 有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：  Master Infra Worker   而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra 節">
 <meta name="twitter:image" content="https://blog.pichuang.com.tw/images/label-overview.png">
 
 <link rel="canonical" href="https://blog.pichuang.com.tw/20200102-openshift-label-update/">
@@ -160,7 +160,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">58</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-03 01:17:47" itemprop="dateModified" datetime="2020-01-03T01:17:47+08:00">2020-01-03</time>
+                <time title="Modified: 2020-01-31 11:46:32" itemprop="dateModified" datetime="2020-01-31T11:46:32+08:00">2020-01-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +257,7 @@
         <p>以前的<a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122?slide=11" target="_blank" rel="noopener">演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122
 </a>有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：</p>
 <ol>
-<li>Master </li>
+<li>Master</li>
 <li>Infra</li>
 <li>Worker</li>
 </ol>
@@ -333,6 +333,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/20200131-swagger-generator/" rel="prev" title="建立私有 Swagger UI 服務">
+                  建立私有 Swagger UI 服務 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -385,7 +388,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -394,7 +397,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

@@ -148,7 +148,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">58</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -183,6 +183,88 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190411-container-bare-metal-for-networking-references-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20190411-container-bare-metal-for-networking-references-architecture/" class="post-title-link" itemprop="url">Container Bare Metal for Networking 參考架構</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-04-11 23:06:00 / Modified: 23:42:47" itemprop="dateCreated datePublished" datetime="2019-04-11T23:06:00+08:00">2019-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openshift/" itemprop="url" rel="index">
+                    <span itemprop="name">openshift</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Intel 網卡黑科技 + 容器網路的現在進行式</p>
+</blockquote>
+<p>在 April 2019 的時候, Intel 釋放出這份 Reference Architecture <a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf" target="_blank" rel="noopener">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></p>
+<p>各位看看以 Multus Plugin 為核心的上下層整合，上面另外接了 Flannel / SR-IOV / Userspace CNI Plugin，下面接的是容器化的 CNF (Cloud-native Network Function) 應用，還順便針對 vBNG / vCMTS 做了 ovs-dpdk/VPP 的網卡加速</p>
+<p><img src="/images/intel-1.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20190411-container-bare-metal-for-networking-references-architecture/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -951,89 +1033,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/20190320-redhat-ansible-and-hashicorp-terraform-position/" class="post-title-link" itemprop="url">Red Hat Ansible 和 HashiCorp Terraform 結合作法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-20 02:03:00" itemprop="dateCreated datePublished" datetime="2019-03-20T02:03:00+08:00">2019-03-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-03-25 02:03:20" itemprop="dateModified" datetime="2019-03-25T02:03:20+08:00">2019-03-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ansible/" itemprop="url" rel="index">
-                    <span itemprop="name">ansible</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview" target="_blank" rel="noopener">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/20190320-redhat-ansible-and-hashicorp-terraform-position/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1082,7 +1081,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1091,7 +1090,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

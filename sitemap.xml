@@ -2,296 +2,303 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    <loc>https://blog.pichuang.com.tw/20200131-swagger-generator/</loc>
     
-    <lastmod>2020-01-05T11:54:02.479Z</lastmod>
+    <lastmod>2020-01-31T04:19:53.265Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
     
-    <lastmod>2020-01-02T17:17:47.312Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191231-2019-personal-review/</loc>
-    
-    <lastmod>2020-01-02T14:40:53.066Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</loc>
-    
-    <lastmod>2020-01-01T07:09:45.736Z</lastmod>
+    <lastmod>2020-01-31T03:46:32.826Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
-    <lastmod>2019-12-31T02:02:34.865Z</lastmod>
+    <lastmod>2020-01-11T20:08:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2020-01-05T11:54:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191231-2019-personal-review/</loc>
+    
+    <lastmod>2020-01-02T14:40:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</loc>
+    
+    <lastmod>2020-01-01T07:09:45.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
     
-    <lastmod>2019-11-28T03:01:59.816Z</lastmod>
+    <lastmod>2019-11-28T03:01:59.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/about/index.html</loc>
     
-    <lastmod>2019-11-24T09:47:29.650Z</lastmod>
+    <lastmod>2019-11-24T09:47:29.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191118-self-defined-qcow2/</loc>
     
-    <lastmod>2019-11-18T06:26:58.891Z</lastmod>
+    <lastmod>2019-11-18T06:26:58.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/</loc>
     
-    <lastmod>2019-11-16T15:02:47.379Z</lastmod>
+    <lastmod>2019-11-16T15:02:47.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/</loc>
     
-    <lastmod>2019-11-16T13:45:39.446Z</lastmod>
+    <lastmod>2019-11-16T13:45:39.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/</loc>
     
-    <lastmod>2019-11-16T13:45:36.891Z</lastmod>
+    <lastmod>2019-11-16T13:45:36.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/</loc>
     
-    <lastmod>2019-11-16T13:45:32.802Z</lastmod>
+    <lastmod>2019-11-16T13:45:32.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/</loc>
     
-    <lastmod>2019-08-17T16:15:11.078Z</lastmod>
+    <lastmod>2019-08-17T16:15:11.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
     
-    <lastmod>2019-07-25T06:43:55.797Z</lastmod>
+    <lastmod>2019-07-25T06:43:55.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
     
-    <lastmod>2019-07-21T15:34:05.582Z</lastmod>
+    <lastmod>2019-07-21T15:34:05.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/</loc>
     
-    <lastmod>2019-07-16T04:04:53.106Z</lastmod>
+    <lastmod>2019-07-16T04:04:53.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190621-building-production-ready-containers/</loc>
     
-    <lastmod>2019-06-20T16:48:17.515Z</lastmod>
+    <lastmod>2019-06-20T16:48:17.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190618-ansible-troubleshooting/</loc>
     
-    <lastmod>2019-06-18T04:11:49.300Z</lastmod>
+    <lastmod>2019-06-18T04:11:49.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
     
-    <lastmod>2019-06-03T06:43:12.399Z</lastmod>
+    <lastmod>2019-06-03T06:43:12.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/</loc>
     
-    <lastmod>2019-05-31T17:36:24.381Z</lastmod>
+    <lastmod>2019-05-31T17:36:24.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</loc>
     
-    <lastmod>2019-05-12T03:40:25.360Z</lastmod>
+    <lastmod>2019-05-12T03:40:25.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
     
-    <lastmod>2019-04-21T14:30:25.174Z</lastmod>
+    <lastmod>2019-04-21T14:30:25.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/</loc>
     
-    <lastmod>2019-04-21T01:18:09.671Z</lastmod>
+    <lastmod>2019-04-21T01:18:09.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
     
-    <lastmod>2019-04-13T07:01:29.550Z</lastmod>
+    <lastmod>2019-04-13T07:01:29.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/</loc>
     
-    <lastmod>2019-04-13T06:59:45.380Z</lastmod>
+    <lastmod>2019-04-13T06:59:45.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180918-skopeo/</loc>
     
-    <lastmod>2019-04-13T06:56:31.167Z</lastmod>
+    <lastmod>2019-04-13T06:56:31.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
     
-    <lastmod>2019-04-13T06:43:00.017Z</lastmod>
+    <lastmod>2019-04-13T06:43:00.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190411-container-bare-metal-for-networking-references-architecture/</loc>
     
-    <lastmod>2019-04-11T15:42:47.145Z</lastmod>
+    <lastmod>2019-04-11T15:42:47.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/</loc>
     
-    <lastmod>2019-04-10T14:56:54.653Z</lastmod>
+    <lastmod>2019-04-10T14:56:54.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190407-how-look-like-operator-framework-in-production/</loc>
     
-    <lastmod>2019-04-10T14:49:34.014Z</lastmod>
+    <lastmod>2019-04-10T14:49:34.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190330-nvidia-dgx-and-redhat-openshift-integration/</loc>
     
-    <lastmod>2019-04-06T14:04:46.696Z</lastmod>
+    <lastmod>2019-04-06T14:04:46.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/</loc>
     
-    <lastmod>2019-04-04T19:05:53.107Z</lastmod>
+    <lastmod>2019-04-04T19:05:53.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</loc>
     
-    <lastmod>2019-03-30T16:28:59.537Z</lastmod>
+    <lastmod>2019-03-30T16:28:59.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/</loc>
     
-    <lastmod>2019-03-30T16:28:54.710Z</lastmod>
+    <lastmod>2019-03-30T16:28:54.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
     
-    <lastmod>2019-03-24T18:07:31.718Z</lastmod>
+    <lastmod>2019-03-24T18:07:31.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/</loc>
     
-    <lastmod>2019-03-24T18:07:19.867Z</lastmod>
+    <lastmod>2019-03-24T18:07:19.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20180825-netdevops/</loc>
     
-    <lastmod>2019-03-24T18:07:16.244Z</lastmod>
+    <lastmod>2019-03-24T18:07:16.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
     
-    <lastmod>2019-03-24T18:07:12.545Z</lastmod>
+    <lastmod>2019-03-24T18:07:12.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
     
-    <lastmod>2019-03-24T18:06:58.204Z</lastmod>
+    <lastmod>2019-03-24T18:06:58.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/</loc>
     
-    <lastmod>2019-03-24T18:03:20.390Z</lastmod>
+    <lastmod>2019-03-24T18:03:20.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
     
-    <lastmod>2019-03-07T14:53:54.425Z</lastmod>
+    <lastmod>2019-03-07T14:53:54.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.pichuang.com.tw/20140712-windows-7-usb-download-tool/</loc>
     
-    <lastmod>2019-02-23T16:06:33.387Z</lastmod>
+    <lastmod>2019-02-23T16:06:33.000Z</lastmod>
     
   </url>
   
@@ -387,14 +394,14 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
