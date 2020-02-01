@@ -55,7 +55,7 @@
 <meta property="og:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-repos.png">
-<meta property="og:updated_time" content="2020-02-01T16:18:46.402Z">
+<meta property="og:updated_time" content="2020-02-01T16:19:40.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="關於容器倉庫的那些二三四">
 <meta name="twitter:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-02 00:18:46" itemprop="dateModified" datetime="2020-02-02T00:18:46+08:00">2020-02-02</time>
+                <time title="Modified: 2020-02-02 00:19:40" itemprop="dateModified" datetime="2020-02-02T00:19:40+08:00">2020-02-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,7 +318,7 @@
 <ol>
 <li><code>:latest</code> 只是一個標籤 (Latest is Just a Tag)</li>
 <li><code>:latest</code> 不會自動更新 (Latest is Not Dynbamic)</li>
-<li>預設狀況下，Latest 很容易被覆蓋掉 (Latest is Easily Overwritten By Default)</li>
+<li>預設狀況下，<code>:latest</code> 很容易被覆蓋掉 (Latest is Easily Overwritten By Default)</li>
 <li><code>:latest</code> 本身不具備任何描述性，不易生產使用 (Latest is Not Descriptive and Hard to Work With)</li>
 </ol>
 <p>舉一個實際狀況，在 2019/06 那段時間 <code>library/centos:latest</code> 是指向 <code>library/centos:7</code> 這個版本，而在某一天 <code>library/centos:8</code> 出了，而這個 <code>library/centos:latest</code> 就被上游管理者手動指過去了，而並不是指向 <code>library/centos:7.x</code> 的最新版本，導致使用 <code>:latest</code> 為標籤的使用者有不小的災難</p>
