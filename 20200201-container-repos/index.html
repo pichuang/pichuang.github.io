@@ -55,7 +55,7 @@
 <meta property="og:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-repos.png">
-<meta property="og:updated_time" content="2020-02-01T16:14:38.181Z">
+<meta property="og:updated_time" content="2020-02-01T16:18:46.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="關於容器倉庫的那些二三四">
 <meta name="twitter:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-02 00:14:38" itemprop="dateModified" datetime="2020-02-02T00:14:38+08:00">2020-02-02</time>
+                <time title="Modified: 2020-02-02 00:18:46" itemprop="dateModified" datetime="2020-02-02T00:18:46+08:00">2020-02-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
 <ol>
 <li>在同一個倉庫裡，不同的 Namespace 可以有相同的 Image 命名，譬如下列狀況</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Test Case</span></span><br><span class="line"><span class="comment"># Remote: quay.misc.internal/library/centos:latest</span></span><br><span class="line"><span class="comment"># Local: quay.misc.internal/golden/centos:latest</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製</span></span><br><span class="line">skopeo copy docker://quay.misc.internal/library/centos:latest docker://quay.misc.internal/golden/centos:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比對</span></span><br><span class="line">skopeo inspect docker://quay.misc.internal/library/centos:latest</span><br><span class="line">skopeo inspect docker://quay.misc.internal/golden/centos:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Test Case</span></span><br><span class="line"><span class="comment"># Local 1: quay.misc.internal/library/centos:latest</span></span><br><span class="line"><span class="comment"># Local 2: quay.misc.internal/golden/centos:latest</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製</span></span><br><span class="line">skopeo copy docker://quay.misc.internal/library/centos:latest docker://quay.misc.internal/golden/centos:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比對</span></span><br><span class="line">skopeo inspect docker://quay.misc.internal/library/centos:latest</span><br><span class="line">skopeo inspect docker://quay.misc.internal/golden/centos:latest</span><br></pre></td></tr></table></figure>
 
 <p>這樣兩邊的 Container Images 內容會是一模一樣的，差異只有在 Namespace 命名不一樣而已，可以透過 <code>skoepo</code> 進行對照</p>
 <ol start="2">
