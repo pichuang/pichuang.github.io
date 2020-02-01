@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Phil Workspace" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
+<meta name="keywords" content="container">
+<meta property="og:type" content="article">
+<meta property="og:title" content="關於容器倉庫的那些一二三">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200201-container-repos/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/container-repos.png">
+<meta property="og:updated_time" content="2020-02-01T16:11:10.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="關於容器倉庫的那些一二三">
+<meta name="twitter:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/container-repos.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200201-container-repos/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>關於容器倉庫的那些一二三 | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">59</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200201-container-repos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          關於容器倉庫的那些一二三
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-01 03:45:00" itemprop="dateCreated datePublished" datetime="2020-02-01T03:45:00+08:00">2020-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-02 00:11:10" itemprop="dateModified" datetime="2020-02-02T00:11:10+08:00">2020-02-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/container/" itemprop="url" rel="index">
+                    <span itemprop="name">container</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，<code>docker pull docker.io/library/centos</code> 的指令試試，那到底 <code>docker.io/library/centos</code> 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 <code>podman</code>、<code>skopeo</code> 為主</p>
+<p><img src="/images/container-repos.png" alt></p>
+<a id="more"></a>
+
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="Q1-一般來說，正常的下載路徑長怎樣"><a href="#Q1-一般來說，正常的下載路徑長怎樣" class="headerlink" title="Q1: 一般來說，正常的下載路徑長怎樣?"></a>Q1: 一般來說，正常的下載路徑長怎樣?</h3><p>通用標準格式如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;HOSTNAME&gt;/&lt;NAMESPACE&gt;/&lt;IMAGE&gt;:&lt;TAG&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Hostname: 就是一般常見的網址，譬如 <code>https://docker.io</code>、<code>https://registry.redhat.io</code> 或者是私有的 <code>http://quay.misc.internal</code> 等符合 <a href="https://tools.ietf.org/html/rfc3986" target="_blank" rel="noopener">RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax</a> 標準且以 <code>http</code> 或 <code>https</code> 為主的通訊協議皆可</li>
+<li>Namespace: 有些會稱作 project、project-id、Organization，意思是相同的，主要是分類的功用，不可省略，最知名的命名就是來自於 docker.io 的 <code>library</code></li>
+<li>Image: 實際上要使用的 Container Image 名稱</li>
+<li>Tag: 針對每一個 Image，區分特定的版本，一般來說如果沒有特別寫的話，<code>多數預設狀況下會尋找標記 latest</code> 的標記，後面會討論這件事</li>
+</ul>
+<p>至於有一些特殊的路徑，譬如 <code>&lt;HOSTNAME&gt;/&lt;IMAGE&gt;:&lt;TAG&gt;</code>，也是可以放，但我個人不太建議就是了，盡量保持命名規則的一致性及通用性</p>
+<h3 id="Q2-遠端跟地端的-Namespace-及-Image-name-是否一定保持相同命名才能使用"><a href="#Q2-遠端跟地端的-Namespace-及-Image-name-是否一定保持相同命名才能使用" class="headerlink" title="Q2: 遠端跟地端的 Namespace 及 Image name 是否一定保持相同命名才能使用?"></a>Q2: 遠端跟地端的 Namespace 及 Image name 是否一定保持相同命名才能使用?</h3><p>不需要，這邊有幾個情況可以討論</p>
+<ol>
+<li>在同一個倉庫裡，不同的 Namespace 可以有相同的 Image 命名，譬如下列狀況</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Test Case</span></span><br><span class="line"><span class="comment"># Remote: quay.misc.internal/library/centos:latest</span></span><br><span class="line"><span class="comment"># Local: quay.misc.internal/golden/centos:latest</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製</span></span><br><span class="line">skopeo copy docker://quay.misc.internal/library/centos:latest docker://quay.misc.internal/golden/centos:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比對</span></span><br><span class="line">skopeo inspect docker://quay.misc.internal/library/centos:latest</span><br><span class="line">skopeo inspect docker://quay.misc.internal/golden/centos:latest</span><br></pre></td></tr></table></figure>
+
+<p>這樣兩邊的 Container Images 內容會是一模一樣的，差異只有在 Namespace 命名不一樣而已，可以透過 <code>skoepo</code> 進行對照</p>
+<ol start="2">
+<li>在不同倉庫裡，相同 Namespace 命名可以有相同 Image 命名，譬如下列狀況</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Test Case</span></span><br><span class="line"><span class="comment"># Remote: docker.io/library/centos:latest</span></span><br><span class="line"><span class="comment"># Local: quay.misc.internal/library/centos:latest</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製</span></span><br><span class="line">skopeo copy docker://docker.io/library/centos:latest docker://quay.misc.internal/library/centos:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比對</span></span><br><span class="line">skopeo inspect docker://docker.io/library/centos:latest</span><br><span class="line">skopeo inspect docker://quay.misc.internal/library/centos:latest</span><br></pre></td></tr></table></figure>
+
+<p>兩邊的 Container Images 內容還是一模一樣的，這常見用於定期同步 (Mirror / Replica) 遠端跟地端的映像檔</p>
+<h3 id="Q3-有沒有什麼映像檔標籤的命名慣例呢"><a href="#Q3-有沒有什麼映像檔標籤的命名慣例呢" class="headerlink" title="Q3: 有沒有什麼映像檔標籤的命名慣例呢?"></a>Q3: 有沒有什麼映像檔標籤的命名慣例呢?</h3><p>依據 <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.3/html/images/managing-images#tagging-images" target="_blank" rel="noopener">Tagging images - OpenShift Container Platform 4.2</a> 推薦使用方式，其實說穿了基本也是跟隨常用的 <a href="https://semver.org/lang/zh-TW/" target="_blank" rel="noopener">語意化版本 Semantic Versioning 2.0.0</a> 規矩走，除此之外，也有公司因為一天發布的頻率非常高，會搭配用 <a href="https://zh.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noopener">ISO 8601 - Data and time format</a> 版本 <code>2004</code> 所規範的表示方式 <code>YYYYMMDDhhmm</code> 當作流水號紀錄</p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>範例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>語意化版本</td>
+<td>myimage:v2.0.1</td>
+</tr>
+<tr>
+<td>語意化版本+架構</td>
+<td>myimage:v2.0-x86_64</td>
+</tr>
+<tr>
+<td>語意化版本+基礎鏡像</td>
+<td>myimage:v1.2-centos7</td>
+</tr>
+<tr>
+<td>ISO 8601 (YYYYMMDDhhmm)</td>
+<td>myimage:202002011200</td>
+</tr>
+<tr>
+<td>ISO 8601 (YYYYMMDD)</td>
+<td>myimage:20200201</td>
+</tr>
+<tr>
+<td>最新穩定</td>
+<td>myimage:stable</td>
+</tr>
+<tr>
+<td>最新 (可能不穩定)</td>
+<td>myimage:latest</td>
+</tr>
+</tbody></table>
+<p>至於這個標籤 <code>latest</code>，可能蠻多人對它有點誤解</p>
+<h3 id="Q4-關於-latest-有什麼誤解呢"><a href="#Q4-關於-latest-有什麼誤解呢" class="headerlink" title="Q4: 關於 latest 有什麼誤解呢?"></a>Q4: 關於 <code>latest</code> 有什麼誤解呢?</h3><p>這邊直接引用 <a href="https://vsupalov.com/docker-latest-tag/" target="_blank" rel="noopener">What’s Wrong With The Docker :latest Tag?</a> 的文章，寫的蠻直白的，摘要如下：</p>
+<ol>
+<li><code>:latest</code> 只是一個標籤 (Latest is Just a Tag)</li>
+<li><code>:latest</code> 不會自動更新 (Latest is Not Dynbamic)</li>
+<li>預設狀況下，Latest 很容易被覆蓋掉 (Latest is Easily Overwritten By Default)</li>
+<li><code>:latest</code> 本身不具備任何描述性，不易生產使用 (Latest is Not Descriptive and Hard to Work With)</li>
+</ol>
+<p>舉一個實際狀況，在 2019/06 那段時間 <code>library/centos:latest</code> 是指向 <code>library/centos:7</code> 這個版本，而在某一天 <code>library/centos:8</code> 出了，而這個 <code>library/centos:latest</code> 就被上游管理者手動指過去了，而並不是指向 <code>library/centos:7.x</code> 的最新版本，導致使用 <code>:latest</code> 為標籤的使用者有不小的災難</p>
+<p>根本上的問題就是 latest 這個字的語意不太好，字面上的意思並不能完全表達他的真正含義，而在現行一個程式擁有多版本維護需求狀況下 (e.g: centos:7.x, centos:8.x)，不是特別適當，故寫 Dockerfile/Containerfile 務必要把指定版號寫進去才不會照成混亂，也相對比較好維護</p>
+<h3 id="Q5-有建議的命名方式嗎"><a href="#Q5-有建議的命名方式嗎" class="headerlink" title="Q5: 有建議的命名方式嗎?"></a>Q5: 有建議的命名方式嗎?</h3><p>公用的標籤可以取名為 <code>stable</code>，或者是直接依照 <a href="https://semver.org/lang/zh-TW/" target="_blank" rel="noopener">語意化版本 Semantic Versioning 2.0.0</a> 進行命名</p>
+<p>個人經驗上，多數沒有什麼需要版本化命名的需求，預設都是採用 <code>ISO 8601 (YYYYMMDD)</code> 當作標籤名，既可以確保不會重複標籤，也可以直觀理解版本意義</p>
+<h3 id="Q6-所以-latest-是不是應該要完全被禁止"><a href="#Q6-所以-latest-是不是應該要完全被禁止" class="headerlink" title="Q6: 所以 latest 是不是應該要完全被禁止?"></a>Q6: 所以 latest 是不是應該要完全被禁止?</h3><p>不需要，目前現行約定俗成的作法就是，當你沒有特別指定標籤名的話，預設就是會先去抓 <code>:latest</code> 的標籤，可以撈到 manifest 的資訊回來，裡面通常都會包含完整的 RepoTags 可供查詢</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 各位試試這條指令，然後看著 latest 標籤，試問他指向哪一個版本?</span></span><br><span class="line">skopeo inspect docker://docker.io/library/centos | jq <span class="string">".RepoTags"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>Latest 標籤引發的誤解，應該或多或少都有導致一些狀況發生，請大家一定要依據正確的觀念來使用這個 latest 標籤，這邊也有一篇 <a href="http://dockone.io/article/165" target="_blank" rel="noopener">Docker中latest标签引发的困惑</a> 探討相關的議題也可以補充參考</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://vsupalov.com/docker-latest-tag/" target="_blank" rel="noopener">What’s Wrong With The Docker :latest Tag?</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.3/html/images/managing-images#tagging-images" target="_blank" rel="noopener">Tagging images - Red Hat OpenShift Container Platform 4.3</a></li>
+<li><a href="https://semver.org/lang/zh-TW/" target="_blank" rel="noopener">語意化版本 Semantic Versioning 2.0.0</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noopener">ISO 8601:2004</a></li>
+<li><a href="http://dockone.io/article/165" target="_blank" rel="noopener">Docker中latest标签引发的困惑</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/container/" rel="tag"># container</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/20200131-swagger-generator/" rel="next" title="建立私有 Swagger UI 服務">
+                  <i class="fa fa-chevron-left"></i> 建立私有 Swagger UI 服務
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">1.</span> <span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-一般來說，正常的下載路徑長怎樣"><span class="nav-number">1.1.</span> <span class="nav-text">Q1: 一般來說，正常的下載路徑長怎樣?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-遠端跟地端的-Namespace-及-Image-name-是否一定保持相同命名才能使用"><span class="nav-number">1.2.</span> <span class="nav-text">Q2: 遠端跟地端的 Namespace 及 Image name 是否一定保持相同命名才能使用?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-有沒有什麼映像檔標籤的命名慣例呢"><span class="nav-number">1.3.</span> <span class="nav-text">Q3: 有沒有什麼映像檔標籤的命名慣例呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-關於-latest-有什麼誤解呢"><span class="nav-number">1.4.</span> <span class="nav-text">Q4: 關於 latest 有什麼誤解呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q5-有建議的命名方式嗎"><span class="nav-number">1.5.</span> <span class="nav-text">Q5: 有建議的命名方式嗎?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6-所以-latest-是不是應該要完全被禁止"><span class="nav-number">1.6.</span> <span class="nav-text">Q6: 所以 latest 是不是應該要完全被禁止?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">2.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
