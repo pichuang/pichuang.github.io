@@ -55,7 +55,7 @@
 <meta property="og:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/container-repos.png">
-<meta property="og:updated_time" content="2020-02-01T16:43:41.893Z">
+<meta property="og:updated_time" content="2020-02-01T17:23:51.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="關於容器倉庫的那些二三四">
 <meta name="twitter:description" content="隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，docker pull docker.io/library/centos 的指令試試，那到底 docker.io/library/centos 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 podm">
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-02 00:43:41" itemprop="dateModified" datetime="2020-02-02T00:43:41+08:00">2020-02-02</time>
+                <time title="Modified: 2020-02-02 01:23:51" itemprop="dateModified" datetime="2020-02-02T01:23:51+08:00">2020-02-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,6 +325,7 @@
 <p>根本上的問題就是 latest 這個字的語意不太好，字面上的意思並不能完全表達他的真正含義，而在現行一個程式擁有多版本維護需求狀況下 (e.g: centos:7.x, centos:8.x)，不是特別適當，故寫 Dockerfile/Containerfile 務必要把指定版號寫進去才不會照成混亂，也相對比較好維護</p>
 <h3 id="Q5-有建議的命名方式嗎"><a href="#Q5-有建議的命名方式嗎" class="headerlink" title="Q5: 有建議的命名方式嗎?"></a>Q5: 有建議的命名方式嗎?</h3><p>公用的標籤可以取名為 <code>stable</code>，或者是直接依照 <a href="https://semver.org/lang/zh-TW/" target="_blank" rel="noopener">語意化版本 Semantic Versioning 2.0.0</a> 進行命名</p>
 <p>個人經驗上，多數沒有什麼需要版本化命名的需求，預設都是採用 <code>ISO 8601 (YYYYMMDD)</code> 當作標籤名，既可以確保不會重複標籤，也可以直觀理解版本意義</p>
+<p>譬如像 <a href="https://quay.io/repository/pichuang/debug-container?tab=tags" target="_blank" rel="noopener">pichuang/debug-container</a> 所呈現的樣子</p>
 <h3 id="Q6-所以-latest-是不是應該要完全被禁止"><a href="#Q6-所以-latest-是不是應該要完全被禁止" class="headerlink" title="Q6: 所以 latest 是不是應該要完全被禁止?"></a>Q6: 所以 latest 是不是應該要完全被禁止?</h3><p>不需要，目前現行約定俗成的作法就是，當你沒有特別指定標籤名的話，預設就是會先去抓 <code>:latest</code> 的標籤，可以撈到 manifest 的資訊回來，裡面通常都會包含完整的 RepoTags 可供查詢</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 各位試試這條指令，然後看著 latest 標籤，試問他指向哪一個版本?</span></span><br><span class="line">skopeo inspect docker://docker.io/library/centos | jq <span class="string">".RepoTags"</span></span><br></pre></td></tr></table></figure>
 
