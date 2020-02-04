@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
+    
+    <lastmod>2020-02-04T17:38:59.186Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/</loc>
     
     <lastmod>2020-02-04T16:22:02.776Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
     
     <lastmod>2020-01-31T03:46:32.826Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
-    
-    <lastmod>2020-01-11T20:08:45.000Z</lastmod>
     
   </url>
   
