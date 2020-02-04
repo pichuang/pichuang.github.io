@@ -54,15 +54,16 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/homecloud-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/root-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/intermediate-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/operation-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/sign-tls-cert-key.png">
-<meta property="og:updated_time" content="2020-02-04T16:09:18.284Z">
+<meta property="og:updated_time" content="2020-02-04T16:17:07.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2020 大改造宅宅雲架構系列文-5 窮人版 PKI">
 <meta name="twitter:description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
-<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/root-ca.png">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/homecloud-ca.png">
 
 <link rel="canonical" href="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/">
 
@@ -227,7 +228,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-05 00:09:18" itemprop="dateModified" datetime="2020-02-05T00:09:18+08:00">2020-02-05</time>
+                <time title="Modified: 2020-02-05 00:17:07" itemprop="dateModified" datetime="2020-02-05T00:17:07+08:00">2020-02-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,6 +254,7 @@
 
       
         <p>各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的基礎文章可以參考 Haway 哈維哥的 [[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</p>
+<p><img src="/images/homecloud-ca.png" alt></p>
 <a id="more"></a>
 
 <h2 id="開始之前…"><a href="#開始之前…" class="headerlink" title="開始之前…"></a>開始之前…</h2><p>本文將會完全依據 <a href="https://pki-tutorial.readthedocs.io/en/latest/" target="_blank" rel="noopener">OpenSSL PKI Tutorial v1.1</a> 的內容進行實踐，如果你沒有試過的人，超級建議自己玩一次看看，這份文件最有價值的地方在於，提供了三個情境啊啊啊啊啊</p>
