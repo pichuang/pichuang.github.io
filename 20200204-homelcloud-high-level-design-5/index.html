@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Phil Workspace" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Overpass Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
+<meta name="keywords" content="pki,ssl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020 大改造宅宅雲架構系列文-5 窮人版 PKI">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/root-ca.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/intermediate-ca.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/operation-ca.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/sign-tls-cert-key.png">
+<meta property="og:updated_time" content="2020-02-04T16:09:18.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2020 大改造宅宅雲架構系列文-5 窮人版 PKI">
+<meta name="twitter:description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/root-ca.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>2020 大改造宅宅雲架構系列文-5 窮人版 PKI | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">60</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2020 大改造宅宅雲架構系列文-5 窮人版 PKI
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-03 16:11:00" itemprop="dateCreated datePublished" datetime="2020-02-03T16:11:00+08:00">2020-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-05 00:09:18" itemprop="dateModified" datetime="2020-02-05T00:09:18+08:00">2020-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/infra/" itemprop="url" rel="index">
+                    <span itemprop="name">infra</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的基礎文章可以參考 Haway 哈維哥的 [[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</p>
+<a id="more"></a>
+
+<h2 id="開始之前…"><a href="#開始之前…" class="headerlink" title="開始之前…"></a>開始之前…</h2><p>本文將會完全依據 <a href="https://pki-tutorial.readthedocs.io/en/latest/" target="_blank" rel="noopener">OpenSSL PKI Tutorial v1.1</a> 的內容進行實踐，如果你沒有試過的人，超級建議自己玩一次看看，這份文件最有價值的地方在於，提供了三個情境啊啊啊啊啊</p>
+<ol>
+<li><a href="https://pki-tutorial.readthedocs.io/en/latest/simple/index.html" target="_blank" rel="noopener">Simple PKI</a>，包含 root CA + 1 signing CA，且提供 2 種不同簽發的方式 (Email / TLS Certificate)</li>
+<li><a href="https://pki-tutorial.readthedocs.io/en/latest/advanced/index.html" target="_blank" rel="noopener">Advanced PKI</a>，包含 root CA + 3 signing CA (Email / TLS / Software)，且提供 3 種不同簽發的方式 (Email / TLS / Software)</li>
+<li><a href="https://pki-tutorial.readthedocs.io/en/latest/expert/index.html" target="_blank" rel="noopener">Expert PKI</a>，包含 root CA + 1 intermediate CA + 2 signing CA，且提供多種常見的簽發方式</li>
+</ol>
+<p>我自己是以 Expert PKI 為主，簽出 root CA + 1 intermediate CA + 2 signing CA，倘若看官們是 HomeCloud 要用，簡單不複雜，大多都是 Web 服務的話，選擇 Simple PKI 的情境就好了</p>
+<h2 id="建立人生第一個-Root-CA"><a href="#建立人生第一個-Root-CA" class="headerlink" title="建立人生第一個 Root CA"></a>建立人生第一個 Root CA</h2><p>這個我蠻建議選擇一個你不會常常碰到的資料夾放置好，然後簽出 Intermediate CA 之後，就可以把金鑰 (Key, .key) 藏起來到只有你知道的地方去，憑證 (Certification, .crt) 因為後面還會用到所以要留著放在外面給人串憑證信任用</p>
+<h3 id="下載-Expert-PKI-模板"><a href="#下載-Expert-PKI-模板" class="headerlink" title="下載 Expert PKI 模板"></a>下載 Expert PKI 模板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># I love example</span></span><br><span class="line">git <span class="built_in">clone</span> https://bitbucket.org/stefanholek/pki-example-3 homecloud</span><br><span class="line"><span class="built_in">cd</span> homecloud</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-Root-CA-的設定檔"><a href="#配置-Root-CA-的設定檔" class="headerlink" title="配置 Root CA 的設定檔"></a>配置 Root CA 的設定檔</h3><p>這邊分享針對 <code>etc/root-ca.conf</code> 我修改的 patch 檔</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">git diff etc/root-ca.conf</span><br><span class="line"></span><br><span class="line">diff --git a/etc/root-ca.conf b/etc/root-ca.conf</span><br><span class="line">index 15d6126..a97d179 100644</span><br><span class="line">--- a/etc/root-ca.conf</span><br><span class="line">+++ b/etc/root-ca.conf</span><br><span class="line">@@ -3,7 +3,7 @@</span><br><span class="line"> [ default ]</span><br><span class="line"> ca                      = root-ca               <span class="comment"># CA name</span></span><br><span class="line"> dir                     = .                     <span class="comment"># Top dir</span></span><br><span class="line">-base_url                = http://pki.blue.se    <span class="comment"># CA base URL</span></span><br><span class="line">+base_url                = http://pki.pichuang.local    <span class="comment"># CA base URL</span></span><br><span class="line"> aia_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.cer     <span class="comment"># CA certificate URL</span></span><br><span class="line"> crl_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.crl     <span class="comment"># CRL distribution point</span></span><br><span class="line"> name_opt                = multiline,-esc_msb,utf8 <span class="comment"># Display UTF-8 characters</span></span><br><span class="line">@@ -22,10 +22,10 @@ distinguished_name      = ca_dn                 <span class="comment"># DN section</span></span><br><span class="line"> req_extensions          = ca_reqext             <span class="comment"># Desired extensions</span></span><br><span class="line"></span><br><span class="line"> [ ca_dn ]</span><br><span class="line">-countryName             = <span class="string">"SE"</span></span><br><span class="line">-organizationName        = <span class="string">"Blue AB"</span></span><br><span class="line">-organizationalUnitName  = <span class="string">"Blue Root CA"</span></span><br><span class="line">-commonName              = <span class="string">"Blue Root CA"</span></span><br><span class="line">+countryName             = <span class="string">"TW"</span></span><br><span class="line">+organizationName        = <span class="string">"HomeCloud"</span></span><br><span class="line">+organizationalUnitName  = <span class="string">"HomeCloud Root CA"</span></span><br><span class="line">+commonName              = <span class="string">"HomeCloud Root CA"</span></span><br><span class="line"></span><br><span class="line"> [ ca_reqext ]</span><br><span class="line"> keyUsage                = critical,keyCertSign,cRLSign</span><br><span class="line">@@ -90,7 +90,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @issuer_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumAssurance,blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumAssurance,HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ crl_ext ]</span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line">@@ -108,5 +108,5 @@ URI.0                   = <span class="variable">$crl_url</span></span><br><span class="line"> oid_section             = additional_oids</span><br><span class="line"></span><br><span class="line"> [ additional_oids ]</span><br><span class="line">-blueMediumAssurance     = Blue Medium Assurance, 1.3.6.1.4.1.0.1.7.8</span><br><span class="line">-blueMediumDevice        = Blue Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br><span class="line">+HomeCloudMediumAssurance     = HomeCloud Medium Assurance, 1.3.6.1.4.1.0.1.7.8</span><br><span class="line">+HomeCloudMediumDevice        = HomeCloud Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br></pre></td></tr></table></figure>
+
+<p>這邊要特別留意下列四個欄位</p>
+<ol>
+<li>countryName             = “TW”</li>
+<li>organizationName        = “HomeCloud”</li>
+<li>organizationalUnitName  = “HomeCloud Root CA”</li>
+<li>commonName              = “HomeCloud Root CA”</li>
+</ol>
+<p>分別會對應到符合 X.509 標準之識別名稱 (Distinguished Name, DN) 格式: <code>DN: C=TW, O=HomeCloud, OU=HomeCloud Root CA, CN=HomeCloud Root CA</code>，詳細之縮寫表示可以參考 <a href="https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.5.0/com.ibm.mq.sec.doc/q009860_.htm" target="_blank" rel="noopener">IBM - Distinguished Names</a></p>
+<h3 id="建立-Root-CA-憑證-金鑰及自簽憑證-HomeCloud-Root-CA"><a href="#建立-Root-CA-憑證-金鑰及自簽憑證-HomeCloud-Root-CA" class="headerlink" title="建立 Root CA 憑證/金鑰及自簽憑證 - HomeCloud Root CA"></a>建立 Root CA 憑證/金鑰及自簽憑證 - HomeCloud Root CA</h3><p>準備好一組密碼，建立 Csr 跟金鑰時會用上，另外美國國家標準技術研究所 (NIST) 於 2010 年認為 <code>2048 bits</code> 可以<a href="https://www.informationsecurity.com.tw/article/article_print.aspx?aid=7511" target="_blank" rel="noopener">撐到 2030 年</a>，所以對於過期日期直接設定為 <code>2030/12/31 23:59:59</code>。(小編: 可能那時候還沒發展出量子電腦…之後這個位元數跟過期時間推測會隨著量子計算的演進會大幅度縮小)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create directories</span></span><br><span class="line">mkdir -p ca/root-ca/private ca/root-ca/db crl certs</span><br><span class="line">chmod 700 ca/root-ca/private</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create database 建立序列號</span></span><br><span class="line">cp /dev/null ca/root-ca/db/root-ca.db</span><br><span class="line">cp /dev/null ca/root-ca/db/root-ca.db.attr</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/root-ca/db/root-ca.crt.srl</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/root-ca/db/root-ca.crl.srl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA Request</span></span><br><span class="line"><span class="comment"># 密碼跟 root-cakey 都應該要妥善藏好</span></span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/root-ca.conf \</span><br><span class="line">    -out ca/root-ca.csr \</span><br><span class="line">    -keyout ca/root-ca/private/root-ca.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA Certificate</span></span><br><span class="line"><span class="comment"># 2048-bit RSA keys are deemed safe until 2030/12/31 23:59:59</span></span><br><span class="line">openssl ca -selfsign \</span><br><span class="line">    -config etc/root-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> ca/root-ca.csr \</span><br><span class="line">    -out ca/root-ca.crt \</span><br><span class="line">    -extensions root_ca_ext \</span><br><span class="line">    -enddate 20301231235959Z</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create initial CRL</span></span><br><span class="line"><span class="comment"># 建立憑證吊銷列表 (Certficiate revocation list)</span></span><br><span class="line">openssl ca -gencrl \</span><br><span class="line">    -config etc/root-ca.conf \</span><br><span class="line">    -out crl/root-ca.crl</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/root-ca.png" alt></p>
+<p>假設你跑完了上面的流程，你應該可以獲得到下列 3 個東西</p>
+<ul>
+<li>憑證: <code>ca/root-ca.crt</code></li>
+<li>金鑰: <code>ca/root-ca/private/root-ca.key</code> &lt;- 拿去藏好</li>
+<li>設定檔: <code>etc/root-ca.conf</code></li>
+</ul>
+<h2 id="建立人生第一個-Intermidate-CA"><a href="#建立人生第一個-Intermidate-CA" class="headerlink" title="建立人生第一個 Intermidate CA"></a>建立人生第一個 Intermidate CA</h2><p>繼承上面的 <code>HomeCloud Root CA</code> 的產生結果，繼續簽 <code>HomeCloud Intermediate CA</code>，其實到這一步如果你不想要簽 Intermidate CA 的話，可以左轉 <a href="https://pki-tutorial.readthedocs.io/en/latest/simple/index.html" target="_blank" rel="noopener">Simple PKI</a> 或 <a href="https://pki-tutorial.readthedocs.io/en/latest/advanced/index.html" target="_blank" rel="noopener">Advanced PKI</a> 繼續執行下去</p>
+<h3 id="配置-Intermidate-CA-的設定檔"><a href="#配置-Intermidate-CA-的設定檔" class="headerlink" title="配置 Intermidate CA 的設定檔"></a>配置 Intermidate CA 的設定檔</h3><p>主要是從 <code>etc/network-ca.conf</code> 更改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp etc/network-ca.conf etc/intermediate-ca.conf</span><br><span class="line">git add etc/intermediate-ca.conf</span><br></pre></td></tr></table></figure>
+
+<p>另外分享修改的地方</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">git diff etc/intermediate-ca.conf</span><br><span class="line"></span><br><span class="line">diff --git a/etc/intermediate-ca.conf b/etc/intermediate-ca.conf</span><br><span class="line">index 6bda509..ca77f92 100644</span><br><span class="line">--- a/etc/intermediate-ca.conf</span><br><span class="line">+++ b/etc/intermediate-ca.conf</span><br><span class="line">@@ -1,9 +1,9 @@</span><br><span class="line"> <span class="comment"># Blue Network CA</span></span><br><span class="line"></span><br><span class="line"> [ default ]</span><br><span class="line">-ca                      = network-ca            <span class="comment"># CA name</span></span><br><span class="line">+ca                      = intermediate-ca            <span class="comment"># CA name</span></span><br><span class="line"> dir                     = .                     <span class="comment"># Top dir</span></span><br><span class="line">-base_url                = http://pki.blue.se    <span class="comment"># CA base URL</span></span><br><span class="line">+base_url                = http://pki.pichuang.local    <span class="comment"># CA base URL</span></span><br><span class="line"> aia_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.cer     <span class="comment"># CA certificate URL</span></span><br><span class="line"> crl_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.crl     <span class="comment"># CRL distribution point</span></span><br><span class="line"> name_opt                = multiline,-esc_msb,utf8 <span class="comment"># Display UTF-8 characters</span></span><br><span class="line">@@ -22,10 +22,10 @@ distinguished_name      = ca_dn                 <span class="comment"># DN section</span></span><br><span class="line"> req_extensions          = ca_reqext             <span class="comment"># Desired extensions</span></span><br><span class="line"></span><br><span class="line"> [ ca_dn ]</span><br><span class="line">-countryName             = <span class="string">"SE"</span></span><br><span class="line">-organizationName        = <span class="string">"Blue AB"</span></span><br><span class="line">-organizationalUnitName  = <span class="string">"Blue Network CA"</span></span><br><span class="line">-commonName              = <span class="string">"Blue Network CA"</span></span><br><span class="line">+countryName             = <span class="string">"TW"</span></span><br><span class="line">+organizationName        = <span class="string">"HomeCloud"</span></span><br><span class="line">+organizationalUnitName  = <span class="string">"HomeCloud Intermediate CA"</span></span><br><span class="line">+commonName              = <span class="string">"HomeCloud Intermediate CA"</span></span><br><span class="line"></span><br><span class="line"> [ ca_reqext ]</span><br><span class="line"> keyUsage                = critical,keyCertSign,cRLSign</span><br><span class="line">@@ -35,9 +35,9 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> <span class="comment"># CA operational settings</span></span><br><span class="line"></span><br><span class="line"> [ ca ]</span><br><span class="line">-default_ca              = network_ca            <span class="comment"># The default CA section</span></span><br><span class="line">+default_ca              = intermediate_ca            <span class="comment"># The default CA section</span></span><br><span class="line"></span><br><span class="line">-[ network_ca ]</span><br><span class="line">+[ intermediate_ca ]</span><br><span class="line"> certificate             = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>.crt       <span class="comment"># The CA cert</span></span><br><span class="line"> private_key             = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>/private/<span class="variable">$ca</span>.key <span class="comment"># CA private key</span></span><br><span class="line"> new_certs_dir           = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>           <span class="comment"># Certificate archive</span></span><br><span class="line">@@ -84,7 +84,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @issuer_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumAssurance,blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumAssurance,HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ signing_ca_ext ]</span><br><span class="line"> keyUsage                = critical,keyCertSign,cRLSign</span><br><span class="line">@@ -93,7 +93,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @issuer_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumAssurance,blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumAssurance,HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ crl_ext ]</span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line">@@ -111,5 +111,5 @@ URI.0                   = <span class="variable">$crl_url</span></span><br><span class="line"> oid_section             = additional_oids</span><br><span class="line"></span><br><span class="line"> [ additional_oids ]</span><br><span class="line">-blueMediumAssurance     = Blue Medium Assurance, 1.3.6.1.4.1.0.1.7.8</span><br><span class="line">-blueMediumDevice        = Blue Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br><span class="line">+HomeCloudMediumAssurance     = HomeCloud Medium Assurance, 1.3.6.1.4.1.0.1.7.8</span><br><span class="line">+HomeCloudMediumDevice        = HomeCloud Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立-Intermidate-CA-憑證-金鑰-HomeCloud-Intermidate-CA"><a href="#建立-Intermidate-CA-憑證-金鑰-HomeCloud-Intermidate-CA" class="headerlink" title="建立 Intermidate CA 憑證/金鑰 - HomeCloud Intermidate CA"></a>建立 Intermidate CA 憑證/金鑰 - HomeCloud Intermidate CA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create directories</span></span><br><span class="line">mkdir -p ca/intermediate-ca/private ca/intermediate-ca/db crl certs</span><br><span class="line">chmod 700 ca/intermediate-ca/private</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create database</span></span><br><span class="line">cp /dev/null ca/intermediate-ca/db/intermediate-ca.db</span><br><span class="line">cp /dev/null ca/intermediate-ca/db/intermediate-ca.db.attr</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/intermediate-ca/db/intermediate-ca.crt.srl</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/intermediate-ca/db/intermediate-ca.crl.srl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA request</span></span><br><span class="line"><span class="comment"># 角色: 下游 CA</span></span><br><span class="line"><span class="comment"># 一般流程是寄送 intermediate-ca.csr (Certificate Signing Request) 給上游 CA 做簽發，intermediate-ca.key 要保留著</span></span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/intermediate-ca.conf \</span><br><span class="line">    -out ca/intermediate-ca.csr \</span><br><span class="line">    -keyout ca/intermediate-ca/private/intermediate-ca.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA certificate</span></span><br><span class="line"><span class="comment"># 角色: 上游 CA</span></span><br><span class="line"><span class="comment"># 拿到下游 CA 的 intermediate-ca.csr 後，簽署出 intermediate-ca.crt 寄送回去給下游 CA</span></span><br><span class="line">openssl ca \</span><br><span class="line">    -config etc/root-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> ca/intermediate-ca.csr \</span><br><span class="line">    -out ca/intermediate-ca.crt \</span><br><span class="line">    -extensions intermediate_ca_ext \</span><br><span class="line">    -enddate 20301231235959Z</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create initial CRL</span></span><br><span class="line"><span class="comment"># 建立憑證吊銷列表 (Certficiate revocation list)</span></span><br><span class="line">openssl ca -gencrl \</span><br><span class="line">    -config etc/intermediate-ca.conf \</span><br><span class="line">    -out crl/intermediate-ca.crl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create PEM bundle</span></span><br><span class="line"><span class="comment"># cat 下游 + 中游 + 上游 &gt; ca-chain/ca-bundle</span></span><br><span class="line">cat ca/intermediate-ca.crt ca/root-ca.crt &gt; \</span><br><span class="line">    ca/intermediate-ca-chain.pem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/intermediate-ca.png" alt></p>
+<h2 id="建立-Operation-CA"><a href="#建立-Operation-CA" class="headerlink" title="建立 Operation CA"></a>建立 Operation CA</h2><h3 id="配置-Operation-CA-的設定檔"><a href="#配置-Operation-CA-的設定檔" class="headerlink" title="配置 Operation CA 的設定檔"></a>配置 Operation CA 的設定檔</h3><p>從 <code>etc/component-ca.conf</code> 修改而來</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp etc/component-ca.conf etc/operation-ca.conf</span><br><span class="line">git add etc/operation-ca.conf</span><br></pre></td></tr></table></figure>
+
+<p>分享修改的地方</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">diff --git a/etc/operation-ca.conf b/etc/operation-ca.conf</span><br><span class="line">index 8858261..480e83f 100644</span><br><span class="line">--- a/etc/operation-ca.conf</span><br><span class="line">+++ b/etc/operation-ca.conf</span><br><span class="line">@@ -1,12 +1,12 @@</span><br><span class="line"> <span class="comment"># Blue Component CA</span></span><br><span class="line"></span><br><span class="line"> [ default ]</span><br><span class="line">-ca                      = component-ca          <span class="comment"># CA name</span></span><br><span class="line">+ca                      = operation-ca          <span class="comment"># CA name</span></span><br><span class="line"> dir                     = .                     <span class="comment"># Top dir</span></span><br><span class="line">-base_url                = http://pki.blue.se    <span class="comment"># CA base URL</span></span><br><span class="line">+base_url                = http://pki.pichuang.local    <span class="comment"># CA base URL</span></span><br><span class="line"> aia_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.cer     <span class="comment"># CA certificate URL</span></span><br><span class="line"> crl_url                 = <span class="variable">$base_url</span>/<span class="variable">$ca</span>.crl     <span class="comment"># CRL distribution point</span></span><br><span class="line">-ocsp_url                = http://ocsp.blue.se   <span class="comment"># OCSP responder URL</span></span><br><span class="line">+ocsp_url                = http://ocsp.pichuang.local   <span class="comment"># OCSP responder URL</span></span><br><span class="line"> name_opt                = multiline,-esc_msb,utf8 <span class="comment"># Display UTF-8 characters</span></span><br><span class="line"> openssl_conf            = openssl_init          <span class="comment"># Library config section</span></span><br><span class="line"></span><br><span class="line">@@ -23,10 +23,10 @@ distinguished_name      = ca_dn                 <span class="comment"># DN section</span></span><br><span class="line"> req_extensions          = ca_reqext             <span class="comment"># Desired extensions</span></span><br><span class="line"></span><br><span class="line"> [ ca_dn ]</span><br><span class="line">-countryName             = <span class="string">"SE"</span></span><br><span class="line">-organizationName        = <span class="string">"Blue AB"</span></span><br><span class="line">-organizationalUnitName  = <span class="string">"Blue Component CA"</span></span><br><span class="line">-commonName              = <span class="string">"Blue Component CA"</span></span><br><span class="line">+countryName             = <span class="string">"TW"</span></span><br><span class="line">+organizationName        = <span class="string">"HomeCloud"</span></span><br><span class="line">+organizationalUnitName  = <span class="string">"HomeCloud Operation CA"</span></span><br><span class="line">+commonName              = <span class="string">"HomeCloud Operation CA"</span></span><br><span class="line"></span><br><span class="line"> [ ca_reqext ]</span><br><span class="line"> keyUsage                = critical,keyCertSign,cRLSign</span><br><span class="line">@@ -36,9 +36,9 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> <span class="comment"># CA operational settings</span></span><br><span class="line"></span><br><span class="line"> [ ca ]</span><br><span class="line">-default_ca              = component_ca          <span class="comment"># The default CA section</span></span><br><span class="line">+default_ca              = operation_ca          <span class="comment"># The default CA section</span></span><br><span class="line"></span><br><span class="line">-[ component_ca ]</span><br><span class="line">+[ operation_ca ]</span><br><span class="line"> certificate             = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>.crt       <span class="comment"># The CA cert</span></span><br><span class="line"> private_key             = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>/private/<span class="variable">$ca</span>.key <span class="comment"># CA private key</span></span><br><span class="line"> new_certs_dir           = <span class="variable">$dir</span>/ca/<span class="variable">$ca</span>           <span class="comment"># Certificate archive</span></span><br><span class="line">@@ -86,7 +86,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @ocsp_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ client_ext ]</span><br><span class="line"> keyUsage                = critical,digitalSignature</span><br><span class="line">@@ -96,7 +96,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @ocsp_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ timestamp_ext ]</span><br><span class="line"> keyUsage                = critical,digitalSignature</span><br><span class="line">@@ -106,7 +106,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @issuer_info</span><br><span class="line"> crlDistributionPoints   = @crl_info</span><br><span class="line">-certificatePolicies     = blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ ocspsign_ext ]</span><br><span class="line"> keyUsage                = critical,digitalSignature</span><br><span class="line">@@ -116,7 +116,7 @@ subjectKeyIdentifier    = <span class="built_in">hash</span></span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line"> authorityInfoAccess     = @issuer_info</span><br><span class="line"> noCheck                 = null</span><br><span class="line">-certificatePolicies     = blueMediumDevice</span><br><span class="line">+certificatePolicies     = HomeCloudMediumDevice</span><br><span class="line"></span><br><span class="line"> [ crl_ext ]</span><br><span class="line"> authorityKeyIdentifier  = keyid:always</span><br><span class="line">@@ -138,4 +138,4 @@ URI.0                   = <span class="variable">$crl_url</span></span><br><span class="line"> oid_section             = additional_oids</span><br><span class="line"></span><br><span class="line"> [ additional_oids ]</span><br><span class="line">-blueMediumDevice        = Blue Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br><span class="line">+HomeCloudMediumDevice        = HomeCloud Medium Device Assurance, 1.3.6.1.4.1.0.1.7.9</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立-Operation-CA-憑證-金鑰-HomeCloud-Operation-CA"><a href="#建立-Operation-CA-憑證-金鑰-HomeCloud-Operation-CA" class="headerlink" title="建立 Operation CA 憑證/金鑰 - HomeCloud Operation CA"></a>建立 Operation CA 憑證/金鑰 - HomeCloud Operation CA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create directories</span></span><br><span class="line">mkdir -p ca/operation-ca/private ca/operation-ca/db crl certs</span><br><span class="line">chmod 700 ca/operation-ca/private</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create database</span></span><br><span class="line">cp /dev/null ca/operation-ca/db/operation-ca.db</span><br><span class="line">cp /dev/null ca/operation-ca/db/operation-ca.db.attr</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/operation-ca/db/operation-ca.crt.srl</span><br><span class="line"><span class="built_in">echo</span> 01 &gt; ca/operation-ca/db/operation-ca.crl.srl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA request</span></span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/operation-ca.conf \</span><br><span class="line">    -out ca/operation-ca.csr \</span><br><span class="line">    -keyout ca/operation-ca/private/operation-ca.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create CA certificate</span></span><br><span class="line">openssl ca \</span><br><span class="line">    -config etc/intermediate-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> ca/operation-ca.csr \</span><br><span class="line">    -out ca/operation-ca.crt \</span><br><span class="line">    -extensions signing_ca_ext</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create initial CRL</span></span><br><span class="line">openssl ca -gencrl \</span><br><span class="line">    -config etc/operation-ca.conf \</span><br><span class="line">    -out crl/operation-ca.crl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create PEM bundle</span></span><br><span class="line">cat ca/operation-ca.crt ca/intermediate-ca.crt ca/root-ca.crt &gt; \</span><br><span class="line">    ca/operation-ca-chain.pem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/operation-ca.png" alt></p>
+<h2 id="維運相關"><a href="#維運相關" class="headerlink" title="維運相關"></a>維運相關</h2><h3 id="簽發單一-TLS-Server-憑證"><a href="#簽發單一-TLS-Server-憑證" class="headerlink" title="簽發單一 TLS Server 憑證"></a>簽發單一 TLS Server 憑證</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create TLS Server Request</span></span><br><span class="line">SAN=DNS:www.pichuang.local \</span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/server.conf \</span><br><span class="line">    -out certs/www.pichuang.local.csr \</span><br><span class="line">    -keyout certs/www.pichuang.local.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create TLS Server Certificate</span></span><br><span class="line">openssl ca \</span><br><span class="line">    -config etc/operation-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> certs/www.pichuang.local.csr \</span><br><span class="line">    -out certs/www.pichuang.local.crt \</span><br><span class="line">    -extensions server_ext</span><br></pre></td></tr></table></figure>
+
+<h3 id="簽發單一-Wildcard-TLS-Server-憑證"><a href="#簽發單一-Wildcard-TLS-Server-憑證" class="headerlink" title="簽發單一 Wildcard TLS Server 憑證"></a>簽發單一 Wildcard TLS Server 憑證</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create TLS Server Request</span></span><br><span class="line">SAN=DNS:*.pichuang.local \</span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/server.conf \</span><br><span class="line">    -out certs/wildcard.pichuang.local.csr \</span><br><span class="line">    -keyout certs/wildcard.pichuang.local.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create TLS Server Certificate</span></span><br><span class="line">openssl ca \</span><br><span class="line">    -config etc/operation-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> certs/wildcard.pichuang.local.csr \</span><br><span class="line">    -out certs/wildcard.pichuang.local.crt \</span><br><span class="line">    -extensions server_ext</span><br></pre></td></tr></table></figure>
+
+<h3 id="簽發單一多-Wildcard-TLS-Server-憑證"><a href="#簽發單一多-Wildcard-TLS-Server-憑證" class="headerlink" title="簽發單一多 Wildcard TLS Server 憑證"></a>簽發單一多 Wildcard TLS Server 憑證</h3><p><img src="sign-tls-cert-key.png" alt></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create TLS Server Request</span></span><br><span class="line">SAN=DNS:*.pichuang.local,DNS:*.misc.local \</span><br><span class="line">openssl req -new \</span><br><span class="line">    -config etc/server.conf \</span><br><span class="line">    -out certs/wildcard.csr \</span><br><span class="line">    -keyout certs/wildcard.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create TLS Server Certificate</span></span><br><span class="line">openssl ca \</span><br><span class="line">    -config etc/operation-ca.conf \</span><br><span class="line">    -<span class="keyword">in</span> certs/wildcard.csr \</span><br><span class="line">    -out certs/wildcard.crt \</span><br><span class="line">    -extensions server_ext</span><br></pre></td></tr></table></figure>
+
+<h2 id="驗證相關"><a href="#驗證相關" class="headerlink" title="驗證相關"></a>驗證相關</h2><h3 id="驗證憑證-wildcard-pichuang-local-crt-受-CA-Bundle-ca-operation-ca-chain-pem-信任"><a href="#驗證憑證-wildcard-pichuang-local-crt-受-CA-Bundle-ca-operation-ca-chain-pem-信任" class="headerlink" title="驗證憑證 wildcard.pichuang.local.crt 受 CA Bundle ca/operation-ca-chain.pem 信任"></a>驗證憑證 <code>wildcard.pichuang.local.crt</code> 受 CA Bundle <code>ca/operation-ca-chain.pem</code> 信任</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Should return OK</span></span><br><span class="line">openssl verify -verbose -CAfile ca/operation-ca-chain.pem certs/wildcard.pichuang.local.crt</span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證-RHEL-可正常使用自簽憑證"><a href="#驗證-RHEL-可正常使用自簽憑證" class="headerlink" title="驗證 RHEL 可正常使用自簽憑證"></a>驗證 RHEL 可正常使用自簽憑證</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install PEM into RHEL</span></span><br><span class="line">cp ca/operation-ca-chain.pem /etc/pki/ca-trust/<span class="built_in">source</span>/anchors/</span><br><span class="line">update-ca-trust</span><br><span class="line"></span><br><span class="line"><span class="comment"># Should return OK</span></span><br><span class="line">openssl verify certs/wildcard.pichuang.local.crt</span><br></pre></td></tr></table></figure>
+
+<h3 id="檢查-CRT-憑證內容"><a href="#檢查-CRT-憑證內容" class="headerlink" title="檢查 CRT 憑證內容"></a>檢查 CRT 憑證內容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> certs/wildcard.pichuang.local.crt -text -noout</span><br></pre></td></tr></table></figure>
+
+<h3 id="一般測試-TLS-服務"><a href="#一般測試-TLS-服務" class="headerlink" title="一般測試 TLS 服務"></a>一般測試 TLS 服務</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client -CAfile ca/operation-ca-chain.pem -connect farm.pichuang.local:5001</span><br><span class="line">openssl s_time -connect farm.pichuang.local:5001</span><br></pre></td></tr></table></figure>
+
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>其實我想了想，應該我用 <a href="https://pki-tutorial.readthedocs.io/en/latest/simple/index.html" target="_blank" rel="noopener">Simple PKI</a> 的過程簽一簽就好了…</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://pki-tutorial.readthedocs.io/en/latest/" target="_blank" rel="noopener">OpenSSL PKI Tutorial v1.1</a></li>
+<li>[[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pki/" rel="tag"># pki</a>
+              <a href="/tags/ssl/" rel="tag"># ssl</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/20200201-container-repos/" rel="next" title="關於容器倉庫的那些二三四">
+                  <i class="fa fa-chevron-left"></i> 關於容器倉庫的那些二三四
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#開始之前…"><span class="nav-number">1.</span> <span class="nav-text">開始之前…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立人生第一個-Root-CA"><span class="nav-number">2.</span> <span class="nav-text">建立人生第一個 Root CA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下載-Expert-PKI-模板"><span class="nav-number">2.1.</span> <span class="nav-text">下載 Expert PKI 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Root-CA-的設定檔"><span class="nav-number">2.2.</span> <span class="nav-text">配置 Root CA 的設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-Root-CA-憑證-金鑰及自簽憑證-HomeCloud-Root-CA"><span class="nav-number">2.3.</span> <span class="nav-text">建立 Root CA 憑證/金鑰及自簽憑證 - HomeCloud Root CA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立人生第一個-Intermidate-CA"><span class="nav-number">3.</span> <span class="nav-text">建立人生第一個 Intermidate CA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Intermidate-CA-的設定檔"><span class="nav-number">3.1.</span> <span class="nav-text">配置 Intermidate CA 的設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-Intermidate-CA-憑證-金鑰-HomeCloud-Intermidate-CA"><span class="nav-number">3.2.</span> <span class="nav-text">建立 Intermidate CA 憑證/金鑰 - HomeCloud Intermidate CA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-Operation-CA"><span class="nav-number">4.</span> <span class="nav-text">建立 Operation CA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Operation-CA-的設定檔"><span class="nav-number">4.1.</span> <span class="nav-text">配置 Operation CA 的設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-Operation-CA-憑證-金鑰-HomeCloud-Operation-CA"><span class="nav-number">4.2.</span> <span class="nav-text">建立 Operation CA 憑證/金鑰 - HomeCloud Operation CA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#維運相關"><span class="nav-number">5.</span> <span class="nav-text">維運相關</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#簽發單一-TLS-Server-憑證"><span class="nav-number">5.1.</span> <span class="nav-text">簽發單一 TLS Server 憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簽發單一-Wildcard-TLS-Server-憑證"><span class="nav-number">5.2.</span> <span class="nav-text">簽發單一 Wildcard TLS Server 憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簽發單一多-Wildcard-TLS-Server-憑證"><span class="nav-number">5.3.</span> <span class="nav-text">簽發單一多 Wildcard TLS Server 憑證</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#驗證相關"><span class="nav-number">6.</span> <span class="nav-text">驗證相關</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#驗證憑證-wildcard-pichuang-local-crt-受-CA-Bundle-ca-operation-ca-chain-pem-信任"><span class="nav-number">6.1.</span> <span class="nav-text">驗證憑證 wildcard.pichuang.local.crt 受 CA Bundle ca/operation-ca-chain.pem 信任</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#驗證-RHEL-可正常使用自簽憑證"><span class="nav-number">6.2.</span> <span class="nav-text">驗證 RHEL 可正常使用自簽憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#檢查-CRT-憑證內容"><span class="nav-number">6.3.</span> <span class="nav-text">檢查 CRT 憑證內容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一般測試-TLS-服務"><span class="nav-number">6.4.</span> <span class="nav-text">一般測試 TLS 服務</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#後話"><span class="nav-number">7.</span> <span class="nav-text">後話</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

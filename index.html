@@ -148,7 +148,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">59</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">60</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -183,6 +183,89 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20200204-homelcloud-high-level-design-5/" class="post-title-link" itemprop="url">2020 大改造宅宅雲架構系列文-5 窮人版 PKI</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-03 16:11:00" itemprop="dateCreated datePublished" datetime="2020-02-03T16:11:00+08:00">2020-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-05 00:09:18" itemprop="dateModified" datetime="2020-02-05T00:09:18+08:00">2020-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/infra/" itemprop="url" rel="index">
+                    <span itemprop="name">infra</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的基礎文章可以參考 Haway 哈維哥的 [[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20200204-homelcloud-high-level-design-5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -909,89 +992,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/20191115-homelcloud-high-level-design-2/" class="post-title-link" itemprop="url">2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-11-15 13:21:00" itemprop="dateCreated datePublished" datetime="2019-11-15T13:21:00+08:00">2019-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-16 21:45:36" itemprop="dateModified" datetime="2019-11-16T21:45:36+08:00">2019-11-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/infra/" itemprop="url" rel="index">
-                    <span itemprop="name">infra</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/20191115-homelcloud-high-level-design-2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1040,7 +1040,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1049,7 +1049,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

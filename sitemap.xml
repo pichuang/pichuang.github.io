@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/</loc>
+    
+    <lastmod>2020-02-04T16:09:18.284Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200201-container-repos/</loc>
     
     <lastmod>2020-02-02T12:45:42.387Z</lastmod>
