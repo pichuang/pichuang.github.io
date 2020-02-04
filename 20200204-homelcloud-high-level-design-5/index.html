@@ -59,7 +59,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/intermediate-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/operation-ca.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/sign-tls-cert-key.png">
-<meta property="og:updated_time" content="2020-02-04T16:17:07.677Z">
+<meta property="og:updated_time" content="2020-02-04T16:22:02.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2020 大改造宅宅雲架構系列文-5 窮人版 PKI">
 <meta name="twitter:description" content="各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的">
@@ -228,7 +228,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-05 00:17:07" itemprop="dateModified" datetime="2020-02-05T00:17:07+08:00">2020-02-05</time>
+                <time title="Modified: 2020-02-05 00:22:02" itemprop="dateModified" datetime="2020-02-05T00:22:02+08:00">2020-02-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,7 +253,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的基礎文章可以參考 Haway 哈維哥的 [[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</p>
+        <p>各位鄉親在家裡自建的服務，或多或少應該都有需要建立 https 的服務，估計大部分都是建好一份自簽憑證及金鑰 (self-signed cert/key) 之後，就丟到 TLS Server 端去，但因為我家宅宅雲的服務有點多，還有依據不同任務性質有做 Domain 分類，今天要來分享一下窮人版宅宅雲 PKI 建立大法，但我不是專門研究這領域的人，所以內容大部分都是實務操作面，如果想要看比較單純的基礎文章可以參考 Haway 哈維哥的 <a href="https://haway.30cm.gg/ssl-key-csr-crt-pem/" target="_blank" rel="noopener">[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證</a></p>
 <p><img src="/images/homecloud-ca.png" alt></p>
 <a id="more"></a>
 
@@ -325,7 +325,7 @@
 <h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>其實我想了想，應該我用 <a href="https://pki-tutorial.readthedocs.io/en/latest/simple/index.html" target="_blank" rel="noopener">Simple PKI</a> 的過程簽一簽就好了…</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://pki-tutorial.readthedocs.io/en/latest/" target="_blank" rel="noopener">OpenSSL PKI Tutorial v1.1</a></li>
-<li>[[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證][8]</li>
+<li><a href="https://haway.30cm.gg/ssl-key-csr-crt-pem/" target="_blank" rel="noopener">[SSL 基礎]私有金鑰、CSR 、CRT 與 中繼憑證</a></li>
 </ul>
 
     </div>
