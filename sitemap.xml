@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    
+    <lastmod>2020-02-21T13:05:30.519Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-02-18T02:14:15.184Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
     
     <lastmod>2019-11-28T03:01:59.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
-    
-    <lastmod>2019-11-24T09:47:29.000Z</lastmod>
     
   </url>
   
