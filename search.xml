@@ -288,9 +288,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
-        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
+        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
@@ -345,8 +345,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -622,9 +622,9 @@
       <tags>
         <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
-        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
