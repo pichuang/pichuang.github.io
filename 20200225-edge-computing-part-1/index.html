@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-2.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-1.png">
 <meta property="og:image" content="https://www.crosser.io/media/1568/crosser-industrial-iot-infographique-ml-at-the-edge.svg">
-<meta property="og:updated_time" content="2020-02-25T17:27:32.877Z">
+<meta property="og:updated_time" content="2020-02-26T03:52:45.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="邊緣計算大哉問 Part 1">
 <meta name="twitter:description" content="邊緣計算 (Edge Computing)，相信大家看了一陣子的相關文章、場景和解決方案，但有沒有覺得…好像每個人講的邊緣計算都有點不一樣，本文就是要針對邊緣計算的幾個常見問題來進行介紹，但我的觀點是以自主自建的角度作為討論，不是以公有雲角度為觀點的邊緣計算解釋   Edge Computing = Cloud resources and services close to data source">
@@ -201,7 +201,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-26 01:27:32" itemprop="dateModified" datetime="2020-02-26T01:27:32+08:00">2020-02-26</time>
+                <time title="Modified: 2020-02-26 11:52:45" itemprop="dateModified" datetime="2020-02-26T11:52:45+08:00">2020-02-26</time>
               </span>
 
           
@@ -226,7 +226,7 @@
 <ol>
 <li>對於延遲性 (Latency) 有要求： 使用者到服務需要的 RTT 約等於 1ms 或越低越好</li>
 <li>頻寬 (Bandwidth) 有要求和成本限制</li>
-<li>具備彈性架構：各自的 Site 需具備自治性，可以依據不同業務需求橫向擴充 (Scale-out)，但最小是 1 個站點，</li>
+<li>具備彈性架構：各自的站點需具備自治性，可以依據不同業務需求橫向擴充 (Scale-out)，但最小是 1 個站點，</li>
 <li>資料落地和法規限制：需要將敏感資料放在特定區域裡面，不讓其資料流通至其他地方，你應該不會想要把機台的參數不小心傳出去吧 </li>
 </ol>
 <h3 id="Q2-疑-這個跟常聽到雲端計算-Cloud-Computing-有什麼不一樣"><a href="#Q2-疑-這個跟常聽到雲端計算-Cloud-Computing-有什麼不一樣" class="headerlink" title="Q2: 疑? 這個跟常聽到雲端計算 (Cloud Computing) 有什麼不一樣?"></a>Q2: 疑? 這個跟常聽到雲端計算 (Cloud Computing) 有什麼不一樣?</h3><blockquote>
@@ -234,7 +234,7 @@
 </blockquote>
 <p>常見的雲端計算的 3 個特點</p>
 <ol>
-<li>錯覺般地無限容量的資源池 (Resource Pool)：多數地雲端供應商的資源預備是 <code>供應量 &gt; 需求量</code></li>
+<li>看起來是無限容量的資源池 (Resource Pool)：多數地雲端供應商的資源預備量是 <code>供應量 &gt;&gt; 需求量</code></li>
 <li>多租戶管理 (Multi-Tenant)</li>
 <li>按需自助服務 (On-demand self-service)</li>
 </ol>
@@ -244,8 +244,8 @@
 <li>大多數單租戶居多：大多數服務都是建立在 Remote Branch 或者是 Remote Office 居多，維運者大多都是在總部或者是資訊中心為主</li>
 <li>因業務需求，各自所採用的技術選型，會有不一樣的狀況：這也是為什麼各位看很多人討論的邊緣計算，似乎好像都不太一樣的原因</li>
 </ol>
-<p>承如上面的討論，當然如果你用雲端計算去實踐出邊緣計算也是可以，只要回歸討論 Q1 所提的 4 個點，如果透過雲端供應商的服務也可以達到相關的 SLA 也是可以一種選擇之一。</p>
-<h3 id="Q3-到底邊緣計算有多少種層級可以被討論的"><a href="#Q3-到底邊緣計算有多少種層級可以被討論的" class="headerlink" title="Q3: 到底邊緣計算有多少種層級可以被討論的?"></a>Q3: 到底邊緣計算有多少種層級可以被討論的?</h3><p>依據地理位置和設備的使用目的來做區隔，我覺得紅帽這個畫得蠻好的，借貼在板上</p>
+<p>承如上面的討論，當然如果你用雲端計算去實踐出邊緣計算也是可以 (反正供應量 &gt;&gt; 需求量，不怕)，只要回歸討論 Q1 所提的 4 個點，如果透過雲端供應商的服務也可以達到相關的 SLA 也是可以一種選擇之一。</p>
+<h3 id="Q3-到底邊緣計算有多少種層級可以被討論的"><a href="#Q3-到底邊緣計算有多少種層級可以被討論的" class="headerlink" title="Q3: 到底邊緣計算有多少種層級可以被討論的?"></a>Q3: 到底邊緣計算有多少種層級可以被討論的?</h3><p>依據<code>地理位置</code>和<code>設備的使用目的</code>來做區隔，我覺得紅帽這個畫得蠻好的，借貼在板上</p>
 <p><img src="/images/edge-1.png" alt></p>
 <p>有空也可以看看 <a href="https://www.redhat.com/en/topics/edge-computing/what-is-edge-computing" target="_blank" rel="noopener">Red Hat - What is edge computing?</a> 官方的介紹</p>
 <h3 id="Q4-目前邊緣計算實際上有什麼使用案例"><a href="#Q4-目前邊緣計算實際上有什麼使用案例" class="headerlink" title="Q4: 目前邊緣計算實際上有什麼使用案例?"></a>Q4: 目前邊緣計算實際上有什麼使用案例?</h3><p>不考慮任何產品的方案，分為 10 種邊緣使用案例</p>
@@ -253,16 +253,16 @@
 <li>Enterprise Edge： Enterprise 採用 Local Compute / Storage 及透過有線網路，常見於辦公大樓</li>
 <li>Enterprise Edge (mobile / remote)：Enterprise 採用 Local Compute / Storage 及透過無線網路 (衛星、基地台進行傳輸)，常見於交通設施、煉油平台</li>
 <li>Enterprise Edge (offline)：Enterprise 採用 Local Compute / Storage 及透過實體儲存設備運送資料，例如 <a href="https://aws.amazon.com/tw/snowball-edge/?aws-snowball-edge.sort-by=item.additionalFields.postDateTime&aws-snowball-edge.sort-order=desc" target="_blank" rel="noopener">AWS Snowball Edge</a></li>
-<li>IoT Gateway / Device Edge：Enterprise 採用 IoT 設備，用於收集儀器或感測器資料，傳至 Enterprise Edge 之後處理，大部分的具有 <a href="https://h20195.www2.hpe.com/v2/GetPDF.aspx/c04884747.pdf" target="_blank" rel="noopener">IoT Gateway</a> 皆屬此類</li>
-<li>Provider Network Access Edge：Telco SP 採用純硬體架構式之 Compute / Storage / Network，一般常見於 Central Office 端 </li>
+<li>IoT Gateway / Device Edge：Enterprise 採用 IoT 設備，用於收集儀器或感測器資料，傳至 Enterprise Edge 之後處理，大部分的具有 <a href="https://h20195.www2.hpe.com/v2/GetPDF.aspx/c04884747.pdf" target="_blank" rel="noopener">IoT Gateway</a> 解決方案，譬如 Intel OpenNESS 皆屬此類</li>
+<li>Provider Network Access Edge：Telco SP 採用純硬體架構式之 Compute / Storage / Network，一般常見於 Central Office 端</li>
 <li>Provider Network Access Edge (+OpenStack)：Telco SP 除了採用前者所述以外，需要多加一層 OpenStack，以提供 SDN/NFV 的彈性效益，屬於經典的 NFV / MEC 所提的範圍</li>
 <li>Provider Network Access Edge (+BMaaS)：Telco SP 除了採用前者 <code>5. Provider Network Access Edge</code> 所述以外，還外加實體主機託管能力</li>
-<li><a href="https://events19.linuxfoundation.org/wp-content/uploads/2018/07/K8S-blueprint-for-Far-Edge-v3.pdf" target="_blank" rel="noopener">Provider Far Edge</a>： Telco SP 採用單體較為強的 <a href="https://onestore.nokia.com/asset/205107" target="_blank" rel="noopener">Edge Server</a>，部署在較為遠的室外站點或基站裡，最多三個，常見於 vRAN 使用場景 </li>
+<li><a href="https://events19.linuxfoundation.org/wp-content/uploads/2018/07/K8S-blueprint-for-Far-Edge-v3.pdf" target="_blank" rel="noopener">Provider Far Edge</a>： Telco SP 採用單體較為強的 <a href="https://onestore.nokia.com/asset/205107" target="_blank" rel="noopener">Edge Server</a>，部署在較為遠的室外站點或基站裡，最多三個，常見於 vRAN 使用場景</li>
 <li><a href="https://events19.linuxfoundation.org/wp-content/uploads/2018/07/K8S-blueprint-for-Far-Edge-v3.pdf" target="_blank" rel="noopener">Provider “Ultra Far” Edge</a>：Telco SP 採用 IoT 設備，如 <a href="https://developer.nvidia.com/embedded/develop/hardware" target="_blank" rel="noopener">Nvidia Jetson TX2</a> 部署在基站，進行邊緣計算</li>
 <li>uCPE (Customer-Premises Equipment)：Telco SP 採用自訂的設備放置在客戶端提供自家電信服務，例如 <a href="http://files.opencompute.org/oc/public.php?service=files&t=adca4fc92bc6b981d6ef63da18dc997b&download" target="_blank" rel="noopener">AT&amp;T OCP Desgin uCPE</a></li>
 </ol>
-<h3 id="Q5-哇…眼花撩亂…有沒有快速了解"><a href="#Q5-哇…眼花撩亂…有沒有快速了解" class="headerlink" title="Q5: 哇…眼花撩亂…有沒有快速了解?"></a>Q5: 哇…眼花撩亂…有沒有快速了解?</h3><p>你看上面 10 種的案例，可以理解到客戶角色 (Enterprise、Telco SP) 的不同，對於邊緣計算的理解也會不一樣</p>
-<p>針對企業最常見的就是 <code>1. Enterprise Edge</code> 跟工廠或製造業討論很久的 <code>4. IoT Gateway / Device Edge</code> 的邊緣計算</p>
+<h3 id="Q5-哇…眼花撩亂…有沒有快速了解的方式"><a href="#Q5-哇…眼花撩亂…有沒有快速了解的方式" class="headerlink" title="Q5: 哇…眼花撩亂…有沒有快速了解的方式?"></a>Q5: 哇…眼花撩亂…有沒有快速了解的方式?</h3><p>你看上面 10 種的案例，可以理解到客戶角色 (Enterprise、Telco SP) 的不同，對於邊緣計算的理解也會不一樣</p>
+<p>針對企業最常見的就是 <code>1. Enterprise Edge</code> 跟工廠或製造業討論很久的 <code>4. IoT Gateway / Device Edge</code> 的邊緣計算，但比較多討論的還是在跨國或中大型工廠、製造業那邊</p>
 <p>針對電信就是國外做一堆的 <code>6. Provider Network Access Edge (+OpenStack)</code> 和正在佈局中的 <code>Far Edge / Ultra Edge</code> 的情境，簡單來說 Telco 畢竟不能年年都被 CSP 吃豆腐，現在努力擴展 <code>last mile</code> 的距離中，獲取更大的控制範圍，提供更深化的服務綁住客戶，譬如說中國移動、Verizon、AT&amp;T 都屬此類</p>
 <h3 id="Q6-那為什麼有時候會看到-AI-ML-跟邊緣計算一起出現"><a href="#Q6-那為什麼有時候會看到-AI-ML-跟邊緣計算一起出現" class="headerlink" title="Q6: 那為什麼有時候會看到 AI/ML 跟邊緣計算一起出現?"></a>Q6: 那為什麼有時候會看到 AI/ML 跟邊緣計算一起出現?</h3><p>這個都是因為 <code>4. IoT Gateway / Device Edge</code> 產生的延伸需求，因為工作的關係，目前我看過最經典的案例應該是美國石油巨頭埃克森美孚 (Exxonmobil)</p>
 <p>示意圖大概如下</p>
@@ -358,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-什麼原因驅動了邊緣計算的需求"><span class="nav-number">1.</span> <span class="nav-text">Q1: 什麼原因驅動了邊緣計算的需求?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-疑-這個跟常聽到雲端計算-Cloud-Computing-有什麼不一樣"><span class="nav-number">2.</span> <span class="nav-text">Q2: 疑? 這個跟常聽到雲端計算 (Cloud Computing) 有什麼不一樣?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-到底邊緣計算有多少種層級可以被討論的"><span class="nav-number">3.</span> <span class="nav-text">Q3: 到底邊緣計算有多少種層級可以被討論的?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-目前邊緣計算實際上有什麼使用案例"><span class="nav-number">4.</span> <span class="nav-text">Q4: 目前邊緣計算實際上有什麼使用案例?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q5-哇…眼花撩亂…有沒有快速了解"><span class="nav-number">5.</span> <span class="nav-text">Q5: 哇…眼花撩亂…有沒有快速了解?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6-那為什麼有時候會看到-AI-ML-跟邊緣計算一起出現"><span class="nav-number">6.</span> <span class="nav-text">Q6: 那為什麼有時候會看到 AI/ML 跟邊緣計算一起出現?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#後話"><span class="nav-number"></span> <span class="nav-text">後話</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-什麼原因驅動了邊緣計算的需求"><span class="nav-number">1.</span> <span class="nav-text">Q1: 什麼原因驅動了邊緣計算的需求?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-疑-這個跟常聽到雲端計算-Cloud-Computing-有什麼不一樣"><span class="nav-number">2.</span> <span class="nav-text">Q2: 疑? 這個跟常聽到雲端計算 (Cloud Computing) 有什麼不一樣?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-到底邊緣計算有多少種層級可以被討論的"><span class="nav-number">3.</span> <span class="nav-text">Q3: 到底邊緣計算有多少種層級可以被討論的?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-目前邊緣計算實際上有什麼使用案例"><span class="nav-number">4.</span> <span class="nav-text">Q4: 目前邊緣計算實際上有什麼使用案例?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q5-哇…眼花撩亂…有沒有快速了解的方式"><span class="nav-number">5.</span> <span class="nav-text">Q5: 哇…眼花撩亂…有沒有快速了解的方式?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6-那為什麼有時候會看到-AI-ML-跟邊緣計算一起出現"><span class="nav-number">6.</span> <span class="nav-text">Q6: 那為什麼有時候會看到 AI/ML 跟邊緣計算一起出現?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#後話"><span class="nav-number"></span> <span class="nav-text">後話</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
       </div>
       <!--/noindex-->
 
