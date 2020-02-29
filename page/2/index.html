@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">61</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">62</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -159,6 +159,83 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20191116-homelcloud-high-level-design-4/" class="post-title-link" itemprop="url">2019 大改造宅宅雲架構系列文-4 pfSense</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-16 16:11:00 / Modified: 23:02:47" itemprop="dateCreated datePublished" datetime="2019-11-16T16:11:00+08:00">2019-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/infra/" itemprop="url" rel="index"><span itemprop="name">infra</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img src="/images/pfsense-logo.png" alt></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20191116-homelcloud-high-level-design-4/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -888,79 +965,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/20190427-reference-architecture-red-Hat-ceph-storage/" class="post-title-link" itemprop="url">導讀 Reference Architecture: Red Hat Ceph Storage</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-27 01:37:31" itemprop="dateCreated datePublished" datetime="2019-04-27T01:37:31+08:00">2019-04-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-07-25 14:43:55" itemprop="dateModified" datetime="2019-07-25T14:43:55+08:00">2019-07-25</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 <a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide" target="_blank" rel="noopener">Brief: How to configure Red Hat Ceph Storage</a> 和 <a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage" target="_blank" rel="noopener">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a> 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 <a href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/3.2/html-single/release_notes/index" target="_blank" rel="noopener">v3.2</a></p>
-<p><img src="/images/ceph.png" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/20190427-reference-architecture-red-Hat-ceph-storage/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1031,7 +1035,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

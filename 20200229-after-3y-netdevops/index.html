@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="三年前(2017)，那時工作在 Edgecore Network 上班，經常接觸到各式各樣的網路設備，那時候看到一家新創公司 Cumulus Networks 開始推所謂的 NetDevOps 的概念，也就是利用組態管理系統 (Configuration Management) 去管理底下資料中心的 Switch / Router 確保不會有設定飄移 (Configuration Drift)，時">
+<meta property="og:type" content="article">
+<meta property="og:title" content="過了三年後的 NetDevOps ">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200229-after-3y-netdevops/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="三年前(2017)，那時工作在 Edgecore Network 上班，經常接觸到各式各樣的網路設備，那時候看到一家新創公司 Cumulus Networks 開始推所謂的 NetDevOps 的概念，也就是利用組態管理系統 (Configuration Management) 去管理底下資料中心的 Switch / Router 確保不會有設定飄移 (Configuration Drift)，時">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://static.cumulusnetworks.com/static/images/shared/cumulus-og@2x.1e8aac69c04e.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-logo.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/netdevops-ansible.png">
+<meta property="og:image" content="https://www.junipercertified.com/wp-content/uploads/2019/01/JNCIA-DevOps.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/netdevops-cisco.png">
+<meta property="og:image" content="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_operation-automated_compare.png">
+<meta property="og:image" content="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_config-gen-deploy_compare.png">
+<meta property="og:image" content="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_2019_trend-tools_stack.png">
+<meta property="og:image" content="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_2019_env-nbr-devices_bar.png">
+<meta property="og:updated_time" content="2020-02-29T18:09:22.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="過了三年後的 NetDevOps ">
+<meta name="twitter:description" content="三年前(2017)，那時工作在 Edgecore Network 上班，經常接觸到各式各樣的網路設備，那時候看到一家新創公司 Cumulus Networks 開始推所謂的 NetDevOps 的概念，也就是利用組態管理系統 (Configuration Management) 去管理底下資料中心的 Switch / Router 確保不會有設定飄移 (Configuration Drift)，時">
+<meta name="twitter:image" content="https://static.cumulusnetworks.com/static/images/shared/cumulus-og@2x.1e8aac69c04e.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200229-after-3y-netdevops/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>過了三年後的 NetDevOps  | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">62</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200229-after-3y-netdevops/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          過了三年後的 NetDevOps 
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-29 22:28:00" itemprop="dateCreated datePublished" datetime="2020-02-29T22:28:00+08:00">2020-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-01 02:09:22" itemprop="dateModified" datetime="2020-03-01T02:09:22+08:00">2020-03-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>三年前(2017)，那時工作在 <a href="https://blog.pichuang.com.tw/about/">Edgecore Network 上班</a>，經常接觸到各式各樣的網路設備，那時候看到一家新創公司 <a href="https://cumulusnetworks.com/" target="_blank" rel="noopener">Cumulus Networks</a> 開始推所謂的 NetDevOps 的概念，也就是利用組態管理系統 (Configuration Management) 去管理底下資料中心的 Switch / Router 確保不會有設定飄移 (Configuration Drift)，時間轉換到2020，我以個人角度來跟大家分享一下經歷</p>
+<a id="more"></a>
+
+<h2 id="2017"><a href="#2017" class="headerlink" title="2017"></a>2017</h2><h3 id="Switch-as-a-Server"><a href="#Switch-as-a-Server" class="headerlink" title="Switch as a Server ?"></a>Switch as a Server ?</h3><blockquote>
+<p>OpenNetworking = Network OS + Open (Spec) Hardware</p>
+</blockquote>
+<p>要講 NetDevOps 首先一定要講一下 Cumulus Networks 這家公司</p>
+<p><img src="https://static.cumulusnetworks.com/static/images/shared/cumulus-og@2x.1e8aac69c04e.png" alt></p>
+<p>Cumulus Networks 是一家做 Network OS 的新創公司，他們的產品名稱就是叫做 <code>Cumulus Linux</code>，而他們真的只有負責做軟體的部分，底下的硬體就是使用開放規格的 <code>Open Networking</code> 為核心的硬體交換機，白話來說就是，底下硬體規格只要是一樣的，理想上無論哪家 ODM/OEM 硬體都是可以安裝 Cumulus Linux 在上面跑，就像是你裝個 Windows 作業系統，理論上你也不用太擔心到底是裝在誰家的硬體，反正都是 x86_64 的架構，都可以裝。</p>
+<p>這有趣的地方就是在這個 <code>Cumulus Linux</code> 身上，它本質上就是用 Debian 作業系統下去改的，連網路的操作都是用你我常見的 Linux command，包含像是升級 (apt update/upgrade)、修改檔案 (vim)、網路操作 (ip)，這操作體驗壓根兒就是個… Linux OS，只是它跑在網路交換機上。你可以把它想成 <code>一台灌著 Debian Linux 的伺服器，插著總共 54 port 的網卡</code>，所以那時候我蠻常說，只要你會用 Linux 相關的指令，那這這個 Cumulus Linux 一定會非常好上手。</p>
+<p>正因為 Cumulus Linux 是這種特性，所以管理這些 Switch 的方式，其實就跟管 Linux Server 沒什麼特別的差異，所以 <code>Switch as a Server</code> 用管理 Server 的方式來管理 Switch 是這樣的緣故。</p>
+<p>想瞭解更多 SDN / OpenNetworking 的基礎概念的話，可以參考一下 <a href="https://drive.google.com/file/d/1aYUoVzlJi-LgNnFFfWbpMzFtmQpyf3B1/view" target="_blank" rel="noopener">建豪哥先前的分享 SDN 101</a>，老實說比我當年講的還要好 XD</p>
+<h3 id="Why-NetDevOps"><a href="#Why-NetDevOps" class="headerlink" title="Why NetDevOps?"></a>Why NetDevOps?</h3><blockquote>
+<p>NetDevOps = Networking + DevOps</p>
+</blockquote>
+<p>畢竟這是網路領域，日常維運 (Day 2 Operation) 還是跟 Server 是有所不一樣，常見一個 DC Leaf-Spine Network Fabric 最小就是 2 Spine + 4 Leaf 起跳，就是 6 台的量。大家搞 IT 的都知道，動任何一台設備的網路設定，有可能會<code>改一設定毀全網</code></p>
+<p>所以當時 Cumulus Networks 提出了一個概念叫做 NetDevOps，講白了就是把現行 DevOps 的概念，套用在 Networking 領域之上實踐</p>
+<ol>
+<li>自動化維運（IT Automation)：透過軟體操作來完成大量維運的工作</li>
+<li>基礎架構即代碼 (Infastracture as Code, IaC)：原始碼可重複 (Reusable)、可共享 (Shareable)、可驗證 (Validable)</li>
+<li>易於持續交付/整合 (Continous Deployment / Continous Integration)</li>
+</ol>
+<p>具體實踐的幾種方式可以參考一下以前寫的文章 <a href="https://blog.pichuang.com.tw/20180825-netdevops/">NetDevOps 風格之網路設備連接方式 - Phil Huang</a></p>
+<p>而 Cumulus Networks 挑的基礎技術，其中之一就是 <code>Ansible</code></p>
+<p>關於 NetDevOps 的部分，有兩本書還蠻推薦看的</p>
+<ul>
+<li><a href="https://www.tenlong.com.tw/products/9787111599098?list_name=srh" target="_blank" rel="noopener">NetDevOps 入門與實踐</a></li>
+<li><a href="https://www.tenlong.com.tw/products/9789865020484?list_name=srh" target="_blank" rel="noopener">使用 Python、Powershell、Ansible 實踐網路自動化 (中文版)</a></li>
+</ul>
+<h3 id="Why-Ansible"><a href="#Why-Ansible" class="headerlink" title="Why Ansible ?"></a>Why Ansible ?</h3><p><img src="/images/ansible-logo.png" alt></p>
+<p>瞭解到了 NetDevOps 的演進，對於 Network Engineer 來說，基本上很多是不寫程式的，如果有現有的模組 (Module) 可以套一套就可以用，可以做到上面篇幅所提的好處，會有相當的吸引力</p>
+<p>Ansible 是 2013 冒出來的，Red Hat 於 2015 年收購，至於理由我覺得這篇寫得不錯 <a href="https://www.infoq.cn/article/2015/10/Red-Hat-DevOps" target="_blank" rel="noopener">解读：Red Hat 为什么收购 Ansible</a></p>
+<p>Ansible 於當時為人所知，做得較多的還是在 Linux Server 端的管理，後面慢慢的才開始有支援 Windows、Networks、Security 等領域</p>
+<p>Cumulus Linux 剛好本身就是泛 Linux 操作，而當時 Ansible 網路廠商不是非常多家支援的狀況下，挟著<code>我就是一個 Linux 只是生在網路交換機上</code>的角度，搭配 Ansible 剛好切入了 NetDevOps 的議題，所以才於 2017 年在 DevOpsDay Taipei 上分享了 <a href="https://speakerdeck.com/pichuang/netdevops-next-generation-network-engineer" target="_blank" rel="noopener">NetDevOps: Next-Generation Network Engineer - Phil Huang</a></p>
+<h2 id="2020"><a href="#2020" class="headerlink" title="2020"></a>2020</h2><h3 id="更多網路廠商願意支持-Ansible"><a href="#更多網路廠商願意支持-Ansible" class="headerlink" title="更多網路廠商願意支持 Ansible"></a>更多網路廠商願意支持 Ansible</h3><p>通常來說，Ansible 內建三大優勢：</p>
+<ol>
+<li>Simple</li>
+<li>Powerful</li>
+<li><strong>Agentless</strong></li>
+</ol>
+<p>對於各大網路廠商來說，最大的特點是 <code>Agentless</code>，使用 Ansible 不需要特別先塞程式在設備上面，各廠商可以各自撰寫自己的 SDK 進行維護，Ansible 及各網路廠商的架構搭配，可以參考 <a href="https://speakerdeck.com/pichuang/netdevops-101?slide=7" target="_blank" rel="noopener">NetDevOps 101 - Phil Huang</a></p>
+<p>台灣較為知名的 Cisco、Juniper，也都相繼針對自動化推出了各自的證照，可以參考一下這新聞 <a href="https://ithome.com.tw/news/131227" target="_blank" rel="noopener">思科認證近年來最大變革！新增軟體開發系列證照，將軟體技能與實務經驗帶至網路管理領域 - iThome</a></p>
+<ul>
+<li><p>Cisco DevNet<br><img src="/images/netdevops-ansible.png" alt></p>
+</li>
+<li><p><a href="https://www.juniper.net/us/en/training/certification/certification-tracks/devops?tab=jnciadevops" target="_blank" rel="noopener">Juniper JNCIA-DevOps - Automation and DevOps Certification Track</a><br><img src="https://www.junipercertified.com/wp-content/uploads/2019/01/JNCIA-DevOps.png" alt></p>
+</li>
+</ul>
+<p>當中 Cisco 蠻有趣的，Red Hat 跟 Cisco 合作的文章 <a href="https://www.ansible.com/hubfs/pdf/ansible-automate-cisco-environments.pdf?hsLang=en-us" target="_blank" rel="noopener">Automate Cisco Environments with Red Hat Ansible Automation</a> 範圍，其實不單單是 Switch / Router，連 Server / Wireless / Firewall / SDN 都有</p>
+<p><img src="/images/netdevops-cisco.png" alt></p>
+<h3 id="NetDevOps-實踐上更普及"><a href="#NetDevOps-實踐上更普及" class="headerlink" title="NetDevOps 實踐上更普及"></a>NetDevOps 實踐上更普及</h3><p><a href="https://www.networktocode.com/" target="_blank" rel="noopener">Network to code</a> 是一家利用網絡自動化以及DevOps技術和方法，幫助公司轉變其網絡的部署，管理和使用方式，且不受限於任何供應商技術或工具的一家公司</p>
+<p>這公司於 2016 就有發佈 NetDevOps 的調查 <a href="https://dgarros.github.io/netdevops-survey/reports/2016" target="_blank" rel="noopener">2016 NetDevOps Survey</a></p>
+<p>經過了三年後，發布了 <code>2019 NetDevOps Survey: State of network operations through automation</code> - <a href="https://storage.googleapis.com/site-media-prod/meetings/NANOG78/2108/20200212_Garros_Netdevops_Survey__v1.pdf" target="_blank" rel="noopener">Slide</a>, <a href="https://www.youtube.com/watch?v=1DhDGEvLQ8Q&feature=youtu.be" target="_blank" rel="noopener">YouTube</a>, <a href="https://dgarros.github.io/netdevops-survey/reports/2019" target="_blank" rel="noopener">Survey</a></p>
+<p>這邊 Highlight 一下幾個我覺得有趣的內容，</p>
+<p><img src="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_operation-automated_compare.png" alt></p>
+<p>三年後，使用場景不僅僅只是做最簡單的設定檔定期備份或收收資料，其他的場景也變高了</p>
+<p><img src="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_config-gen-deploy_compare.png" alt></p>
+<p>Ansible 持續海放中</p>
+<p><img src="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_2019_trend-tools_stack.png" alt></p>
+<p>使用 Ansible 務必要搭個版本控制使用，畢竟基礎建設即代碼 ( Infrastrcuture as Code, IaC) 的靈魂是版本控制</p>
+<p>第一次接觸版控的人，可以直接從 Git 開始入手了</p>
+<p><img src="https://dgarros.github.io/netdevops-survey/graphs/png/netdevops_survey_2019_env-nbr-devices_bar.png" alt></p>
+<p>無論大小環境都很適用實踐自動化</p>
+<h3 id="網路測試覆蓋率更廣"><a href="#網路測試覆蓋率更廣" class="headerlink" title="網路測試覆蓋率更廣"></a>網路測試覆蓋率更廣</h3><p>Ansible 使用上不需要預先塞代理軟體的，很容易可以跨平台使用，可以執行一個劇本，搭配 CI/CD 跨多個平台管理使用</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/22vaD3QH1rg" frameborder="0" allowfullscreen></iframe></div>
+
+<p>所以對於網路測試的理解，不單單只是單一設備的測試，而是端到端的業務邏輯測試</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/LinGy8DGIJ8" frameborder="0" allowfullscreen></iframe></div>
+
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>若你是一名網路工程師，用最小學習成本，學習一個符合 DevOps 理念的工具，那 Ansible 是你一個投資報酬率會相當高的選擇</p>
+<p>透過 Ansible，可以更實際且迅速地跟其他部門合作管理好自家公司 (或客戶家) 的環境</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.infoq.cn/article/2015/10/Red-Hat-DevOps" target="_blank" rel="noopener">解读：Red Hat 为什么收购 Ansible</a></li>
+<li><a href="https://speakerdeck.com/pichuang/netdevops-next-generation-network-engineer" target="_blank" rel="noopener">NetDevOps: Next-Generation Network Engineer - Phil Huang</a></li>
+<li><a href="https://blog.pichuang.com.tw/20180825-netdevops/">NetDevOps 風格之網路設備連接方式 - Phil Huang</a></li>
+<li><a href="https://speakerdeck.com/pichuang/netdevops-101?slide=7" target="_blank" rel="noopener">NetDevOps 101 - Phil Huang</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/network/index.html" target="_blank" rel="noopener">Ansible for Network Automation</a></li>
+<li><a href="https://ithome.com.tw/news/131227" target="_blank" rel="noopener">思科認證近年來最大變革！新增軟體開發系列證照，將軟體技能與實務經驗帶至網路管理領域 - iThome</a></li>
+<li><a href="https://developer.cisco.com/certification/exam-topic-associate/" target="_blank" rel="noopener">DevNet Associate Exam v1.0 (200-901)</a></li>
+<li><a href="https://www.juniper.net/us/en/training/certification/certification-tracks/devops?tab=jnciadevops" target="_blank" rel="noopener">What is DevOps? - Juniper</a></li>
+<li><a href="https://storage.googleapis.com/site-media-prod/meetings/NANOG78/2108/20200212_Garros_Netdevops_Survey__v1.pdf" target="_blank" rel="noopener">Building a NetDevOps CI/CD Pipeline - Hank Preston (DevNet Create 2018)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20200225-edge-computing-part-1/" rel="prev" title="邊緣計算大哉問 Part 1">
+      <i class="fa fa-chevron-left"></i> 邊緣計算大哉問 Part 1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2017"><span class="nav-number">1.</span> <span class="nav-text">2017</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Switch-as-a-Server"><span class="nav-number">1.1.</span> <span class="nav-text">Switch as a Server ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-NetDevOps"><span class="nav-number">1.2.</span> <span class="nav-text">Why NetDevOps?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-Ansible"><span class="nav-number">1.3.</span> <span class="nav-text">Why Ansible ?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2020"><span class="nav-number">2.</span> <span class="nav-text">2020</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更多網路廠商願意支持-Ansible"><span class="nav-number">2.1.</span> <span class="nav-text">更多網路廠商願意支持 Ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NetDevOps-實踐上更普及"><span class="nav-number">2.2.</span> <span class="nav-text">NetDevOps 實踐上更普及</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#網路測試覆蓋率更廣"><span class="nav-number">2.3.</span> <span class="nav-text">網路測試覆蓋率更廣</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
