@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前幾天寫了篇 邊緣計算大哉問 Part 1 ，最後面有提到要提到實務面的事情，但在提到實務面的規劃前，想先跟大家介紹一下現在場上與 Edge Computing 相關的開源軟體 (Open Source Software, OSS) 大型社群，內文是我本人自己的觀點，一定有偏頗，所以各位看官請自己拿捏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="邊緣計算大哉問 Part 2">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200302-edge-computing-part-2/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="前幾天寫了篇 邊緣計算大哉問 Part 1 ，最後面有提到要提到實務面的事情，但在提到實務面的規劃前，想先跟大家介紹一下現在場上與 Edge Computing 相關的開源軟體 (Open Source Software, OSS) 大型社群，內文是我本人自己的觀點，一定有偏頗，所以各位看官請自己拿捏">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-6.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-3.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-5.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/edge-4.png">
+<meta property="og:updated_time" content="2020-03-01T18:09:52.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="邊緣計算大哉問 Part 2">
+<meta name="twitter:description" content="前幾天寫了篇 邊緣計算大哉問 Part 1 ，最後面有提到要提到實務面的事情，但在提到實務面的規劃前，想先跟大家介紹一下現在場上與 Edge Computing 相關的開源軟體 (Open Source Software, OSS) 大型社群，內文是我本人自己的觀點，一定有偏頗，所以各位看官請自己拿捏">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/edge-6.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200302-edge-computing-part-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>邊緣計算大哉問 Part 2 | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200302-edge-computing-part-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          邊緣計算大哉問 Part 2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-02 00:16:00 / Modified: 02:09:52" itemprop="dateCreated datePublished" datetime="2020-03-02T00:16:00+08:00">2020-03-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前幾天寫了篇 <a href="https://blog.pichuang.com.tw/20200225-edge-computing-part-1/">邊緣計算大哉問 Part 1 </a>，最後面有提到要提到實務面的事情，但在提到實務面的規劃前，想先跟大家介紹一下現在場上與 Edge Computing 相關的開源軟體 (Open Source Software, OSS) 大型社群，內文是我本人自己的觀點，一定有偏頗，所以各位看官請自己拿捏</p>
+<p><img src="/images/edge-6.png" alt></p>
+<a id="more"></a>
+
+<h2 id="Q7-那現在有多少常見的-Edge-Computing-國際社群"><a href="#Q7-那現在有多少常見的-Edge-Computing-國際社群" class="headerlink" title="Q7: 那現在有多少常見的 Edge Computing 國際社群?"></a>Q7: 那現在有多少常見的 Edge Computing 國際社群?</h2><blockquote>
+<p>多到不可思議</p>
+</blockquote>
+<p>目前我自己知道的就以下這麼多專案</p>
+<ul>
+<li>隸屬 OpenStack Foundation 底下的 <a href="https://wiki.openstack.org/wiki/Edge_Computing_Group" target="_blank" rel="noopener">Edge Computing Group</a><ul>
+<li><a href="https://www.starlingx.io/" target="_blank" rel="noopener">StarlingX</a></li>
+<li><a href="https://www.airshipit.org/" target="_blank" rel="noopener">Airship</a></li>
+</ul>
+</li>
+<li>隸屬 Linux Foundation 底下的分支 <a href="https://www.lfedge.org/" target="_blank" rel="noopener">LF Edge Foundation</a> 的專案們，當中<a href="https://wiki.lfedge.org/display/LE/Project+Stages%3A+Definitions+and+Expectations" target="_blank" rel="noopener">分為 3 階段</a> (階段越大專案越成熟)：<ul>
+<li>Stage 1: At Large<ul>
+<li><a href="https://www.lfedge.org/projects/baetyl/" target="_blank" rel="noopener">Baetyl</a></li>
+<li><a href="https://www.lfedge.org/projects/fledge/" target="_blank" rel="noopener">Fledge</a></li>
+</ul>
+</li>
+<li>Stage 2: Growth<ul>
+<li><a href="https://www.lfedge.org/projects/eve/" target="_blank" rel="noopener">Edge Virtualization Engine (EVE)</a></li>
+<li><a href="https://www.lfedge.org/projects/homeedge/" target="_blank" rel="noopener">Home Edge</a></li>
+<li><a href="https://www.lfedge.org/projects/openglossary/" target="_blank" rel="noopener">Open Glossary</a></li>
+</ul>
+</li>
+<li>Stage 3: Impact<ul>
+<li><a href="https://www.lfedge.org/projects/edgexfoundry/" target="_blank" rel="noopener">EdgeX Foundry</a></li>
+<li><a href="https://www.lfedge.org/projects/akraino/" target="_blank" rel="noopener">Akraino Edge Stack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>隸屬歐洲電信標準協會 (ETSI) 的 <a href="https://www.etsi.org/technologies/multi-access-edge-computing" target="_blank" rel="noopener">Mobile Edge Computing, MEC</a></li>
+<li>隸屬 Kubernetes 底下的 <a href="https://github.com/kubernetes/community/tree/master/wg-iot-edge" target="_blank" rel="noopener">IoT Edge Working Group</a></li>
+<li>隸屬電信基礎專案組織 (Telecom Infra Project, TIP) 的 <a href="https://telecominfraproject.com/edge-computing/" target="_blank" rel="noopener">Edge Computing</a></li>
+<li>隸屬 <a href="https://www.linaro.org/" target="_blank" rel="noopener">Linaro</a> 底下的 <a href="https://www.linaro.org/engineering/edge-and-fog-computing/" target="_blank" rel="noopener">Edge &amp; Fog Computing</a></li>
+<li><a href="https://www.openedgecomputing.org/" target="_blank" rel="noopener">Open Edge Computing Initiative</a> //這個組織我個人不是很清楚在做什麼的，歡迎補充</li>
+<li>專門針對自駕車的汽車邊緣計算聯盟 <a href="https://aecc.org/" target="_blank" rel="noopener">Automotive Edge Computing Consortium, AECC</a></li>
+</ul>
+<p>你的內心一定在罵說怎麼那麼多專案…跟我的心情是一樣的呢~</p>
+<h2 id="Q8-哪個專案比較有搞頭"><a href="#Q8-哪個專案比較有搞頭" class="headerlink" title="Q8: 哪個專案比較有搞頭?"></a>Q8: 哪個專案比較有搞頭?</h2><p>老實說，看上面的隸屬的母組織，其實都有各自的立場和方案，所以很難一言以蔽之</p>
+<p>但因為小弟現在在 Red Hat 打工，所以會比較關注 LF Edge 底下的 <code>Akraino Edge Stack</code> 及 <code>Kubernetes IoT Edge Working Group</code>，尤其是前者，其他的專案就都只會順便看看</p>
+<h2 id="Q9-關於-Kubernetes-IoT-Edge-WG"><a href="#Q9-關於-Kubernetes-IoT-Edge-WG" class="headerlink" title="Q9: 關於 Kubernetes IoT Edge WG?"></a>Q9: 關於 Kubernetes IoT Edge WG?</h2><blockquote>
+<p>專門以使用 Kubernetes，對 IoT 及 Edge 相關應用討論為主的工作組</p>
+</blockquote>
+<p><img src="/images/edge-3.png" alt></p>
+<p>去年 KubeCon EU 2019，Kubernetes IoT Edge WG 發布了一份 <a href="https://static.sched.com/hosted_files/kccnceu19/e2/edge-wg.pdf" target="_blank" rel="noopener">Intro and Deep Dive Combined Session</a>，這份還蠻值得一看的</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/5UgOjvK1IN8" frameborder="0" allowfullscreen></iframe></div>
+
+<p>簡單來說，底下涵蓋 3 個專案，包含台灣有陣子有在討論蠻熱烈的 <a href="https://k3s.io/" target="_blank" rel="noopener"><code>k3s</code></a> 以外，<a href="https://kubeedge.io/en/" target="_blank" rel="noopener"><code>KubeEdge</code></a> 和 <a href="https://virtual-kubelet.io/" target="_blank" rel="noopener"><code>Virtual Kubelet</code></a> 也在討論的範圍之內，只是兩者對應的是不同的場景，詳細可以看一下投影片 (p9)</p>
+<p>除此之外，底下提供一下幾個傳送門</p>
+<ul>
+<li><a href="https://docs.google.com/document/d/1We-pRDV9LDFo-vd9DURCPC5-Bum2FvjHUGZ1tacGmk8/edit#" target="_blank" rel="noopener">WG White Paper</a></li>
+<li><a href="https://github.com/kubernetes/community/tree/master/wg-iot-edge" target="_blank" rel="noopener">GitHub Communtiy</a></li>
+</ul>
+<p>另外，剛好前陣子 iThome 第 11 屆鐵人賽，台中科技大學的 IMAC 團隊有介紹了裡面所提的兩個專案，大家可以看看</p>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10215792" target="_blank" rel="noopener">[Day 2] KubeEdge 介紹</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10222869" target="_blank" rel="noopener">[Day 14] K3s 介紹</a></li>
+</ul>
+<h2 id="Q10-關於-LF-Edge"><a href="#Q10-關於-LF-Edge" class="headerlink" title="Q10: 關於 LF Edge?"></a>Q10: 關於 LF Edge?</h2><blockquote>
+<p>LF Edge = The New Open “Edge” = IoT + Telecom + Cloud + Enterprise</p>
+</blockquote>
+<blockquote>
+<p>筆者：不負責任推測，下次大概就要多一個 AI/ML =_=</p>
+</blockquote>
+<p><img src="/images/edge-5.png" alt></p>
+<p>就是這麼剛好，2020/02 的時候 LF Edge 發布了最新的 <a href="https://www.lfedge.org/wp-content/uploads/2020/02/LF-Edge-web-feb2020.pdf" target="_blank" rel="noopener">Overview Slide</a> 再搭配 <a href="https://wiki.lfedge.org/" target="_blank" rel="noopener">Wiki</a> 看，可以快速抓個框架</p>
+<p>但下面這張圖我一定要特別講一下，以最高層組織 Linux Foundation 的角度看待這個子組織，可以了解到…</p>
+<blockquote>
+<p>來自 Linux Foundation の 野望!!</p>
+</blockquote>
+<p><img src="/images/edge-4.png" alt></p>
+<p>回歸正題，誠如在 Q7 中所列的專案，LF Edge 把這些專案分為<a href="https://wiki.lfedge.org/display/LE/Project+Stages%3A+Definitions+and+Expectations" target="_blank" rel="noopener">三個階段</a></p>
+<ul>
+<li>Stage 1: At Large (formerly ‘Sandbox’)</li>
+<li>Stage 2: Growth (formerly ‘Incubating’)</li>
+<li>Stage 3: Impact (formerly ‘Top-Level’)</li>
+</ul>
+<p>因工作關係，主要都是看 <code>Stage 3</code> 當中的 <code>Akraino Edge Stack</code>，而裡面的內容相當多…是真的非常多…後面再來介紹</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>Part 3 預計要來寫 Akraino Edge Stack 相關的內容，還有 Kubernetes Native Infrastructure (KNI) 的架構</p>
+<p>另外對邊緣人計算有興趣的朋友們，看一看研究的差不多，快來 <a href="https://www.facebook.com/groups/cloudnative.tw/" target="_blank" rel="noopener">Cloud Native Taiwan User Group</a> 報名講者分享啊~</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.pichuang.com.tw/20200225-edge-computing-part-1/">邊緣計算大哉問 Part 1 - Phil Huang</a></li>
+<li><a href="https://wiki.openstack.org/wiki/Edge_Computing_Group" target="_blank" rel="noopener">OpenStack - Edge Computing Group</a></li>
+<li><a href="https://www.lfedge.org/" target="_blank" rel="noopener">LF Edge Homepage</a></li>
+<li><a href="https://www.lfedge.org/projects/akraino/" target="_blank" rel="noopener">LF Edge - Akranio Edge Stack</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20200229-after-3y-netdevops/" rel="prev" title="過了三年後的 NetDevOps ">
+      <i class="fa fa-chevron-left"></i> 過了三年後的 NetDevOps 
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q7-那現在有多少常見的-Edge-Computing-國際社群"><span class="nav-number">1.</span> <span class="nav-text">Q7: 那現在有多少常見的 Edge Computing 國際社群?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q8-哪個專案比較有搞頭"><span class="nav-number">2.</span> <span class="nav-text">Q8: 哪個專案比較有搞頭?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q9-關於-Kubernetes-IoT-Edge-WG"><span class="nav-number">3.</span> <span class="nav-text">Q9: 關於 Kubernetes IoT Edge WG?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q10-關於-LF-Edge"><span class="nav-number">4.</span> <span class="nav-text">Q10: 關於 LF Edge?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
