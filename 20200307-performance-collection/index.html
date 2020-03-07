@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-r.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-W.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-d.png">
-<meta property="og:updated_time" content="2020-03-07T11:26:43.800Z">
+<meta property="og:updated_time" content="2020-03-07T11:28:48.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尋找當下 Linux OS 效能瓶頸">
 <meta name="twitter:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
@@ -200,7 +200,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-03-07 00:16:00 / Modified: 19:26:43" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
+              <time title="Created: 2020-03-07 00:16:00 / Modified: 19:28:48" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
             </span>
 
           
@@ -221,12 +221,13 @@
 <h2 id="系統壓力觀測目標"><a href="#系統壓力觀測目標" class="headerlink" title="系統壓力觀測目標"></a>系統壓力觀測目標</h2><blockquote>
 <p>sar - Clliect, report, or save system activity information</p>
 </blockquote>
-<p>本篇將會用 <code>sar</code> 系統活動報告器來貫穿全部操作，主要觀測點會有 4 個</p>
+<p>本篇將會用 <code>sar</code> 系統活動報告器來貫穿全部操作，主要觀測點會有 5 個</p>
 <ol>
 <li>CPU</li>
 <li>Disk I/O</li>
 <li>Network</li>
-<li>Memory / Swap</li>
+<li>Memory</li>
+<li>Swap</li>
 </ol>
 <p>選用 sar 的理由是</p>
 <ol>
