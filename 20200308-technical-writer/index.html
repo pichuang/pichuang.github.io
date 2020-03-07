@@ -28,7 +28,8 @@
 <meta property="og:description" content="小弟 Blog 陸陸續續也從 2013 年寫到現在了，從 roan.logdown.com 到現在的 blog.pichuang.com.tw 自己寫作風格好像一直以來都是差不多的，這邊分享一下幾個我覺得蠻有用的資訊">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://developers.google.com/tech-writing/images/TechWritingCoursesLogo.png">
-<meta property="og:updated_time" content="2020-03-07T19:47:33.335Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/hackmd.png">
+<meta property="og:updated_time" content="2020-03-07T20:00:53.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="成為一名技術留跡者">
 <meta name="twitter:description" content="小弟 Blog 陸陸續續也從 2013 年寫到現在了，從 roan.logdown.com 到現在的 blog.pichuang.com.tw 自己寫作風格好像一直以來都是差不多的，這邊分享一下幾個我覺得蠻有用的資訊">
@@ -193,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-03-08 00:16:00 / Modified: 03:47:33" itemprop="dateCreated datePublished" datetime="2020-03-08T00:16:00+08:00">2020-03-08</time>
+              <time title="Created: 2020-03-08 00:16:00 / Modified: 04:00:53" itemprop="dateCreated datePublished" datetime="2020-03-08T00:16:00+08:00">2020-03-08</time>
             </span>
 
           
@@ -218,8 +219,8 @@
 <p>所以我非常佩服寫書的大大們…</p>
 <h2 id="推薦使用套路"><a href="#推薦使用套路" class="headerlink" title="推薦使用套路?"></a>推薦使用套路?</h2><ul>
 <li>語法選擇: <code>Markdown</code>，基本上沒有什麼懸念，Markdown 文字移植性太好，到哪裡基本上都可以用，但缺點就是對於圖片處理不好，但身為一個大部分都是寫字居多的，沒什麼問題</li>
-<li>建立靜態網站: 現在要搞一個自己的 Blog 已經不是很麻煩的事情了，也不需要用到 Wordpress / Dropul 這種 CMS 比較大的等級，有個人 GitHub 帳號就可以建立靜態網頁，搭配 <a href="https://hexo.io/zh-tw/docs/github-pages.html" target="_blank" rel="noopener">Hexo</a> 或 <a href="https://jekyllrb.com/" target="_blank" rel="noopener">Jekyll</a> 或 <a href="https://gohugo.io/getting-started/quick-start/" target="_blank" rel="noopener">Hugo</a> 三個選一個使用</li>
-<li>申請個個人域名: <code>.tw</code> 結尾的應該不會太貴我記得，我個人是選 <code>Gandi</code> 域名商 (感恩 哈維 讚嘆 Haway)</li>
+<li>建立靜態網站: 現在要搞一個自己的 Blog 已經不是很麻煩的事情了，也不需要用到 Wordpress / Dropul 這種 CMS 比較大的等級，有個人 GitHub 帳號就可以建立靜態網頁，搭配 <a href="https://hexo.io/zh-tw/docs/github-pages.html" target="_blank" rel="noopener">Hexo</a> 或 <a href="https://jekyllrb.com/" target="_blank" rel="noopener">Jekyll</a> 或 <a href="https://gohugo.io/getting-started/quick-start/" target="_blank" rel="noopener">Hugo</a> 三個選一個使用，我是用 <code>Hexo</code></li>
+<li>申請個人域名: <code>.tw</code> 結尾的應該不會太貴我記得，我個人是選 <code>Gandi</code> 域名商 (感恩 哈維 讚嘆 Haway)，掛載到 Cloudflare 的話就有 SSL 的連線能力囉</li>
 </ul>
 <h2 id="給工程師看的純技術文件寫作風格選擇"><a href="#給工程師看的純技術文件寫作風格選擇" class="headerlink" title="給工程師看的純技術文件寫作風格選擇?"></a>給工程師看的純技術文件寫作風格選擇?</h2><blockquote>
 <p>請給我標準的技術文件規範</p>
@@ -233,7 +234,13 @@
 <li><a href="https://doc.opensuse.org/products/opensuse/Styleguide/opensuse_documentation_styleguide_sd/" target="_blank" rel="noopener">SUSE Documentation Style Guide</a></li>
 <li><a href="https://developers.google.com/tech-writing" target="_blank" rel="noopener">Google Developer Documentation Style Guide</a></li>
 </ol>
-<p>如果是要建立模組化的技術文件，可以參考 <a href="https://redhat-documentation.github.io/modular-docs/" target="_blank" rel="noopener">Red Hat Modular Documentation Reference Guide</a> 所提的方法<br>如果是要建立與社群合作建立相關技術文件，可以參考 <a href="https://redhat-documentation.github.io/community-collaboration-guide/" target="_blank" rel="noopener">Red Hat Community Collaboration Guide</a><br>如果只是想要寫出<code>安裝手冊</code>的等級，可以參考 <a href="https://linuxconfig.org/" target="_blank" rel="noopener">Linuxconfig.org</a>，目標明確，指示清楚，我最近的寫作風格有受這網站影響 XD</p>
+<p>但實際上來說，你看完上面的所有文件，大概就是英文作文能力變好，實際上很難完全應用，因為畢竟自己寫文章跟這種大型組織要寫的文件是有點不一樣的，所以以下再提供幾個文件比較落地一點，但因為工作關係，所以會非常偏 Red Hat 的格式</p>
+<ul>
+<li>如果是要建立<code>模組化</code>的技術文件，可以參考 <a href="https://redhat-documentation.github.io/modular-docs/" target="_blank" rel="noopener">Red Hat Modular Documentation Reference Guide</a> 所提的方法</li>
+<li>如果是要建立<code>與社群合作</code>建立相關技術文件，可以參考 <a href="https://redhat-documentation.github.io/community-collaboration-guide/" target="_blank" rel="noopener">Red Hat Community Collaboration Guide</a></li>
+<li>如果是想要寫出<code>口語化</code>的文章，可以參考 <a href="https://developers.redhat.com/" target="_blank" rel="noopener">Red Hat Developer</a>，什麼風格都有，但都是小而美的內容</li>
+<li>如果只是想要寫出<code>安裝手冊</code>的等級，可以參考 <a href="https://linuxconfig.org/" target="_blank" rel="noopener">Linuxconfig.org</a>，目標明確，指示清楚，我最近的寫作風格有受這網站影響 XD</li>
+</ul>
 <h2 id="有什麼教學網站嗎"><a href="#有什麼教學網站嗎" class="headerlink" title="有什麼教學網站嗎?"></a>有什麼教學網站嗎?</h2><p><img src="https://developers.google.com/tech-writing/images/TechWritingCoursesLogo.png" alt></p>
 <blockquote>
 <p>Every engineer is also writer</p>
@@ -243,9 +250,10 @@
 <li><a href="https://developers.google.com/tech-writing/one" target="_blank" rel="noopener">基礎技術寫作知識科普</a></li>
 <li><a href="https://developers.google.com/tech-writing/two" target="_blank" rel="noopener">中階技術寫作主題教學</a></li>
 </ol>
-<p>我個人是認為這是標準的英文寫作課 XD，對我還蠻有用的，以後可以嘗試寫點英文技術文件下來</p>
+<p>個人是認為這是標準的英文寫作課 XD，對我還蠻有用的，以後可以嘗試寫點英文技術文件下來</p>
 <p>除了教學網站，連基礎的技術文件網站模板都 OpenSource 了，可以參考以 <code>Hugo</code> 為底的 <a href="https://github.com/google/docsy" target="_blank" rel="noopener">google/docsy</a> 專案，此外還弄了個 <a href="https://developers.google.com/season-of-docs/docs" target="_blank" rel="noopener">Season of Docs</a> 供對於這類技術作家們的開源社群，不得不說 Google 真的是蠻有心的，整套包好好</p>
-<h2 id="寫作工具"><a href="#寫作工具" class="headerlink" title="寫作工具?"></a>寫作工具?</h2><p>這也沒什麼好選的，基本上就是環繞 HackMD 的工具，HackMD 是我長久使用的 Ｍarkdown 以來最好用的一個平台，我看有些國外會議紀錄也都改用 HackMD 來做共筆</p>
+<h2 id="寫作工具"><a href="#寫作工具" class="headerlink" title="寫作工具?"></a>寫作工具?</h2><p><img src="/images/hackmd.png" alt></p>
+<p>這也沒什麼好選的，基本上就是環繞 HackMD 的工具，HackMD 是我長久使用的 Ｍarkdown 以來最好用的一個平台，我看有些國外會議紀錄也都改用 HackMD 來做共筆</p>
 <ul>
 <li>線上用 <a href="https://hackmd.io/pricing" target="_blank" rel="noopener">Hackmd.io</a></li>
 <li>線下用 VSCode + <a href="https://marketplace.visualstudio.com/items?itemName=HackMD.vscode-hackmd" target="_blank" rel="noopener">HackMD Markdown VSCode Extension</a></li>
