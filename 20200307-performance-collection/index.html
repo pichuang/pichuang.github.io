@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-r.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-W.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-d.png">
-<meta property="og:updated_time" content="2020-03-07T11:28:48.628Z">
+<meta property="og:updated_time" content="2020-03-07T13:12:56.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尋找當下 Linux OS 效能瓶頸">
 <meta name="twitter:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
@@ -200,7 +200,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-03-07 00:16:00 / Modified: 19:28:48" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
+              <time title="Created: 2020-03-07 00:16:00 / Modified: 21:12:56" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
             </span>
 
           
@@ -289,7 +289,7 @@
 <li><p>數字解讀</p>
 <ul>
 <li><code>%iowait</code> 過高，有可能是 Disk I/O 瓶頸，要改善 Disk</li>
-<li><code>%idel</code> 過高，有可能是 CPU 等待分配 Memory，要加記憶體</li>
+<li><code>%idle</code> 過高，有可能是 CPU 等待分配 Memory，要看一下記憶體是不是不夠</li>
 <li><code>%idle</code> 持續低於 10，則代表 CPU 處理效率低，需要解決 CPU 瓶頸</li>
 </ul>
 </li>
@@ -315,7 +315,7 @@
 </li>
 <li><p>數字解讀:</p>
 <ul>
-<li><code>rxpcl/s</code> 和 <code>txpck/s</code> 是衡量一張網卡效能的指標，數字越大壓力越大</li>
+<li><code>rxpck/s</code> 和 <code>txpck/s</code> 是衡量一張網卡效能的指標，數字越大壓力越大</li>
 <li><code>rxkB/s</code> 和 <code>txkB/s</code> 是代表吞吐量效能，數字越大壓力越大</li>
 </ul>
 </li>
