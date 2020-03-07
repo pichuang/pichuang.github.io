@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
+<meta property="og:type" content="article">
+<meta property="og:title" content="尋找當下 Linux OS 效能瓶頸">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200307-performance-collection/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.brendangregg.com/Perf/linux_observability_tools.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-q.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-u.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-P.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-n.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-r.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-W.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-d.png">
+<meta property="og:updated_time" content="2020-03-07T11:26:43.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="尋找當下 Linux OS 效能瓶頸">
+<meta name="twitter:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
+<meta name="twitter:image" content="http://www.brendangregg.com/Perf/linux_observability_tools.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200307-performance-collection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>尋找當下 Linux OS 效能瓶頸 | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">64</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200307-performance-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          尋找當下 Linux OS 效能瓶頸
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-07 00:16:00 / Modified: 19:26:43" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到<code>當下</code>系統很慢的時候，可以有個<code>數字判斷</code>的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題</p>
+<p><img src="http://www.brendangregg.com/Perf/linux_observability_tools.png" alt></p>
+<a id="more"></a>
+
+<h2 id="系統壓力觀測目標"><a href="#系統壓力觀測目標" class="headerlink" title="系統壓力觀測目標"></a>系統壓力觀測目標</h2><blockquote>
+<p>sar - Clliect, report, or save system activity information</p>
+</blockquote>
+<p>本篇將會用 <code>sar</code> 系統活動報告器來貫穿全部操作，主要觀測點會有 4 個</p>
+<ol>
+<li>CPU</li>
+<li>Disk I/O</li>
+<li>Network</li>
+<li>Memory / Swap</li>
+</ol>
+<p>選用 sar 的理由是</p>
+<ol>
+<li>數據收集過程盡可能對系統本身不會造成無謂的壓力</li>
+<li>大多數 Linux 發行版皆可用</li>
+<li>簡單指令</li>
+<li>Linux 目前較為全面的系統效能分析工具之一</li>
+</ol>
+<h2 id="環境介紹"><a href="#環境介紹" class="headerlink" title="環境介紹"></a>環境介紹</h2><ul>
+<li>Red Hat Enterprise Linux 8.1</li>
+</ul>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y sysstat</span><br></pre></td></tr></table></figure>
+
+<h2 id="常常遇到的問題"><a href="#常常遇到的問題" class="headerlink" title="常常遇到的問題"></a>常常遇到的問題</h2><blockquote>
+<p>[聲明] 如果底下的欄位解釋，覺得翻的很爛，可以參考 <code>man sar</code> 的英文版解釋</p>
+</blockquote>
+<h3 id="懷疑系統是不是真的忙"><a href="#懷疑系統是不是真的忙" class="headerlink" title="懷疑系統是不是真的忙?"></a>懷疑系統是不是真的忙?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -q 1 60</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解釋: 每隔 1 秒收集一次，一共收集 60 次平均常見的負載 (1m / 5m / 15m)數字</li>
+</ul>
+<p><img src="/images/sar-q.png" alt></p>
+<ul>
+<li><p>欄位解釋:</p>
+<ul>
+<li>runq-sz: 運行中的 Quene 長度 (等待運行的 Tasks 數)</li>
+<li>plist-sz: Tasks 列表中的 tasks 數量</li>
+<li>ldavg-1: 最後 1 分鐘的系統平均負載量</li>
+<li>ldavg-5: 最後 5 分鐘的系統平均負載量</li>
+<li>ldavg-15: 最後 15 分鐘的系統平均負載量</li>
+</ul>
+</li>
+<li><p>數字解讀:</p>
+<ul>
+<li>現在都是支援多核 CPU，故 <code>n</code> 個 CPU Core，可接受的系統負荷最大 <code>n.0</code></li>
+<li>確認系統核心數的指令是 <code>grep -c &#39;model name&#39; /proc/cpuinfo</code></li>
+<li>通常來講是看 <code>ldavg-15</code>，如果長期接近或大於 n 的話，就是系統負擔過大</li>
+</ul>
+</li>
+</ul>
+<h3 id="懷疑是-CPU-Bound"><a href="#懷疑是-CPU-Bound" class="headerlink" title="懷疑是 CPU Bound?"></a>懷疑是 CPU Bound?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sar -u 2 10 //看 CPU Overview 使用率 (與 mpstat 相同)</span><br><span class="line">sar -P ALL 2 10 //看個別 CPU 使用率 (與 mpstat -P ALL 相同)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解釋: 每隔 2 秒收集一次，一共收集 10 次所有 CPU 的效能數據</li>
+</ul>
+<p><img src="/images/sar-u.png" alt></p>
+<p><img src="/images/sar-P.png" alt></p>
+<ul>
+<li><p>欄位解釋</p>
+<ul>
+<li>%user: 於 User (Application) 等級之下，消耗的 CPU 時間比例</li>
+<li>%nice: 透過 <code>nice</code> 改變優先級，於 User (Application) 等級之下，消耗的 CPU 時間的比例</li>
+<li>%system: 於 System (Kernel) 等級之下，消耗的 CPU 時間比例</li>
+<li>%iowait: CPU 等待 Disk I/O 導致空閑狀態 (Idle) 消耗的時間比例</li>
+<li>%steal: 利用虛擬化技術，等待其他 vCPU 計算佔用的時間比例</li>
+<li>%idle: CPU 空閑時間比例</li>
+</ul>
+</li>
+<li><p>數字解讀</p>
+<ul>
+<li><code>%iowait</code> 過高，有可能是 Disk I/O 瓶頸，要改善 Disk</li>
+<li><code>%idel</code> 過高，有可能是 CPU 等待分配 Memory，要加記憶體</li>
+<li><code>%idle</code> 持續低於 10，則代表 CPU 處理效率低，需要解決 CPU 瓶頸</li>
+</ul>
+</li>
+</ul>
+<h3 id="懷疑是-Network-Bound"><a href="#懷疑是-Network-Bound" class="headerlink" title="懷疑是 Network Bound?"></a>懷疑是 Network Bound?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -n DEV 2 10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解讀: 每隔 2 秒收集一次，一共收集 10 次所有網卡的效能數據</li>
+</ul>
+<p><img src="/images/sar-n.png" alt></p>
+<ul>
+<li><p>欄位解釋:</p>
+<ul>
+<li>rxpck/s: 每秒接收到的封包量</li>
+<li>txpck/s: 每秒傳送出的封包量</li>
+<li>rxkB/s: 每秒接收到的 bytes 數量</li>
+<li>txkB/s: 每秒傳送出的 bytes 數量</li>
+<li>rxcmp/s: 每秒接收到的壓縮後封包</li>
+<li>txcmp/s: 每秒傳送出的壓縮後封包</li>
+<li>rxmcst/s: 每秒接收到的群播封包</li>
+<li>%ifutil: 網路介面使用率</li>
+</ul>
+</li>
+<li><p>數字解讀:</p>
+<ul>
+<li><code>rxpcl/s</code> 和 <code>txpck/s</code> 是衡量一張網卡效能的指標，數字越大壓力越大</li>
+<li><code>rxkB/s</code> 和 <code>txkB/s</code> 是代表吞吐量效能，數字越大壓力越大</li>
+</ul>
+</li>
+</ul>
+<h3 id="懷疑是-Memory"><a href="#懷疑是-Memory" class="headerlink" title="懷疑是 Memory?"></a>懷疑是 Memory?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -r 2 10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解釋: 每隔 2 秒收集一次，一共收集 10 次記憶體的效能數據</li>
+</ul>
+<p><img src="/images/sar-r.png" alt></p>
+<ul>
+<li><p>欄位解釋</p>
+<ul>
+<li>kbmemfree: 閒置的 Free Memory 大小</li>
+<li>kbavail: 無需透過 Swapping 即可使用的 Memory 大小</li>
+<li>kbmemused: 使用中的 Memory</li>
+<li>%memused: 物理記憶體使用率</li>
+<li>kbbuffers: Kernel 拿去作為 Buffer 的大小</li>
+<li>kbcached: Kernel 拿取當作 Cached 的大小</li>
+<li>kbcommit: Kernel 當前工作負載所需要的量，這是預估需要多少 RAM/Swap，以保證不會有記憶體不足的估計值</li>
+<li>%commit: Kernel 當前工作負載所需記憶體佔記憶體總量 (RAM + Swap) 的百分比</li>
+<li>kbactive: 活躍中的記憶體，除非必要，通常不會回收 (Reclaimed)</li>
+<li>kbinact: 不活躍中的記憶體，最近被使用的次數較少，有可能會被回收</li>
+<li>kbdirty: 等待寫回至磁碟的記憶體內容</li>
+</ul>
+</li>
+<li><p>數字解讀</p>
+<ul>
+<li>透過 <code>%memused</code> <code>kbbuffers</code> <code>kbcached</code> 可以了解到記憶體實際使用量</li>
+<li><code>%commit</code> 這是 <code>kbcommit</code> 與記憶體總量 (包含swap) 的百分比數字，越小代表記憶體越足夠</li>
+<li><code>%commit</code> 有可能會大於 100%，有可能 Kernel 使用過量記憶體</li>
+</ul>
+</li>
+</ul>
+<h3 id="懷疑是-Swap-Page-Bound"><a href="#懷疑是-Swap-Page-Bound" class="headerlink" title="懷疑是 Swap Page Bound?"></a>懷疑是 Swap Page Bound?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -W 2 10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解讀: 每隔 2 秒收集一次，一共收集 10 次 Swap page out/in 的效能數據</li>
+</ul>
+<p><img src="/images/sar-W.png" alt></p>
+<ul>
+<li><p>欄位解釋</p>
+<ul>
+<li>pswpin/s: 每秒系統 Swap page IN 的數量</li>
+<li>pswpout/s: 每秒系統 Swap page Out 的數量</li>
+</ul>
+</li>
+<li><p>數字解讀</p>
+<ul>
+<li>這個只要有數字跳出來，伺服器處理吞吐量會大幅下降，這時候要先確定是不是記憶體夠不夠</li>
+</ul>
+</li>
+</ul>
+<h3 id="懷疑是-Disk-I-O-Bound？"><a href="#懷疑是-Disk-I-O-Bound？" class="headerlink" title="懷疑是 Disk I/O Bound？"></a>懷疑是 Disk I/O Bound？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -d 2 10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令解讀: 每隔 2 秒收集一次，一共收集 10 次 Disk I/O 的效能數據</li>
+</ul>
+<p><img src="/images/sar-d.png" alt></p>
+<ul>
+<li><p>欄位解釋</p>
+<ul>
+<li>tps: 設備每秒數據傳輸量</li>
+<li>rkB/s: 每秒從設備讀取的資料量</li>
+<li>wkB/s: 每秒寫入到設備的資料量</li>
+<li>areq-sz: 發出到設備 I/O 請求的平均資料大小</li>
+<li>aqu/sz: 發出到設備的 I/O 請求的平均 Queue 長度</li>
+<li>await: 發出到服務的設備請求 I/O 的平均反應時間</li>
+<li>svctm: 不用看，未來要移除</li>
+<li>%util: 像設備發出 I/O 請求的經過時間百分比</li>
+</ul>
+</li>
+<li><p>數字解讀</p>
+<ul>
+<li><code>%util</code> 數值越大越忙</li>
+<li>如果剛好有 raid 之類的化，<code>%util</code> 有可能會大於 100%</li>
+<li><code>iostat</code> 比較詳細，針對 Disk I/O 更建議使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>當然， <code>sar</code> 並不是一個長期監控很好的方案，如 Red Hat Enterprise Linux 更推薦的使用是用 <code>Performance Co-Pilot (pcp)</code> <a href="https://pcp.io/" target="_blank" rel="noopener">pcp 快速門</a> 來進行系統長期監控維運</p>
+<p>但透過此篇，希望大家未來聽到類似的系統很慢的問題時，可以先利用 <code>sar</code> 先進行快速了解，建立一個簡單的了解，再來花時間計畫比較長期的系統監控方式</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/sar.html" target="_blank" rel="noopener">sar 找出系统瓶颈的利器</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2011/07/linux_load_average_explained.html" target="_blank" rel="noopener">理解Linux系统负荷</a></li>
+<li><a href="https://pcp.io/" target="_blank" rel="noopener">Performance Co-Pilot</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20200302-edge-computing-part-2/" rel="prev" title="邊緣計算大哉問 Part 2">
+      <i class="fa fa-chevron-left"></i> 邊緣計算大哉問 Part 2
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系統壓力觀測目標"><span class="nav-number">1.</span> <span class="nav-text">系統壓力觀測目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#環境介紹"><span class="nav-number">2.</span> <span class="nav-text">環境介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">3.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常常遇到的問題"><span class="nav-number">4.</span> <span class="nav-text">常常遇到的問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑系統是不是真的忙"><span class="nav-number">4.1.</span> <span class="nav-text">懷疑系統是不是真的忙?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑是-CPU-Bound"><span class="nav-number">4.2.</span> <span class="nav-text">懷疑是 CPU Bound?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑是-Network-Bound"><span class="nav-number">4.3.</span> <span class="nav-text">懷疑是 Network Bound?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑是-Memory"><span class="nav-number">4.4.</span> <span class="nav-text">懷疑是 Memory?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑是-Swap-Page-Bound"><span class="nav-number">4.5.</span> <span class="nav-text">懷疑是 Swap Page Bound?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懷疑是-Disk-I-O-Bound？"><span class="nav-number">4.6.</span> <span class="nav-text">懷疑是 Disk I/O Bound？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">63</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">64</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -159,6 +159,93 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20190404-openshift-network-traffic-overview/" class="post-title-link" itemprop="url">Red Hat OpenShift v3.11 東西南北向網路探討</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-04 00:45:00" itemprop="dateCreated datePublished" datetime="2019-04-04T00:45:00+08:00">2019-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-05 19:54:02" itemprop="dateModified" datetime="2020-01-05T19:54:02+08:00">2020-01-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openshift/" itemprop="url" rel="index"><span itemprop="name">openshift</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="資料中心東西南北向網路流"><a href="#資料中心東西南北向網路流" class="headerlink" title="資料中心東西南北向網路流"></a>資料中心東西南北向網路流</h2><p>一般討論的資料中心資料流量，主要分為兩大流向</p>
+<ul>
+<li>南北向 (North-South Traffic):  Client 與 Server 之間的網路流量</li>
+<li>東西向 (East-West Traffic): Server 與 Server 之間的網路流量</li>
+</ul>
+<p><img src="/images/network-traffic.png" alt></p>
+<p>那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20190404-openshift-network-traffic-overview/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -892,87 +979,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/20180920-add-ssl-tls-cert-and-key/" class="post-title-link" itemprop="url">新增 SSL/TLS 憑證和金鑰</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-11-20 14:13:00" itemprop="dateCreated datePublished" datetime="2018-11-20T14:13:00+08:00">2018-11-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-04-13 14:43:00" itemprop="dateModified" datetime="2019-04-13T14:43:00+08:00">2019-04-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/rhel/" itemprop="url" rel="index"><span itemprop="name">rhel</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/20180920-add-ssl-tls-cert-and-key/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1043,7 +1049,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
