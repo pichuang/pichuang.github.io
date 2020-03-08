@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-ping.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-shell.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-copy.png">
-<meta property="og:updated_time" content="2020-03-08T09:09:52.938Z">
+<meta property="og:updated_time" content="2020-03-08T09:15:32.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="30 分鐘內使用 Ansible">
 <meta name="twitter:description" content="Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位">
@@ -202,7 +202,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-08 17:09:52" itemprop="dateModified" datetime="2020-03-08T17:09:52+08:00">2020-03-08</time>
+                <time title="Modified: 2020-03-08 17:15:32" itemprop="dateModified" datetime="2020-03-08T17:15:32+08:00">2020-03-08</time>
               </span>
 
           
@@ -231,8 +231,8 @@
 <p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bation) 上使用</p>
 <h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
 <ol>
-<li>對<code>多個機器</code>下相同的指令</li>
-<li>將一個檔案或資料夾放到<code>多個機器</code>上面</li>
+<li>對多個機器下相同的<code>指令</code>，包含重開服務 (systemctl restart ooxx)、看檔案 (cat ooxx)、例行更新 (yum update -y)、執行網路指令 (ip route) 等等</li>
+<li>將一個<code>檔案</code>或<code>資料夾</code>放到多個機器上面</li>
 <li>修改檔案內容</li>
 </ol>
 <p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
