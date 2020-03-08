@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位">
+<meta property="og:type" content="article">
+<meta property="og:title" content="30 分鐘內使用 Ansible">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200308-ansible-30m/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-inventory.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-ping.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-shell.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ansible-copy.png">
+<meta property="og:updated_time" content="2020-03-08T09:08:41.896Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="30 分鐘內使用 Ansible">
+<meta name="twitter:description" content="Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/ansible-inventory.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200308-ansible-30m/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>30 分鐘內使用 Ansible | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">66</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200308-ansible-30m/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          30 分鐘內使用 Ansible
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-08 07:16:00 / Modified: 17:08:41" itemprop="dateCreated datePublished" datetime="2020-03-08T07:16:00+08:00">2020-03-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/ysqclCH9Vc0" frameborder="0" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="沒有-Ansible-的時候是怎麼管理伺服器的"><a href="#沒有-Ansible-的時候是怎麼管理伺服器的" class="headerlink" title="沒有 Ansible 的時候是怎麼管理伺服器的?"></a>沒有 Ansible 的時候是怎麼管理伺服器的?</h2><p>當遇到有一票機器需要同時間要進行操作的時候，以前我用過幾個招數，因為我是 Linux 長期使用者，故以 Linux 上能用為主</p>
+<ol>
+<li>一個一個登入操作: 最早期，最花時間，錯誤率超高</li>
+<li>寫 <code>Shell Script</code> + for 迴圈: 要會寫程式，Shell Script 真心不好多人維護</li>
+<li>寫 <code>Python</code>: 要會寫程式，只要會寫 Python 的才看得懂我在寫什麼</li>
+<li>tmux 搭配 <code>synchronize panes</code>: 懶得寫程式，直接一個畫面操作全部，但如果遇到機器的參數不一樣就要一個一個操作</li>
+</ol>
+<p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bation) 上使用</p>
+<h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
+<ol>
+<li>對<code>多個機器</code>下相同的指令</li>
+<li>將一個檔案或資料夾放到<code>多個機器</code>上面</li>
+<li>修改檔案內容</li>
+</ol>
+<p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
+<h2 id="30-分鐘學習開始"><a href="#30-分鐘學習開始" class="headerlink" title="30 分鐘學習開始"></a>30 分鐘學習開始</h2><p>建議要有一台機器當作跳板機，可以是你的 Mac / Linux (很抱歉 Windows 不行)，這邊的範例是透過 Ansible 下去管理三台機器</p>
+<h3 id="作業系統環境"><a href="#作業系統環境" class="headerlink" title="作業系統環境"></a>作業系統環境</h3><ul>
+<li>Bastion<ul>
+<li>Red Hat Enterprise Linux 7.x 10.0.96.9/24</li>
+<li>Ansible 2.x</li>
+</ul>
+</li>
+<li>被控端<ul>
+<li>ceph3-node01.ceph.internal 10.0.98.1/24</li>
+<li>ceph3-node02.ceph.internal 10.0.98.2/24</li>
+<li>ceph3-node03.ceph.internal 10.0.98.3/24</li>
+</ul>
+</li>
+</ul>
+<h3 id="安裝-Ansible"><a href="#安裝-Ansible" class="headerlink" title="安裝 Ansible"></a>安裝 Ansible</h3><ul>
+<li><p>MacOS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ansible</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ubuntu Debian</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install ansible -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RHEL/CentOS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y ansible</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="使用前準備"><a href="#使用前準備" class="headerlink" title="使用前準備"></a>使用前準備</h3><ol>
+<li>首先要先用 SSH 登入過所有受控機器，讓 host fingerprint 加入到 <code>known_hosts</code> 裡面，不然會噴下面的錯誤，當然最好的建議是走免密碼金鑰的方式 <code>ssh-copy-id</code>，但這邊不提，降低複雜性</li>
+</ol>
+<ul>
+<li>Error Output<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host."</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="2">
+<li>準備環境<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增資料夾</span></span><br><span class="line">mkdir ansible-workspace &amp;&amp; <span class="built_in">cd</span> ansible-workspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增受控端資訊</span></span><br><span class="line">cat &gt; inventory &lt;&lt; EOF</span><br><span class="line">ceph3-node01.ceph.internal ansible_host=10.0.98.1 ansible_user=root</span><br><span class="line">ceph3-node02.ceph.internal ansible_host=10.0.98.2 ansible_user=root</span><br><span class="line">ceph3-node03.ceph.internal ansible_host=10.0.98.3 ansible_user=root</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><img src="/images/ansible-inventory.png" alt></p>
+<h3 id="任務-0-了解是否伺服器可以被-Ansible-管理"><a href="#任務-0-了解是否伺服器可以被-Ansible-管理" class="headerlink" title="任務 0: 了解是否伺服器可以被 Ansible 管理"></a>任務 0: 了解是否伺服器可以被 Ansible 管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m ping -k</span></span><br><span class="line">ansible -i inventory all -m ping -k</span><br></pre></td></tr></table></figure>
+
+<p>一定要是全部都是 <code>SUCCESS</code>，這樣後面的才能指令使用，有任何錯誤的話，一定要先搞好，不然後面也就不用看了</p>
+<p><img src="/images/ansible-ping.png" alt></p>
+<h3 id="任務-1-對多個伺服器下相同指令"><a href="#任務-1-對多個伺服器下相同指令" class="headerlink" title="任務 1: 對多個伺服器下相同指令"></a>任務 1: 對多個伺服器下相同指令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m shell -k -a &lt;指令&gt;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">"timedatectl"</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">"yum update -y"</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">"systemctl status tuned"</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">"cat /etc/os-release | grep PRETTY_NAME"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-shell.png" alt></p>
+<h3 id="任務-2-將一個檔案或資料夾傳送到多個伺服器上"><a href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上" class="headerlink" title="任務 2: 將一個檔案或資料夾傳送到多個伺服器上"></a>任務 2: 將一個檔案或資料夾傳送到多個伺服器上</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 檔案</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">"src=/etc/motd dest=/etc/motd"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料夾</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">"src=/etc/yum.repos.d/ dest=/etc/yum.repos.d/"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-copy.png" alt></p>
+<h3 id="想要學更多"><a href="#想要學更多" class="headerlink" title="想要學更多?"></a>想要學更多?</h3><p>恭喜各位 30 分鐘內快速上手使用 Ansible，Ansible 入手門檻真的是非常低，不需要學特別的程式語言就可以直接拿來使用，你看看前面對於多機器的操作有寫到 for 迴圈嗎? 但他的使用不單單是這樣，還可以延伸更多，以下是兩個蠻適合入門的簡報</p>
+<ul>
+<li><a href="https://chusiang.gitbooks.io/automate-with-ansible/" target="_blank" rel="noopener">現代 IT 人一定要知道的 Ansible 自動化組態技巧</a></li>
+<li><a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible" target="_blank" rel="noopener">20190720_Better Practice_Day 2 Operaition with Ansible</a></li>
+</ul>
+<p>如果你想要參加相關社群的話，也歡迎加入 <a href="https://ansible.tw/#!index.md" target="_blank" rel="noopener">Ansible 台灣使用者社群</a> 當中的 <a href="https://telegram.me/ansible_tw" target="_blank" rel="noopener">Telegram Group</a> 跟我們一起討論</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20200308-technical-writer/" rel="prev" title="成為一名技術留跡者">
+      <i class="fa fa-chevron-left"></i> 成為一名技術留跡者
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#沒有-Ansible-的時候是怎麼管理伺服器的"><span class="nav-number">1.</span> <span class="nav-text">沒有 Ansible 的時候是怎麼管理伺服器的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常見-Linux-日常維運操作"><span class="nav-number">2.</span> <span class="nav-text">常見 Linux 日常維運操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#30-分鐘學習開始"><span class="nav-number">3.</span> <span class="nav-text">30 分鐘學習開始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作業系統環境"><span class="nav-number">3.1.</span> <span class="nav-text">作業系統環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Ansible"><span class="nav-number">3.2.</span> <span class="nav-text">安裝 Ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用前準備"><span class="nav-number">3.3.</span> <span class="nav-text">使用前準備</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任務-0-了解是否伺服器可以被-Ansible-管理"><span class="nav-number">3.4.</span> <span class="nav-text">任務 0: 了解是否伺服器可以被 Ansible 管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任務-1-對多個伺服器下相同指令"><span class="nav-number">3.5.</span> <span class="nav-text">任務 1: 對多個伺服器下相同指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上"><span class="nav-number">3.6.</span> <span class="nav-text">任務 2: 將一個檔案或資料夾傳送到多個伺服器上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想要學更多"><span class="nav-number">3.7.</span> <span class="nav-text">想要學更多?</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

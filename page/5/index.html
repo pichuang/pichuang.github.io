@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">65</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">66</span></a>
 
   </li>
         <li class="menu-item menu-item-who">
@@ -159,6 +159,72 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/20190319-cnf-testbed/" class="post-title-link" itemprop="url">Cloud Native Network Functions (CNF) Testbed 心得感想</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-03-07 22:04:00 / Modified: 22:53:54" itemprop="dateCreated datePublished" datetime="2019-03-07T22:04:00+08:00">2019-03-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/" target="_blank" rel="noopener">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/20190319-cnf-testbed/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -874,81 +940,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20170413-how-to-contribute-on-github/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/20170413-how-to-contribute-on-github/" class="post-title-link" itemprop="url">How to contribute on GitHub</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-04-13 19:32:57" itemprop="dateCreated datePublished" datetime="2017-04-13T19:32:57+08:00">2017-04-13</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Fork from <a href="https://gist.github.com/timdream/5968469" target="_blank" rel="noopener">Github 發 Pull Request &amp; 貢獻流程速查/timdream</a></p>
-<h1 id="Github-發-Pull-Request-amp-貢獻流程速查"><a href="#Github-發-Pull-Request-amp-貢獻流程速查" class="headerlink" title="Github 發 Pull Request &amp; 貢獻流程速查"></a>Github 發 Pull Request &amp; 貢獻流程速查</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>此文目標讀者需先自行學會</p>
-<ul>
-<li>開 Github 帳號</li>
-<li>會 fork GitHub repository</li>
-<li>會使用 <code>git</code></li>
-<li>會 clone 自己的 repository</li>
-<li>會開 feature branch ，commit 修改，且 push 到自己的 Github remote repository</li>
-<li>會發 Pull Request</li>
-</ul>
-<h2 id="那到底還要教什麼？"><a href="#那到底還要教什麼？" class="headerlink" title="那到底還要教什麼？"></a>那到底還要教什麼？</h2><p>除了極端的情況（例如 reviewer 對 pull request 來者不拒，照單全收）之外，貢獻者通常需要再度修改自己的 pull request 以順利的讓自己的作品被接受。這些步驟需要一些非初階且有時危險的 git 指令，且無法三言兩語對沒作過的人解釋。<br>此文件的目標就是要解釋這些步驟。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/20170413-how-to-contribute-on-github/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1019,7 +1010,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
