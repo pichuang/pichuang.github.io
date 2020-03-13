@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://www.brendangregg.com/Perf/linux_observability_tools.png">
+<meta property="og:image" content="http://www.brendangregg.com/Perf/linux_observability_sar.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-q.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-u.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-P.png">
@@ -35,11 +35,11 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-r.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-W.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/sar-d.png">
-<meta property="og:updated_time" content="2020-03-07T13:29:22.856Z">
+<meta property="og:updated_time" content="2020-03-13T15:39:40.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尋找當下 Linux OS 效能瓶頸">
 <meta name="twitter:description" content="常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到當下系統很慢的時候，可以有個數字判斷的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題">
-<meta name="twitter:image" content="http://www.brendangregg.com/Perf/linux_observability_tools.png">
+<meta name="twitter:image" content="http://www.brendangregg.com/Perf/linux_observability_sar.png">
 
 <link rel="canonical" href="https://blog.pichuang.com.tw/20200307-performance-collection/">
 
@@ -198,10 +198,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-07 00:16:00 / Modified: 21:29:22" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
+              <time title="Created: 2020-03-07 00:16:00" itemprop="dateCreated datePublished" datetime="2020-03-07T00:16:00+08:00">2020-03-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-13 23:39:40" itemprop="dateModified" datetime="2020-03-13T23:39:40+08:00">2020-03-13</time>
+              </span>
 
           
 
@@ -215,7 +221,7 @@
 
       
         <p>常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到<code>當下</code>系統很慢的時候，可以有個<code>數字判斷</code>的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題</p>
-<p><img src="http://www.brendangregg.com/Perf/linux_observability_tools.png" alt></p>
+<p><img src="http://www.brendangregg.com/Perf/linux_observability_sar.png" alt></p>
 <a id="more"></a>
 
 <h2 id="系統壓力觀測目標"><a href="#系統壓力觀測目標" class="headerlink" title="系統壓力觀測目標"></a>系統壓力觀測目標</h2><blockquote>
