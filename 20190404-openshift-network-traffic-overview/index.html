@@ -34,7 +34,8 @@
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-firewall.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-router.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/egress-static.png">
-<meta property="og:updated_time" content="2020-01-05T11:54:02.000Z">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/ocp3_f5.png">
+<meta property="og:updated_time" content="2020-03-17T17:50:48.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Red Hat OpenShift v3.11 東西南北向網路探討">
 <meta name="twitter:description" content="資料中心東西南北向網路流一般討論的資料中心資料流量，主要分為兩大流向  南北向 (North-South Traffic):  Client 與 Server 之間的網路流量 東西向 (East-West Traffic): Server 與 Server 之間的網路流量   那如果套用在 Red Hat OpenShift v3.11 容器平台架構下，那實際網路流量是如何對應?">
@@ -205,7 +206,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-05 19:54:02" itemprop="dateModified" datetime="2020-01-05T19:54:02+08:00">2020-01-05</time>
+                <time title="Modified: 2020-03-18 01:50:48" itemprop="dateModified" datetime="2020-03-18T01:50:48+08:00">2020-03-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,6 +318,7 @@
 </tbody></table>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>無論是 Kubernetes / OpenShift 一般在討論容器平台網路的不外乎都是在討論 Pod / Service / NodePort 等等的應用，但實際上使用的時候會蠻推薦用資料流 (Data Flow) 的觀點下去做每一個點的討論，這樣在技術選型上才不會思考太久，當然整體網路考慮不會只有單單這一篇文章就可以全部講完的，其實有非常多細節可以做探討，尤其是如何跟現有網路做對接、防火牆環境隔離等等都得一併考慮進去。</p>
 <p>希望這篇能幫助大家用高視角的方式來理解整個 Red Hat OpenShift v3.11 網路流量走向</p>
+<h2 id="Appendix-針對-OpenShift-v3-版本之-F5-設定"><a href="#Appendix-針對-OpenShift-v3-版本之-F5-設定" class="headerlink" title="Appendix: 針對 OpenShift v3 版本之 F5 設定"></a>Appendix: 針對 OpenShift v3 版本之 F5 設定</h2><p><img src="/images/ocp3_f5.png" alt></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://www.cisco.com/c/en/us/products/collateral/switches/nexus-7000-series-switches/white-paper-c11-737022.html" target="_blank" rel="noopener">Cisco Data Center Spine-and-Leaf Architecture: Design Overview White Paper</a></li>
 <li><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress" target="_blank" rel="noopener">What is Ingress? - Kubernetes</a></li>
@@ -414,7 +416,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#資料中心東西南北向網路流"><span class="nav-number">1.</span> <span class="nav-text">資料中心東西南北向網路流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-OpenShift-東西南北向網路流"><span class="nav-number">2.</span> <span class="nav-text">Red Hat OpenShift 東西南北向網路流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#北向-Ingress-Traffic"><span class="nav-number">2.1.</span> <span class="nav-text">北向: Ingress Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#東西向-East-West-Traffic"><span class="nav-number">2.2.</span> <span class="nav-text">東西向: East-West Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#南向-Egress-Traffic"><span class="nav-number">2.3.</span> <span class="nav-text">南向: Egress Traffic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">3.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#資料中心東西南北向網路流"><span class="nav-number">1.</span> <span class="nav-text">資料中心東西南北向網路流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-OpenShift-東西南北向網路流"><span class="nav-number">2.</span> <span class="nav-text">Red Hat OpenShift 東西南北向網路流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#北向-Ingress-Traffic"><span class="nav-number">2.1.</span> <span class="nav-text">北向: Ingress Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#東西向-East-West-Traffic"><span class="nav-number">2.2.</span> <span class="nav-text">東西向: East-West Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#南向-Egress-Traffic"><span class="nav-number">2.3.</span> <span class="nav-text">南向: Egress Traffic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">3.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix-針對-OpenShift-v3-版本之-F5-設定"><span class="nav-number">4.</span> <span class="nav-text">Appendix: 針對 OpenShift v3 版本之 F5 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

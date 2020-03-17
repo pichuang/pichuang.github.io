@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2020-03-17T17:50:48.390Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
     
     <lastmod>2020-03-17T16:48:56.550Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
     
     <lastmod>2020-01-31T03:46:32.826Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
-    
-    <lastmod>2020-01-05T11:54:02.000Z</lastmod>
     
   </url>
   
