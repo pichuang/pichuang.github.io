@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
+    
+    <lastmod>2020-03-17T07:46:22.009Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200309-ansible-30m/</loc>
+    
+    <lastmod>2020-03-17T02:50:40.582Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200307-performance-collection/</loc>
     
     <lastmod>2020-03-13T15:39:40.738Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://blog.pichuang.com.tw/20200308-technical-writer/</loc>
     
     <lastmod>2020-03-13T14:46:44.063Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200309-ansible-30m/</loc>
-    
-    <lastmod>2020-03-08T11:19:54.457Z</lastmod>
     
   </url>
   
