@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ocp4-coreos.png">
 <meta property="og:image" content="https://blog.pichuang.com.tw/images/ocp4.png">
-<meta property="og:updated_time" content="2020-03-17T08:14:45.577Z">
+<meta property="og:updated_time" content="2020-03-17T16:48:56.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1">
 <meta name="twitter:description" content="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co">
@@ -192,10 +192,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-17 00:16:00 / Modified: 16:14:45" itemprop="dateCreated datePublished" datetime="2020-03-17T00:16:00+08:00">2020-03-17</time>
+              <time title="Created: 2020-03-17 00:16:00" itemprop="dateCreated datePublished" datetime="2020-03-17T00:16:00+08:00">2020-03-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-18 00:48:56" itemprop="dateModified" datetime="2020-03-18T00:48:56+08:00">2020-03-18</time>
+              </span>
 
           
 
@@ -253,13 +259,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@bastion]<span class="comment"># ssh core@compute-0.ocp4.internal -i ~/.ssh/id_rsa_ocp4_vcenter</span></span><br><span class="line"></span><br><span class="line">[core@compute-0 ~]$ sudo su -</span><br><span class="line"></span><br><span class="line">[root@compute-0 ~]<span class="comment"># podman run \</span></span><br><span class="line">    --hostname debug-toolbox \</span><br><span class="line">    --name ocp-debug-container \</span><br><span class="line">    --network host \</span><br><span class="line">    --privileged \</span><br><span class="line">    --security-opt label=<span class="built_in">disable</span> \</span><br><span class="line">    --tty \</span><br><span class="line">    --rm \</span><br><span class="line">    -it \</span><br><span class="line">    --volume /:/host/:rslave \</span><br><span class="line">    quay.io/pichuang/debug-container</span><br><span class="line">[root@debug-toolbox /]<span class="comment"># tcpdump -i ens192 -w /host/home/core/tcpdump.pcap</span></span><br><span class="line">[root@debug-toolbox /]<span class="comment"># scp /host/home/core/tcpdump.pcap root@bastion.ocp4.internal:~/</span></span><br><span class="line"></span><br><span class="line">[root@debug-toolbox /]<span class="comment"># exit</span></span><br><span class="line">[root@compute-0 ~]<span class="comment"># podman ps</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="常見服務-systemd-journalctl"><a href="#常見服務-systemd-journalctl" class="headerlink" title="常見服務 systemd / journalctl"></a>常見服務 systemd / journalctl</h3><p>在 RHCOS 中，你還是可以使用 <code>systemd</code> 或 <code>journalctl</code> 做觀察性質的操作</p>
-<blockquote>
-<p>WARNING: Direct SSH access to machines is not recommended; instead,<br>make configuration changes via <code>machineconfig</code> objects</p>
-</blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@compute-0 ~]<span class="comment"># systemctl status crio</span></span><br><span class="line">● crio.service - Open Container Initiative Daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/crio.service; disabled; vendor preset: disa&gt;</span><br><span class="line">  Drop-In: /etc/systemd/system/crio.service.d</span><br><span class="line">           └─10-default-env.conf</span><br><span class="line">   Active: active (running) since Tue 2020-03-17 03:17:12 UTC; 3h 7min ago</span><br><span class="line">     Docs: https://github.com/cri-o/cri-o</span><br><span class="line"> Main PID: 1588 (crio)</span><br><span class="line">    Tasks: 37</span><br><span class="line">   Memory: 638.8M</span><br><span class="line">      CPU: 15min 23.689s</span><br><span class="line">   CGroup: /system.slice/crio.service</span><br><span class="line">           ├─  1588 /usr/bin/crio --<span class="built_in">enable</span>-metrics=<span class="literal">true</span> --metrics-port=9537</span><br><span class="line">           ├─587682 /usr/libexec/crio/conmon -c 72482678b7cd9b0384fca2486d89e320c21cfe&gt;</span><br><span class="line">           ├─587683 /usr/bin/runc --root=/run/runc <span class="built_in">exec</span> --pid-file /tmp/pidfile4561585&gt;</span><br><span class="line">           └─587693 /usr/bin/runc init</span><br><span class="line"></span><br><span class="line">[root@compute-0 ~]<span class="comment"># journalctl</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="6-修改-RHCOS-設定檔"><a href="#6-修改-RHCOS-設定檔" class="headerlink" title="6. 修改 RHCOS 設定檔"></a>6. 修改 RHCOS 設定檔</h3><blockquote>
-<p>WARNING: Direct SSH access to machines is not recommended; instead,<br>make configuration changes via <code>machineconfig</code> objects</p>
+<p>WARNING: Direct SSH access to machines is not recommended; instead, make configuration changes via <code>machineconfig</code> objects</p>
 </blockquote>
 <p><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos" target="_blank" rel="noopener">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a> 指出 3 種修改方向</p>
 <ol>
