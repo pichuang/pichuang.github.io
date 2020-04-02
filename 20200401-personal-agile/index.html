@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="要來進行今天的分享之前，我得要先來推一下 David Ko 前輩 David Ko Learning Journey，當初研究所開始接觸 Scurm / Agile 等等的都是主要都是從這位前輩上學習到相關經驗的，直到現在工作一陣子了，觀念還是非常有用，大推 今天要來講一下關於身為一位在 Red Hat 打工了快兩年的解決方案架構師 (Solution Architect) 如何透過敏捷方式提高">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一名解決方案架構師的自我敏捷">
+<meta property="og:url" content="https://blog.pichuang.com.tw/20200401-personal-agile/index.html">
+<meta property="og:site_name" content="Phil Workspace">
+<meta property="og:description" content="要來進行今天的分享之前，我得要先來推一下 David Ko 前輩 David Ko Learning Journey，當初研究所開始接觸 Scurm / Agile 等等的都是主要都是從這位前輩上學習到相關經驗的，直到現在工作一陣子了，觀念還是非常有用，大推 今天要來講一下關於身為一位在 Red Hat 打工了快兩年的解決方案架構師 (Solution Architect) 如何透過敏捷方式提高">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/trello-2.png">
+<meta property="og:image" content="https://blog.pichuang.com.tw/images/trello.png">
+<meta property="og:image" content="https://blog.trello.com/hs-fs/hubfs/Imported_Blog_Media/eisenhower-box2-654x576.jpg?width=654&name=eisenhower-box2-654x576.jpg">
+<meta property="og:updated_time" content="2020-04-02T15:00:31.943Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一名解決方案架構師的自我敏捷">
+<meta name="twitter:description" content="要來進行今天的分享之前，我得要先來推一下 David Ko 前輩 David Ko Learning Journey，當初研究所開始接觸 Scurm / Agile 等等的都是主要都是從這位前輩上學習到相關經驗的，直到現在工作一陣子了，觀念還是非常有用，大推 今天要來講一下關於身為一位在 Red Hat 打工了快兩年的解決方案架構師 (Solution Architect) 如何透過敏捷方式提高">
+<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/trello-2.png">
+
+<link rel="canonical" href="https://blog.pichuang.com.tw/20200401-personal-agile/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>一名解決方案架構師的自我敏捷 | Phil Workspace</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-90856047-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Phil Workspace</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">68</span></a>
+
+  </li>
+        <li class="menu-item menu-item-who">
+
+    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
+
+  </li>
+        <li class="menu-item menu-item-record">
+
+    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200401-personal-agile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil Huang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil Workspace">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一名解決方案架構師的自我敏捷
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-01 00:16:00" itemprop="dateCreated datePublished" datetime="2020-04-01T00:16:00+08:00">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-02 23:00:31" itemprop="dateModified" datetime="2020-04-02T23:00:31+08:00">2020-04-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>要來進行今天的分享之前，我得要先來推一下 David Ko 前輩 <a href="https://www.facebook.com/DavidLearningJourney/" target="_blank" rel="noopener">David Ko Learning Journey</a>，當初研究所開始接觸 Scurm / Agile 等等的都是主要都是從這位前輩上學習到相關經驗的，直到現在工作一陣子了，觀念還是非常有用，大推</p>
+<p>今天要來講一下關於身為一位在 Red Hat 打工了快兩年的解決方案架構師 (Solution Architect) 如何透過敏捷方式提高個人生產力，這篇完完全全就是<code>個人實際經驗分享</code> XD</p>
+<p><img src="/images/trello-2.png" alt></p>
+<a id="more"></a>
+
+<h2 id="何謂解決方案架構師"><a href="#何謂解決方案架構師" class="headerlink" title="何謂解決方案架構師?"></a>何謂解決方案架構師?</h2><p>解決方案架構師 (Solution Architect) 在 Red Hat 定義中是售前職位 (Pre-sales)，主要每日任務簡要版本就是</p>
+<ol>
+<li>白天跟著業務跑來跑去開會</li>
+<li>晚上寫簡報 / Lab / 回信 / 讀書 / 研究</li>
+</ol>
+<p>這個職位有個特性就是，無論來自業務還是客戶，需求都是來得又快又急，很容易一天內被一票不同的事情衝在一起，所以對自己的每月每週每日待辦工作項目掌握要非常清楚，不然很容易會 overloading。而剛好每一季的自我目標管理 (Management By Objectives, MBO)，也需要回顧三個月內做的一些專案和工作負載狀況，故為了提高生產力和準時交付產物，所以…我自己開始了個人敏捷探索</p>
+<h2 id="常見的個人敏捷方式"><a href="#常見的個人敏捷方式" class="headerlink" title="常見的個人敏捷方式"></a>常見的個人敏捷方式</h2><p>Trello 有特別針對<code>個人</code>提出了幾種提高生產力的方式 - <a href="https://trello.com/zh-Hant/teams/personal-productivity" target="_blank" rel="noopener">以 Trello 提升個人生產力</a>，包含如下 4 種方式:</p>
+<ol>
+<li>個人生產力系統：<a href="https://blog.trello.com/work-life-focus-trello-insider-guide-personal-productivity" target="_blank" rel="noopener">元老級 Trello 使用者的個人生產力指南</a></li>
+<li>艾森豪矩陣 (Eisenhower Matrix)：相當著名的<a href="https://blog.trello.com/eisenhower-matrix-productivity-tool-trello-board" target="_blank" rel="noopener">工作優先排序法</a>實踐</li>
+<li>每週檢討流程：以週為單位 <a href="https://trello.com/b/O3xTMwoI/weekly-to-dos-review-process" target="_blank" rel="noopener">《搞定！》一書建議養成每週自我檢討的習慣</a>實踐</li>
+<li>心智圖：我個人覺得走錯棚</li>
+</ol>
+<p>或者是真的走看板方法 (Kanban Method) 的，但是給個人用的</p>
+<ol>
+<li><a href="https://ruddyblog.wordpress.com/2014/09/21/%e9%81%8b%e7%94%a8%e5%80%8b%e4%ba%ba%e7%9c%8b%e6%9d%bf%e5%81%9a%e6%99%82%e9%96%93%e7%ae%a1%e7%90%86/" target="_blank" rel="noopener">運用個人看板做時間管理 - Ruddy</a></li>
+<li><a href="https://oberonlai.blog/scrum-kanban/" target="_blank" rel="noopener">原來我以為的看板根本不是看板… - Oberon Lai</a></li>
+</ol>
+<p>可能有些人對於看板方法 (Kanban Method) 的定義有所不清楚，這邊強烈建議看一下 <a href="https://kojenchieh.pixnet.net/blog/post/470744012-%E8%A6%96%E8%A6%BA%E5%8C%96%E7%99%BD%E6%9D%BF,-proto-kanban,-kanban-%E5%82%BB%E5%82%BB%E5%88%86%E4%B8%8D%E6%B8%85%E6%A5%9A%3F" target="_blank" rel="noopener">視覺化白板, Proto-Kanban, Kanban 傻傻分不清楚? - David Ko</a>，如同內文所述，只要沒有照著David J Anderson 所提出的以下看板方法實踐走，其實都不算真<code>看板方法</code></p>
+<ul>
+<li>視覺化 (Visualize)</li>
+<li>限制同時工作數量 (Limit Work In Progress, WIP)</li>
+<li>管理工作流程 (Manage flow)</li>
+<li>為流程訂定明確的方針 (Make policies explicit)</li>
+<li>實現反饋迴圈 (Implement feedback loops)</li>
+<li>利用模型和科學方法來協同式改進, 實驗性演進(Improve collaboratively, evolve experimentally)</li>
+</ul>
+<h2 id="我使用的方式-小飛機版視覺化白板"><a href="#我使用的方式-小飛機版視覺化白板" class="headerlink" title="我使用的方式 - 小飛機版視覺化白板"></a>我使用的方式 - 小飛機版視覺化白板</h2><p>對的，基於對於看板方式的規範，我沒有完全採納該實踐，但從中還是有擷取出 3 個核心概念，從中改成屬於<code>小飛機版視覺化看板</code>的樣子</p>
+<ul>
+<li>視覺化 (Visualize)</li>
+<li>管理工作流程 (Manage flow)</li>
+<li>為流程訂定明確的方針 (Make policies explicit)</li>
+</ul>
+<p>工具選擇是採用 Trello，主要是簡單、快速和跨平台，當然選擇了好工具不代表專案就能跑得好，只是方便我自己使用而已，<a href="https://kojenchieh.pixnet.net/blog/post/457533491-trello-%E5%92%8C%E7%9C%8B%E6%9D%BF%E6%96%B9%E6%B3%95%E7%9A%84%E9%97%9C%E4%BF%82%E6%98%AF%3F" target="_blank" rel="noopener">Trello 和看板方法的關係是? - David Ko</a> 一文結語不錯，但我是自己使用，不是跟團隊使用就是了 XD</p>
+<blockquote>
+<p>工具不會讓你團隊改善, 唯有團隊具備改善能力, 工具才能改善團隊</p>
+</blockquote>
+<p>可能有人會想推我用矽谷真香的 Notion，我中間有兩個月換成使用 Notion，但使用體驗相當差，網頁開啟反應太慢、有點複雜，最重要是不能離線，我就果斷換回 Trello，另因自己的筆記已經有台灣團隊出品的 <a href="https://hackmd.io/" target="_blank" rel="noopener">HackMD</a> 及 HappenApps 出品的 Quiver 在使用，我就沒有持續使用 Notion 的理由了</p>
+<p>設計上，因為這職業對於時間相當要求，所以視覺化白板設計是以<code>時間</code>作為分隔進行流水線設計，範例網址在此 <a href="https://trello.com/b/tZdYnYrN/%E5%B0%8F%E9%A3%9B%E6%A9%9F%E7%89%88%E8%A6%96%E8%A6%BA%E5%8C%96%E7%9C%8B%E6%9D%BF" target="_blank" rel="noopener">Trello Template - 小飛機版視覺化看板</a></p>
+<p><img src="/images/trello.png" alt></p>
+<p>清單從左至右:</p>
+<ol>
+<li>Backlog per month：本月收到的任何代辦事項或要求都寫在裡面</li>
+<li>Todo per Week：這週要處理的待辦事項</li>
+<li>Do it per Day：今天要處理的待辦事項</li>
+<li>Ready to go：已處理完的事項，但還沒執行</li>
+<li>Tracking：已處理完的事項，但還會有延伸需處理之項目</li>
+<li>Done - Week 1：第一週已處理完的事項</li>
+<li>Done - Week 2：第二週已處理完的事項</li>
+<li>Done - Week 3：第三週已處理完的事項</li>
+<li>Done - Week 4：第四週已處理完的事項</li>
+<li>Discard：放棄處理的待辦事項</li>
+</ol>
+<p>採用<a href="https://blog.trello.com/eisenhower-matrix-productivity-tool-trello-board" target="_blank" rel="noopener">艾森豪矩陣 (Eisenhower Matrix)</a> 方式，時間先決，故卡片排序優先處理順序由上至下：</p>
+<p><img src="https://blog.trello.com/hs-fs/hubfs/Imported_Blog_Media/eisenhower-box2-654x576.jpg?width=654&name=eisenhower-box2-654x576.jpg" alt></p>
+<ol>
+<li>緊急且重要 (Urgent, Important)：一定會列在上去白板上，當前優先處理順序最高</li>
+<li>緊急但不重要(Urgent, Not Important)：一定會列上去白板上</li>
+<li>不急但重要 (Not Urgent, Important)：一定會列上去白板上，當前優先處理順序最低</li>
+<li>不急但不重要 (Not Urgent, Not important)：不列，靠緣分</li>
+</ol>
+<p>至於卡片內容的撰寫方式則為</p>
+<ul>
+<li>抬頭 (Title)：一定是 <code>執行對象</code> 和 <code>要幹麻</code> 不會有其他多餘的描述</li>
+<li>截止日期 (Due Date)：要從 Backlog 裡面拉出來，一定要上截止時間</li>
+<li>描述 (Description)：產出物，可以是簡報網址、網址、文字結論</li>
+<li>待辦清單 (CheckList)：看複雜度，有時候會用</li>
+<li>評論 (Comment)：交談後隨手筆記或者是雜資料都可以往裡面塞</li>
+</ul>
+<p>而標籤 (Label) 我就比較少用了，沒特別想到怎麼用，而免費版的 Trello 可以選一個 <code>Power Ups</code> 使用，這邊是用 <code>Custom Fields</code>，可以自己加欄位</p>
+<h2 id="長期使用下來的缺點"><a href="#長期使用下來的缺點" class="headerlink" title="長期使用下來的缺點?"></a>長期使用下來的缺點?</h2><p>我這個設計使用大概三年多了，當中的缺點其實也蠻明顯的，前 3 有感如下：</p>
+<ul>
+<li>對於自身的工作量無法以數字量化，所以工作生活平衡 (Work–life balance) 奇差無比 XD</li>
+<li>僅能單人使用，只有我自己看得懂在幹嘛</li>
+<li>不適合用在跑一個中長期專案，或需要定期迭代交付東西的事情，我的理解是改走 Scrum 實踐比較適合，畢竟需要跟其他人協作</li>
+</ul>
+<p>雖然我知道有這些缺點，但這個自我設計可以搞定我將近八九成以上的工作型態，我就懶得做成 100% 的樣子</p>
+<p>但如果團隊要一起放在同一個板上管理的話，還是先從 Agile 最佳實踐中，先行選出可行的做法後，隨著執行時間越久，慢慢地淬煉出自家團隊的走法是比較有規章的作法</p>
+<h2 id="Red-Hat-開源敏捷軟體專案經驗分享"><a href="#Red-Hat-開源敏捷軟體專案經驗分享" class="headerlink" title="Red Hat 開源敏捷軟體專案經驗分享?"></a>Red Hat 開源敏捷軟體專案經驗分享?</h2><p>以下都有公開的資訊可以被 Google 到，只是要知道關鍵字而已 XD</p>
+<p>工具選擇上，目前常見走 Kanban 或類似看板 (極難在廣大社群專案上 WIP = =) 的作法，我看到的都是放在 Trello 比較多，而跑 Scrum 的方式則是跑在 Jira 軟體為主的作法居多，少數跑 Kanban 也會放在 Jira 上執行就是了</p>
+<p>敏捷方法選擇上，Red Hat 軟體專案管理無論是上中下游大多數都是 <code>Scrum</code> 居多，我的觀察是蠻標準的 Scrum 跑法，至於與 Kanban 差異可以看看 <a href="https://kojenchieh.pixnet.net/blog/post/394636169" target="_blank" rel="noopener">Kanban board 和 Scrum Board 不同之處 - David Ko</a></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><blockquote>
+<p>眾里尋他千百度，驀然回首，那妹卻在燈火闌珊處</p>
+</blockquote>
+<p>對，沒錯，我就是沒有遵照最佳實踐，但弄出一套自己運行的很開心的模式，工具在手，揮灑在我。我個人並不是待在軟體開發團隊，而是業務團隊，所以使用敏捷方式會有別於現在大多主流軟體開發的討論情境，各位在思考的時候要留意一下</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://oberonlai.blog/scrum-kanban/" target="_blank" rel="noopener">原來我以為的看板根本不是看板… - Oberon Lai</a></li>
+<li><a href="https://ruddyblog.wordpress.com/2014/09/21/%e9%81%8b%e7%94%a8%e5%80%8b%e4%ba%ba%e7%9c%8b%e6%9d%bf%e5%81%9a%e6%99%82%e9%96%93%e7%ae%a1%e7%90%86/" target="_blank" rel="noopener">運用個人看板做時間管理 - Ruddy</a></li>
+<li><a href="https://kojenchieh.pixnet.net/blog/post/457533491-trello-%E5%92%8C%E7%9C%8B%E6%9D%BF%E6%96%B9%E6%B3%95%E7%9A%84%E9%97%9C%E4%BF%82%E6%98%AF%3F" target="_blank" rel="noopener">Trello 和看板方法的關係是? - David Ko</a></li>
+<li><a href="https://kojenchieh.pixnet.net/blog/post/470744012-%E8%A6%96%E8%A6%BA%E5%8C%96%E7%99%BD%E6%9D%BF,-proto-kanban,-kanban-%E5%82%BB%E5%82%BB%E5%88%86%E4%B8%8D%E6%B8%85%E6%A5%9A%3F" target="_blank" rel="noopener">視覺化白板, Proto-Kanban, Kanban 傻傻分不清楚? - David Ko</a></li>
+<li><a href="https://www.facebook.com/DavidLearningJourney/" target="_blank" rel="noopener">DavidKo Learning Journey</a></li>
+<li><a href="http://teddy-chen-tw.blogspot.com/2014/08/8.html" target="_blank" rel="noopener">看板方法介紹（8）：造物就是造人 - Teddy</a></li>
+<li><a href="https://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="noopener">Kanban: Successful Evolutionary Change for Your Technology Business (English)</a></li>
+<li><a href="https://medium.com/@mailtojacklai/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87-%E6%B1%BA%E7%AD%96%E6%96%B9%E6%B3%95-%E8%89%BE%E6%A3%AE%E8%B1%AA%E7%9F%A9%E9%99%A3-eisenhower-matrix-88bbbf17b454" target="_blank" rel="noopener">[工作效率] 決策方法: 艾森豪矩陣(Eisenhower Matrix)</a></li>
+<li><a href="https://trello.com/b/tZdYnYrN/%E5%B0%8F%E9%A3%9B%E6%A9%9F%E7%89%88%E8%A6%96%E8%A6%BA%E5%8C%96%E7%9C%8B%E6%9D%BF" target="_blank" rel="noopener">Trello Template - 小飛機版視覺化看板</a></li>
+<li><a href="https://kojenchieh.pixnet.net/blog/post/394636169" target="_blank" rel="noopener">Kanban board 和 Scrum Board 不同之處 - David Ko</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20200317-openshift-with-coreos-part-1/" rel="prev" title="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1">
+      <i class="fa fa-chevron-left"></i> 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#何謂解決方案架構師"><span class="nav-number">1.</span> <span class="nav-text">何謂解決方案架構師?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常見的個人敏捷方式"><span class="nav-number">2.</span> <span class="nav-text">常見的個人敏捷方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我使用的方式-小飛機版視覺化白板"><span class="nav-number">3.</span> <span class="nav-text">我使用的方式 - 小飛機版視覺化白板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#長期使用下來的缺點"><span class="nav-number">4.</span> <span class="nav-text">長期使用下來的缺點?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Hat-開源敏捷軟體專案經驗分享"><span class="nav-number">5.</span> <span class="nav-text">Red Hat 開源敏捷軟體專案經驗分享?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil Huang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

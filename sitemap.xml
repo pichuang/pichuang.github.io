@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200401-personal-agile/</loc>
+    
+    <lastmod>2020-04-02T15:00:31.943Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
     
     <lastmod>2020-03-17T17:50:48.390Z</lastmod>
