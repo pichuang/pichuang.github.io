@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-03T12:36:55.956Z">
+<meta property="og:updated_time" content="2020-04-03T13:52:54.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2">
 <meta name="twitter:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
@@ -191,7 +191,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-03 00:16:00 / Modified: 20:36:55" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 00:16:00 / Modified: 21:52:54" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
             </span>
 
           
@@ -235,9 +235,9 @@
 <p>CoreDNS 主要處理 OpenShift 內部服務的名稱解析，包含以下 4 類:</p>
 <ol>
 <li>cluster.local</li>
-<li><project>.cluster.local</project></li>
-<li><service>.<project>.cluster.local</project></service></li>
-<li><pod>.<project>.cluster.local</project></pod></li>
+<li><code>&lt;project&gt;</code>.cluster.local</li>
+<li><code>&lt;service&gt;</code>.<code>&lt;project&gt;</code>.cluster.local</li>
+<li><code>&lt;pod&gt;</code>.<code>&lt;project&gt;</code>.cluster.local</li>
 </ol>
 <h3 id="了解當下網路資訊-Cluster-Network-Operator"><a href="#了解當下網路資訊-Cluster-Network-Operator" class="headerlink" title="了解當下網路資訊 - Cluster Network Operator"></a>了解當下網路資訊 - Cluster Network Operator</h3><p>通常來說，建立 OpenShift 需要三段網段，而所有 IP 網段都不能重複，分別是下列:</p>
 <ol>
