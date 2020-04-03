@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-03T13:52:54.853Z">
+<meta property="og:updated_time" content="2020-04-03T14:07:45.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2">
 <meta name="twitter:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
@@ -191,7 +191,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-03 00:16:00 / Modified: 21:52:54" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 00:16:00 / Modified: 22:07:45" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
             </span>
 
           
@@ -253,7 +253,7 @@
 <li>clusterNetwork 也就是 Pod 實際上能使用的 IP 為 10.128.0.0/14，共 <a href="http://jodies.de/ipcalc?host=10.128.0.0&mask1=14&mask2=" target="_blank" rel="noopener"><code>262142</code> 個 Pod IP</a></li>
 <li>networkType 也就是 CNI Plugin 的名稱，這邊是使用原生的 <code>OpenShift SDN</code></li>
 <li>serviceNetwork 也就是 Kubernetes Service 可以使用的 IP 為 172.30.0.0/16，共可以開啟 <a href="http://jodies.de/ipcalc?host=172.30.0.0&mask1=16&mask2=" target="_blank" rel="noopener"><code>65534</code> 個 Service IP</a></li>
-<li>hostPrefix 比較難理解，主要是代表<code>每一個節點 (Node) 所能拿到的 Pod IP 為多少</code>，例如這邊是 <code>/23</code>，所以每個節點可以運行約 <code>500</code> 左右的 Pod，若改成 <code>/22</code>，則每個節點可運行約 <code>1000</code> 左右的 Pod。有些人會問夠不夠用，其實就預設 <a href="https://docs.openshift.com/container-platform/4.3/scalability_and_performance/recommended-host-practices.html#recommended-node-host-practices_" target="_blank" rel="noopener">OpenShift 4.3 - Recommended host practices</a> 上，一個節點的上限是跑 <code>kubeletConfig.maxPods: 250</code>，最高 250，所以撞不到天花板</li>
+<li>hostPrefix 比較難理解，主要是代表<code>每一個節點 (Node) 所能拿到的 Pod IP 為多少</code>，例如這邊是 <code>/23</code>，所以每個節點可以運行 <a href="http://jodies.de/ipcalc?host=10.128.0.0&mask1=23&mask2=" target="_blank" rel="noopener"><code>510</code> 個 Pod IP</a> 的 Pod，若改成 <code>/22</code>，則每個節點可運行約 <code>1000</code> 左右的 Pod。有些人會問夠不夠用，其實就預設 <a href="https://docs.openshift.com/container-platform/4.3/scalability_and_performance/recommended-host-practices.html#recommended-node-host-practices_" target="_blank" rel="noopener">OpenShift 4.3 - Recommended host practices</a> 上，一個節點的上限是跑 <code>kubeletConfig.maxPods: 250</code>，最高 250，所以撞不到天花板</li>
 </ol>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>我知道寫的蠻亂的，就當筆記邊研究邊紀錄</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
