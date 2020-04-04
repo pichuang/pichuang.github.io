@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-03T14:07:45.770Z">
+<meta property="og:updated_time" content="2020-04-04T04:44:43.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2">
 <meta name="twitter:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
@@ -189,10 +189,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-03 00:16:00 / Modified: 22:07:45" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
+              <time title="Created: 2020-04-03 00:16:00" itemprop="dateCreated datePublished" datetime="2020-04-03T00:16:00+08:00">2020-04-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-04 12:44:43" itemprop="dateModified" datetime="2020-04-04T12:44:43+08:00">2020-04-04</time>
+              </span>
 
           
 
@@ -241,9 +247,9 @@
 </ol>
 <h3 id="了解當下網路資訊-Cluster-Network-Operator"><a href="#了解當下網路資訊-Cluster-Network-Operator" class="headerlink" title="了解當下網路資訊 - Cluster Network Operator"></a>了解當下網路資訊 - Cluster Network Operator</h3><p>通常來說，建立 OpenShift 需要三段網段，而所有 IP 網段都不能重複，分別是下列:</p>
 <ol>
-<li>Node CIDR：給實體主機用的 IP</li>
-<li>Service CIDR：給 Kubernetes Service 使用的 IP，對照設定檔名字為 <code>serviceNetwork</code></li>
-<li>Pod CIDR：Pod 實際上會拿到的 IP，對照設定檔名字為 <code>clusterNetwork</code></li>
+<li>Node Subnet：給實體主機用的 IP</li>
+<li>Service Subnet：給 Kubernetes Service 使用的 IP，對照設定檔名字為 <code>serviceNetwork</code></li>
+<li>Pod Subnet：Pod 實際上會拿到的 IP，對照設定檔名字為 <code>clusterNetwork</code></li>
 </ol>
 <p>如果想要確認當前的網路設定資訊，可以參考下面作法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ oc get Network.config.openshift.io cluster -oyaml</span><br><span class="line"></span><br><span class="line">apiVersion: config.openshift.io/v1</span><br><span class="line">kind: Network</span><br><span class="line">...</span><br><span class="line">spec:</span><br><span class="line">  clusterNetwork:</span><br><span class="line">  - cidr: 10.128.0.0/14</span><br><span class="line">    hostPrefix: 23</span><br><span class="line">  externalIP:</span><br><span class="line">    policy: &#123;&#125;</span><br><span class="line">  networkType: OpenshiftSDN</span><br><span class="line">  serviceNetwork:</span><br><span class="line">  - 172.30.0.0/16</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
