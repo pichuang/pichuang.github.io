@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
+  <meta name="description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm、oc debug 這類的指令，但是我記得新版的 Kubernetes 好像有 kubec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2">
 <meta property="og:url" content="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/index.html">
 <meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
+<meta property="og:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm、oc debug 這類的指令，但是我記得新版的 Kubernetes 好像有 kubec">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-04T04:44:43.428Z">
+<meta property="og:updated_time" content="2020-04-04T04:47:40.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2">
-<meta name="twitter:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm 這類的指令，但是我記得最近新版的 Kubernetes 好像有 kubectl debu">
+<meta name="twitter:description" content="上個月寫了一篇愛的走馬看花 愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1，繼續逛下去 第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 oc adm、oc debug 這類的指令，但是我記得新版的 Kubernetes 好像有 kubec">
 
 <link rel="canonical" href="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/">
 
@@ -197,7 +197,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-04 12:44:43" itemprop="dateModified" datetime="2020-04-04T12:44:43+08:00">2020-04-04</time>
+                <time title="Modified: 2020-04-04 12:47:40" itemprop="dateModified" datetime="2020-04-04T12:47:40+08:00">2020-04-04</time>
               </span>
 
           
@@ -212,7 +212,7 @@
 
       
         <p>上個月寫了一篇愛的走馬看花 <a href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</a>，繼續逛下去</p>
-<p>第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 <code>oc adm</code> 這類的指令，但是我記得最近新版的 Kubernetes 好像有 <code>kubectl debug</code> 的指令可以用了，但不知道效果是不是一樣的</p>
+<p>第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 <code>oc adm</code>、<code>oc debug</code> 這類的指令，但是我記得新版的 Kubernetes 好像有 <code>kubectl debug</code> 的指令可以用了，但不知道效果是不是一樣的</p>
 <p>另外開頭我沒梗圖了，故附上一個我覺得蠻不錯的影片 <a href="https://www.youtube.com/watch?v=Kx110kqoHo0&list=PLaR6Rq6Z4IqeGIzsnWX1ifTLwJaYBQSUs&index=39&t=0s" target="_blank" rel="noopener">Deploying a Windows Server 2019 virtual machine using OpenShift Virtualization</a></p>
 <div class="video-container"><iframe src="//www.youtube.com/embed/Kx110kqoHo0" frameborder="0" allowfullscreen></iframe></div>
 
