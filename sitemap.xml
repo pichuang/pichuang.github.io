@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
+    
+    <lastmod>2020-04-04T04:29:25.974Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
     
     <lastmod>2020-04-03T14:07:45.770Z</lastmod>
@@ -348,13 +355,6 @@
     <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
     
     <lastmod>2019-03-24T18:07:12.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
-    
-    <lastmod>2019-03-24T18:06:58.000Z</lastmod>
     
   </url>
   

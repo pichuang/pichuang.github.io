@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Phil Workspace">
 <meta property="og:description" content="Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:  Hosts subnet Service subnet Pod subnet">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-24T18:06:58.000Z">
+<meta property="og:updated_time" content="2020-04-04T04:29:25.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="從 Red Hat OpenShift 外部訪問 Services 或 Pods">
 <meta name="twitter:description" content="Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:  Hosts subnet Service subnet Pod subnet">
@@ -198,7 +198,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-03-25 02:06:58" itemprop="dateModified" datetime="2019-03-25T02:06:58+08:00">2019-03-25</time>
+                <time title="Modified: 2020-04-04 12:29:25" itemprop="dateModified" datetime="2020-04-04T12:29:25+08:00">2020-04-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,15 +253,15 @@
 <h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
 <p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
 <p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html" target="_blank" rel="noopener">Router Overview - OpenShift v3.11 Docs</a></p>
-<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>這個功能僅限於公有雲，如果是 on-premise 的就只能自己實作或者是不要使用</p>
+<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html" target="_blank" rel="noopener">Using Ingress to Expose Services</a></p>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
 <ol>
 <li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
 <li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
 <li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
-<li>若需要提供對外服務，有下列兩種做法:<ol>
+<li>若需要提供對外服務，有下列三種做法:<ol>
 <li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
-<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>nodePort</code> 為佳</li>
+<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
 </ol>
 </li>
 </ol>
@@ -276,6 +276,7 @@
 <li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html" target="_blank" rel="noopener">Router Overview - OpenShift v3.11 Docs</a></li>
 <li><a href="https://cloud.tencent.com/developer/article/1101219" target="_blank" rel="noopener">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
 <li><a href="https://cloud.tencent.com/developer/article/1375943" target="_blank" rel="noopener">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
+<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html" target="_blank" rel="noopener">Using Ingress to Expose Services</a></li>
 </ul>
 
     </div>
