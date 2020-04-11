@@ -1,241 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
-<meta name="keywords" content="linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計">
-<meta property="og:url" content="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/index.html">
-<meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-1.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-3.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-2.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-1.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-2.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/vds-3.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-4.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-5.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/rack.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-6.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/pfsense-7.png">
-<meta property="og:updated_time" content="2019-11-16T13:45:39.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計">
-<meta name="twitter:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的">
-<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png">
-
-<link rel="canonical" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true
-  };
-</script>
-
-  <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計 | Phil Workspace</title>
-  
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
-    <script>
-      if (CONFIG.hostname === location.hostname) {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-90856047-1');
-      }
-    </script>
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Phil Workspace</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">69</span></a>
-
-  </li>
-        <li class="menu-item menu-item-who">
-
-    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
-
-  </li>
-        <li class="menu-item menu-item-record">
-
-    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-11-16 02:03:00 / Modified: 21:45:39" itemprop="dateCreated datePublished" datetime="2019-11-16T02:03:00+08:00">2019-11-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/infra/" itemprop="url" rel="index"><span itemprop="name">infra</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計 - Phil Workspace</title><meta description="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的"><meta property="og:type" content="blog"><meta property="og:title" content="2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計"><meta property="og:url" content="https://blog.pichuang.com.tw/"><meta property="og:site_name" content="Phil Workspace"><meta property="og:description" content="2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2019-11-15T18:03:00.000Z"><meta property="article:modified_time" content="2019-11-16T13:45:39.000Z"><meta property="article:author" content="Phil Huang"><meta property="article:tag" content="linux"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://blog.pichuang.com.tw/images/homecloud-1.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/"},"headline":"Phil Workspace","image":["https://blog.pichuang.com.tw/images/homecloud-1.png","https://blog.pichuang.com.tw/images/pfsense.png","https://blog.pichuang.com.tw/images/pfsense-1.png","https://blog.pichuang.com.tw/images/pfsense-3.png","https://blog.pichuang.com.tw/images/pfsense-2.png","https://blog.pichuang.com.tw/images/vds-1.png","https://blog.pichuang.com.tw/images/vds-2.png","https://blog.pichuang.com.tw/images/vds-3.png","https://blog.pichuang.com.tw/images/pfsense-4.png","https://blog.pichuang.com.tw/images/pfsense-5.png","https://blog.pichuang.com.tw/images/rack.png","https://blog.pichuang.com.tw/images/pfsense-6.png","https://blog.pichuang.com.tw/images/pfsense-7.png"],"datePublished":"2019-11-15T18:03:00.000Z","dateModified":"2019-11-16T13:45:39.000Z","author":{"@type":"Person","name":"Phil Huang"},"description":"2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：  2019 大改造宅宅雲架構系列文-1：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標 2019 大改造宅宅雲架構系列文-2：介紹宅宅雲塔式伺服器硬體裝備  而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的"}</script><link rel="canonical" href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/"><link rel="icon" href="/img/logo.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/github.css"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.jpg" alt="Phil Workspace" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/record">Record</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2019-11-15T18:03:00.000Z" title="2019-11-15T18:03:00.000Z">2019-11-16</time><span class="level-item"><a class="link-muted" href="/categories/infra/">infra</a></span><span class="level-item">13 minutes read (About 1893 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</h1><div class="content"><p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
 <ol>
 <li><a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1</a>：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標</li>
 <li><a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2</a>：介紹宅宅雲塔式伺服器硬體裝備</li>
 </ol>
 <p>而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的</p>
-<p><img src="/images/homecloud-1.png" alt></p>
+<p><img src="/images/homecloud-1.png" alt=""></p>
 <a id="more"></a>
 
 <h2 id="1-台-2-埠雙臂網路架構"><a href="#1-台-2-埠雙臂網路架構" class="headerlink" title="1 台 2 埠雙臂網路架構"></a>1 台 2 埠雙臂網路架構</h2><p>雙臂網路 (Two-Arm) 需使用 2 個網路介面，Inbound/Outbound 分別走不同介面；單臂網路則是 (One-Arm) 僅使用 1 個網路介面，Inbound/Outbound 都走同一個介面，裡面的網路隔離是採用 802.1Q VLAN Subinterface 進行劃分，所以後者相較前者，Overlay Switch (這邊指的就是 Synology RT2600ac ) 需要多支援 VLAN 能力才有辦法做，但可惜它沒有，就保持做 Two-Arm 網路。而我自己經驗基本都是做 Two-Arm，單純好理解</p>
@@ -251,10 +21,10 @@
 <blockquote>
 <p>NAT + VLAN Subinterface</p>
 </blockquote>
-<p>這邊採用的 vFirewall 是 <a href="https://www.pfsense.org/" target="_blank" rel="noopener">pfSense</a>，先前在 Edgecore Networks 機櫃環境是用 <a href="https://opnsense.org/" target="_blank" rel="noopener">OPNsense</a>，而我個人是比較偏好 OPNsense。</p>
-<p><img src="/images/pfsense.png" alt></p>
+<p>這邊採用的 vFirewall 是 <a href="https://www.pfsense.org/">pfSense</a>，先前在 Edgecore Networks 機櫃環境是用 <a href="https://opnsense.org/">OPNsense</a>，而我個人是比較偏好 OPNsense。</p>
+<p><img src="/images/pfsense.png" alt=""></p>
 <p>Q: 說好的 vRouter 不能搞嗎?</p>
-<p>先前也有嘗試用 [VyOS][<a href="https://vyos.io/]" target="_blank" rel="noopener">https://vyos.io/]</a> 當做虛擬路由器，但三年前測試的時候，它沒有支援 NAT 啊啊啊啊啊！就放棄回到 pfSense / OPNsesne 的懷抱中，不知道現在有沒有支援，徵求勇者試試</p>
+<p>先前也有嘗試用 [VyOS][<a href="https://vyos.io/]">https://vyos.io/]</a> 當做虛擬路由器，但三年前測試的時候，它沒有支援 NAT 啊啊啊啊啊！就放棄回到 pfSense / OPNsesne 的懷抱中，不知道現在有沒有支援，徵求勇者試試</p>
 <p>Q: 疑? 這樣 iptables 土炮好像也很 ok 啊?</p>
 <p>無論是 Linux iptables / FreeBSD pf 系列的都可以做，技術上沒什麼問題，只是我懶得每次都在想 iptables 的 <code>masquerade</code> 跟 <code>Port Forwarding</code> 怎麼下</p>
 <h3 id="IP-Design"><a href="#IP-Design" class="headerlink" title="IP Design?"></a>IP Design?</h3><p>想當爾，要提供 WAN IP 給對應的網路介面，這邊假設以下：</p>
@@ -270,245 +40,75 @@
 <h3 id="1-vFW-雙臂直上實體機架構圖"><a href="#1-vFW-雙臂直上實體機架構圖" class="headerlink" title="1 . vFW 雙臂直上實體機架構圖"></a>1 . vFW 雙臂直上實體機架構圖</h3><blockquote>
 <p>一台 Server 直接裝 pfSense</p>
 </blockquote>
-<p><img src="/images/pfsense-1.png" alt></p>
+<p><img src="/images/pfsense-1.png" alt=""></p>
 <p>這個架構缺點顯而易見，整台實體機資源都被 pfSense 咬走了，完全沒有用到任何虛擬化平台，但可以外接支援 VLAN Tagging/Untag 的交換器擴大可使用實體 Port 數</p>
-<p><img src="/images/pfsense-3.png" alt></p>
+<p><img src="/images/pfsense-3.png" alt=""></p>
 <p>Q: 我家沒有具備 VLAN 功能的 Switch…</p>
 <p>如果家中有一台小小的電腦，剛好也有兩個 Port，就很適合做上圖， 而 eth1 不一定要用 VLAN Subinterface 處理，可以直接掛 IP 在上面使用，外面接 L2 Switch 起來用，擴大可使用實體 Port 數</p>
 <h3 id="2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><a href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖" class="headerlink" title="2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖"></a>2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</h3><blockquote>
 <p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，不考慮外接其他設備</p>
 </blockquote>
 <p>下圖是以 VMware vSphere 作為範例</p>
-<p><img src="/images/pfsense-2.png" alt></p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
 <p>關於 Virtual Switch 的部分，無論是 vSS (virtual Standard Switch) /vDS (virtual Distributed Swtich) 皆可使用，詳細相關技術評估請洽友商 VMware。</p>
 <p>Q:  <code>vDS: WAN</code> 端的設定示意圖?</p>
-<p><img src="/images/vds-1.png" alt></p>
-<p>右邊那邊 Port Group 可以多加網卡做點事情，詳細功能請參考官方文件 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.networking.doc/GUID-B15C6A13-797E-4BCB-B9D9-5CBC5A60C3A6.html" target="_blank" rel="noopener">vSphere Distributed Switch Architecture</a>，左邊留意 <code>VLAN 識別碼</code> 為 <code>--</code>，但我不確定是不是代表是 <code>VLAN 1</code> 的意思，哪天遇到問題再研究</p>
+<p><img src="/images/vds-1.png" alt=""></p>
+<p>右邊那邊 Port Group 可以多加網卡做點事情，詳細功能請參考官方文件 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.networking.doc/GUID-B15C6A13-797E-4BCB-B9D9-5CBC5A60C3A6.html">vSphere Distributed Switch Architecture</a>，左邊留意 <code>VLAN 識別碼</code> 為 <code>--</code>，但我不確定是不是代表是 <code>VLAN 1</code> 的意思，哪天遇到問題再研究</p>
 <p>Q: <code>vDS: Trunk</code> 端的也來一下</p>
-<p><img src="/images/vds-2.png" alt></p>
+<p><img src="/images/vds-2.png" alt=""></p>
 <p>右邊留意 Port Group 是完全沒有實體網卡在裡面的，左邊則是針對 VLAN ID 設定個別的 <code>VM Network</code> (注：我忘記正確描述是什麼了，有錯請敲我更正)</p>
 <p>Q: 多問一句…有魔鬼嗎?</p>
-<p><img src="/images/vds-3.png" alt></p>
-<p>Of course！這個設定應該是有做過類似事情的朋友都會遇到的最大遺漏，那個被設定為 Trunk 的 VM Network… 要把混合模式 (Promiscuous Mode)開啟來，避免來自於各式各樣的網路的封包在 ESXi 層就被丟掉，具體技術文件請參照 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.security.doc/GUID-92F3AB1F-B4C5-4F25-A010-8820D7250350.html" target="_blank" rel="noopener">Promiscuous Mode Operation</a></p>
+<p><img src="/images/vds-3.png" alt=""></p>
+<p>Of course！這個設定應該是有做過類似事情的朋友都會遇到的最大遺漏，那個被設定為 Trunk 的 VM Network… 要把混合模式 (Promiscuous Mode)開啟來，避免來自於各式各樣的網路的封包在 ESXi 層就被丟掉，具體技術文件請參照 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.security.doc/GUID-92F3AB1F-B4C5-4F25-A010-8820D7250350.html">Promiscuous Mode Operation</a></p>
 <p>下圖是採用 libvirt 為主的技術架構</p>
-<p><img src="/images/pfsense-4.png" alt></p>
+<p><img src="/images/pfsense-4.png" alt=""></p>
 <p>Q: 疑? 怎麼看起來都差不多?</p>
 <p>其實簡單來說就是透過 Bridge 技術搭橋把實體網卡和虛擬網卡塞在同一個 Linux Bridge ( or OVS Bridge) 裡面，就很像是多台虛擬 L2 交換機在虛擬化平台裡面，概念就是這麼簡單，因為 VMware vSS/vDS 設定方式比較特別，所以特別拉出來講</p>
 <h3 id="3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><a href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖" class="headerlink" title="3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖"></a>3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</h3><blockquote>
 <p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，須考慮外接其他設備</p>
 </blockquote>
-<p><img src="/images/pfsense-5.png" alt></p>
-<p>這個就是先前在 Edgecore Networks Lab 最完整的架構，詳細投影片請參照 2017 年有一天不知道在哪裡講的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17" target="_blank" rel="noopener">Build Testing Infrastructure</a> 投影片</p>
+<p><img src="/images/pfsense-5.png" alt=""></p>
+<p>這個就是先前在 Edgecore Networks Lab 最完整的架構，詳細投影片請參照 2017 年有一天不知道在哪裡講的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure</a> 投影片</p>
 <p>Q:  為什麼要特別做雙臂?</p>
-<p><img src="/images/rack.png" alt> </p>
+<p><img src="/images/rack.png" alt=""> </p>
 <p>因為完全是為了管理這整櫃機櫃裡面設備使用的，那時候有另外接兩台 Cumulus Linux + AS4610-54T 做 CLAG，讓底下設備只要可以咬 IP 的全部配發一個 IP，網段全部切開做 VLAN Routing 避免被廣播封包打爆</p>
 <p>Q: VLAN Routing !!! 是不是漏講了什麼? 那個 pfSense 裡面怎麼做的?</p>
 <p>第四篇，我覺得也蠻有趣的部份，傳送門 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/">2019 大改造宅宅雲架構系列文-4</a></p>
-<h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt></p>
+<h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt=""></p>
 <p>這個很直覺，VLAN Routing + SNAT 搞定</p>
-<h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt></p>
-<p>這個也很直覺，DNAT 做 Port Forwarding，這邊提供一個小祕技，搭 <code>SSH ProxyCommand</code>蠻好用的，參照 <a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible?slide=12" target="_blank" rel="noopener">20190720 Better Practice  Day 2 Operaition with Ansible</a></p>
+<h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt=""></p>
+<p>這個也很直覺，DNAT 做 Port Forwarding，這邊提供一個小祕技，搭 <code>SSH ProxyCommand</code>蠻好用的，參照 <a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible?slide=12">20190720 Better Practice  Day 2 Operaition with Ansible</a></p>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這年頭看到虛擬網路技術不用感到特別害怕，畫點圖，上個 IP，想像一下網路怎麼流，其實很多問題就能解決了，平時可以多多做點 Lab 培養觀落陰能力</p>
-
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/linux/" rel="tag"># linux</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/20191115-homelcloud-high-level-design-2/" rel="prev" title="2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹">
-      <i class="fa fa-chevron-left"></i> 2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/20191116-homelcloud-high-level-design-4/" rel="next" title="2019 大改造宅宅雲架構系列文-4 pfSense">
-      2019 大改造宅宅雲架構系列文-4 pfSense <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-台-2-埠雙臂網路架構"><span class="nav-number">1.</span> <span class="nav-text">1 台 2 埠雙臂網路架構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最小-Port-數"><span class="nav-number">1.1.</span> <span class="nav-text">最小 Port 數?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vFW-vRouter"><span class="nav-number">1.2.</span> <span class="nav-text">vFW? vRouter?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-Design"><span class="nav-number">1.3.</span> <span class="nav-text">IP Design?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vFW-雙臂直上實體機架構圖"><span class="nav-number">1.4.</span> <span class="nav-text">1 . vFW 雙臂直上實體機架構圖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><span class="nav-number">1.5.</span> <span class="nav-text">2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><span class="nav-number">1.6.</span> <span class="nav-text">3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Traffic-分解圖"><span class="nav-number">2.</span> <span class="nav-text">Traffic 分解圖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SNAT-Traffic"><span class="nav-number">2.1.</span> <span class="nav-text">SNAT Traffic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNAT-Traffic"><span class="nav-number">2.2.</span> <span class="nav-text">DNAT Traffic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Phil Huang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">69</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">92</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
-  
-  &copy; 2014 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/pisces.js"></script>
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/linux/">linux</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/20191116-homelcloud-high-level-design-4/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2019 大改造宅宅雲架構系列文-4 pfSense</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/20191115-homelcloud-high-level-design-2/"><span class="level-item">2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/';
+            this.page.identifier = '20191116-homelcloud-high-level-design-3/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'pichuang-tw' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="https://www.gravatar.com/avatar/5a21bcc96ca7c977edd021a164b97df5?s=128" alt="Phil Huang"></figure><p class="title is-size-4 is-block line-height-inherit">Phil Huang</p><p class="is-size-6 is-block">Red Hat Taiwan Solution Architect</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Taiwan</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">69</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">91</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="http://fb.me/paulintoro" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/pichuang"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com/paulintoro"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/pichuang_tw"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="SpeakerDeck" href="https://speakerdeck.com/pichuang"><i class="fab fa-speaker-deck"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/ansible/"><span class="level-start"><span class="level-item">ansible</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/container/"><span class="level-start"><span class="level-item">container</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/infra/"><span class="level-start"><span class="level-item">infra</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/kvm/"><span class="level-start"><span class="level-item">kvm</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/misc/"><span class="level-start"><span class="level-item">misc</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/network/"><span class="level-start"><span class="level-item">network</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openapi/"><span class="level-start"><span class="level-item">openapi</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openshfit/"><span class="level-start"><span class="level-item">openshfit</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openshift/"><span class="level-start"><span class="level-item">openshift</span></span><span class="level-end"><span class="level-item tag">18</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openstack/"><span class="level-start"><span class="level-item">openstack</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/rhel/"><span class="level-start"><span class="level-item">rhel</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/sdn/"><span class="level-start"><span class="level-item">sdn</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">Recent</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-02T16:16:00.000Z">2020-04-03</time></p><p class="title is-6"><a class="link-muted" href="/20200403-openshift-with-coreos-part-2/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-31T16:16:00.000Z">2020-04-01</time></p><p class="title is-6"><a class="link-muted" href="/20200401-personal-agile/">一名解決方案架構師的自我敏捷</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-16T16:16:00.000Z">2020-03-17</time></p><p class="title is-6"><a class="link-muted" href="/20200317-openshift-with-coreos-part-1/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-08T16:16:00.000Z">2020-03-09</time></p><p class="title is-6"><a class="link-muted" href="/20200309-ansible-30m/">30 分鐘內從開始到入門的 Ansible</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-07T16:16:00.000Z">2020-03-08</time></p><p class="title is-6"><a class="link-muted" href="/20200308-technical-writer/">成為一名技術留跡者</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">April 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/03/"><span class="level-start"><span class="level-item">March 2020</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/02/"><span class="level-start"><span class="level-item">February 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/01/"><span class="level-start"><span class="level-item">January 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/11/"><span class="level-start"><span class="level-item">November 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/07/"><span class="level-start"><span class="level-item">July 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/06/"><span class="level-start"><span class="level-item">June 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/05/"><span class="level-start"><span class="level-item">May 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/04/"><span class="level-start"><span class="level-item">April 2019</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/03/"><span class="level-start"><span class="level-item">March 2019</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/11/"><span class="level-start"><span class="level-item">November 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/08/"><span class="level-start"><span class="level-item">August 2018</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/07/"><span class="level-start"><span class="level-item">July 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/06/"><span class="level-start"><span class="level-item">June 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/07/"><span class="level-start"><span class="level-item">July 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/04/"><span class="level-start"><span class="level-item">April 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/03/"><span class="level-start"><span class="level-item">March 2017</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/01/"><span class="level-start"><span class="level-item">January 2017</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2016/05/"><span class="level-start"><span class="level-item">May 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2016/04/"><span class="level-start"><span class="level-item">April 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2015/07/"><span class="level-start"><span class="level-item">July 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2014/07/"><span class="level-start"><span class="level-item">July 2014</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2014/04/"><span class="level-start"><span class="level-item">April 2014</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/12apps/"><span class="tag">12apps</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/30m/"><span class="tag">30m</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ansible/"><span class="tag">ansible</span><span class="tag is-grey-lightest">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/automation/"><span class="tag">automation</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/aws/"><span class="tag">aws</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/azure/"><span class="tag">azure</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bonding/"><span class="tag">bonding</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/centos/"><span class="tag">centos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cicada/"><span class="tag">cicada</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cloud/"><span class="tag">cloud</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cncf/"><span class="tag">cncf</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cni/"><span class="tag">cni</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cnv/"><span class="tag">cnv</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/container/"><span class="tag">container</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/contrail/"><span class="tag">contrail</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dac/"><span class="tag">dac</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dgx/"><span class="tag">dgx</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker/"><span class="tag">docker</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker-compose/"><span class="tag">docker-compose</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/driver/"><span class="tag">driver</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/easyrsa/"><span class="tag">easyrsa</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/event/"><span class="tag">event</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flexswitch/"><span class="tag">flexswitch</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gcp/"><span class="tag">gcp</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/github/"><span class="tag">github</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gpu/"><span class="tag">gpu</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/headless/"><span class="tag">headless</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iac/"><span class="tag">iac</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/images/"><span class="tag">images</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/infra/"><span class="tag">infra</span><span class="tag is-grey-lightest">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/intel/"><span class="tag">intel</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/juniper/"><span class="tag">juniper</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kubevirt/"><span class="tag">kubevirt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kvm/"><span class="tag">kvm</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/label/"><span class="tag">label</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/libvirt/"><span class="tag">libvirt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux/"><span class="tag">linux</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/misc/"><span class="tag">misc</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/multus-cni/"><span class="tag">multus-cni</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/netdevops/"><span class="tag">netdevops</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/network/"><span class="tag">network</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/networking/"><span class="tag">networking</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nfv/"><span class="tag">nfv</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ngc/"><span class="tag">ngc</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nmcli/"><span class="tag">nmcli</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nsx-t/"><span class="tag">nsx-t</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nvidia/"><span class="tag">nvidia</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/oas/"><span class="tag">oas</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ofdpa/"><span class="tag">ofdpa</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/onl/"><span class="tag">onl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/onos/"><span class="tag">onos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ons/"><span class="tag">ons</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openapi/"><span class="tag">openapi</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openflow/"><span class="tag">openflow</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openshift/"><span class="tag">openshift</span><span class="tag is-grey-lightest">17</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openssl/"><span class="tag">openssl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openstack/"><span class="tag">openstack</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/operator/"><span class="tag">operator</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/oracle/"><span class="tag">oracle</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ovs/"><span class="tag">ovs</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ovs-ofctl/"><span class="tag">ovs-ofctl</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pki/"><span class="tag">pki</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pods/"><span class="tag">pods</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/qcow/"><span class="tag">qcow</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/queue/"><span class="tag">queue</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redhat/"><span class="tag">redhat</span><span class="tag is-grey-lightest">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/registry/"><span class="tag">registry</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/restful/"><span class="tag">restful</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/rhel/"><span class="tag">rhel</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/router/"><span class="tag">router</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sdn/"><span class="tag">sdn</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/serial/"><span class="tag">serial</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/services/"><span class="tag">services</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sff/"><span class="tag">sff</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/skopeo/"><span class="tag">skopeo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/snaproute/"><span class="tag">snaproute</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssl/"><span class="tag">ssl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/storage/"><span class="tag">storage</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/swagger/"><span class="tag">swagger</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/switch/"><span class="tag">switch</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/teaming/"><span class="tag">teaming</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/terminal/"><span class="tag">terminal</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/terraform/"><span class="tag">terraform</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tesla/"><span class="tag">tesla</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tower/"><span class="tag">tower</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/troubleshooting/"><span class="tag">troubleshooting</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tscc/"><span class="tag">tscc</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vmware/"><span class="tag">vmware</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/weblogic/"><span class="tag">weblogic</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/win7/"><span class="tag">win7</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ztp/"><span class="tag">ztp</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.jpg" alt="Phil Workspace" height="28"></a><p class="size-small"><span>&copy; 2020 Phil Huang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Non Commercial" href="http://creativecommons.org/licenses/by-nc-sa/3.0/tw/"><i class="fab fa-creative-commons-share"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://blog.pichuang.com.tw',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

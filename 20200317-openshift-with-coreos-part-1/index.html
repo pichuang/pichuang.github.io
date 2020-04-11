@@ -1,230 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Overpass:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.pichuang.com.tw","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co">
-<meta property="og:type" content="article">
-<meta property="og:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1">
-<meta property="og:url" content="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/index.html">
-<meta property="og:site_name" content="Phil Workspace">
-<meta property="og:description" content="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/ocp4-coreos.png">
-<meta property="og:image" content="https://blog.pichuang.com.tw/images/ocp4.png">
-<meta property="og:updated_time" content="2020-03-17T16:48:56.550Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1">
-<meta name="twitter:description" content="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co">
-<meta name="twitter:image" content="https://blog.pichuang.com.tw/images/ocp4-coreos.png">
-
-<link rel="canonical" href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true
-  };
-</script>
-
-  <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1 | Phil Workspace</title>
-  
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90856047-1"></script>
-    <script>
-      if (CONFIG.hostname === location.hostname) {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-90856047-1');
-      }
-    </script>
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Phil Workspace</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">69</span></a>
-
-  </li>
-        <li class="menu-item menu-item-who">
-
-    <a href="/about" rel="section"><i class="fa fa-fw fa-info-circle"></i>who</a>
-
-  </li>
-        <li class="menu-item menu-item-record">
-
-    <a href="/record" rel="section"><i class="fa fa-fw fa-microphone"></i>record</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil Huang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil Workspace">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-17 00:16:00" itemprop="dateCreated datePublished" datetime="2020-03-17T00:16:00+08:00">2020-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-18 00:48:56" itemprop="dateModified" datetime="2020-03-18T00:48:56+08:00">2020-03-18</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman" target="_blank" rel="noopener">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1 - Phil Workspace</title><meta description="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co"><meta property="og:type" content="blog"><meta property="og:title" content="愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1"><meta property="og:url" content="https://blog.pichuang.com.tw/"><meta property="og:site_name" content="Phil Workspace"><meta property="og:description" content="誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2020-03-16T16:16:00.000Z"><meta property="article:modified_time" content="2020-03-17T16:48:56.550Z"><meta property="article:author" content="Phil Huang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://blog.pichuang.com.tw/images/ocp4-coreos.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/"},"headline":"Phil Workspace","image":["https://blog.pichuang.com.tw/images/ocp4-coreos.png","https://blog.pichuang.com.tw/images/ocp4.png"],"datePublished":"2020-03-16T16:16:00.000Z","dateModified":"2020-03-17T16:48:56.550Z","author":{"@type":"Person","name":"Phil Huang"},"description":"誠如大家所知，因爲種種技術及非技術因素上 - Why Red Hat is investing in CRI-O and Podman，OpenShift 4 底層有兩個蠻大的更新  容器運行時環境 (Container Runtime) 從 docker 換成了 CRI-O 作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat Co"}</script><link rel="canonical" href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/"><link rel="icon" href="/img/logo.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/github.css"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.jpg" alt="Phil Workspace" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/record">Record</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-03-16T16:16:00.000Z" title="2020-03-16T16:16:00.000Z">2020-03-17</time><span class="level-item">17 minutes read (About 2476 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</h1><div class="content"><p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
 <ol>
-<li>容器運行時環境 (Container Runtime) 從 docker 換成了 <a href="https://cri-o.io/" target="_blank" rel="noopener">CRI-O</a></li>
+<li>容器運行時環境 (Container Runtime) 從 docker 換成了 <a href="https://cri-o.io/">CRI-O</a></li>
 <li>作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat CoreOS</li>
 </ol>
 <p>本文將記錄一下於 Red Hat CoreOS (RHCOS) 及 Red Hat OpenShift 偏作業系統層面的探索紀錄</p>
-<p><img src="/images/ocp4-coreos.png" alt></p>
+<p><img src="/images/ocp4-coreos.png" alt=""></p>
 <a id="more"></a>
 
-<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p><img src="/images/ocp4.png" alt></p>
-<p>因為小弟已經裝好了 Red Hat OpenShift 4 的環境，所以我已經有 3 master 及 2 compute 節點可以登進去使用，倘若你想要自己研究的話，可以下載 <a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/" target="_blank" rel="noopener">Fedora CoreOS</a> 試試看</p>
+<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p><img src="/images/ocp4.png" alt=""></p>
+<p>因為小弟已經裝好了 Red Hat OpenShift 4 的環境，所以我已經有 3 master 及 2 compute 節點可以登進去使用，倘若你想要自己研究的話，可以下載 <a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/">Fedora CoreOS</a> 試試看</p>
 <h2 id="走馬看花之旅-第一天"><a href="#走馬看花之旅-第一天" class="headerlink" title="走馬看花之旅: 第一天"></a>走馬看花之旅: 第一天</h2><h3 id="登入-CoreOS-節點"><a href="#登入-CoreOS-節點" class="headerlink" title="登入 CoreOS 節點"></a>登入 CoreOS 節點</h3><blockquote>
 <p>Red Hat CoreOS is a container OS</p>
 </blockquote>
@@ -246,11 +31,11 @@
 <p>CRI-O is a lightwieght container runtime for Kubernetes</p>
 </blockquote>
 <p>誠如開頭所說的，OpenShift 4 預設的 Container Runtime 是採用 <code>CRI-O</code>，所以若要在 CoreOS 上找尋類似於 <code>docker</code> 或 <code>podman</code> 的指令，則為 <code>crictl</code></p>
-<p>常用的指令組合不外乎為 crictl [images | ps | pods | stats]，詳細的操作指令輸出可以參考 <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/" target="_blank" rel="noopener">Debugging Kubernetes nodes with crictl</a></p>
+<p>常用的指令組合不外乎為 crictl [images | ps | pods | stats]，詳細的操作指令輸出可以參考 <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/">Debugging Kubernetes nodes with crictl</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@control-plane-1 ~]<span class="comment"># crictl images</span></span><br><span class="line">IMAGE                                                                                 TAG                 IMAGE ID            SIZE</span><br><span class="line">&lt;none&gt;                                                                                &lt;none&gt;              493f2db8b5178       728MB</span><br></pre></td></tr></table></figure>
 
 <p>但畢竟 CRI-O 主要設計上還是給 OpenShift / Kubernetes 這類容器平台使用，所以老實講，拿著 <code>crictl</code> 要在 CoreOS 上面要啟動一個服務，而它的最小單位是 Pod，所以你需要先準備好 <code>pod-config.json</code> 及 <code>container-config.json</code>，而執行的指令則是使用 <code>crictl runp</code> 及 <code>crictl create</code>，去跑一個完整的 Pod 起來才能單機使用，整體上是相當有複雜性的</p>
-<p>倘若是只是要在 CoreOS 上面跑一個容器試試的話，就像是常見如 docker 運行的方式的話，還是使用 <code>podman</code> 較為恰當，有興趣可以參考此投影片 <a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman" target="_blank" rel="noopener">The First Journey from Docker to Podman - Phil Huang</a></p>
+<p>倘若是只是要在 CoreOS 上面跑一個容器試試的話，就像是常見如 docker 運行的方式的話，還是使用 <code>podman</code> 較為恰當，有興趣可以參考此投影片 <a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman">The First Journey from Docker to Podman - Phil Huang</a></p>
 <h3 id="運行一個容器於-CoreOS-上"><a href="#運行一個容器於-CoreOS-上" class="headerlink" title="運行一個容器於 CoreOS 上"></a>運行一個容器於 CoreOS 上</h3><blockquote>
 <p>It make sense to run any container on container OS</p>
 </blockquote>
@@ -264,7 +49,7 @@
 <h3 id="6-修改-RHCOS-設定檔"><a href="#6-修改-RHCOS-設定檔" class="headerlink" title="6. 修改 RHCOS 設定檔"></a>6. 修改 RHCOS 設定檔</h3><blockquote>
 <p>WARNING: Direct SSH access to machines is not recommended; instead, make configuration changes via <code>machineconfig</code> objects</p>
 </blockquote>
-<p><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos" target="_blank" rel="noopener">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a> 指出 3 種修改方向</p>
+<p><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a> 指出 3 種修改方向</p>
 <ol>
 <li>透過 Kubernetes 內建的物件 (DaemonSet / Deployment) 等，這常見於你想要裝一些服務在 RHCOS 上面，譬如像是網路套件、自己寫的 Agent 等</li>
 <li>Day 2 Customization: 一般來說，<code>不建議透過 SSH 直接連線</code>至 RHCOS 上進行修改設定檔，現行建議透過控制集群等級 (Cluster-level) 的 <code>MachineConfigs</code> 或者是控制節點等級 (Node-level) 的 <code>Tuned</code> 等進行設定檔修改</li>
@@ -277,7 +62,7 @@
 <p>沒錯，只要透過 <code>Machine Config</code> 有任何修改，預設都會依序重開節點，倘若真的不想要重開的話，可以透過修改 <code>Machine Config Pool</code> 的 <code>paused</code> 來暫時停止</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 關閉自動重啟</span></span><br><span class="line">oc patch --<span class="built_in">type</span>=merge --patch=<span class="string">'&#123;"spec":&#123;"paused":true&#125;&#125;'</span> machineconfigpool/master</span><br><span class="line">oc patch --<span class="built_in">type</span>=merge --patch=<span class="string">'&#123;"spec":&#123;"paused":true&#125;&#125;'</span> machineconfigpool/worker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打開自動重啟</span></span><br><span class="line">oc patch --<span class="built_in">type</span>=merge --patch=<span class="string">'&#123;"spec":&#123;"paused":false&#125;&#125;'</span> machineconfigpool/master</span><br><span class="line">oc patch --<span class="built_in">type</span>=merge --patch=<span class="string">'&#123;"spec":&#123;"paused":false&#125;&#125;'</span> machineconfigpool/worker</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://openshift.tips/machine-config/" target="_blank" rel="noopener">Openshift Tips - MachineConfig</a> 除了我上面提到的 chrony 的改變以外，裡面還有幾個範例：</p>
+<p><a href="https://openshift.tips/machine-config/">Openshift Tips - MachineConfig</a> 除了我上面提到的 chrony 的改變以外，裡面還有幾個範例：</p>
 <ol>
 <li>Apply sysctl tweaks to nodes</li>
 <li>Modify MTU in a second interface in workers</li>
@@ -290,217 +75,51 @@
 <p>倘若需要允許應用程式以任何使用者 ID (包含 root) 執行，則需要新增 SCC <code>anyuid</code> 給指定的 service account</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以 administrator 權限，確認當前 SCC 清單</span></span><br><span class="line">oc get scc --as system:admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 確認 SCC - restricted</span></span><br><span class="line">oc describe scc restricted</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增 SCC - anyuid 能力給 service account - runasanyuid 於當前專案 project - debbuging</span></span><br><span class="line">oc adm policy add-scc-to-user anyuid -z runasanyuid --as system:admin</span><br></pre></td></tr></table></figure>
 
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman" target="_blank" rel="noopener">Why Red Hat is investing in CRI-O and Podman - Red Hat Blog</a></li>
-<li><a href="https://cri-o.io/" target="_blank" rel="noopener">CRI-O - LIGHTWEIGHT CONTAINER RUNTIME FOR KUBERNETES</a></li>
-<li><a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/" target="_blank" rel="noopener">Installing CoreOS on Bare Metal - Fedora CoreOS</a></li>
-<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/" target="_blank" rel="noopener">Debugging Kubernetes nodes with crictl - Kubernetes</a></li>
+<li><a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman - Red Hat Blog</a></li>
+<li><a href="https://cri-o.io/">CRI-O - LIGHTWEIGHT CONTAINER RUNTIME FOR KUBERNETES</a></li>
+<li><a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/">Installing CoreOS on Bare Metal - Fedora CoreOS</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/">Debugging Kubernetes nodes with crictl - Kubernetes</a></li>
 <li><a href="https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/">Troubleshooting from Container to Any - Phil Huang</a></li>
-<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-1-a1546b683d2f" target="_blank" rel="noopener">How to TCPdump effectively in Kubernetes (part 1)</a></li>
-<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-2-7e4127b42dc7" target="_blank" rel="noopener">How to TCPdump effectively in Kubernetes (part 2)</a></li>
-<li><a href="https://cookbook.openshift.org/users-and-role-based-access-control/how-can-i-enable-an-image-to-run-as-a-set-user-id.html" target="_blank" rel="noopener">How can I enable an image to run as a set user ID?</a></li>
-<li><a href="https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_scc&locale=zh-tw" target="_blank" rel="noopener">配置安全環境定義限制</a></li>
-<li><a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman" target="_blank" rel="noopener">The First Journey from Docker to Podman - Phil Huang</a></li>
-<li><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos" target="_blank" rel="noopener">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a></li>
-<li><a href="https://openshift.tips/machine-config/" target="_blank" rel="noopener">Openshift Tips - MachineConfig</a></li>
+<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-1-a1546b683d2f">How to TCPdump effectively in Kubernetes (part 1)</a></li>
+<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-2-7e4127b42dc7">How to TCPdump effectively in Kubernetes (part 2)</a></li>
+<li><a href="https://cookbook.openshift.org/users-and-role-based-access-control/how-can-i-enable-an-image-to-run-as-a-set-user-id.html">How can I enable an image to run as a set user ID?</a></li>
+<li><a href="https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_scc&locale=zh-tw">配置安全環境定義限制</a></li>
+<li><a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman">The First Journey from Docker to Podman - Phil Huang</a></li>
+<li><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a></li>
+<li><a href="https://openshift.tips/machine-config/">Openshift Tips - MachineConfig</a></li>
 </ul>
-
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/20200309-ansible-30m/" rel="prev" title="30 分鐘內從開始到入門的 Ansible">
-      <i class="fa fa-chevron-left"></i> 30 分鐘內從開始到入門的 Ansible
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/20200401-personal-agile/" rel="next" title="一名解決方案架構師的自我敏捷">
-      一名解決方案架構師的自我敏捷 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提"><span class="nav-number">1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#走馬看花之旅-第一天"><span class="nav-number">2.</span> <span class="nav-text">走馬看花之旅: 第一天</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#登入-CoreOS-節點"><span class="nav-number">2.1.</span> <span class="nav-text">登入 CoreOS 節點</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切換成-root"><span class="nav-number">2.2.</span> <span class="nav-text">切換成 root</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI-O-探索"><span class="nav-number">2.3.</span> <span class="nav-text">CRI-O 探索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#運行一個容器於-CoreOS-上"><span class="nav-number">2.4.</span> <span class="nav-text">運行一個容器於 CoreOS 上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常見服務-systemd-journalctl"><span class="nav-number">2.5.</span> <span class="nav-text">常見服務 systemd / journalctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-修改-RHCOS-設定檔"><span class="nav-number">2.6.</span> <span class="nav-text">6. 修改 RHCOS 設定檔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#後記"><span class="nav-number">3.</span> <span class="nav-text">後記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix"><span class="nav-number">4.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用任意-User-ID-啟動-Container-Image？"><span class="nav-number">4.1.</span> <span class="nav-text">如何使用任意 User ID 啟動 Container Image？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Phil Huang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">69</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">92</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/pichuang" title="Github → https://github.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.facebook.com/paulintoro" title="FB Page → https://www.facebook.com/paulintoro" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://speakerdeck.com/pichuang" title="Speakerdeck → https://speakerdeck.com/pichuang" rel="noopener" target="_blank"><i class="fa fa-fw fa-slideshare"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://tw.linkedin.com/in/phil-huang-09b09895" title="Linkedin → https://tw.linkedin.com/in/phil-huang-09b09895" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
-  
-  &copy; 2014 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Phil Huang</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/pisces.js"></script>
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+</div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/20200401-personal-agile/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">一名解決方案架構師的自我敏捷</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/20200309-ansible-30m/"><span class="level-item">30 分鐘內從開始到入門的 Ansible</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/';
+            this.page.identifier = '20200317-openshift-with-coreos-part-1/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'pichuang-tw' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="https://www.gravatar.com/avatar/5a21bcc96ca7c977edd021a164b97df5?s=128" alt="Phil Huang"></figure><p class="title is-size-4 is-block line-height-inherit">Phil Huang</p><p class="is-size-6 is-block">Red Hat Taiwan Solution Architect</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Taiwan</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">69</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">91</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="http://fb.me/paulintoro" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/pichuang"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com/paulintoro"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/pichuang_tw"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="SpeakerDeck" href="https://speakerdeck.com/pichuang"><i class="fab fa-speaker-deck"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/ansible/"><span class="level-start"><span class="level-item">ansible</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/container/"><span class="level-start"><span class="level-item">container</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/infra/"><span class="level-start"><span class="level-item">infra</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/kvm/"><span class="level-start"><span class="level-item">kvm</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/misc/"><span class="level-start"><span class="level-item">misc</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/network/"><span class="level-start"><span class="level-item">network</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openapi/"><span class="level-start"><span class="level-item">openapi</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openshfit/"><span class="level-start"><span class="level-item">openshfit</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openshift/"><span class="level-start"><span class="level-item">openshift</span></span><span class="level-end"><span class="level-item tag">18</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/openstack/"><span class="level-start"><span class="level-item">openstack</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/rhel/"><span class="level-start"><span class="level-item">rhel</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/sdn/"><span class="level-start"><span class="level-item">sdn</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">Recent</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-02T16:16:00.000Z">2020-04-03</time></p><p class="title is-6"><a class="link-muted" href="/20200403-openshift-with-coreos-part-2/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-31T16:16:00.000Z">2020-04-01</time></p><p class="title is-6"><a class="link-muted" href="/20200401-personal-agile/">一名解決方案架構師的自我敏捷</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-16T16:16:00.000Z">2020-03-17</time></p><p class="title is-6"><a class="link-muted" href="/20200317-openshift-with-coreos-part-1/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-08T16:16:00.000Z">2020-03-09</time></p><p class="title is-6"><a class="link-muted" href="/20200309-ansible-30m/">30 分鐘內從開始到入門的 Ansible</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-03-07T16:16:00.000Z">2020-03-08</time></p><p class="title is-6"><a class="link-muted" href="/20200308-technical-writer/">成為一名技術留跡者</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">April 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/03/"><span class="level-start"><span class="level-item">March 2020</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/02/"><span class="level-start"><span class="level-item">February 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/01/"><span class="level-start"><span class="level-item">January 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/11/"><span class="level-start"><span class="level-item">November 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/07/"><span class="level-start"><span class="level-item">July 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/06/"><span class="level-start"><span class="level-item">June 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/05/"><span class="level-start"><span class="level-item">May 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/04/"><span class="level-start"><span class="level-item">April 2019</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2019/03/"><span class="level-start"><span class="level-item">March 2019</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/11/"><span class="level-start"><span class="level-item">November 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/08/"><span class="level-start"><span class="level-item">August 2018</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/07/"><span class="level-start"><span class="level-item">July 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2018/06/"><span class="level-start"><span class="level-item">June 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/07/"><span class="level-start"><span class="level-item">July 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/04/"><span class="level-start"><span class="level-item">April 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/03/"><span class="level-start"><span class="level-item">March 2017</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2017/01/"><span class="level-start"><span class="level-item">January 2017</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2016/05/"><span class="level-start"><span class="level-item">May 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2016/04/"><span class="level-start"><span class="level-item">April 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2015/07/"><span class="level-start"><span class="level-item">July 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2014/07/"><span class="level-start"><span class="level-item">July 2014</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2014/04/"><span class="level-start"><span class="level-item">April 2014</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/12apps/"><span class="tag">12apps</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/30m/"><span class="tag">30m</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ansible/"><span class="tag">ansible</span><span class="tag is-grey-lightest">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/automation/"><span class="tag">automation</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/aws/"><span class="tag">aws</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/azure/"><span class="tag">azure</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bonding/"><span class="tag">bonding</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/centos/"><span class="tag">centos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cicada/"><span class="tag">cicada</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cloud/"><span class="tag">cloud</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cncf/"><span class="tag">cncf</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cni/"><span class="tag">cni</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cnv/"><span class="tag">cnv</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/container/"><span class="tag">container</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/contrail/"><span class="tag">contrail</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dac/"><span class="tag">dac</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dgx/"><span class="tag">dgx</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker/"><span class="tag">docker</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker-compose/"><span class="tag">docker-compose</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/driver/"><span class="tag">driver</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/easyrsa/"><span class="tag">easyrsa</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/event/"><span class="tag">event</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flexswitch/"><span class="tag">flexswitch</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gcp/"><span class="tag">gcp</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/github/"><span class="tag">github</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gpu/"><span class="tag">gpu</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/headless/"><span class="tag">headless</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iac/"><span class="tag">iac</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/images/"><span class="tag">images</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/infra/"><span class="tag">infra</span><span class="tag is-grey-lightest">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/intel/"><span class="tag">intel</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/juniper/"><span class="tag">juniper</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kubevirt/"><span class="tag">kubevirt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kvm/"><span class="tag">kvm</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/label/"><span class="tag">label</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/libvirt/"><span class="tag">libvirt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/linux/"><span class="tag">linux</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/misc/"><span class="tag">misc</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/multus-cni/"><span class="tag">multus-cni</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/netdevops/"><span class="tag">netdevops</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/network/"><span class="tag">network</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/networking/"><span class="tag">networking</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nfv/"><span class="tag">nfv</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ngc/"><span class="tag">ngc</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nmcli/"><span class="tag">nmcli</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nsx-t/"><span class="tag">nsx-t</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nvidia/"><span class="tag">nvidia</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/oas/"><span class="tag">oas</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ofdpa/"><span class="tag">ofdpa</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/onl/"><span class="tag">onl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/onos/"><span class="tag">onos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ons/"><span class="tag">ons</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openapi/"><span class="tag">openapi</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openflow/"><span class="tag">openflow</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openshift/"><span class="tag">openshift</span><span class="tag is-grey-lightest">17</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openssl/"><span class="tag">openssl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openstack/"><span class="tag">openstack</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/operator/"><span class="tag">operator</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/oracle/"><span class="tag">oracle</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ovs/"><span class="tag">ovs</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ovs-ofctl/"><span class="tag">ovs-ofctl</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pki/"><span class="tag">pki</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pods/"><span class="tag">pods</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/qcow/"><span class="tag">qcow</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/queue/"><span class="tag">queue</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redhat/"><span class="tag">redhat</span><span class="tag is-grey-lightest">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/registry/"><span class="tag">registry</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/restful/"><span class="tag">restful</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/rhel/"><span class="tag">rhel</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/router/"><span class="tag">router</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sdn/"><span class="tag">sdn</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/serial/"><span class="tag">serial</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/services/"><span class="tag">services</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sff/"><span class="tag">sff</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/skopeo/"><span class="tag">skopeo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/snaproute/"><span class="tag">snaproute</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssl/"><span class="tag">ssl</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/storage/"><span class="tag">storage</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/swagger/"><span class="tag">swagger</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/switch/"><span class="tag">switch</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/teaming/"><span class="tag">teaming</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/terminal/"><span class="tag">terminal</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/terraform/"><span class="tag">terraform</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tesla/"><span class="tag">tesla</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tower/"><span class="tag">tower</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/troubleshooting/"><span class="tag">troubleshooting</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tscc/"><span class="tag">tscc</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vmware/"><span class="tag">vmware</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/weblogic/"><span class="tag">weblogic</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/win7/"><span class="tag">win7</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ztp/"><span class="tag">ztp</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.jpg" alt="Phil Workspace" height="28"></a><p class="size-small"><span>&copy; 2020 Phil Huang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Non Commercial" href="http://creativecommons.org/licenses/by-nc-sa/3.0/tw/"><i class="fab fa-creative-commons-share"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://blog.pichuang.com.tw',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
