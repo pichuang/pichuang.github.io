@@ -2,9 +2,261 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20140712-windows-7-usb-download-tool/</loc>
+    
+    <lastmod>2020-04-11T17:15:16.762Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
+    
+    <lastmod>2020-04-11T17:12:53.611Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
+    
+    <lastmod>2020-04-11T17:12:45.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/</loc>
+    
+    <lastmod>2020-04-11T17:12:34.007Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180918-skopeo/</loc>
+    
+    <lastmod>2020-04-11T17:12:27.055Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
+    
+    <lastmod>2020-04-11T17:12:22.702Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
+    
+    <lastmod>2020-04-11T17:12:14.842Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
+    
+    <lastmod>2020-04-11T17:12:05.214Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
+    
+    <lastmod>2020-04-11T17:11:39.076Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
+    
+    <lastmod>2020-04-11T17:11:28.515Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190330-nvidia-dgx-and-redhat-openshift-integration/</loc>
+    
+    <lastmod>2020-04-11T17:11:13.697Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2020-04-11T17:11:08.708Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
+    
+    <lastmod>2020-04-11T17:10:38.698Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
+    
+    <lastmod>2020-04-11T17:10:30.680Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/</loc>
+    
+    <lastmod>2020-04-11T17:09:56.890Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190621-building-production-ready-containers/</loc>
+    
+    <lastmod>2020-04-11T17:09:34.267Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/</loc>
+    
+    <lastmod>2020-04-11T17:09:27.911Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/</loc>
+    
+    <lastmod>2020-04-11T17:09:06.327Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/</loc>
+    
+    <lastmod>2020-04-11T17:08:39.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/</loc>
+    
+    <lastmod>2020-04-11T17:08:36.323Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/</loc>
+    
+    <lastmod>2020-04-11T17:08:30.730Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/</loc>
+    
+    <lastmod>2020-04-11T17:08:27.147Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191118-self-defined-qcow2/</loc>
+    
+    <lastmod>2020-04-11T17:08:06.413Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
+    
+    <lastmod>2020-04-11T17:07:56.918Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20191231-2019-personal-review/</loc>
+    
+    <lastmod>2020-04-11T17:07:45.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</loc>
+    
+    <lastmod>2020-04-11T17:07:35.538Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
+    
+    <lastmod>2020-04-11T17:07:21.531Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
+    
+    <lastmod>2020-04-11T17:06:50.957Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
     
-    <lastmod>2020-04-11T07:24:13.024Z</lastmod>
+    <lastmod>2020-04-11T17:06:43.742Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/</loc>
+    
+    <lastmod>2020-04-11T17:06:28.437Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200225-edge-computing-part-1/</loc>
+    
+    <lastmod>2020-04-11T17:05:27.417Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200229-after-3y-netdevops/</loc>
+    
+    <lastmod>2020-04-11T17:05:09.541Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200309-ansible-30m/</loc>
+    
+    <lastmod>2020-04-11T17:04:31.823Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200308-technical-writer/</loc>
+    
+    <lastmod>2020-04-11T17:04:27.995Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200302-edge-computing-part-2/</loc>
+    
+    <lastmod>2020-04-11T17:04:16.078Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200307-performance-collection/</loc>
+    
+    <lastmod>2020-04-11T17:04:00.072Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200401-personal-agile/</loc>
+    
+    <lastmod>2020-04-11T17:02:27.519Z</lastmod>
     
   </url>
   
@@ -16,93 +268,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
-    
-    <lastmod>2020-04-04T04:29:25.974Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200401-personal-agile/</loc>
-    
-    <lastmod>2020-04-02T15:24:16.443Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
-    
-    <lastmod>2020-03-17T17:50:48.390Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
-    
-    <lastmod>2020-03-17T16:48:56.550Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200309-ansible-30m/</loc>
-    
-    <lastmod>2020-03-17T16:30:57.210Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200307-performance-collection/</loc>
-    
-    <lastmod>2020-03-13T15:39:40.738Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200308-technical-writer/</loc>
-    
-    <lastmod>2020-03-13T14:46:44.063Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191231-2019-personal-review/</loc>
-    
-    <lastmod>2020-03-08T09:12:07.124Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200302-edge-computing-part-2/</loc>
-    
-    <lastmod>2020-03-03T19:53:40.871Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200229-after-3y-netdevops/</loc>
-    
-    <lastmod>2020-02-29T20:46:17.467Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200225-edge-computing-part-1/</loc>
-    
-    <lastmod>2020-02-26T16:50:14.111Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/about/index.html</loc>
     
     <lastmod>2020-02-21T13:39:46.139Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200204-homelcloud-high-level-design-5/</loc>
-    
-    <lastmod>2020-02-04T16:22:02.776Z</lastmod>
     
   </url>
   
@@ -121,93 +289,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20200102-openshift-label-update/</loc>
-    
-    <lastmod>2020-01-31T03:46:32.826Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</loc>
-    
-    <lastmod>2020-01-01T07:09:45.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</loc>
-    
-    <lastmod>2019-11-28T03:01:59.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191118-self-defined-qcow2/</loc>
-    
-    <lastmod>2019-11-18T06:26:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/</loc>
-    
-    <lastmod>2019-11-16T15:02:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/</loc>
-    
-    <lastmod>2019-11-16T13:45:39.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/</loc>
-    
-    <lastmod>2019-11-16T13:45:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/</loc>
-    
-    <lastmod>2019-11-16T13:45:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/</loc>
-    
-    <lastmod>2019-08-17T16:15:11.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
-    
-    <lastmod>2019-07-25T06:43:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190420-redhat-openshift-kubevirt/</loc>
     
     <lastmod>2019-07-21T15:34:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/</loc>
-    
-    <lastmod>2019-07-16T04:04:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190621-building-production-ready-containers/</loc>
-    
-    <lastmod>2019-06-20T16:48:17.000Z</lastmod>
     
   </url>
   
@@ -219,20 +303,6 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</loc>
-    
-    <lastmod>2019-06-03T06:43:12.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput/</loc>
-    
-    <lastmod>2019-05-31T17:36:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</loc>
     
     <lastmod>2019-05-12T03:40:25.000Z</lastmod>
@@ -240,44 +310,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
-    
-    <lastmod>2019-04-21T14:30:25.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/</loc>
     
     <lastmod>2019-04-21T01:18:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
-    
-    <lastmod>2019-04-13T07:01:29.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/</loc>
-    
-    <lastmod>2019-04-13T06:59:45.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180918-skopeo/</loc>
-    
-    <lastmod>2019-04-13T06:56:31.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
-    
-    <lastmod>2019-04-13T06:43:00.000Z</lastmod>
     
   </url>
   
@@ -303,13 +338,6 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190330-nvidia-dgx-and-redhat-openshift-integration/</loc>
-    
-    <lastmod>2019-04-06T14:04:46.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/</loc>
     
     <lastmod>2019-04-04T19:05:53.000Z</lastmod>
@@ -331,13 +359,6 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
-    
-    <lastmod>2019-03-24T18:07:31.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/</loc>
     
     <lastmod>2019-03-24T18:07:19.000Z</lastmod>
@@ -352,30 +373,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
-    
-    <lastmod>2019-03-24T18:07:12.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190320-redhat-ansible-and-hashicorp-terraform-position/</loc>
     
     <lastmod>2019-03-24T18:03:20.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
-    
-    <lastmod>2019-03-07T14:53:54.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20140712-windows-7-usb-download-tool/</loc>
-    
-    <lastmod>2019-02-23T16:06:33.000Z</lastmod>
     
   </url>
   
