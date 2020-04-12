@@ -273,8 +273,8 @@
         <tag>openshift</tag>
         <tag>container</tag>
         <tag>openshift3</tag>
-        <tag>openshift4</tag>
         <tag>cni</tag>
+        <tag>openshift4</tag>
         <tag>security</tag>
         <tag>harden8</tag>
       </tags>
@@ -804,8 +804,8 @@
       </categories>
       <tags>
         <tag>sdn</tag>
-        <tag>ovs</tag>
         <tag>ofdpa</tag>
+        <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
       </tags>
@@ -819,9 +819,9 @@
       </categories>
       <tags>
         <tag>sdn</tag>
-        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
+        <tag>ofdpa</tag>
       </tags>
   </entry>
   <entry>

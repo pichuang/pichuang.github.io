@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
+    
+    <lastmod>2020-04-12T06:35:01.668Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20140712-windows-7-usb-download-tool/</loc>
     
     <lastmod>2020-04-11T17:15:16.762Z</lastmod>
@@ -264,13 +271,6 @@
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-04-10T15:24:08.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/about/index.html</loc>
-    
-    <lastmod>2020-02-21T13:39:46.139Z</lastmod>
     
   </url>
   
