@@ -365,6 +365,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[導讀 Reference Architecture: Red Hat Ceph Storage]]></title>
+    <url>%2F20190427-reference-architecture-red-Hat-ceph-storage%2F</url>
+    <content type="text"><![CDATA[本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 Brief: How to configure Red Hat Ceph Storage 和 Reference Architecture: Red Hat Ceph Storage hardware selection guide 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 v3.2 Red Hat Ceph Storage一座 Ceph 集群會具備以下五種角色: Management/Dashboard node (ceph-mgr) Monitor nodes (ceph-mon / ceph-osd-container) Object Gateway nodes (ceph-radosgw / ceph-radosgw-container) MDS nodes (ceph-mds / ceph-mds-container) OSD nodes (ceph-osd / ceph-osd-container) 一般討論最多的就是 OSD nodes 的原始空間大小及可用空間大小 (因要推算硬體規格及評估效能)，其餘角色都是使用或維運時會使用 對於角色作用可以參考 Ceph 分散式儲存系統介紹 - KaiRen’s Blog 的內容 Total Solution規模定義基本上只要是屬於 OSD Node 角色的，每一台主機都會配置一個 OSD (Object Storage Daemon)，用戶主要是將資料存取於此使用。而空間定義上主要分為原始空間 (Raw Capacity) 跟依據不同集群優化策略 (3 * Replication / Erasure Coding) 推算後的可用空間 (Usuable Capacity) 規模 可用空間大小 Small 250 TB+ Medium 1 PB - 2 PB Large 2 PB+ 集群優化定義 集群優化定義 特性 舉例 IOPS 優化 - Lowest cost per IOPS - Highest IOPS per GB - 99% latency consistency - Block storage - 3 x replication- MySQL on OpenStack Clouds Throughput 優化 - Lowest cost per MBps (throughput) - Highest MBps per TB- Highest MBps per BTU- Highest MBps per Watt- 97% latency consistency - Block or Object storage- 3 x replication- Streaming media/data/images Cost/Capacity 優化 - Lowest cost per TB- Lowest BTU per TB- Lowest Watts required per TB - Object storage- Erasure coding- Object archive Referencea Archtictures (RAs)建議於最小規模 (Small) 最少需三台實體機，而每台 Ceph Server 最小規格，可參考 Red Hat Partner 推薦型號 QCT QxStor Red Hat Ceph Storage Edition - QxStor RCT-200 Dell PowerEdge R730xd Performance and Sizing Guide for Red Hat Ceph Storage Cisco UCS S3260 Storage Server and Red Hat Ceph Storage Performance Lenovo Reference Architecture: Red Hat Ceph Storage Micron RA: 9200 MAX NVMeTM With 5210 QLC SATA SSDs for Red Hat® Ceph Storage 3.2 and BlueStore on AMD EPYCTM 倘若想自行精算配置的話，則可參考此篇 Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs 推算硬體規格 About BlueStore另因 Red Hat Ceph Storage 3.2 宣布可使用 BlueStore 方式部署，底下是 BlueStore v.s. Filestore 的技術堆疊比較 整體 IOPS 會跟硬碟規格選型會呈現完全正相關，故硬體越好越快 From BlueStore Unleashed 除了硬體以外，Ceph 參數調教得當的話可以，讓系統 Latency 及 IOPS 的表現都會非常好 Red Hat Ceph Storage 3.2 PoC 評測文 Part - 1: BlueStore (Default vs. Tuned) Performance Comparison Part - 2: Ceph Block Storage Performance on All-Flash Cluster with BlueStore backend Part - 3: RHCS Bluestore performance Scalability (3 vs 5 nodes) References Brief: How to configure Red Hat Ceph Storage Reference Architecture: Red Hat Ceph Storage hardware selection guide QCT: QxStor Red Hat Ceph Storage Edition Complete OpenStack Storage from Red Hat Technical Detail: Red Hat Data Analytics Infrastructure Solution RED HAT BLOG - Why Spark on Ceph? (Part 3 of 3) Red Hat Ceph Storage Hardware Selection Guide - CHAPTER 6. RECOMMENDED MINIMUM HARDWARE Technical Detail: Red Hat Ceph Storage on Servers with Intel Processors and SSDs Ceph USE CASES / REFERENCE ARCHITECTURES BlueStore Unleashed Ceph 分散式儲存系統介紹 - KaiRen’s Blog Lenovo Reference Architecture: Red Hat Ceph Storage Micron Accelerated Solutions for Red Hat Ceph Storage Reference Architecture: Micron® 9200 MAX NVMeTM With 5210 QLC SATA SSDs for Red Hat® Ceph Storage 3.2 and BlueStore on AMD EPYCTM Part - 1: BlueStore (Default vs. Tuned) Performance Comparison Part - 2: Ceph Block Storage Performance on All-Flash Cluster with BlueStore backend Part - 3: RHCS Bluestore performance Scalability (3 vs 5 nodes) Part – 4 : RHCS 3.2 Bluestore Advanced Performance Investigation]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>storage</tag>
+        <tag>ceph</tag>
+        <tag>sds</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi]]></title>
     <url>%2F20190421-intel-select-solutions-redhat-osp-13-for-nfvi%2F</url>
     <content type="text"><![CDATA[承上篇 導讀 Intel Select Solutions: Red Hat OpenShift Container Platform，本篇同時收錄 Red Hat OpenStack 13 代號 Queens 的推薦硬體 BOM 表 Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13，然而想要了解其他 Intel Select Solutions for NFVi 的方案可以參考 Intel® Select Solutions for NFVI What are Intel Select Solutions?Intel® Select 解決方案 (Intel® Select Solutions) 是經過驗證的硬件和軟件全套解決方案，針對計算 Compute，存儲 Storage 和網絡 Network 中的特定工作負載進行了優化。 除了與世界領先的數據中心和服務提供商的廣泛合作之外，這些解決方案還源自英特爾與行業解決方案提供商的深厚經驗。要獲得英特爾精選解決方案的資格，解決方案提供商必須： 1.遵循 Red Hat 和 Intel 共同合作的軟體和硬體堆棧要求2.複製或超過英特爾的參考基準性能基準3.發布詳細的實施指南以促進客戶部署落地 Red Hat OpenStack Platform 13 QueensRed Hat OpenStack 13 Queens 是長期支援版本 (Long-Term Support, LTS)，生命週期最多可長達五年，同時也因基礎技術採用 Container 方式服務為主，故於這版支援 Fast Forward Upgrade (FFU)，可以從 13 直接跳往下一個 LTS 版本 16 進行 in-place 升級 Total SolutionReference Architecture (RA) Lenovo RA: Red Hat OpenStack Platform 13 QCT RA: QxStack with Red Hat OpenStack Platform QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13 Lenovo RA: OpenStack Reference Architecture for Service Providers Hardware Configuration針對 OpenStack for NFVi 角色主要拆分兩個: Controller nodes Cloud (or Compute) nodes 而其中 Cloud/Compute nodes 的角色，依據不同的硬體 BOM 表會有兩種: Base、Plus 的區別 Intel + Red Hat 聯名文件主要推薦配置為以下 (以 Base 最小等級為例): Controller node 32c 192GB RAM 2 * XL710 Dual Port 2 * LOM (Lan on Motherboard) Port 2 * 480 GB for boot 2 * 2TB for data QAT Cloud (or Compute) node 40c 384GB RAM 2 * XL710 Dual Port 2 * LOM (Lan on Motherboard) Port 2 * 480 GB for boot 2 * 2TB for data QAT 至於詳細的 BOM (Bill Of Material) 表跟硬體效能指標內容請參閱 Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13 Software Configuration毫無懸念地，你可以參考 Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide 這裡面的文件來了解 NFVi 的架構是長得如何，下圖是基於標準 NFV ETSI 架構，以 Red Hat 現行產品進行對應的圖表 一般來說 IaaS 的部分是以 Red Hat OpenStack 為主這點是沒錯的，Storage 的技術選型現行是以 Ceph 為優先考量，同時也跟 OpenStack 不同類型的 storage backend project (swift/cinder/glance/…)整合性最好。當然也是可以替換成第三方廠商的方案，並沒有說一定要選擇某個技術才能運行。而網路的部分，因為牽扯到實體網路的整合及最大化利用網路頻寬議題，通常都會在搭配一家 SDN 廠商在內進行 Overlay + Underlay 網路整合，例如以下幾家都是不錯的組合 Cisco ACI Juniper Contrail BigSwitch BCF References 導讀 Intel Select Solutions: Red Hat OpenShift Container Platform Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13 Intel® Select Solutions for NFVI Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide Red Hat OpenStack* Platform with Red Hat Ceph* Storage - Intel Lenovo RA: Red Hat OpenStack Platform 13 QCT RA: QxStack with Red Hat OpenStack Platform QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13 Lenovo RA: OpenStack Reference Architecture for Service Providers]]></content>
@@ -472,8 +485,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>redhat</tag>
         <tag>openshift3</tag>
+        <tag>redhat</tag>
         <tag>networking</tag>
       </tags>
   </entry>
@@ -486,8 +499,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>redhat</tag>
         <tag>openshift3</tag>
+        <tag>redhat</tag>
         <tag>nvidia</tag>
         <tag>dgx</tag>
         <tag>tesla</tag>
@@ -533,8 +546,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>redhat</tag>
         <tag>openshift3</tag>
+        <tag>redhat</tag>
         <tag>storage</tag>
       </tags>
   </entry>
@@ -547,8 +560,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>redhat</tag>
         <tag>openshift3</tag>
+        <tag>redhat</tag>
         <tag>openshift4</tag>
         <tag>router</tag>
         <tag>services</tag>
@@ -577,9 +590,9 @@
       </categories>
       <tags>
         <tag>vmware</tag>
-        <tag>redhat</tag>
         <tag>openshift3</tag>
         <tag>nsx-t</tag>
+        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -706,9 +719,9 @@
         <category>linux</category>
       </categories>
       <tags>
+        <tag>linux</tag>
         <tag>headless</tag>
         <tag>serial</tag>
-        <tag>linux</tag>
         <tag>centos</tag>
       </tags>
   </entry>
@@ -817,9 +830,9 @@
       <tags>
         <tag>sdn</tag>
         <tag>ofdpa</tag>
-        <tag>ovs-ofctl</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
+        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
