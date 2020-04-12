@@ -273,8 +273,8 @@
         <tag>openshift</tag>
         <tag>container</tag>
         <tag>openshift3</tag>
-        <tag>cni</tag>
         <tag>openshift4</tag>
+        <tag>cni</tag>
         <tag>security</tag>
         <tag>harden8</tag>
       </tags>
