@@ -2,6 +2,69 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
+    
+    <lastmod>2020-04-12T17:08:24.956Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/</loc>
+    
+    <lastmod>2020-04-12T17:08:13.238Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
+    
+    <lastmod>2020-04-12T17:08:09.747Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180825-netdevops/</loc>
+    
+    <lastmod>2020-04-12T17:08:06.974Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180918-skopeo/</loc>
+    
+    <lastmod>2020-04-12T17:08:03.346Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/</loc>
+    
+    <lastmod>2020-04-12T17:07:58.135Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
+    
+    <lastmod>2020-04-12T17:07:55.011Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
+    
+    <lastmod>2020-04-12T17:07:52.114Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
+    
+    <lastmod>2020-04-12T17:07:12.618Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20190427-reference-architecture-red-Hat-ceph-storage/</loc>
     
     <lastmod>2020-04-12T17:03:22.269Z</lastmod>
@@ -331,72 +394,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
-    
-    <lastmod>2020-04-11T17:12:53.611Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180821-review-twelve-factor-apps/</loc>
-    
-    <lastmod>2020-04-11T17:12:45.160Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180826-setup-bonding-and-teaming-using-nmcli/</loc>
-    
-    <lastmod>2020-04-11T17:12:34.007Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180918-skopeo/</loc>
-    
-    <lastmod>2020-04-11T17:12:27.055Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180920-add-ssl-tls-cert-and-key/</loc>
-    
-    <lastmod>2020-04-11T17:12:22.702Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190317-openshift-and-nsx-t/</loc>
-    
-    <lastmod>2020-04-11T17:12:14.842Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190319-cnf-testbed/</loc>
-    
-    <lastmod>2020-04-11T17:12:05.214Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-04-10T15:24:08.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180815-cloud-resource-sizing-reference/</loc>
-    
-    <lastmod>2019-03-24T18:07:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20180825-netdevops/</loc>
-    
-    <lastmod>2019-03-24T18:07:16.000Z</lastmod>
     
   </url>
   
