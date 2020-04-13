@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200413-openshift4-network-traffic-overview/</loc>
+    
+    <lastmod>2020-04-13T05:41:48.183Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
+    
+    <lastmod>2020-04-13T05:32:20.122Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
+    
+    <lastmod>2020-04-13T02:11:15.544Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
+    
+    <lastmod>2020-04-12T17:22:48.049Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
+    
+    <lastmod>2020-04-12T17:22:18.781Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
+    
+    <lastmod>2020-04-12T17:22:14.647Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20180723-openapi-and-oas/</loc>
     
     <lastmod>2020-04-12T17:08:24.956Z</lastmod>
@@ -72,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
-    
-    <lastmod>2020-04-12T17:01:31.949Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190411-container-bare-metal-for-networking-references-architecture/</loc>
     
     <lastmod>2020-04-12T15:12:26.461Z</lastmod>
@@ -107,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/</loc>
-    
-    <lastmod>2020-04-12T15:12:14.250Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20190330-nvidia-dgx-and-redhat-openshift-integration/</loc>
     
     <lastmod>2020-04-12T15:12:11.342Z</lastmod>
@@ -131,13 +159,6 @@
     <loc>https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</loc>
     
     <lastmod>2020-04-12T15:12:01.998Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift/</loc>
-    
-    <lastmod>2020-04-12T15:11:58.314Z</lastmod>
     
   </url>
   
@@ -345,23 +366,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
-    
-    <lastmod>2020-04-12T15:09:03.001Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20200401-personal-agile/</loc>
     
     <lastmod>2020-04-12T15:09:00.090Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
-    
-    <lastmod>2020-04-12T15:08:57.083Z</lastmod>
     
   </url>
   
