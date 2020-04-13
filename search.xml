@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[用 k9s 操作 OpenShift?]]></title>
+    <title><![CDATA[用 k9s 操作 OpenShift 4]]></title>
     <url>%2F20200413-k9s-for-openshift%2F</url>
     <content type="text"><![CDATA[OK…社群損友們跟我講了一個專案叫做 k9s，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看 環境資訊 Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2) k9s v0.19.1 Red Hat Enterprise Linux 7.7 as bastion server 如何安裝?相當簡單，去 https://github.com/derailed/k9s/releases 選個版本，這邊選擇是 v0.19.1 1234$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz$ tar zxvf k9s_Linux_x86_64.tar.gz$ mv k9s /usr/bin/$ k9s 沒了 = = 畫面截圖我只能說相當潮啊… Node 截圖 Pods 截圖 Namespace 截圖 結語免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已 References k9s - Kubernetes CLI To Manage Your Clusters In Style!]]></content>
       <categories>
@@ -543,8 +543,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -901,9 +901,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”www@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”*.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match www.night9.cc roan.night9.cc, 但不能 match night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”roan@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”roan.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match roan.night9.cc, 但不能 match night9.cc xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -914,9 +914,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”roan@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”roan.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match roan.night9.cc, 但不能 match night9.cc xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”www@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”*.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match www.night9.cc roan.night9.cc, 但不能 match night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <categories>
         <category>linux</category>
       </categories>
