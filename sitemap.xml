@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
+    
+    <lastmod>2020-04-13T18:30:13.846Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200413-k9s-for-openshift/</loc>
     
     <lastmod>2020-04-13T18:19:52.100Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</loc>
     
     <lastmod>2020-04-12T17:22:18.781Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
-    
-    <lastmod>2020-04-12T17:22:14.647Z</lastmod>
     
   </url>
   
