@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-13T18:19:52.100Z</updated>
+  <updated>2020-04-14T11:38:22.371Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>於 OpenShift 4 上運行混沌工程測試 KubeInvaders</title>
+    <link href="https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/"/>
+    <id>https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/</id>
+    <published>2020-04-14T09:14:50.000Z</published>
+    <updated>2020-04-14T11:38:22.371Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;混沌工程 (Chaos Engineering)，最早期我知道這個單字是因為做 SDN 網路的時候，BigSwitch Network (現已被 Arista 收購) 那時候有實作出對網路進行不定期、無法預知之斷線行為，來確保網路 HA 是否暢通，&lt;a href=&quot;http://go.bigswitch.com/rs/974-WXR-561/images/Chaos_Monkey_and_Big_Cloud_Fabric.pdf&quot;&gt;Chaos Monkey and Big Cloud Fabric - Big Switch Networks&lt;/a&gt;。當時才認真看了下最源頭來自於 NetFlix 的 &lt;a href=&quot;https://github.com/Netflix/chaosmonkey&quot;&gt;Netflix/chaosmonkey&lt;/a&gt; 指導原則&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;建立一個圍繞穩定狀態行為的假說 (Build a Hypothesis around Steady State Behavior)&lt;/li&gt;
+&lt;li&gt;多樣化真實世界的事件 (Vary Real-world Events)&lt;/li&gt;
+&lt;li&gt;在生產環境中運行實驗 (Run Experiments in Production)&lt;/li&gt;
+&lt;li&gt;持續自動化運行實驗 (Automate Experiments to Run Continuously)&lt;/li&gt;
+&lt;li&gt;最小化爆炸半徑 (Minimize Blast Radius)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;基於上面的指導原則，這邊選了一套適用於 Kubernetes 的混沌工程原則的工具: KubeInvaders&lt;/p&gt;
+&lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/3OOXOCTAYF0&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
+    
+    </summary>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="chaos engineering" scheme="https://blog.pichuang.com.tw/tags/chaos-engineering/"/>
+    
+      <category term="kubeinvaders" scheme="https://blog.pichuang.com.tw/tags/kubeinvaders/"/>
+    
+  </entry>
   
   <entry>
     <title>用 k9s 操作 OpenShift 4</title>
@@ -93,9 +127,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -149,9 +183,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -207,9 +241,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -516,31 +550,6 @@
       <category term="misc" scheme="https://blog.pichuang.com.tw/tags/misc/"/>
     
       <category term="annual" scheme="https://blog.pichuang.com.tw/tags/annual/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
-    <link href="https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/"/>
-    <id>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</id>
-    <published>2019-11-22T16:39:00.000Z</published>
-    <updated>2020-04-12T15:10:26.475Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;遇過非常多人使用 &lt;code&gt;docekr-distribution&lt;/code&gt; 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 &lt;a href=&quot;https://docs.docker.com/registry/insecure/&quot;&gt;&lt;code&gt;insecure-registries&lt;/code&gt;&lt;/a&gt; 來避掉，今天要來分享自簽憑證的作法&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/categories/container/"/>
-    
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
-      <category term="registry" scheme="https://blog.pichuang.com.tw/tags/registry/"/>
-    
-      <category term="smart start" scheme="https://blog.pichuang.com.tw/tags/smart-start/"/>
     
   </entry>
   
