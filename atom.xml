@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-14T11:38:22.371Z</updated>
+  <updated>2020-04-14T11:40:09.513Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/"/>
     <id>https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/</id>
     <published>2020-04-14T09:14:50.000Z</published>
-    <updated>2020-04-14T11:38:22.371Z</updated>
+    <updated>2020-04-14T11:40:09.513Z</updated>
     
     <summary type="html">
     
@@ -33,7 +33,7 @@
 &lt;li&gt;持續自動化運行實驗 (Automate Experiments to Run Continuously)&lt;/li&gt;
 &lt;li&gt;最小化爆炸半徑 (Minimize Blast Radius)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;基於上面的指導原則，這邊選了一套適用於 Kubernetes 的混沌工程原則的工具: KubeInvaders&lt;/p&gt;
+&lt;p&gt;基於上面的指導原則，這邊選了一套適用於 Kubernetes 的混沌工程原則的工具，名叫 &lt;code&gt;KubeInvaders&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/3OOXOCTAYF0&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
     
     </summary>
