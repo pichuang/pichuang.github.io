@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-14T09:54:26.098Z</updated>
+  <updated>2020-04-13T18:19:52.100Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,37 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>於 OpenShift 4 上運行混沌工程測試 KubeInvaders</title>
-    <link href="https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/"/>
-    <id>https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/</id>
-    <published>2020-04-14T09:14:50.000Z</published>
-    <updated>2020-04-14T09:54:26.098Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="chaos engineering" scheme="https://blog.pichuang.com.tw/tags/chaos-engineering/"/>
-    
-      <category term="kubeinvaders" scheme="https://blog.pichuang.com.tw/tags/kubeinvaders/"/>
-    
-  </entry>
   
   <entry>
     <title>用 k9s 操作 OpenShift 4</title>
@@ -124,9 +93,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -180,9 +149,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -238,9 +207,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -547,6 +516,31 @@
       <category term="misc" scheme="https://blog.pichuang.com.tw/tags/misc/"/>
     
       <category term="annual" scheme="https://blog.pichuang.com.tw/tags/annual/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
+    <link href="https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/"/>
+    <id>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</id>
+    <published>2019-11-22T16:39:00.000Z</published>
+    <updated>2020-04-12T15:10:26.475Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;遇過非常多人使用 &lt;code&gt;docekr-distribution&lt;/code&gt; 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 &lt;a href=&quot;https://docs.docker.com/registry/insecure/&quot;&gt;&lt;code&gt;insecure-registries&lt;/code&gt;&lt;/a&gt; 來避掉，今天要來分享自簽憑證的作法&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/categories/container/"/>
+    
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="registry" scheme="https://blog.pichuang.com.tw/tags/registry/"/>
+    
+      <category term="smart start" scheme="https://blog.pichuang.com.tw/tags/smart-start/"/>
     
   </entry>
   
