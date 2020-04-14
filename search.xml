@@ -543,8 +543,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -856,8 +856,8 @@
       </categories>
       <tags>
         <tag>sdn</tag>
-        <tag>ofdpa</tag>
         <tag>ovs</tag>
+        <tag>ofdpa</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
       </tags>
@@ -871,9 +871,9 @@
       </categories>
       <tags>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
-        <tag>ofdpa</tag>
       </tags>
   </entry>
   <entry>
