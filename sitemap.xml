@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200414-kubeInvaders-openshift4/</loc>
+    
+    <lastmod>2020-04-14T09:54:26.098Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</loc>
     
     <lastmod>2020-04-13T18:30:13.846Z</lastmod>

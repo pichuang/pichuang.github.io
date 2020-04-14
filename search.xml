@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[於 OpenShift 4 上運行混沌工程測試 KubeInvaders]]></title>
+    <url>%2F20200414-kubeInvaders-openshift4%2F</url>
+    <content type="text"><![CDATA[環境資訊 Red Hat OpenShift 4.3.10 (Kubernetes v1.16.2) KubeInvaders 使用 master branch Red Hat Enterprise Linux 7.7 as bastion server Target Project: bookinfo 如何安裝?我都照 lucky-sideburn/KubeInvaders README 所述的步驟執行，算寫的蠻清楚的，這邊選擇的方式是用 Install KubeInvaders on Openshift Download project KubeIvaders 12$ git clone https://github.com/lucky-sideburn/KubeInvaders$ cd KubeInvaders Install KubeInvaders ~/KubeInvaders12345678910111213$ oc create clusterrole kubeinvaders-role --verb=watch,get,delete,list --resource=pods$ TARGET_NAMESPACE=bookinfo$ ROUTE_HOST=kubeinvaders.apps.ocp4.internal$ oc new-project kubeinvaders --display-name='KubeInvaders'$ oc create sa kubeinvaders -n kubeinvaders$ oc adm policy add-cluster-role-to-user kubeinvaders-role -z kubeinvaders -n kubeinvaders$ KUBEINVADERS_SECRET=$(oc get secret -n kubeinvaders --field-selector=type==kubernetes.io/service-account-token | grep 'kubeinvaders-token' --color=never | awk '&#123; print $1&#125;' | head -n 1)$ echo $KUBEINVADERS_SECRET$ oc process -f openshift/KubeInvaders.yaml -p ROUTE_HOST=$ROUTE_HOST -p TARGET_NAMESPACE=$TARGET_NAMESPACE -p KUBEINVADERS_SECRET=$KUBEINVADERS_SECRET | oc create -f - Get Route 123$ KubeInvaders_URL=$(oc -n kubeinvaders get route kubeinvaders -o jsonpath='&#123;.spec.host&#125;') &amp;&amp; echo "KubeInvaders URL: https://$KubeInvaders_URL"KubeInvaders URL: https://kube.apps.ocp4.internal Refererences KubeInvaders - Gamified Chaos Engineering Tool for Kubernetes lucky-sideburn/KubeInvaders]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift4</tag>
+        <tag>chaos engineering</tag>
+        <tag>kubeinvaders</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[用 k9s 操作 OpenShift 4]]></title>
     <url>%2F20200413-k9s-for-openshift%2F</url>
     <content type="text"><![CDATA[OK…社群損友們跟我講了一個專案叫做 k9s，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看 k9s Kubernetes CLI To Manage Your Clusters In Style! k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群 環境資訊 Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2) k9s v0.19.1 Red Hat Enterprise Linux 7.7 as bastion server 如何安裝?相當簡單，去 https://github.com/derailed/k9s/releases 選個版本，這邊選擇是 v0.19.1 1234$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz$ tar zxvf k9s_Linux_x86_64.tar.gz$ mv k9s /usr/bin/$ k9s 沒了 = = 畫面截圖我只能說相當潮啊… Node 截圖 Pods 截圖 Namespace 截圖 Pulses 截圖 Xray 截圖 結語免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已 References k9s - Kubernetes CLI To Manage Your Clusters In Style!]]></content>
