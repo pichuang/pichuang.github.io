@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-14T18:12:33.336Z</updated>
+  <updated>2020-04-21T03:09:31.300Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何跟妹子介紹數位轉型?</title>
+    <link href="https://blog.pichuang.com.tw/20200421-what-is-digital-transformation/"/>
+    <id>https://blog.pichuang.com.tw/20200421-what-is-digital-transformation/</id>
+    <published>2020-04-20T17:11:38.000Z</published>
+    <updated>2020-04-21T03:09:31.300Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望去錄影介紹 &lt;code&gt;Cloud Native API&lt;/code&gt; 是蝦毀東西，而該場活動有位主持人。順稿的時候遇到了一個問題，我們親愛的主持人因為非本科系，所以很難理解稿子裡面講的&lt;code&gt;數位轉型&lt;/code&gt;等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，故這邊紀錄一下我如何解釋數位轉型 (Digital Transformation)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
+    
+    
+      <category term="digitaltransformation" scheme="https://blog.pichuang.com.tw/tags/digitaltransformation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20200416-openshift-with-coreos-part-4</title>
+    <link href="https://blog.pichuang.com.tw/20200416-openshift-with-coreos-part-4/"/>
+    <id>https://blog.pichuang.com.tw/20200416-openshift-with-coreos-part-4/</id>
+    <published>2020-04-15T18:54:49.000Z</published>
+    <updated>2020-04-16T05:20:48.501Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+  </entry>
   
   <entry>
     <title>於 OpenShift 4 上運行混沌工程測試 KubeInvaders</title>
@@ -500,56 +550,6 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
-    <link href="https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/"/>
-    <id>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</id>
-    <published>2020-01-01T05:08:00.000Z</published>
-    <updated>2020-04-12T15:10:19.483Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? &lt;/p&gt;
-&lt;p&gt;本文將使用 &lt;a href=&quot;https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&amp;tab=tags&quot;&gt;Workshop Terminal&lt;/a&gt; 來當作 shell 來做使用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/terminal-quay.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="web-console" scheme="https://blog.pichuang.com.tw/tags/web-console/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2019 年度個人回顧</title>
-    <link href="https://blog.pichuang.com.tw/20191231-2019-personal-review/"/>
-    <id>https://blog.pichuang.com.tw/20191231-2019-personal-review/</id>
-    <published>2020-01-01T04:55:32.000Z</published>
-    <updated>2020-04-12T15:10:23.444Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;完整的日曆年過了，來個年度回顧紀錄&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/tags/misc/"/>
-    
-      <category term="annual" scheme="https://blog.pichuang.com.tw/tags/annual/"/>
     
   </entry>
   

@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[如何跟妹子介紹數位轉型?]]></title>
+    <url>%2F20200421-what-is-digital-transformation%2F</url>
+    <content type="text"><![CDATA[最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望去錄影介紹 Cloud Native API 是蝦毀東西，而該場活動有位主持人。順稿的時候遇到了一個問題，我們親愛的主持人因為非本科系，所以很難理解稿子裡面講的數位轉型等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，故這邊紀錄一下我如何解釋數位轉型 (Digital Transformation) 如何跟妹子介紹數位轉型 每個人都有屬於自己的數位轉型歷程 其實每個人都已經(或正在)經歷過了數位轉型的時代，我是 78 年出生，舉個以下幾個例子 上課傳紙條 -&gt; 去網咖上 MSN / 即時通 -&gt; 手機傳 Line / FB 沖洗相片 -&gt; 日本美肌拍立得 -&gt; 美圖秀秀 / Foodie 卡帶 -&gt; CD -&gt; MP3 -&gt; KKBox / YouTube Music / Spotify 錄影帶 -&gt; 電影院 -&gt; 租 DVD -&gt; Netflix 以上這些過程其實就涵蓋了我個人的小學 -&gt; 中學 -&gt; 高中 -&gt; 大學 -&gt; 現在的歷程 如果跟不同年紀段的人討論這些變化，可能得到的答案是不太一樣的，但有渡過 MSN / Yahoo 即時通年代的朋友，應該會相當有感覺，每個階段都是時代的眼淚啊 對於修車廠的數位轉型 手動 -&gt; 電腦化輔助線下 -&gt; 線上 我家是開修車廠的，雖然我不會修車，但旁邊也觀察到了一些改變 現金 -&gt; 信用卡手動刷卡機 -&gt; 信用卡磁條晶片讀卡機 -&gt; 信用卡感應式讀卡機 -&gt; 手機支付 手動記帳單 -&gt; 電腦化帳單 定期買雜誌給客人看 -&gt; 裝 Wireless Router 給客人用 師傅個人經驗技術 -&gt; 各廠牌維修手冊 -&gt; 電腦診斷系統 口耳相傳介紹 -&gt; 中華黃頁 -&gt; Google 店家註冊 -&gt; Facebook 粉絲頁 我相信那個信用卡手動刷卡機一定很多人沒玩過 XD，以前信用卡是凸字的，不像現在都是平面的，主要就是要給這種舊式刷卡機下面放三聯單 + 信用卡，手動刷過去印上信用卡號碼 共通點? 以重新定位客戶體驗、商業模式及供應流程，來創造新的價值 有沒有發現其實走到最後，轉到後面都是透過以電腦/手機為數位化媒介，以前要用很多工具或流程才能搞定的事情，現在則是在小小的螢幕前敲敲打打就能搞定，整體效率還更好，所帶來的主客體驗也跟隨提高 隨著使用工具和習慣不同，大家消費習性也有所改變，現在無論各行各業都在提及的數位轉型，無非都是希望能發現到適合當今潮流的商業模式來賺到更多的錢 Appendix如何跟同性解釋數位轉型? 不好的例子: PS1 -&gt; PS2 -&gt; PS3 -&gt; PS4 不知道為何共鳴度很高的例子: 高雄建國路 -&gt; BT / eMule 存 D 槽 -&gt; 線上串流 -&gt; AR / VR]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>digitaltransformation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[20200416-openshift-with-coreos-part-4]]></title>
+    <url>%2F20200416-openshift-with-coreos-part-4%2F</url>
+    <content type="text"><![CDATA[走馬看花之旅: 第四天References Exposing the registry]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[於 OpenShift 4 上運行混沌工程測試 KubeInvaders]]></title>
     <url>%2F20200414-kubeInvaders-openshift4%2F</url>
     <content type="text"><![CDATA[混沌工程 (Chaos Engineering)，最早期我知道這個單字是因為做 SDN 網路的時候，BigSwitch Network (現已被 Arista 收購) 那時候有實作出對網路進行不定期、無法預知之斷線行為，來確保網路 HA 是否暢通，Chaos Monkey and Big Cloud Fabric - Big Switch Networks。當時才認真看了下最源頭來自於 NetFlix 的 Netflix/chaosmonkey 指導原則 建立一個圍繞穩定狀態行為的假說 (Build a Hypothesis around Steady State Behavior) 多樣化真實世界的事件 (Vary Real-world Events) 在生產環境中運行實驗 (Run Experiments in Production) 持續自動化運行實驗 (Automate Experiments to Run Continuously) 最小化爆炸半徑 (Minimize Blast Radius) 基於上面的指導原則，這邊選了一套適用於 Kubernetes 的混沌工程原則的工具，名叫 KubeInvaders KubeInvaders KubeInvaders: 針對 Kubernetes 遊戲化混沌工程，把 Pod 當作外星人攻擊 這專案提供了一個簡單的網頁介面，裡面用 Defold 寫的一個射擊外星人 (Space Invaders) 的小遊戲，但這個小遊戲裡面的外星人，通通都是你指定的 Kubernetes Namespace 裡面的實際運行的 Pod 按照 Kubernetes 的設計，只要對 Kubernetes 聲明 (Declarative) 說，要在這個集群內要保持幾個 Pods，Kubernets 就會在資源充足的前提之下，把錯誤或被移出的 Pod 重新跑新的起來 所以回到剛剛講的 5 個混沌工程指導原則，套用在這個 KubeInvaders 及 Red Hat OpenShift 身上的解釋就會變成 建立一個圍繞穩定狀態行為的假說 (Build a Hypothesis around Steady State Behavior) =&gt; OpenShift 容器平台及其上面容器服務本身是穩定且正常工作 多樣化真實世界的事件 (Vary Real-world Events) =&gt; 譬如說砍錯 Pod、移除錯 Worker 節點等具備破壞穩定狀態的事情 在生產環境中運行實驗 (Run Experiments in Production) =&gt; 我相信是 NetFlix 限定，不然大部分應該都是會選擇在 UAT / SIT 持續自動化運行實驗 (Automate Experiments to Run Continuously) =&gt; KubeInvaders 自動化射擊外星人 (Pods) 最小化爆炸半徑 (Minimize Blast Radius) =&gt; 只砍 Pod，其他不動 講這麼多，來動手玩一下就知道了 環境資訊 Red Hat OpenShift 4.3.10 (Kubernetes v1.16.2) KubeInvaders 使用 master branch Red Hat Enterprise Linux 7.7 as bastion server Target Project: bookinfo 如何安裝?我都照 lucky-sideburn/KubeInvaders README 所述的步驟執行，算寫的蠻清楚的，這邊選擇的方式是用 Install KubeInvaders on Openshift 下載 KubeIvaders12$ git clone https://github.com/lucky-sideburn/KubeInvaders$ cd KubeInvaders 安裝 KubeInvaders~/KubeInvaders12345678910111213$ oc create clusterrole kubeinvaders-role --verb=watch,get,delete,list --resource=pods$ TARGET_NAMESPACE=bookinfo$ ROUTE_HOST=kubeinvaders.apps.ocp4.internal$ oc new-project kubeinvaders --display-name='KubeInvaders'$ oc create sa kubeinvaders -n kubeinvaders$ oc adm policy add-cluster-role-to-user kubeinvaders-role -z kubeinvaders -n kubeinvaders$ KUBEINVADERS_SECRET=$(oc get secret -n kubeinvaders --field-selector=type==kubernetes.io/service-account-token | grep 'kubeinvaders-token' --color=never | awk '&#123; print $1&#125;' | head -n 1)$ echo $KUBEINVADERS_SECRET$ oc process -f openshift/KubeInvaders.yaml -p ROUTE_HOST=$ROUTE_HOST -p TARGET_NAMESPACE=$TARGET_NAMESPACE -p KUBEINVADERS_SECRET=$KUBEINVADERS_SECRET | oc create -f - 獲得網址123$ KubeInvaders_URL=$(oc -n kubeinvaders get route kubeinvaders -o jsonpath='&#123;.spec.host&#125;') &amp;&amp; echo "KubeInvaders URL: https://$KubeInvaders_URL"KubeInvaders URL: https://kube.apps.ocp4.internal 打開瀏覽器 按 a 會自動攻擊 按 m 切回手動攻擊 按 i 可以顯示攻擊目標的 Pod 名字 按 n 可以切換已經設定好在 TARGET_NAMESPACE 的 namespaces 實際 Demo小弟原汁原味配音 清除 KubeInvaders12oc delete project kubeinvadersoc delete clusterrole kubeinvaders-role Refererences KubeInvaders - Gamified Chaos Engineering Tool for Kubernetes lucky-sideburn/KubeInvaders Chaos Monkey and Big Cloud Fabric - Big Switch Networks Netflix/chaosmonkey 混沌工程原则 （PRINCIPLES OF CHAOS ENGINEERING）]]></content>
@@ -497,9 +520,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
+        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
-        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
@@ -853,8 +876,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -868,9 +891,9 @@
         <category>infra</category>
       </categories>
       <tags>
+        <tag>ofdpa</tag>
         <tag>sdn</tag>
         <tag>ovs</tag>
-        <tag>ofdpa</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
       </tags>
@@ -883,10 +906,10 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
-        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
+        <tag>ofdpa</tag>
+        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>
@@ -914,9 +937,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
-    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”roan@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”roan.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match roan.night9.cc, 但不能 match night9.cc xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
+    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”www@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”*.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match www.night9.cc roan.night9.cc, 但不能 match night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -927,9 +950,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[PKI Lab$2 Create Multiple domain (UCC) SSL Certificate]]></title>
-    <url>%2F20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate%2F</url>
-    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”www@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”*.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match www.night9.cc roan.night9.cc, 但不能 match night9.cc Create UCC Key source ./vars./build-key-server *.night9.cc&lt;enter&gt;…&lt;enter&gt; Check Root CA key and crt ls -la ./keys/*.night9.cc.{key,crt} 建議將 *.night9.cc 做個改名的動作 Check *.night9.cc crt Info openssl x509 -in *.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
+    <title><![CDATA[PKI Lab$3 Create Single domain SSL Certificate]]></title>
+    <url>%2F20150727-pki-lab-3-create-single-domain-ssl-certificate%2F</url>
+    <content type="text"><![CDATA[採用 easyrsa 來建立 PKI CA, 必需要有 Root CA, 可參考 PKI Lab$1 Create Root CA 做建立的動作 Step by Step Setting vars for Root CA export KEY_SIZE=2048export CA_EXPIRE=365export KEY_EXPIRE=365export KEY_COUNTRY=”TW”export KEY_PROVINCE=”Taiwan”export KEY_CITY=”HsinChu”export KEY_ORG=”Night9 Studios”export KEY_EMAIL=”roan@night9.cc“export KEY_OU=”www.night9.cc&quot;export KEY_NAME=””export KEY_CN=”roan.night9.cc” Source 重點在於 KEY_CN, 此設定可以 match roan.night9.cc, 但不能 match night9.cc xxx.night9.cc Create Key source ./vars./build-key-server roan.night9.cc&lt;enter&gt;…&lt;enter&gt; Check key and crt ls -la ./keys/roan.night9.cc.{key,crt} Check roan.night9.cc crt Info openssl x509 -in roan.night9.crt -text -noout Show Reference OpenSSL PKI Tutorial How To Setup a CA OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation]]></content>
       <categories>
         <category>linux</category>
       </categories>

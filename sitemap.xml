@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200421-what-is-digital-transformation/</loc>
+    
+    <lastmod>2020-04-21T03:09:31.300Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200416-openshift-with-coreos-part-4/</loc>
+    
+    <lastmod>2020-04-16T05:20:48.501Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
     
     <lastmod>2020-04-15T17:28:13.559Z</lastmod>
@@ -513,14 +527,14 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
