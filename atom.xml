@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-22T17:32:33.106Z</updated>
+  <updated>2020-04-22T17:42:58.434Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.pichuang.com.tw/20200423-deadman/"/>
     <id>https://blog.pichuang.com.tw/20200423-deadman/</id>
     <published>2020-04-22T15:57:49.000Z</published>
-    <updated>2020-04-22T17:32:33.106Z</updated>
+    <updated>2020-04-22T17:42:58.434Z</updated>
     
     <summary type="html">
     
@@ -33,6 +33,8 @@
     
       <category term="linux" scheme="https://blog.pichuang.com.tw/categories/linux/"/>
     
+    
+      <category term="sdn" scheme="https://blog.pichuang.com.tw/tags/sdn/"/>
     
       <category term="networking" scheme="https://blog.pichuang.com.tw/tags/networking/"/>
     
