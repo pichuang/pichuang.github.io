@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-21T14:48:14.092Z</updated>
+  <updated>2020-04-22T17:29:49.199Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>系統工程師必備監控小工具 deadman</title>
+    <link href="https://blog.pichuang.com.tw/20200423-deadman/"/>
+    <id>https://blog.pichuang.com.tw/20200423-deadman/</id>
+    <published>2020-04-22T15:57:49.000Z</published>
+    <updated>2020-04-22T17:29:49.199Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天要來分享一個長期以來藏在我心中的小工具，以前搞網路出國做軟體定義網路 (Software Defined Networking, SDN) 相關的 PoC，因為時間非常短，僅僅只有一週，所以出門前要測試、準備工具需要相當齊備，而且現場狀況神多，尤其是虛擬網路及實體網路之延伸綜合性問題，遇到問題時會不知道要相信哪個點，反覆一直確認。我鍵盤上的 &lt;code&gt;p&lt;/code&gt;、&lt;code&gt;i&lt;/code&gt;、&lt;code&gt;n&lt;/code&gt;、&lt;code&gt;g&lt;/code&gt; 加數字鍵已經被我打爛了，為了各位的鍵盤和手指著想，今天要來介紹一個由日本 Interop Tokyo 發展出來的一個超好用小工具 &lt;code&gt;deadman&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/shownet.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="linux" scheme="https://blog.pichuang.com.tw/categories/linux/"/>
+    
+    
+      <category term="networking" scheme="https://blog.pichuang.com.tw/tags/networking/"/>
+    
+  </entry>
   
   <entry>
     <title>如何跟妹子介紹數位轉型?</title>
@@ -523,33 +545,6 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
-    <link href="https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/"/>
-    <id>https://blog.pichuang.com.tw/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</id>
-    <published>2020-01-01T05:08:00.000Z</published>
-    <updated>2020-04-12T15:10:19.483Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? &lt;/p&gt;
-&lt;p&gt;本文將使用 &lt;a href=&quot;https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&amp;tab=tags&quot;&gt;Workshop Terminal&lt;/a&gt; 來當作 shell 來做使用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/terminal-quay.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="web-console" scheme="https://blog.pichuang.com.tw/tags/web-console/"/>
     
   </entry>
   
