@@ -348,8 +348,8 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
-        <tag>openshift3</tag>
         <tag>container</tag>
+        <tag>openshift3</tag>
         <tag>cni</tag>
         <tag>security</tag>
         <tag>harden8</tag>
@@ -365,8 +365,8 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
-        <tag>openshift3</tag>
         <tag>container</tag>
+        <tag>openshift3</tag>
       </tags>
   </entry>
   <entry>
@@ -567,8 +567,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>openapi</tag>
         <tag>ansible</tag>
+        <tag>openapi</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -666,8 +666,8 @@
         <category>container</category>
       </categories>
       <tags>
-        <tag>skopeo</tag>
         <tag>container</tag>
+        <tag>skopeo</tag>
         <tag>images</tag>
       </tags>
   </entry>
