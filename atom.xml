@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-26T11:13:48.342Z</updated>
+  <updated>2020-04-26T11:14:38.323Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,11 +21,11 @@
     <link href="https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/"/>
     <id>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</id>
     <published>2020-04-25T18:54:49.000Z</published>
-    <updated>2020-04-26T11:13:48.342Z</updated>
+    <updated>2020-04-26T11:14:38.323Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;走馬看花之旅-第四天&quot;&gt;&lt;a href=&quot;#走馬看花之旅-第四天&quot; class=&quot;headerlink&quot; title=&quot;走馬看花之旅: 第四天&quot;&gt;&lt;/a&gt;走馬看花之旅: 第四天&lt;/h2&gt;&lt;p&gt;承襲上篇 &lt;a href=&quot;https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3&lt;/a&gt; 精神，繼續寫一點東西，但因本週太忙了，講一個大家都很關注的 Kubernetes 套件管理程式 - &lt;code&gt;Helm 3&lt;/code&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;走馬看花之旅-第四天&quot;&gt;&lt;a href=&quot;#走馬看花之旅-第四天&quot; class=&quot;headerlink&quot; title=&quot;走馬看花之旅: 第四天&quot;&gt;&lt;/a&gt;走馬看花之旅: 第四天&lt;/h2&gt;&lt;p&gt;承襲上篇 &lt;a href=&quot;https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3&lt;/a&gt; 精神，繼續寫一點東西，但因本週太忙了，只講一個大家都很關注的 Kubernetes 套件管理程式 - &lt;code&gt;Helm 3&lt;/code&gt; 內容&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/helm3-ocp4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
