@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-22T17:55:15.188Z</updated>
+  <updated>2020-04-26T11:11:06.672Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 4</title>
+    <link href="https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/"/>
+    <id>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</id>
+    <published>2020-04-25T18:54:49.000Z</published>
+    <updated>2020-04-26T11:11:06.672Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;走馬看花之旅-第四天&quot;&gt;&lt;a href=&quot;#走馬看花之旅-第四天&quot; class=&quot;headerlink&quot; title=&quot;走馬看花之旅: 第四天&quot;&gt;&lt;/a&gt;走馬看花之旅: 第四天&lt;/h2&gt;&lt;p&gt;承襲上篇 &lt;a href=&quot;https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3&lt;/a&gt; 精神，繼續寫一點東西，但因本週太忙了，講一個大家都很關注的 Kubernetes 套件管理程式 - &lt;code&gt;Helm 3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/helm3-ocp4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+  </entry>
   
   <entry>
     <title>系統工程師必備監控小工具 deadman</title>
@@ -174,9 +198,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -230,9 +254,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -288,9 +312,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -516,37 +540,6 @@
       <category term="openapi" scheme="https://blog.pichuang.com.tw/tags/openapi/"/>
     
       <category term="swagger" scheme="https://blog.pichuang.com.tw/tags/swagger/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Red Hat OpenShift 4 特定節點 Label 更新</title>
-    <link href="https://blog.pichuang.com.tw/20200102-openshift-label-update/"/>
-    <id>https://blog.pichuang.com.tw/20200102-openshift-label-update/</id>
-    <published>2020-01-02T02:45:00.000Z</published>
-    <updated>2020-04-12T15:10:16.928Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;以前的&lt;a href=&quot;https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122?slide=11&quot;&gt;演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122
-&lt;/a&gt;有分享過，Red Hat OpenShift 對於節點的角色有分 3 種：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Master&lt;/li&gt;
-&lt;li&gt;Infra&lt;/li&gt;
-&lt;li&gt;Worker&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;/images/label-overview.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;而 OpenShift 4 的安裝方式是預設不會有 Infa 節點的存在，僅會先有 Master 及 Worker，而需要特別設定 Label - 從 Worker 轉成 Infra 節點。本文將花點篇幅講一下轉法&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
   </entry>
   
