@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-27T04:39:42.448Z</updated>
+  <updated>2020-04-27T04:49:50.857Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,14 +21,17 @@
     <link href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/"/>
     <id>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</id>
     <published>2020-04-27T17:14:15.000Z</published>
-    <updated>2020-04-27T04:39:42.448Z</updated>
+    <updated>2020-04-27T04:49:50.857Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;如果有朋友剛弄好 OpenShift 4 可能對於很多預設機制感到有點狐疑，這篇文章就是要來解釋，安裝完 OpenShift 4 後，最重要的小事 - 帳號權限認證 (Authentication)&lt;/p&gt;
 &lt;p&gt;Red Hat OpenShift 的權限認證一如繼往都是採用角色型存取控制 (Role Based Access Control, RBAC)，這邊就要來準備開始務實一點的操作，本文先從簡單的把預設帳號置換開始做起&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/rbac.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;話說大家也可以多多支持一下 &lt;a href=&quot;https://www.youtube.com/watch?v=4CS9KvnVFs0&quot;&gt;Semenix Gaming&lt;/a&gt; 大大的影片，我的圖片都是截他的頻道，錄的影片相當有水準，最近都在看它的影片當作自己有在打電動 Q_Q&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;圖片出處: 【最終幻想7：重製版】4K電影剪輯版(後篇) - 零收集、電影式運鏡、完整劇情 - PS4 Pro增強模式 - Final Fantasy VII: REMAKE - 太空戰士7- Semenix出品&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;話說大家也可以多多支持一下 &lt;a href=&quot;https://www.youtube.com/watch?v=4CS9KvnVFs0&quot;&gt;Semenix Gaming&lt;/a&gt; -  大大的影片，我的圖片都是截他的頻道，錄的影片相當有水準，最近都在看它的影片當作自己有在打太七 Q_Q&lt;/p&gt;
     
     </summary>
     
