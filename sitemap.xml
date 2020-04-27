@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</loc>
+    
+    <lastmod>2020-04-27T04:39:42.448Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</loc>
     
-    <lastmod>2020-04-26T13:56:48.133Z</lastmod>
+    <lastmod>2020-04-26T17:14:46.598Z</lastmod>
     
   </url>
   
@@ -534,14 +541,14 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</loc>
+    <loc>https://blog.pichuang.com.tw/20150727-pki-lab-3-create-single-domain-ssl-certificate/</loc>
     
     <lastmod>2015-07-26T16:00:00.000Z</lastmod>
     

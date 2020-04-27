@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-26T13:56:48.133Z</updated>
+  <updated>2020-04-27T04:39:42.448Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -17,15 +17,41 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 5</title>
+    <link href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/"/>
+    <id>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</id>
+    <published>2020-04-27T17:14:15.000Z</published>
+    <updated>2020-04-27T04:39:42.448Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果有朋友剛弄好 OpenShift 4 可能對於很多預設機制感到有點狐疑，這篇文章就是要來解釋，安裝完 OpenShift 4 後，最重要的小事 - 帳號權限認證 (Authentication)&lt;/p&gt;
+&lt;p&gt;Red Hat OpenShift 的權限認證一如繼往都是採用角色型存取控制 (Role Based Access Control, RBAC)，這邊就要來準備開始務實一點的操作，本文先從簡單的把預設帳號置換開始做起&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/rbac.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;話說大家也可以多多支持一下 &lt;a href=&quot;https://www.youtube.com/watch?v=4CS9KvnVFs0&quot;&gt;Semenix Gaming&lt;/a&gt; 大大的影片，我的圖片都是截他的頻道，錄的影片相當有水準，最近都在看它的影片當作自己有在打電動 Q_Q&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+  </entry>
+  
+  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 4</title>
     <link href="https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/"/>
     <id>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</id>
     <published>2020-04-25T18:54:49.000Z</published>
-    <updated>2020-04-26T13:56:48.133Z</updated>
+    <updated>2020-04-26T17:14:46.598Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;走馬看花之旅-第四天&quot;&gt;&lt;a href=&quot;#走馬看花之旅-第四天&quot; class=&quot;headerlink&quot; title=&quot;走馬看花之旅: 第四天&quot;&gt;&lt;/a&gt;走馬看花之旅: 第四天&lt;/h2&gt;&lt;p&gt;承襲上篇 &lt;a href=&quot;https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3&lt;/a&gt; 精神，繼續寫一點東西，但因本週太忙了，只講一個大家都很關注的 Kubernetes 套件管理程式 - &lt;code&gt;Helm 3&lt;/code&gt; 內容&lt;/p&gt;
+      &lt;p&gt;承襲上篇 &lt;a href=&quot;https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3&lt;/a&gt; 精神，繼續寫一點東西，但因本週太忙了，只講一個大家都很關注的 Kubernetes 套件管理程式 - &lt;code&gt;Helm 3&lt;/code&gt; 內容&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/helm3-ocp4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
@@ -518,30 +544,6 @@
     
     
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>建立私有 Swagger UI 服務</title>
-    <link href="https://blog.pichuang.com.tw/20200131-swagger-generator/"/>
-    <id>https://blog.pichuang.com.tw/20200131-swagger-generator/</id>
-    <published>2020-01-31T02:45:00.000Z</published>
-    <updated>2020-04-12T15:09:45.464Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;想必常使用 RESTful API 開發的人對於好看好讀的 API Docs 有相當程度的需求，而眾多開源軟體中，最知名的框架就是 &lt;code&gt;Swagger&lt;/code&gt; 這個框架，什麼？你說你不知道這是什麼，我相信你一定多多少少應該都有看過這個蠻經典的 &lt;a href=&quot;http://petstore.swagger.io/&quot;&gt;petstore.swagger.io&lt;/a&gt; API 文件，本文就是要來梳理一下這 Swagger UI 要怎麼放到自家，用容器運行非常簡單&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/swagger.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
-    
-    
-      <category term="openapi" scheme="https://blog.pichuang.com.tw/tags/openapi/"/>
-    
-      <category term="swagger" scheme="https://blog.pichuang.com.tw/tags/swagger/"/>
     
   </entry>
   
