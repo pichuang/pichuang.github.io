@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
+    
+    <lastmod>2020-04-29T13:04:16.810Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
+    
+    <lastmod>2020-04-28T07:48:27.426Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</loc>
     
     <lastmod>2020-04-27T07:07:28.062Z</lastmod>
@@ -23,23 +37,9 @@
   </url>
   
   <url>
-    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
-    
-    <lastmod>2020-04-22T09:03:56.580Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.pichuang.com.tw/20200421-what-is-digital-transformation/</loc>
     
     <lastmod>2020-04-21T14:48:14.092Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
-    
-    <lastmod>2020-04-15T17:28:13.559Z</lastmod>
     
   </url>
   
