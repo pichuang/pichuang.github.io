@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-04-27T07:07:28.062Z</updated>
+  <updated>2020-04-30T16:57:05.402Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在 Red Hat 打工打滿第 2 年的日子</title>
+    <link href="https://blog.pichuang.com.tw/20200501-redhat-2nd-year/"/>
+    <id>https://blog.pichuang.com.tw/20200501-redhat-2nd-year/</id>
+    <published>2020-04-30T16:31:45.000Z</published>
+    <updated>2020-04-30T16:57:05.402Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文為個人紀念文&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
+    
+    
+      <category term="redhat" scheme="https://blog.pichuang.com.tw/tags/redhat/"/>
+    
+  </entry>
   
   <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 5</title>
@@ -525,28 +546,6 @@
       <category term="linux" scheme="https://blog.pichuang.com.tw/tags/linux/"/>
     
       <category term="ssl" scheme="https://blog.pichuang.com.tw/tags/ssl/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>關於容器倉庫的那些二三四</title>
-    <link href="https://blog.pichuang.com.tw/20200201-container-repos/"/>
-    <id>https://blog.pichuang.com.tw/20200201-container-repos/</id>
-    <published>2020-01-31T19:45:00.000Z</published>
-    <updated>2020-04-12T15:09:43.003Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;隨著使用容器 (Container) 技術也有段時間了，多數人人生第一次使用 Container 應該都會嘗試下，&lt;code&gt;docker pull docker.io/library/centos&lt;/code&gt; 的指令試試，那到底 &lt;code&gt;docker.io/library/centos&lt;/code&gt; 有什麼玄機，今天想分享一下關於容器倉庫 (Container Repository/Registry) 的觀念探討，文章內的操作會以 &lt;code&gt;podman&lt;/code&gt;、&lt;code&gt;skopeo&lt;/code&gt; 為主&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/container-repos.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/categories/container/"/>
-    
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
   </entry>
   
