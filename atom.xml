@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-05-01T18:01:17.404Z</updated>
+  <updated>2020-05-03T11:51:23.510Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/"/>
     <id>https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/</id>
     <published>2020-05-02T02:15:40.000Z</published>
-    <updated>2020-05-01T18:01:17.404Z</updated>
+    <updated>2020-05-03T11:51:23.510Z</updated>
     
     <summary type="html">
     
@@ -31,6 +31,12 @@
     </summary>
     
     
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
     
   </entry>
   
