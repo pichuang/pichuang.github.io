@@ -628,8 +628,8 @@
       </categories>
       <tags>
         <tag>ansible</tag>
-        <tag>redhat</tag>
         <tag>openapi</tag>
+        <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
   </entry>
@@ -924,8 +924,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -939,8 +939,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -954,10 +954,10 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>
