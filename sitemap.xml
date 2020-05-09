@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
+    
+    <lastmod>2020-05-09T04:25:36.476Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</loc>
     
     <lastmod>2020-05-03T14:47:20.404Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://blog.pichuang.com.tw/20200501-redhat-2nd-year/</loc>
     
     <lastmod>2020-04-30T17:17:50.757Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
-    
-    <lastmod>2020-04-29T13:04:16.810Z</lastmod>
     
   </url>
   

@@ -568,9 +568,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
-        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
+        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
@@ -628,8 +628,8 @@
       </categories>
       <tags>
         <tag>ansible</tag>
-        <tag>openapi</tag>
         <tag>redhat</tag>
+        <tag>openapi</tag>
         <tag>restful</tag>
       </tags>
   </entry>
