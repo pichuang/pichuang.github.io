@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</loc>
+    
+    <lastmod>2020-05-23T11:13:13.067Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</loc>
+    
+    <lastmod>2020-05-23T11:12:39.046Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/</loc>
+    
+    <lastmod>2020-05-23T11:11:47.177Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200521-openshift-with-coreos-part-7/</loc>
     
-    <lastmod>2020-05-21T14:21:15.823Z</lastmod>
+    <lastmod>2020-05-23T11:11:17.499Z</lastmod>
     
   </url>
   
@@ -12,20 +33,6 @@
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-05-12T16:15:15.573Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</loc>
-    
-    <lastmod>2020-05-03T14:47:20.404Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/</loc>
-    
-    <lastmod>2020-05-03T11:51:23.510Z</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</loc>
     
     <lastmod>2020-04-28T07:48:27.426Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</loc>
-    
-    <lastmod>2020-04-27T07:07:28.062Z</lastmod>
     
   </url>
   

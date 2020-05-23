@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-05-21T14:21:15.823Z</updated>
+  <updated>2020-05-23T11:11:17.499Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 7</title>
+    <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
     <link href="https://blog.pichuang.com.tw/20200521-openshift-with-coreos-part-7/"/>
     <id>https://blog.pichuang.com.tw/20200521-openshift-with-coreos-part-7/</id>
     <published>2020-05-21T02:15:40.000Z</published>
-    <updated>2020-05-21T14:21:15.823Z</updated>
+    <updated>2020-05-23T11:11:17.499Z</updated>
     
     <summary type="html">
     
@@ -46,11 +46,11 @@
   </entry>
   
   <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 6</title>
+    <title>Red Hat OpenShift RBAC 最小權限實作</title>
     <link href="https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/"/>
     <id>https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6/</id>
     <published>2020-05-02T02:15:40.000Z</published>
-    <updated>2020-05-03T11:51:23.510Z</updated>
+    <updated>2020-05-23T11:11:47.177Z</updated>
     
     <summary type="html">
     
@@ -91,11 +91,11 @@
   </entry>
   
   <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 5</title>
+    <title>當安裝完 Red Hat OpenShift 之後...</title>
     <link href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/"/>
     <id>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/</id>
     <published>2020-04-26T17:14:15.000Z</published>
-    <updated>2020-04-27T07:07:28.062Z</updated>
+    <updated>2020-05-23T11:12:39.046Z</updated>
     
     <summary type="html">
     
@@ -120,11 +120,11 @@
   </entry>
   
   <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 4</title>
+    <title>Red Hat OpenShift 官方支援 Helm 3 啦!</title>
     <link href="https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/"/>
     <id>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4/</id>
     <published>2020-04-25T18:54:49.000Z</published>
-    <updated>2020-05-03T14:47:20.404Z</updated>
+    <updated>2020-05-23T11:13:13.067Z</updated>
     
     <summary type="html">
     
