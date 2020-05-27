@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-05-27T17:59:07.307Z</updated>
+  <updated>2020-05-27T17:59:35.166Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</title>
-    <link href="https://blog.pichuang.com.tw/20200523-openshift-etcd-operator-1/"/>
-    <id>https://blog.pichuang.com.tw/20200523-openshift-etcd-operator-1/</id>
-    <published>2020-05-23T02:15:40.000Z</published>
-    <updated>2020-05-27T17:59:07.307Z</updated>
+    <link href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/"/>
+    <id>https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/</id>
+    <published>2020-05-28T02:15:40.000Z</published>
+    <updated>2020-05-27T17:59:35.166Z</updated>
     
     <summary type="html">
     
