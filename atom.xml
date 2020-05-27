@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-05-23T11:11:17.499Z</updated>
+  <updated>2020-05-27T17:59:07.307Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</title>
+    <link href="https://blog.pichuang.com.tw/20200523-openshift-etcd-operator-1/"/>
+    <id>https://blog.pichuang.com.tw/20200523-openshift-etcd-operator-1/</id>
+    <published>2020-05-23T02:15:40.000Z</published>
+    <updated>2020-05-27T17:59:07.307Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;打從 OpenShift 4 之後，etcd 的安裝變成是透過 &lt;code&gt;etcd-operator&lt;/code&gt; 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/etcd-operator-overview.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="etcd" scheme="https://blog.pichuang.com.tw/tags/etcd/"/>
+    
+  </entry>
   
   <entry>
     <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
@@ -303,9 +329,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -359,9 +385,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -417,9 +443,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -519,33 +545,6 @@
       <category term="telco" scheme="https://blog.pichuang.com.tw/tags/telco/"/>
     
       <category term="edge computing" scheme="https://blog.pichuang.com.tw/tags/edge-computing/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>過了三年後的 NetDevOps </title>
-    <link href="https://blog.pichuang.com.tw/20200229-after-3y-netdevops/"/>
-    <id>https://blog.pichuang.com.tw/20200229-after-3y-netdevops/</id>
-    <published>2020-02-29T14:28:00.000Z</published>
-    <updated>2020-04-12T15:09:27.587Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;三年前(2017)，那時工作在 &lt;a href=&quot;https://blog.pichuang.com.tw/about/&quot;&gt;Edgecore Network 上班&lt;/a&gt;，經常接觸到各式各樣的網路設備，那時候看到一家新創公司 &lt;a href=&quot;https://cumulusnetworks.com/&quot;&gt;Cumulus Networks&lt;/a&gt; 開始推所謂的 NetDevOps 的概念，也就是利用組態管理系統 (Configuration Management) 去管理底下資料中心的 Switch / Router 確保不會有設定飄移 (Configuration Drift)，時間轉換到2020，我以個人角度來跟大家分享一下經歷&lt;br&gt;&lt;img src=&quot;/images/netdevops-overview.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="telco" scheme="https://blog.pichuang.com.tw/categories/telco/"/>
-    
-    
-      <category term="automation" scheme="https://blog.pichuang.com.tw/tags/automation/"/>
-    
-      <category term="ansible" scheme="https://blog.pichuang.com.tw/tags/ansible/"/>
-    
-      <category term="netdevops" scheme="https://blog.pichuang.com.tw/tags/netdevops/"/>
-    
-      <category term="telco" scheme="https://blog.pichuang.com.tw/tags/telco/"/>
     
   </entry>
   
