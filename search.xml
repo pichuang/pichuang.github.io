@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二]]></title>
+    <url>%2F20200529-openshift-etcd-operator-2%2F</url>
+    <content type="text"><![CDATA[承襲上文 Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一，繼續針對硬碟的部分進行調整，畢竟 etcd 對硬碟 IOPS 相當要求，建議用 SSD 比較好 沒意外的，開場分享個 Deploying OpenShift 4.4 to VMware vSphere 7，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說 etcd 節點硬碟調教 ionice: set or get process I/O scheduling class and priority 這邊使用 ionice (1) - Linux Man Pages 來完成這件事，剛好 CoreOS 內建有支援這個指令 XD，差點就要包一個 Container 而且要蠻高的權限 (需要 root) 去定期執行了 Before12345678910111213141516[core@control-plane-2 ~]$ pgrep etcd740369740441[core@control-plane-2 ~]$ ps uax |grep 740369root 740369 7.6 8.4 9672968 1382392 ? Ssl 17:05 4:25 etcd --initial-advertise-peer-urls=https://10.0.97.3:2380 --cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.crt --key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.key --trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-serving-ca/ca-bundle.crt --client-cert-auth=true --peer-cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --peer-key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --peer-trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --peer-client-cert-auth=true --advertise-client-urls=https://10.0.97.3:2379 --listen-client-urls=https://0.0.0.0:2379 --listen-peer-urls=https://0.0.0.0:2380 --listen-metrics-urls=https://0.0.0.0:9978core 901685 0.0 0.0 12760 1076 pts/0 S+ 18:03 0:00 grep --color=auto 740369[core@control-plane-2 ~]$ ps uax |grep 740441root 740441 0.9 0.1 124764 25288 ? Ssl 17:05 0:32 etcd grpc-proxy start --endpoints https://10.0.97.3:9978 --metrics-addr https://0.0.0.0:9979 --listen-addr 127.0.0.1:9977 --key /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --key-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.key --cert /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --cert-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.crt --cacert /etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --trusted-ca-file /etc/kubernetes/static-pod-certs/configmaps/etcd-metrics-proxy-serving-ca/ca-bundle.crtcore 902165 0.0 0.0 12760 1060 pts/0 S+ 18:03 0:00 grep --color=auto 740441# Get priority and class[core@control-plane-2 ~]$ sudo ionice -p 740369 740441none: prio 4none: prio 0 Tuning我們可以直接登入 CoreOS 後下 ionice 對特定 PID 和硬碟處理權限拉高，可以搭配 ansible 來針對 master node 執行 12# Set priority and class[core@control-plane-2 ~]$ sudo ionice -c2 -n0 -p `pgrep etcd` -c2: best-effort -n0: the highest priority level After1234567[core@control-plane-2 ~]$ pgrep etcd740369740441[core@control-plane-2 ~]$ sudo ionice -p 740369 740441best-effort: prio 0best-effort: prio 0 後話恩…反正裝 etcd 的那個節點之硬碟選用高 IOPS，例如用 SSD，效率和穩定性會提升不少 References ionice (1) - Linux Man Pages etcd - tuning machineconfig etcd 性能测试与调优 Running background tasks on nodes automatically with daemonsets Tuning etcd for Large Installations - Rancher Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一 etcd - hardware Deploying OpenShift 4.4 to VMware vSphere 7]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>etcd</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一]]></title>
     <url>%2F20200528-openshift-etcd-operator-1%2F</url>
     <content type="text"><![CDATA[打從 OpenShift 4 之後，etcd 的安裝變成是透過 etcd-operator 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄 透過 oc 檢查 etcd 狀態核心中的核心，正常狀態下一定是要好的，它的穩定性會直接關聯到 etcd 叢集的穩定性，兩點之間建議須低於 &gt;100ms 12345$ oc get pods -n openshift-etcd -o wide | grep etcdetcd-control-plane-0 3/3 Running 0 2d3h 10.0.97.1 control-plane-0 &lt;none&gt; &lt;none&gt;etcd-control-plane-1 3/3 Running 0 2d3h 10.0.97.2 control-plane-1 &lt;none&gt; &lt;none&gt;etcd-control-plane-2 3/3 Running 0 2d3h 10.0.97.3 control-plane-2 &lt;none&gt; &lt;none&gt; 檢查 etcd 叢集狀態採用跟前一篇介紹的方法 Red Hat OpenShift Pod 與 Container 的愛恨情仇 進行 etcdctl 的基礎操作 12345678910111213141516171819202122232425262728293031323334$ oc rsh -n openshift-etcd etcd-control-plane-0Defaulting container name to etcdctl.Use 'oc describe pod/etcd-control-plane-0 -n openshift-etcd' to see all of the containers in this pod.sh-4.2# etcdctl versionetcdctl version: 3.3.18API version: 3.3sh-4.2# etcdctl endpoint status -w table+------------------------+------------------+---------+---------+-----------+-----------+------------+| ENDPOINT | ID | VERSION | DB SIZE | IS LEADER | RAFT TERM | RAFT INDEX |+------------------------+------------------+---------+---------+-----------+-----------+------------+| https://10.0.97.1:2379 | 8e7cdeadd4c04bd3 | 3.3.18 | 168 MB | true | 109 | 35522525 || https://10.0.97.2:2379 | 65124c220e1d1efa | 3.3.18 | 168 MB | false | 109 | 35522525 || https://10.0.97.3:2379 | 23675b8f347a5bea | 3.3.18 | 168 MB | false | 109 | 35522525 |+------------------------+------------------+---------+---------+-----------+-----------+------------+sh-4.2# etcdctl endpoint health -w table+------------------------+--------+-------------+-------+| ENDPOINT | HEALTH | TOOK | ERROR |+------------------------+--------+-------------+-------+| https://10.0.97.3:2379 | true | 12.52718ms | || https://10.0.97.2:2379 | true | 16.830977ms | || https://10.0.97.1:2379 | true | 21.484222ms | |+------------------------+--------+-------------+-------+sh-4.2# etcdctl member list -w table+------------------+---------+-----------------+------------------------+------------------------+| ID | STATUS | NAME | PEER ADDRS | CLIENT ADDRS |+------------------+---------+-----------------+------------------------+------------------------+| 23675b8f347a5bea | started | control-plane-2 | https://10.0.97.3:2380 | https://10.0.97.3:2379 || 65124c220e1d1efa | started | control-plane-1 | https://10.0.97.2:2380 | https://10.0.97.2:2379 || 8e7cdeadd4c04bd3 | started | control-plane-0 | https://10.0.97.1:2380 | https://10.0.97.1:2379 |+------------------+---------+-----------------+------------------------+------------------------+ 使用 etcdctl 原生效能檢查承上，你也可以直接使用 etcdctl 做一個 60 秒的檢測， 123456sh-4.2# etcdctl check perf -w table 60 / 60 Boooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo! 100.00%1m0sPASS: Throughput is 150 writes/sPASS: Slowest request took 0.134647sPASS: Stddev is 0.003738sPASS 關於預設參數透過 oc describe pod/etcd-control-plane-0 -n openshift-etcd 可知， ETCD 選舉超時預設時間 (ETCD_ELECTION_TIMEOUT): 1000ms ETCD 心跳間隔預設時間 (ETCD_HEARTBEAT_INTERVAL): 100ms etcd 的分散式一致性協定仰賴上述 2 個參數來保證節點之間能夠在部分節點斷線的狀況下依然能夠正確處理 Leader Node 的選舉。 依據 etcd - tuning 及個人經驗可知，ETCD_HEARTBEAT_INTERVAL，即由 Leader 節點通知其他節點 它還是 Leader 的頻率，建議設定為 2 個節點之間 RTT 最大值時間 * 1 ~ 1.5 倍，若該值設定太短，etcd 會發送無用的心跳確認訊息，反而增加 CPU / Network / Disk 無謂的資源消耗；若該值設定太長，就會導致監控節點異常時間過長，會有重新選舉的事情發生。判斷 RTT 的最簡單方式就是使用 ping，如下 12345678910111213141516171819# 登入節點$ oc debug node/control-plane-0Starting pod/control-plane-0-debug ...To use host binaries, run `chroot /host`Pod IP: 10.0.97.1If you dont see a command prompt, try pressing enter.sh-4.2# chroot /hostsh-4.4# ping 10.0.97.5 -c60PING 10.0.97.5 (10.0.97.5) 56(84) bytes of data.64 bytes from 10.0.97.5: icmp_seq=1 ttl=64 time=0.191 ms64 bytes from 10.0.97.5: icmp_seq=2 ttl=64 time=0.151 ms64 bytes from 10.0.97.5: icmp_seq=3 ttl=64 time=0.213 ms...omit...64 bytes from 10.0.97.5: icmp_seq=59 ttl=64 time=0.142 ms64 bytes from 10.0.97.5: icmp_seq=60 ttl=64 time=0.204 ms--- 10.0.97.5 ping statistics ---60 packets transmitted, 60 received, 0% packet loss, time 59000msrtt min/avg/max/mdev = 0.112/0.212/0.435/0.054 ms 如上面數字表現，RTT 測試出來是 0.435ms，遠低於預設值 100ms，所以就不用特別改 ETCD_ELECTION_TIMEOUT，則是表示如果節點等待多久沒收到 Leader 的心跳確認的話，就會開始嘗試去競選 Leader 的位子，建議設定為 2 個節點之間 RTT 最大值時間 * 10，以應對網路變化，故如果原有 RTT 為 100ms 的話，則選舉超時設定則為 1000ms。 另外選舉超時建議上限值為 50,000 ms，心跳間隔上限值為 5,000 ms 備份 etcd database12345678910111213141516171819202122232425$ ssh core@control-plane-1 -i ~/.ssh/id_rsa_ocp4_vcenter.pubLast login: Wed May 27 16:49:17 2020 from 10.0.97.100# Backup[core@control-plane-1 ~]$ sudo -E /usr/local/bin/cluster-backup.sh ./assets/backup385e44c057e47b6fe0b02d534dc4cb452056d33f9174271d1ecced45bc317e50etcdctl version: 3.3.18API version: 3.3found latest kube-apiserver-pod: /etc/kubernetes/static-pod-resources/kube-apiserver-pod-131found latest kube-controller-manager-pod: /etc/kubernetes/static-pod-resources/kube-controller-manager-pod-13found latest kube-scheduler-pod: /etc/kubernetes/static-pod-resources/kube-scheduler-pod-17found latest etcd-pod: /etc/kubernetes/static-pod-resources/etcd-pod-139Snapshot saved at ./assets/backup/snapshot_2020-05-27_165016.dbsnapshot db and kube resources are successfully saved to ./assets/backup# Check[core@control-plane-1 ~]$ cd ./assets/backup/[core@control-plane-1 backup]$ lssnapshot_2020-05-27_165016.db static_kuberesources_2020-05-27_165016.tar.gz# Copy to outside[core@control-plane-1 backup]$ scp snapshot_2020-05-27_165016.db static_kuberesources_2020-05-27_165016.tar.gz root@bastion.ocp4.internal:~/snapshot_2020-05-27_165016.db 100% 171MB 135.1MB/s 00:01static_kuberesources_2020-05-27_165016.tar.gz 100% 64KB 56.1MB/s 00:00 後話下回待續 References Red Hat OpenShift Pod 與 Container 的愛恨情仇 etcdctl 常用命令 etcd - tuning Backing up etcd Replacing an unhealthy etcd member]]></content>
@@ -652,8 +665,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -949,8 +962,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>ofdpa</tag>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -964,8 +977,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>ofdpa</tag>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -979,10 +992,10 @@
         <category>infra</category>
       </categories>
       <tags>
+        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
-        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>
