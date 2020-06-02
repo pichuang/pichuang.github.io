@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[通用抽象網路邏輯介紹]]></title>
+    <url>%2F20200602-network-logical-plane%2F</url>
+    <content type="text"><![CDATA[來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考 但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係 RHEL 網路流量抽象邏輯其實因為他本身就是一台 VM 你加多少網卡，決定該網卡要幹嘛，他就是什麼角色，就像上面那張圖一樣，這比較沒什麼特別的 OpenShift 網路流量抽象邏輯以一個 OpenShift 的 Networking 為觀點出發的話，針對網路的流量分類，常見會分為下面 3 + 1 種但不限於之類型 資料層 (Data Plane, DP)：有時候有會被叫做轉發層 (Forwarding Plane, FP) 或 User Plane (UP)，主要講的就是實際上資料封包傳輸所流經的路線 1234567$ oc get daemonset.apps/ovs -n openshift-sdnNAME DESIRED CURRENT READY UP-TO-DATE AVAILABLE NODE SELECTOR AGEovs 5 5 5 5 5 kubernetes.io/os=linux 77d$ oc get daemonset.apps/sdn -n openshift-sdnNAME DESIRED CURRENT READY UP-TO-DATE AVAILABLE NODE SELECTOR AGEsdn 5 5 5 5 5 kubernetes.io/os=linux 77d 如果更詳細要講的話，其實就是透過基於 CNI 定義下實做出來的網路模組，如預設的 ovs-networkpolicy，裡面就是節點間建立歸屬能辦到 L2 over L3 的 VXLAN 進行 Pod to Pod 或 Pod to Services 等 Kubernetes 內建之機制溝通 控制層 (Control Plane, CP)：主要是針對 Data Plane 的資料流控制進行能管理和上一些規範，在 OpenShift 角度上來說就是 1234$ oc get daemonset.apps/sdn-controller -n openshift-sdnNAME DESIRED CURRENT READY UP-TO-DATE AVAILABLE NODE SELECTOR AGEsdn-controller 2 2 2 2 2 node-role.kubernetes.io/master= 77d 管理層 (Management Plane, MP)：能夠管理和監視 Control Plane 的路線，譬如透過 SSH / SNMP / Telnet 登入管理皆屬此類 123456789101112$ ssh core@control-plane-2 -i ~/.ssh/id_rsa_ocp4_vcenter.pubRed Hat Enterprise Linux CoreOS 44.81.202005062110-0 Part of OpenShift 4.4, RHCOS is a Kubernetes native operating system managed by the Machine Config Operator (`clusteroperator/machine-config`).WARNING: Direct SSH access to machines is not recommended; instead,make configuration changes via `machineconfig` objects: https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html---Last login: Sat May 30 15:21:52 2020 from 10.0.97.100[core@control-plane-2 ~]$ 儲存層 (Storage Plane, SP)：嚴格來說，這個不算在常見的網路架構中，連 OpenShift 網路都沒有特別定義，這是從 Data Plane 拆分一個角色出來，特別針對 OS 跟儲存設備中間拉一個專門的網路，譬如你的 nfs mount point 通常都不會跟你的一般流量混在一起， 後話這邊要比較留意就是 不同的設備觀點，對於 CP / DP / MP 會有不一樣的解釋，所以要講架構前一定要很清楚知道是從哪個設備觀點出發 譬如說以我比較熟的 SDN 架構來說，對照如下 DP: SDN Switch，實際轉發跟處理封包的路線 CP: SDN Controller，負責決定 SDN Switch 內部資料流量的走向 MP: SDN Switch 內建的 SNMP / Telnet / SSH 等標準協定可供日常管理的路線 References Difference between control plane, data plane and management plane? SDN Series Part One: Defining Software Defined Networking]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>network</tag>
+        <tag>redhat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二]]></title>
     <url>%2F20200529-openshift-etcd-operator-2%2F</url>
     <content type="text"><![CDATA[承襲上文 Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一，繼續針對硬碟的部分進行調整，畢竟 etcd 對硬碟 IOPS 相當要求，建議用 SSD 比較好 沒意外的，開場分享個 Deploying OpenShift 4.4 to VMware vSphere 7，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說 etcd 節點硬碟調教 ionice: set or get process I/O scheduling class and priority 這邊使用 ionice (1) - Linux Man Pages 來完成這件事，剛好 CoreOS 內建有支援這個指令 XD，差點就要包一個 Container 而且要蠻高的權限 (需要 root) 去定期執行了 Before12345678910111213141516[core@control-plane-2 ~]$ pgrep etcd740369740441[core@control-plane-2 ~]$ ps uax |grep 740369root 740369 7.6 8.4 9672968 1382392 ? Ssl 17:05 4:25 etcd --initial-advertise-peer-urls=https://10.0.97.3:2380 --cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.crt --key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.key --trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-serving-ca/ca-bundle.crt --client-cert-auth=true --peer-cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --peer-key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --peer-trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --peer-client-cert-auth=true --advertise-client-urls=https://10.0.97.3:2379 --listen-client-urls=https://0.0.0.0:2379 --listen-peer-urls=https://0.0.0.0:2380 --listen-metrics-urls=https://0.0.0.0:9978core 901685 0.0 0.0 12760 1076 pts/0 S+ 18:03 0:00 grep --color=auto 740369[core@control-plane-2 ~]$ ps uax |grep 740441root 740441 0.9 0.1 124764 25288 ? Ssl 17:05 0:32 etcd grpc-proxy start --endpoints https://10.0.97.3:9978 --metrics-addr https://0.0.0.0:9979 --listen-addr 127.0.0.1:9977 --key /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --key-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.key --cert /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --cert-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.crt --cacert /etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --trusted-ca-file /etc/kubernetes/static-pod-certs/configmaps/etcd-metrics-proxy-serving-ca/ca-bundle.crtcore 902165 0.0 0.0 12760 1060 pts/0 S+ 18:03 0:00 grep --color=auto 740441# Get priority and class[core@control-plane-2 ~]$ sudo ionice -p 740369 740441none: prio 4none: prio 0 Tuning我們可以直接登入 CoreOS 後下 ionice 對特定 PID 和硬碟處理權限拉高，可以搭配 ansible 來針對 master node 執行 12# Set priority and class[core@control-plane-2 ~]$ sudo ionice -c2 -n0 -p `pgrep etcd` -c2: best-effort -n0: the highest priority level After1234567[core@control-plane-2 ~]$ pgrep etcd740369740441[core@control-plane-2 ~]$ sudo ionice -p 740369 740441best-effort: prio 0best-effort: prio 0 後話恩…反正裝 etcd 的那個節點之硬碟選用高 IOPS，例如用 SSD，效率和穩定性會提升不少 References ionice (1) - Linux Man Pages etcd - tuning machineconfig etcd 性能测试与调优 Running background tasks on nodes automatically with daemonsets Tuning etcd for Large Installations - Rancher Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一 etcd - hardware Deploying OpenShift 4.4 to VMware vSphere 7]]></content>
@@ -962,8 +975,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>ofdpa</tag>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -977,8 +990,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>ofdpa</tag>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -992,10 +1005,10 @@
         <category>infra</category>
       </categories>
       <tags>
+        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
-        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>

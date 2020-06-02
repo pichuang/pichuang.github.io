@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-05-30T13:18:43.552Z</updated>
+  <updated>2020-06-02T07:23:10.235Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>通用抽象網路邏輯介紹</title>
+    <link href="https://blog.pichuang.com.tw/20200602-network-logical-plane/"/>
+    <id>https://blog.pichuang.com.tw/20200602-network-logical-plane/</id>
+    <published>2020-06-01T16:31:45.000Z</published>
+    <updated>2020-06-02T07:23:10.235Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/network-logical.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="network" scheme="https://blog.pichuang.com.tw/tags/network/"/>
+    
+      <category term="redhat" scheme="https://blog.pichuang.com.tw/tags/redhat/"/>
+    
+  </entry>
   
   <entry>
     <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</title>
@@ -524,30 +551,6 @@
       <category term="technical writer" scheme="https://blog.pichuang.com.tw/tags/technical-writer/"/>
     
       <category term="blogger" scheme="https://blog.pichuang.com.tw/tags/blogger/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>尋找當下 Linux OS 效能瓶頸</title>
-    <link href="https://blog.pichuang.com.tw/20200307-performance-collection/"/>
-    <id>https://blog.pichuang.com.tw/20200307-performance-collection/</id>
-    <published>2020-03-06T16:16:00.000Z</published>
-    <updated>2020-04-12T15:09:21.477Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;常常聽到客戶說他們的系統很慢，但說慢在哪裡也沒有一個很明確的說明，這邊提供一個簡單的做法，當遇到&lt;code&gt;當下&lt;/code&gt;系統很慢的時候，可以有個&lt;code&gt;數字判斷&lt;/code&gt;的依據尋找瓶頸點 (Bound)，這篇單純就 OS 層面說明，不討論應用程式等級的效能問題&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.brendangregg.com/Perf/linux_observability_sar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="https://blog.pichuang.com.tw/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="https://blog.pichuang.com.tw/tags/linux/"/>
-    
-      <category term="performance" scheme="https://blog.pichuang.com.tw/tags/performance/"/>
     
   </entry>
   

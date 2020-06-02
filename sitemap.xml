@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200602-network-logical-plane/</loc>
+    
+    <lastmod>2020-06-02T07:23:10.235Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/</loc>
     
     <lastmod>2020-06-01T14:52:03.156Z</lastmod>
