@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-06-02T07:23:10.235Z</updated>
+  <updated>2020-06-02T11:25:28.099Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,11 +21,14 @@
     <link href="https://blog.pichuang.com.tw/20200602-network-logical-plane/"/>
     <id>https://blog.pichuang.com.tw/20200602-network-logical-plane/</id>
     <published>2020-06-01T16:31:45.000Z</published>
-    <updated>2020-06-02T07:23:10.235Z</updated>
+    <updated>2020-06-02T11:25:28.099Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考&lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;這世界上沒有完美的架構，只有權衡後的辦法，但…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/network-logical.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係&lt;/p&gt;
     
