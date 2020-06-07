@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
+    
+    <lastmod>2020-06-07T15:41:40.140Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
+    
+    <lastmod>2020-06-05T03:17:38.914Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200602-network-logical-plane/</loc>
     
-    <lastmod>2020-06-02T11:25:28.099Z</lastmod>
+    <lastmod>2020-06-02T11:25:37.042Z</lastmod>
     
   </url>
   
@@ -47,13 +61,6 @@
     <loc>https://blog.pichuang.com.tw/20200521-openshift-with-coreos-part-7/</loc>
     
     <lastmod>2020-05-23T11:11:17.499Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/record/index.html</loc>
-    
-    <lastmod>2020-05-12T16:15:15.573Z</lastmod>
     
   </url>
   
@@ -250,13 +257,6 @@
     <loc>https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</loc>
     
     <lastmod>2020-04-12T15:12:01.998Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20190325-redhat-openshift-v3.11-storage-recommendation/</loc>
-    
-    <lastmod>2020-04-12T15:11:55.892Z</lastmod>
     
   </url>
   
