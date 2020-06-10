@@ -647,8 +647,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift3</tag>
         <tag>redhat</tag>
+        <tag>openshift3</tag>
         <tag>networking</tag>
       </tags>
   </entry>
@@ -661,8 +661,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift3</tag>
         <tag>redhat</tag>
+        <tag>openshift3</tag>
         <tag>nvidia</tag>
         <tag>dgx</tag>
         <tag>tesla</tag>
@@ -678,8 +678,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -708,8 +708,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift3</tag>
         <tag>redhat</tag>
+        <tag>openshift3</tag>
         <tag>storage</tag>
       </tags>
   </entry>
@@ -723,8 +723,8 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
-        <tag>openshift3</tag>
         <tag>redhat</tag>
+        <tag>openshift3</tag>
         <tag>router</tag>
         <tag>services</tag>
         <tag>pods</tag>
@@ -752,9 +752,9 @@
       </categories>
       <tags>
         <tag>vmware</tag>
+        <tag>redhat</tag>
         <tag>openshift3</tag>
         <tag>nsx-t</tag>
-        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
