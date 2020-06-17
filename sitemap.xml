@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200618-k8s-release-history/</loc>
+    
+    <lastmod>2020-06-17T18:24:54.177Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-06-10T12:30:46.859Z</lastmod>

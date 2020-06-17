@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-06-02T11:25:37.042Z</updated>
+  <updated>2020-06-17T18:24:54.177Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes / OpenShift 發布歷史時間表</title>
+    <link href="https://blog.pichuang.com.tw/20200618-k8s-release-history/"/>
+    <id>https://blog.pichuang.com.tw/20200618-k8s-release-history/</id>
+    <published>2020-06-17T16:31:45.000Z</published>
+    <updated>2020-06-17T18:24:54.177Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;打從 Kubernetes 1.15 之後，OpenShift 的版本迭代速度就是落差一版而已，在那之前基本上都是兩版的差距，這一切都是為了 &lt;a href=&quot;https://kubernetes.io/docs/setup/release/version-skew-policy/&quot;&gt;Kubernetes 的版本生命週期規定&lt;/a&gt; 的教條而改變的…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ocp-and-k8s.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/categories/kubernetes/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>通用抽象網路邏輯介紹</title>
@@ -529,31 +553,6 @@
       <category term="ansible" scheme="https://blog.pichuang.com.tw/tags/ansible/"/>
     
       <category term="smart start" scheme="https://blog.pichuang.com.tw/tags/smart-start/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>成為一名技術留跡者</title>
-    <link href="https://blog.pichuang.com.tw/20200308-technical-writer/"/>
-    <id>https://blog.pichuang.com.tw/20200308-technical-writer/</id>
-    <published>2020-03-07T16:16:00.000Z</published>
-    <updated>2020-04-12T15:09:19.087Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;小弟 Blog 陸陸續續也從 2013 年寫到現在了，從 &lt;code&gt;roan.logdown.com&lt;/code&gt; 到現在的 &lt;code&gt;blog.pichuang.com.tw&lt;/code&gt; 自己寫作風格好像一直以來都是差不多的，這邊分享一下幾個我覺得蠻有用的資訊&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/tags/misc/"/>
-    
-      <category term="technical writer" scheme="https://blog.pichuang.com.tw/tags/technical-writer/"/>
-    
-      <category term="blogger" scheme="https://blog.pichuang.com.tw/tags/blogger/"/>
     
   </entry>
   
