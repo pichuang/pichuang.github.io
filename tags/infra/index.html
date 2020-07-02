@@ -23,7 +23,43 @@
 <li>Including vmnic{2-5}</li>
 </ul>
 </li>
-</ul></div><a class="article-more button is-small size-small" href="/20170124-upgrade-intel-drivers-on-vmware-esxi/#more">Read More</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-07-26T16:00:00.000Z" title="2015-07-26T16:00:00.000Z">2015-07-27</time><span class="level-item"><a class="link-muted" href="/categories/linux/">linux</a></span><span class="level-item">2 minutes read (About 229 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/">PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</a></h1><div class="content"><p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
+</ul></div><a class="article-more button is-small size-small" href="/20170124-upgrade-intel-drivers-on-vmware-esxi/#more">Read More</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-07-26T16:00:00.000Z" title="2015-07-26T16:00:00.000Z">2015-07-27</time><span class="level-item"><a class="link-muted" href="/categories/linux/">linux</a></span><span class="level-item">a minute read (About 219 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/20150727-pki-lab-3-create-single-domain-ssl-certificate/">PKI Lab$3 Create Single domain SSL Certificate</a></h1><div class="content"><p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
+<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
+<li><p>Setting vars for Root CA</p>
+<blockquote>
+<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:roan@night9.cc">roan@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”roan.night9.cc”  </p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/pichuang/easy-rsa/blob/single/vars">Source</a></li>
+<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code> <code>xxx.night9.cc</code></li>
+</ul>
+</li>
+<li><p>Create Key</p>
+<blockquote>
+<p>source ./vars<br>./build-key-server roan.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
+</blockquote>
+</li>
+<li><p>Check key and crt</p>
+<blockquote>
+<p>ls -la ./keys/roan.night9.cc.{key,crt}</p>
+</blockquote>
+</li>
+<li><p>Check roan.night9.cc crt Info</p>
+<blockquote>
+<p>openssl x509 -in roan.night9.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show</p>
+<img src="https://lh3.googleusercontent.com/jEjmgkHRcXctCtCis_yvaNSvPZpAa7Sp4eG6oVaRUSQ=w1034-h1278-no" width="600" height="700">
+
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-07-26T16:00:00.000Z" title="2015-07-26T16:00:00.000Z">2015-07-27</time><span class="level-item"><a class="link-muted" href="/categories/linux/">linux</a></span><span class="level-item">2 minutes read (About 229 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/">PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</a></h1><div class="content"><p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
 <h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
 <li><p>Setting vars for Root CA</p>
 <blockquote>
@@ -54,42 +90,6 @@
 </li>
 <li><p>Show</p>
 <img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
-
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
-<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
-<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
-</ul>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-07-26T16:00:00.000Z" title="2015-07-26T16:00:00.000Z">2015-07-27</time><span class="level-item"><a class="link-muted" href="/categories/linux/">linux</a></span><span class="level-item">a minute read (About 219 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/20150727-pki-lab-3-create-single-domain-ssl-certificate/">PKI Lab$3 Create Single domain SSL Certificate</a></h1><div class="content"><p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
-<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
-<li><p>Setting vars for Root CA</p>
-<blockquote>
-<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:roan@night9.cc">roan@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”roan.night9.cc”  </p>
-</blockquote>
-<ul>
-<li><a href="https://github.com/pichuang/easy-rsa/blob/single/vars">Source</a></li>
-<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code> <code>xxx.night9.cc</code></li>
-</ul>
-</li>
-<li><p>Create Key</p>
-<blockquote>
-<p>source ./vars<br>./build-key-server roan.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
-</blockquote>
-</li>
-<li><p>Check key and crt</p>
-<blockquote>
-<p>ls -la ./keys/roan.night9.cc.{key,crt}</p>
-</blockquote>
-</li>
-<li><p>Check roan.night9.cc crt Info</p>
-<blockquote>
-<p>openssl x509 -in roan.night9.crt -text -noout</p>
-</blockquote>
-</li>
-<li><p>Show</p>
-<img src="https://lh3.googleusercontent.com/jEjmgkHRcXctCtCis_yvaNSvPZpAa7Sp4eG6oVaRUSQ=w1034-h1278-no" width="600" height="700">
 
 </li>
 </ul>
