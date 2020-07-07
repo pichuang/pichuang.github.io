@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[OpenShift 4 DNS & NTP & PTP 網路套餐]]></title>
+    <url>%2F20200706-openshift-with-coreos-part-8%2F</url>
+    <content type="text"><![CDATA[最近雖然受到 COVID-19 影響導致有些國外專案進度有點落後，但就 OpenShift 4 功能本身不知道為啥成長幅度變的蠻快的…有時候想跟也很難跟上，只能透過影片來了解，然後 Red Hat 本家不知道哪根筋不對了，跑去 Twitch (!!??) 開了一個頻道 RedHatOpenShift Twitch，三不五時就開直播上演下圖的狀況，相當有事 走馬看花第 8 天CoreDNS 做 DNS Forwarder CoreDNS: DNS and Service Discovery 其實 OpenShift 內建有 DNS 服務，主要目的是要來解析 Service IP &lt;-&gt; DNS，所採用的技術是使用 CoreDNS。關於 CoreDNS ，主要是提供雲原生的 DNS 服務和服務發現的解決方案，有興趣想參考效能比較的話，可以看 Scaling CoreDNS in Kubernetes Clusters，目前已於 2019/01 時從 CNCF 專案海中畢業。 如果你仔細觀察 CoreDNS 在 OpenShift 上的運作狀況可以發現他是從 openshift-dns-operator 部署，並於每一個節點採用 DaemonSet 的形式運行 CoreDNS 1234567891011121314151617181920212223# Operator Information$ oc get deployment/dns-operator -n openshift-dns-operatorNAME READY UP-TO-DATE AVAILABLE AGEdns-operator 1/1 1 1 113m$ oc get clusteroperators/dnsNAME VERSION AVAILABLE PROGRESSING DEGRADED SINCEdns 4.3.27 True False False 108m# Project Information$ oc get all -n openshift-dns -o wideNAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATESpod/dns-default-9vq2j 2/2 Running 0 84m 10.129.0.10 ip-10-0-146-166.ap-southeast-1.compute.internal &lt;none&gt; &lt;none&gt;pod/dns-default-g2bps 2/2 Running 0 84m 10.130.0.9 ip-10-0-167-32.ap-southeast-1.compute.internal &lt;none&gt; &lt;none&gt;pod/dns-default-mg7cx 2/2 Running 0 84m 10.128.0.13 ip-10-0-129-186.ap-southeast-1.compute.internal &lt;none&gt; &lt;none&gt;pod/dns-default-sxzcn 2/2 Running 0 75m 10.128.2.3 ip-10-0-132-54.ap-southeast-1.compute.internal &lt;none&gt; &lt;none&gt;pod/dns-default-wj97g 2/2 Running 0 75m 10.131.0.3 ip-10-0-154-36.ap-southeast-1.compute.internal &lt;none&gt; &lt;none&gt;NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGEservice/dns-default ClusterIP 172.30.0.10 &lt;none&gt; 53/UDP,53/TCP,9153/TCP 83mNAME DESIRED CURRENT READY UP-TO-DATE AVAILABLE NODE SELECTOR AGEdaemonset.apps/dns-default 5 5 5 5 5 kubernetes.io/os=linux 83m 倘若你想要透過 VPN 去連線至其他雲裡面的服務，那這樣會有需要特別多加幾條 DNS Forwarder 的能力在集群裡面，遵照 DNS Operator in OpenShift Container Platform 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889# Default Setting$ oc get configmap/dns-default -n openshift-dns -o yamlapiVersion: v1data: Corefile: | .:5353 &#123; errors health kubernetes cluster.local in-addr.arpa ip6.arpa &#123; pods insecure upstream fallthrough in-addr.arpa ip6.arpa &#125; prometheus :9153 forward . /etc/resolv.conf &#123; policy sequential &#125; cache 30 reload &#125;kind: ConfigMapmetadata: labels: dns.operator.openshift.io/owning-dns: default name: dns-default namespace: openshift-dns# 新增 DNS Forwarder$ cat &lt;&lt; EOF &gt;&gt; apply-dns-forwarder.yamlapiVersion: operator.openshift.io/v1kind: DNSmetadata: name: defaultspec: servers: - name: pichuang-server-farm zones: - pichuang.internal forwardPlugin: upstreams: - 192.168.77.100 - 192.168.77.99:5533 - name: redhat-server-farm zones: - rhtw.private - rhglobal.public forwardPlugin: upstreams: - 10.99.1.100 - 172.88.2.99:5533EOF# 執行變更$ oc apply -f apply-dns-forwarder.yaml# 檢查 CoreDNS 設定$ oc get configmap/dns-default -n openshift-dns -o yamlapiVersion: v1data: Corefile: | # pichuang-server-farm pichuang.internal:5353 &#123; forward . 192.168.77.100 192.168.77.99:5533 &#125; # redhat-server-farm rhtw.private:5353 rhglobal.public:5353 &#123; forward . 10.99.1.100 172.88.2.99:5533 &#125; .:5353 &#123; errors health kubernetes cluster.local in-addr.arpa ip6.arpa &#123; pods insecure upstream fallthrough in-addr.arpa ip6.arpa &#125; prometheus :9153 forward . /etc/resolv.conf &#123; policy sequential &#125; cache 30 reload &#125;kind: ConfigMapmetadata: labels: dns.operator.openshift.io/owning-dns: default name: dns-default namespace: openshift-dns 時間設定 Chrony打從 RHEL 7 之後，Red Hat 官方因為安全及效能上的考量，建議從 ntpd 轉換成使用 chronyd，實際上也是蠻推薦多用 chronyd 當作主要的 NTP Server/Client，就連 OpenShift 預載的 CoreOS 內部也是以 Chronyd 為校時基準，參考 NTP configuration - OpenShift Tips，以下是校時的操作 先檢查預設的狀態，隨便挑一台用 oc debug node/&lt;node name&gt; 進去觀察時間 12345678910111213141516171819202122$ oc debug node&#x2F;ip-10-0-129-186.ap-southeast-1.compute.internalStarting pod&#x2F;ip-10-0-129-186ap-southeast-1computeinternal-debug ...To use host binaries, run &#96;chroot &#x2F;host&#96;Pod IP: 10.0.129.186If you don&#39;t see a command prompt, try pressing enter.sh-4.2# chroot &#x2F;hostsh-4.4# cat &#x2F;etc&#x2F;chrony.confsh-4.4# chronyc trackingReference ID : DABA0324 (time1.maxonline.com.sg)Stratum : 2Ref time (UTC) : Tue Jul 07 08:12:11 2020System time : 0.000018082 seconds fast of NTP timeLast offset : +0.000020540 secondsRMS offset : 0.000040942 secondsFrequency : 1.571 ppm slowResidual freq : +0.007 ppmSkew : 0.394 ppmRoot delay : 0.002178520 secondsRoot dispersion : 0.000406400 secondsUpdate interval : 64.2 secondsLeap status : Normal 準備 chrony.conf，然後進行 Base64 編碼 12345678910111213$ cat &lt;&lt; EOF &gt;&gt; chrony.confpool 0.tw.pool.ntp.org iburstpool 3.tw.pool.ntp.org iburstdriftfile /var/lib/chrony/driftmakestep 1.0 3rtcsynckeyfile /etc/chrony.keysleapsectz right/UTClogdir /var/log/chronyEOF$ cat chrony.conf | python3 -m base64 | xargs echo -ncG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK 準備 2 個聲明檔，如果你在 machine config pool 還有多新增 infra 的話，也要特別寫一個，原則上就是一個角色要有一個檔案就是了 123456789101112131415161718192021222324252627282930313233343536373839404142434445cat &lt;&lt; EOF &gt; 98-worker-chrony.yamlapiVersion: machineconfiguration.openshift.io/v1kind: MachineConfigmetadata: labels: machineconfiguration.openshift.io/role: worker name: 98-worker-chrony-configurationspec: config: ignition: version: 2.2.0 storage: files: - contents: source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK verification: &#123;&#125; filesystem: root mode: 420 path: /etc/chrony.confEOFcat &lt;&lt; EOF &gt; 98-master-chrony.yamlapiVersion: machineconfiguration.openshift.io/v1kind: MachineConfigmetadata: labels: machineconfiguration.openshift.io/role: master name: 98-master-chrony-configurationspec: config: ignition: version: 2.2.0 storage: files: - contents: source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK verification: &#123;&#125; filesystem: root mode: 420 path: /etc/chrony.confEOF$ oc apply -f 98-master-chrony.yamlmachineconfig.machineconfiguration.openshift.io/98-masters-chrony-configuration created$ oc apply -f 98-worker-chrony.yamlmachineconfig.machineconfiguration.openshift.io/98-workers-chrony-configuration created 精確時間協定 PTP想不到吧! OpenShift 4 有內建支援 IEEE 1588 (Precision Time Protocol, PTP) 協定，來支援硬體級別的精確時間同步，當然要使用這個技術需要仰賴硬體設備上的支援，包含像是網卡以及交換機，OpenShift 4 是將 Linux PTP 透過 PTP Operator 安裝於所有節點之上，透過內建自動能力查詢機制來協助將具備 PTP 能力之網卡設定其相關參數。其實主要這個功能是為了 O-RAN W6 裡面有定義條目 5.5.1 Cloud Platform Time Synchronization Architecture 而做的，裡面描述如下 The Time Sync deployment architecture which is described below relies on usage of Precision Time Protocol (PTP) IEEE 1588-2008 (a.k.a. IEEE 1588 Version 2) to synchronize clocks throughout the Edge Cloud site. 其實安裝相當簡單，主要是透過 Operator Framework 從頭打到底，如果有興趣想看過程的可以參考該 GitHub - pichuang/redhat-ptp-demo 1234567891011121314151617181920$ oc get allNAME READY STATUS RESTARTS AGEpod/linuxptp-daemon-2z2sx 1/1 Running 0 19mpod/linuxptp-daemon-nllxn 1/1 Running 0 19mpod/linuxptp-daemon-phkwp 1/1 Running 0 19mpod/linuxptp-daemon-v7w4s 1/1 Running 0 19mpod/linuxptp-daemon-xh5fp 1/1 Running 0 19mpod/ptp-operator-575797775d-7bcdf 1/1 Running 0 19mNAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGEservice/ptp-monitor-service ClusterIP None &lt;none&gt; 9091/TCP 19mNAME DESIRED CURRENT READY UP-TO-DATE AVAILABLE NODE SELECTOR AGEdaemonset.apps/linuxptp-daemon 5 5 5 5 5 kubernetes.io/os=linux 19mNAME READY UP-TO-DATE AVAILABLE AGEdeployment.apps/ptp-operator 1/1 1 1 19mNAME DESIRED CURRENT READY AGEreplicaset.apps/ptp-operator-575797775d 1 1 1 19m 哦對了，我身上沒有支援 PTP 的網卡，所以看不出來效果，帶有錢的大大找我去研究相關使用方式 XD AppendixEnvironment Information OpenShift 4.3.27 Kubernetes Version: v1.16.2+d6d3cff]]></content>
+      <categories>
+        <category>kubernetes</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Kubernetes / OpenShift 發布歷史時間表]]></title>
     <url>%2F20200618-k8s-release-history%2F</url>
     <content type="text"><![CDATA[打從 Kubernetes 1.15 之後，OpenShift 的版本迭代速度就是落差一版而已，在那之前基本上都是兩版的差距，這一切都是為了 Kubernetes 的版本生命週期規定 的教條而改變的… OpenShift / Kubernetes 釋出歷史紀錄 Kubernetes Version K8S Release Date OCP Release Date OpenShift Version 1.21 4.8 1.20 4.7 1.19 2020/8/4 4.6 (LTS) 1.18 2020/3/24 2020/7/9 4.5 1.17 2020/1/7 2020/4/29 4.4 1.16 2019/9/16 2020/1/15 4.3 1.15 2019/6/17 - - 1.14 2019/3/25 2019/10/16 4.2 1.13 2018/12/3 2019/6/4 4.1 1.12 2018/9/27 2019/5/7 4.0 1.11 2018/7/3 2018/10/10 3.11 結語若你有看完 Kubernetes 的版本生命週期，會獲得到一個結論就是 你至少每 9 個月一定要升級 Kubernetes … 有人跟你說 Kubernetes 建完用一輩子，只能祈禱不會遇到跨版本的高度危險漏洞，譬如像 CVE-2018-1002105 References Kubernetes 升級規劃 Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 OpenShift vs Kubernetes: What are the Differences?]]></content>
@@ -690,8 +702,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
         <tag>openapi</tag>
+        <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -987,8 +999,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -1002,8 +1014,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -1017,10 +1029,10 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>

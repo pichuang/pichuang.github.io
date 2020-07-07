@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-07-02T15:07:39.743Z</updated>
+  <updated>2020-07-07T12:56:07.603Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenShift 4 DNS &amp; NTP &amp; PTP 網路套餐</title>
+    <link href="https://blog.pichuang.com.tw/20200706-openshift-with-coreos-part-8/"/>
+    <id>https://blog.pichuang.com.tw/20200706-openshift-with-coreos-part-8/</id>
+    <published>2020-07-05T16:31:45.000Z</published>
+    <updated>2020-07-07T12:56:07.603Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近雖然受到 COVID-19 影響導致有些國外專案進度有點落後，但就 OpenShift 4 功能本身不知道為啥成長幅度變的蠻快的…有時候想跟也很難跟上，只能透過影片來了解，然後 Red Hat 本家不知道哪根筋不對了，跑去 Twitch (!!??) 開了一個頻道 &lt;a href=&quot;https://www.twitch.tv/redhatopenshift&quot;&gt;RedHatOpenShift Twitch&lt;/a&gt;，三不五時就開直播上演下圖的狀況，相當有事&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/3-bear.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/categories/kubernetes/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes / OpenShift 發布歷史時間表</title>
@@ -529,30 +553,6 @@
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>30 分鐘內從開始到入門的 Ansible</title>
-    <link href="https://blog.pichuang.com.tw/20200309-ansible-30m/"/>
-    <id>https://blog.pichuang.com.tw/20200309-ansible-30m/</id>
-    <published>2020-03-08T16:16:00.000Z</published>
-    <updated>2020-04-12T15:09:16.902Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位&lt;/p&gt;
-&lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/ysqclCH9Vc0&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
-    
-    </summary>
-    
-    
-      <category term="ansible" scheme="https://blog.pichuang.com.tw/categories/ansible/"/>
-    
-    
-      <category term="ansible" scheme="https://blog.pichuang.com.tw/tags/ansible/"/>
-    
-      <category term="smart start" scheme="https://blog.pichuang.com.tw/tags/smart-start/"/>
     
   </entry>
   
