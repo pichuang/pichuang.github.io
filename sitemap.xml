@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200712-container-on-vm-or-bm/</loc>
+    
+    <lastmod>2020-07-12T18:58:36.790Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/20200706-openshift-with-coreos-part-8/</loc>
     
     <lastmod>2020-07-07T17:19:08.241Z</lastmod>

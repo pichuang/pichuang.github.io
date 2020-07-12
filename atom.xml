@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-07-07T17:19:08.241Z</updated>
+  <updated>2020-07-12T18:58:36.790Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes 部署在虛機好還是裸機好?</title>
+    <link href="https://blog.pichuang.com.tw/20200712-container-on-vm-or-bm/"/>
+    <id>https://blog.pichuang.com.tw/20200712-container-on-vm-or-bm/</id>
+    <published>2020-07-12T16:31:45.000Z</published>
+    <updated>2020-07-12T18:58:36.790Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;這幾週常被問到一個問題&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;以技術觀點來看，請問容器 (Container) 或者是容器平台 (Kubernetes) 比較適合部署在虛擬環境 (VM) 中還是裸機環境中 (Bare Metal)?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;/images/vm-vs-bm.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其實這個問題在十年前虛擬機技術剛出來的時候，也蠻多人做過架構及性能比較，時光快轉到現在的年代，來到容器的世代，相同的問題也被拿出來討論，本篇就是要特別講述一下關於這些架構上的比較分析、使用影響及建議採用的策略作法建議，這篇會採用比較中立的角度闡述，如果有觀點太偏頗的地方，可以私下跟我說及提供修改建議&lt;/p&gt;
+&lt;p&gt;不免俗的我還是要來講一下本次新發現，三個感覺不會同框的公司 Micosoft + Red Hat + HPE 一起出了本架構書 &lt;a href=&quot;https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50001963enw&quot;&gt;HPE Reference Architecture for delivering insight across all your data with Microsoft SQL Server 2019 Big Data Clusters&lt;/a&gt; 我覺得實在太玄了 XD 分享給大家&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/categories/kubernetes/"/>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>Red Hat OpenShift 4 DNS &amp; NTP &amp; PTP 網路套餐</title>
@@ -88,9 +115,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="network" scheme="https://blog.pichuang.com.tw/tags/network/"/>
-    
       <category term="redhat" scheme="https://blog.pichuang.com.tw/tags/redhat/"/>
+    
+      <category term="network" scheme="https://blog.pichuang.com.tw/tags/network/"/>
     
   </entry>
   
@@ -520,39 +547,6 @@
       <category term="kanban" scheme="https://blog.pichuang.com.tw/tags/kanban/"/>
     
       <category term="agile" scheme="https://blog.pichuang.com.tw/tags/agile/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</title>
-    <link href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/"/>
-    <id>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/</id>
-    <published>2020-03-16T16:16:00.000Z</published>
-    <updated>2020-04-12T17:22:18.781Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;誠如大家所知，因爲種種技術及非技術因素上 - &lt;a href=&quot;https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman&quot;&gt;Why Red Hat is investing in CRI-O and Podman&lt;/a&gt;，OpenShift 4 底層有兩個蠻大的更新&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;容器運行時環境 (Container Runtime) 從 docker 換成了 &lt;a href=&quot;https://cri-o.io/&quot;&gt;CRI-O&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat CoreOS&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;本文將記錄一下於 Red Hat CoreOS (RHCOS) 及 Red Hat OpenShift 偏作業系統層面的探索紀錄&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/ocp4-coreos.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
-      <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
   </entry>
   
