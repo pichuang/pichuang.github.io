@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-07-13T17:42:48.937Z</updated>
+  <updated>2020-07-14T03:37:52.065Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/"/>
     <id>https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/</id>
     <published>2020-07-12T16:31:45.000Z</published>
-    <updated>2020-07-13T17:42:48.937Z</updated>
+    <updated>2020-07-14T03:37:52.065Z</updated>
     
     <summary type="html">
     
@@ -115,9 +115,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="network" scheme="https://blog.pichuang.com.tw/tags/network/"/>
-    
       <category term="redhat" scheme="https://blog.pichuang.com.tw/tags/redhat/"/>
+    
+      <category term="network" scheme="https://blog.pichuang.com.tw/tags/network/"/>
     
   </entry>
   
