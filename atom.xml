@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-08-28T11:07:12.097Z</updated>
+  <updated>2020-08-28T11:10:21.357Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -21,11 +21,11 @@
     <link href="https://blog.pichuang.com.tw/20200828-kubectl-view-allocations/"/>
     <id>https://blog.pichuang.com.tw/20200828-kubectl-view-allocations/</id>
     <published>2020-08-27T16:31:45.000Z</published>
-    <updated>2020-08-28T11:07:12.097Z</updated>
+    <updated>2020-08-28T11:10:21.357Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要&lt;code&gt;逆向&lt;/code&gt;研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，目的是想要做一位計算資源精算師，所以就有了下面這篇的紀錄&lt;/p&gt;
+      &lt;p&gt;最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要&lt;code&gt;逆向&lt;/code&gt;研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，身為一位計算資源精算師，所以就有了下面這篇的紀錄&lt;/p&gt;
 &lt;p&gt;本月無心力，無梗圖呈現&lt;/p&gt;
     
     </summary>
@@ -489,9 +489,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
@@ -545,9 +545,9 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     

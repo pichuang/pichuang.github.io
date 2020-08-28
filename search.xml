@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[如何條列出單一 Namespace 內的 Kubernetes 計算資源?]]></title>
     <url>%2F20200828-kubectl-view-allocations%2F</url>
-    <content type="text"><![CDATA[最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要逆向研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，目的是想要做一位計算資源精算師，所以就有了下面這篇的紀錄 本月無心力，無梗圖呈現 為什麼要這樣做?這件事跟 Kubernetes 計算資源估算有關係，基於前一篇所提到的 Kubernetes 資源估算方式，若把實機或虛機的完整可用資源當作一個玻璃杯來看，若有服務需要使用 Kubernetes 計算資源的話，則視為往玻璃杯倒水進去，當水位滿的時候，就代表該實機或虛機不能在擺放其他的服務了，當水位比較低的時候，則代表可以較有餘裕放置其他服務在裡面 Kubectl-view-allocations這邊要推薦 davidB/kubectl-view-allocations 這個專案，相當好用，之前還沒找到這個專案之前，我都是用 jsonpath 慢慢爬，但我覺得不僅指令相當長 (如下指令)，而且輸出結果不明確，加上很難閱讀，所以才又另外找了一下這個專案來用用 1oc get pods -o=jsonpath="&#123;range .items[]&#125;&#123;range .spec.containers[]&#125; &#123;.name&#125; CPU_Requests:&#123;.resources.requests.cpu&#125; CPU_Limites:&#123;.resources.limits.cpu&#125; Memory_Requests:&#123;.resources.requests.memory&#125; Memory_Limites:&#123;.resources.limits.memory&#125; &#123;'\n'&#125;&#123;end&#125;&#123;'\n'&#125;&#123;end&#125;" | column -t 超簡單安裝 Kubectl-view-allocations123curl https://raw.githubusercontent.com/davidB/kubectl-view-allocations/master/scripts/getLatest.sh | bashsudo mv kubectl-view-allocations /usr/local/binkubectl-view-allocations -V Use Cases條列 Namespace 內資源譬如說我想要查 openshift-etcd 裡面的資源預設消耗如何，可以用下列指令辦到 1kubectl-view-allocations -n openshift-etcd 概觀了解各節點資源類同於 oc adm top node 12kubectl-view-allocations -r cpu -g nodekubectl-view-allocations -r memory -g node 詳細了解各節點資源當你想要了解你的 master node 上面到底都放了什麼碗糕的東西，這個還蠻好用的… 12kubectl-view-allocations -r cpukubectl-view-allocations -r memory AppendixEnvironment Information Red Hat OpenShift 4.4.0 Kubernetes v1.18.3]]></content>
+    <content type="text"><![CDATA[最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要逆向研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，身為一位計算資源精算師，所以就有了下面這篇的紀錄 本月無心力，無梗圖呈現 為什麼要這樣做?這件事跟 Kubernetes 計算資源估算有關係，基於前一篇所提到的 Kubernetes 資源估算方式，若把實機或虛機的完整可用資源當作一個玻璃杯來看，若有服務需要使用 Kubernetes 計算資源的話，則視為往玻璃杯倒水進去，當水位滿的時候，就代表該實機或虛機不能在擺放其他的服務了，當水位比較低的時候，則代表可以較有餘裕放置其他服務在裡面 Kubectl-view-allocations這邊要推薦 davidB/kubectl-view-allocations 這個專案，相當好用，之前還沒找到這個專案之前，我都是用 jsonpath 慢慢爬，但我覺得不僅指令相當長 (如下指令)，而且輸出結果不明確，加上很難閱讀，所以才又另外找了一下這個專案來用用 1oc get pods -o=jsonpath="&#123;range .items[]&#125;&#123;range .spec.containers[]&#125; &#123;.name&#125; CPU_Requests:&#123;.resources.requests.cpu&#125; CPU_Limites:&#123;.resources.limits.cpu&#125; Memory_Requests:&#123;.resources.requests.memory&#125; Memory_Limites:&#123;.resources.limits.memory&#125; &#123;'\n'&#125;&#123;end&#125;&#123;'\n'&#125;&#123;end&#125;" | column -t 超簡單安裝 Kubectl-view-allocations123curl https://raw.githubusercontent.com/davidB/kubectl-view-allocations/master/scripts/getLatest.sh | bashsudo mv kubectl-view-allocations /usr/local/binkubectl-view-allocations -V Use Cases條列 Namespace 內資源譬如說我想要查 openshift-etcd 裡面的資源預設消耗如何，可以用下列指令辦到 1kubectl-view-allocations -n openshift-etcd 概觀了解各節點資源類同於 oc adm top node 12kubectl-view-allocations -r cpu -g nodekubectl-view-allocations -r memory -g node 詳細了解各節點資源當你想要了解你的 master node 上面到底都放了什麼碗糕的東西，這個還蠻好用的… 12kubectl-view-allocations -r cpukubectl-view-allocations -r memory AppendixEnvironment Information Red Hat OpenShift 4.4.0 Kubernetes v1.18.3]]></content>
       <categories>
         <category>kubernetes</category>
         <category>openshift</category>
@@ -216,8 +216,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -242,8 +242,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -268,8 +268,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -507,8 +507,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
         <tag>cni</tag>
         <tag>security</tag>
@@ -524,8 +524,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
       </tags>
   </entry>
@@ -668,9 +668,9 @@
       <tags>
         <tag>openshift</tag>
         <tag>redhat</tag>
-        <tag>operator</tag>
         <tag>weblogic</tag>
         <tag>oracle</tag>
+        <tag>operator</tag>
       </tags>
   </entry>
   <entry>
