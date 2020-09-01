@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200618-k8s-release-history/</loc>
+    
+    <lastmod>2020-09-01T15:16:45.594Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-09-01T13:55:07.690Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://blog.pichuang.com.tw/20200706-openshift-with-coreos-part-8/</loc>
     
     <lastmod>2020-07-07T17:19:08.241Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200618-k8s-release-history/</loc>
-    
-    <lastmod>2020-07-02T15:07:39.743Z</lastmod>
     
   </url>
   
