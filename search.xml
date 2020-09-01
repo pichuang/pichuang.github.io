@@ -58,8 +58,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>network</tag>
         <tag>redhat</tag>
+        <tag>network</tag>
       </tags>
   </entry>
   <entry>
@@ -216,8 +216,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift4</tag>
         <tag>container</tag>
+        <tag>openshift4</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -242,8 +242,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>openshift4</tag>
         <tag>container</tag>
+        <tag>openshift4</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -268,8 +268,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift4</tag>
         <tag>container</tag>
+        <tag>openshift4</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -507,8 +507,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift4</tag>
         <tag>container</tag>
+        <tag>openshift4</tag>
         <tag>openshift3</tag>
         <tag>cni</tag>
         <tag>security</tag>
@@ -524,8 +524,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift4</tag>
         <tag>container</tag>
+        <tag>openshift4</tag>
         <tag>openshift3</tag>
       </tags>
   </entry>
@@ -930,9 +930,9 @@
         <category>linux</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>headless</tag>
         <tag>serial</tag>
+        <tag>linux</tag>
         <tag>centos</tag>
       </tags>
   </entry>
@@ -1024,8 +1024,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
@@ -1039,8 +1039,8 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
@@ -1054,10 +1054,10 @@
         <category>infra</category>
       </categories>
       <tags>
-        <tag>sdn</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
         <tag>ofdpa</tag>
+        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>
