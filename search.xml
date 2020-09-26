@@ -10,8 +10,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>openshift4</tag>
         <tag>kubernetes</tag>
+        <tag>openshift4</tag>
       </tags>
   </entry>
   <entry>
@@ -1041,9 +1041,9 @@
       <tags>
         <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
-        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
@@ -1055,9 +1055,9 @@
       </categories>
       <tags>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
-        <tag>ofdpa</tag>
       </tags>
   </entry>
   <entry>
