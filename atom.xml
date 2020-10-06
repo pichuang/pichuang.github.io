@@ -38,9 +38,9 @@
     
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
-      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
-    
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
     
   </entry>
   
