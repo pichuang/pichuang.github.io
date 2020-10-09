@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-08-28T11:10:21.357Z</updated>
+  <updated>2020-10-09T13:42:07.650Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes API 服務及跟各組件的交互關係</title>
+    <link href="https://blog.pichuang.com.tw/20201009-kubernetes-api-communication/"/>
+    <id>https://blog.pichuang.com.tw/20201009-kubernetes-api-communication/</id>
+    <published>2020-10-08T16:31:45.000Z</published>
+    <updated>2020-10-09T13:42:07.650Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考&lt;/p&gt;
+&lt;p&gt;照例講個雜事，Red Hat OpenShift 4.6 (等同 Kubernetes 1.19) 要出啦！這是一個可以一路用到 &lt;code&gt;2022 年 3 月&lt;/code&gt; 的版本，各位 Infra 不用在為了更新和升級落淚了 Q_Q，有興趣者可以參考 &lt;a href=&quot;https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6&quot;&gt;What’s New in OpenShift Container Platform 4.6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ocp4-6-eus.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/categories/kubernetes/"/>
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/kubernetes/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>如何條列出單一 Namespace 內的 Kubernetes 計算資源?</title>
@@ -522,34 +551,6 @@
       <category term="interview" scheme="https://blog.pichuang.com.tw/tags/interview/"/>
     
       <category term="netadmin" scheme="https://blog.pichuang.com.tw/tags/netadmin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2</title>
-    <link href="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/"/>
-    <id>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/</id>
-    <published>2020-04-02T16:16:00.000Z</published>
-    <updated>2020-04-13T18:30:13.846Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上個月寫了一篇愛的走馬看花 &lt;a href=&quot;https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1&lt;/a&gt;，繼續逛下去&lt;/p&gt;
-&lt;p&gt;第二天比較偏向是 Red Hat OpenShift Infrastrcuture 除錯層面的閒逛，有些 Kubernetes 應該是不能直接套用的，譬如像是 &lt;code&gt;oc adm&lt;/code&gt;、&lt;code&gt;oc debug&lt;/code&gt; 這類的指令，但是我記得新版的 Kubernetes 好像有 &lt;code&gt;kubectl debug&lt;/code&gt; 的指令可以用了，但不知道效果是不是一樣的&lt;/p&gt;
-&lt;p&gt;另外開頭我沒梗圖了，故附上一個我覺得蠻不錯的影片 &lt;a href=&quot;https://www.youtube.com/watch?v=Kx110kqoHo0&amp;list=PLaR6Rq6Z4IqeGIzsnWX1ifTLwJaYBQSUs&amp;index=39&amp;t=0s&quot;&gt;Deploying a Windows Server 2019 virtual machine using OpenShift Virtualization&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/Kx110kqoHo0&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
-      <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
   </entry>
   
