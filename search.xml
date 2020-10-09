@@ -944,9 +944,9 @@
         <category>linux</category>
       </categories>
       <tags>
-        <tag>linux</tag>
         <tag>headless</tag>
         <tag>serial</tag>
+        <tag>linux</tag>
         <tag>centos</tag>
       </tags>
   </entry>
@@ -1055,9 +1055,9 @@
       <tags>
         <tag>sdn</tag>
         <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
         <tag>ovs</tag>
         <tag>switch</tag>
-        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
