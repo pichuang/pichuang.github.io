@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.pichuang.com.tw/20200618-k8s-release-history/</loc>
+    
+    <lastmod>2020-10-30T11:00:37.497Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.pichuang.com.tw/record/index.html</loc>
     
     <lastmod>2020-10-09T14:39:30.248Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://blog.pichuang.com.tw/20201009-kubernetes-api-communication/</loc>
     
     <lastmod>2020-10-09T14:02:29.016Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.pichuang.com.tw/20200618-k8s-release-history/</loc>
-    
-    <lastmod>2020-09-01T15:16:45.594Z</lastmod>
     
   </url>
   
