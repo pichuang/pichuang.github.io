@@ -20,10 +20,6 @@
         $('.justified-gallery').justifiedGallery();
     }
 
-    if (!$('.columns .column-right-shadow').children().length) {
-        $('.columns .column-right-shadow').append($('.columns .column-right').children().clone());
-    }
-
     if (typeof moment === 'function') {
         $('.article-meta time').each(function() {
             $(this).text(moment($(this).attr('datetime')).fromNow());
@@ -137,56 +133,5 @@
         $toc.on('click', toggleToc);
         $mask.on('click', toggleToc);
         $('.navbar-main .catalogue').on('click', toggleToc);
-    }
-
-    // hexo-util/lib/is_external_link.js
-    function isExternalLink(input, sitehost, exclude) {
-        try {
-            sitehost = new URL(sitehost).hostname;
-        } catch (e) { }
-
-        if (!sitehost) return false;
-
-        // handle relative url
-        let data;
-        try {
-            data = new URL(input, 'http://' + sitehost);
-        } catch (e) { return false; }
-
-        // handle mailto: javascript: vbscript: and so on
-        if (data.origin === 'null') return false;
-
-        const host = data.hostname;
-
-        if (exclude) {
-            exclude = Array.isArray(exclude) ? exclude : [exclude];
-
-            if (exclude && exclude.length) {
-                for (const i of exclude) {
-                    if (host === i) return false;
-                }
-            }
-        }
-
-        if (host !== sitehost) return true;
-
-        return false;
-    }
-
-    if (typeof config !== 'undefined'
-        && typeof config.site.url !== 'undefined'
-        && typeof config.site.external_link !== 'undefined'
-        && config.site.external_link.enable) {
-        $('.article .content a').filter((i, link) => {
-            return link.href
-                && !$(link).attr('href').startsWith('#')
-                && link.classList.length === 0
-                && isExternalLink(link.href,
-                    config.site.url,
-                    config.site.external_link.exclude);
-        }).each((i, link) => {
-            link.relList.add('noopener');
-            link.target = '_blank';
-        });
     }
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
