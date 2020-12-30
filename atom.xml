@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-10-30T11:47:31.009Z</updated>
+  <updated>2020-12-30T16:17:49.750Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2020 年度個人回顧</title>
+    <link href="https://blog.pichuang.com.tw/20201231-2020-personal-review/"/>
+    <id>https://blog.pichuang.com.tw/20201231-2020-personal-review/</id>
+    <published>2020-12-31T04:55:32.000Z</published>
+    <updated>2020-12-30T16:17:49.750Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2020-personal-review-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
+    
+    
+      <category term="misc" scheme="https://blog.pichuang.com.tw/tags/misc/"/>
+    
+      <category term="annual" scheme="https://blog.pichuang.com.tw/tags/annual/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes API 服務及跟各組件的交互關係</title>
@@ -518,39 +542,11 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
     
     
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
       <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
     
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
       <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第一次の網管人雜誌面談</title>
-    <link href="https://blog.pichuang.com.tw/20200406-netadmin-interview-ansible/"/>
-    <id>https://blog.pichuang.com.tw/20200406-netadmin-interview-ansible/</id>
-    <published>2020-04-12T10:49:07.000Z</published>
-    <updated>2020-04-12T15:08:53.498Z</updated>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;媽！我上雜誌了&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;雖然這次的約訪是公司指派執行，但第一次弄還是蠻新鮮的，可能大家都只會看到最後的產業趨勢報導 &lt;a href=&quot;http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284&quot;&gt;善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin&lt;/a&gt;，但中間有些過程我可以分享一下&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="misc" scheme="https://blog.pichuang.com.tw/categories/misc/"/>
-    
-    
-      <category term="ansible" scheme="https://blog.pichuang.com.tw/tags/ansible/"/>
-    
-      <category term="interview" scheme="https://blog.pichuang.com.tw/tags/interview/"/>
-    
-      <category term="netadmin" scheme="https://blog.pichuang.com.tw/tags/netadmin/"/>
     
   </entry>
   
