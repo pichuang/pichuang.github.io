@@ -104,58 +104,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
-    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
-    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
-<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
-<li><p>Setting vars for Root CA</p>
-<blockquote>
-<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
-</blockquote>
-<ul>
-<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
-<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
-</ul>
-</li>
-<li><p>Create UCC Key</p>
-<blockquote>
-<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
-</blockquote>
-</li>
-<li><p>Check Root CA key and crt</p>
-<blockquote>
-<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
-</blockquote>
-<ul>
-<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
-</ul>
-</li>
-<li><p>Check *.night9.cc crt Info</p>
-<blockquote>
-<p>openssl x509 -in *.night9.crt -text -noout</p>
-</blockquote>
-</li>
-<li><p>Show</p>
-<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
-
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
-<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
-<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>easyrsa</tag>
-        <tag>pki</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -197,6 +145,58 @@
 <li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts">Create a Public Key Infrastructure Using the easy-rsa Scripts</a></li>
 <li><a href="http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw">作者：依瑪貓 http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>easyrsa</tag>
+        <tag>pki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
+    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
+    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
+<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
+<li><p>Setting vars for Root CA</p>
+<blockquote>
+<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
+<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
+</ul>
+</li>
+<li><p>Create UCC Key</p>
+<blockquote>
+<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
+</blockquote>
+</li>
+<li><p>Check Root CA key and crt</p>
+<blockquote>
+<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
+</blockquote>
+<ul>
+<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
+</ul>
+</li>
+<li><p>Check *.night9.cc crt Info</p>
+<blockquote>
+<p>openssl x509 -in *.night9.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show</p>
+<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
+
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
 <li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
 </ul>
@@ -260,6 +260,57 @@
       </tags>
   </entry>
   <entry>
+    <title>Upgrade ONOS Cluster</title>
+    <url>/20160514-upgrade-onos-cluster/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
+<a id="more"></a>
+
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Build Machine<ul>
+<li>MAC OSX 10.11.3</li>
+<li>Java 1.8.0</li>
+<li>Apache Karaf 3.0.5</li>
+<li>Apache Maven 3.3.9</li>
+<li>Misc<ul>
+<li>IP: 10.211.55.2</li>
+<li>Cell name: pichuang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ONOS1 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.10</li>
+</ul>
+</li>
+<li>ONOS2 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.11</li>
+</ul>
+</li>
+</ul>
+<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
+</ul>
+<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>onos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ONS 2016 之旅</title>
     <url>/20160423-open-networking-summit-2016/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 2016/2 - 2016/3 的時候，我接到了一個頗重的任務，目標是趕在 <a href="http://events.linuxfoundation.org/events/open-networking-summit">ONS 2016</a> 要把 <a href="http://onlab.us">ON.LAB</a> 所主導 SDN Controller 專案 <a href="http://onosproject.org">ONOS</a> 當中的一個 Use Case  <a href="https://wiki.onosproject.org/display/ONOS/SDN-IP">SDN-IP</a> 於台灣交通大學建立起來，並跟國際 REN (Research and Education Network) 連接在一起，專案執行時間不到一個月。</p>
@@ -315,57 +366,6 @@
       <tags>
         <tag>event</tag>
         <tag>ons</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Upgrade ONOS Cluster</title>
-    <url>/20160514-upgrade-onos-cluster/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
-<a id="more"></a>
-
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Build Machine<ul>
-<li>MAC OSX 10.11.3</li>
-<li>Java 1.8.0</li>
-<li>Apache Karaf 3.0.5</li>
-<li>Apache Maven 3.3.9</li>
-<li>Misc<ul>
-<li>IP: 10.211.55.2</li>
-<li>Cell name: pichuang</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ONOS1 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.10</li>
-</ul>
-</li>
-<li>ONOS2 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.11</li>
-</ul>
-</li>
-</ul>
-<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
-</ul>
-<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>onos</tag>
       </tags>
   </entry>
   <entry>
@@ -1293,39 +1293,6 @@
       </tags>
   </entry>
   <entry>
-    <title>How do I use docker and docker-compose</title>
-    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
-<a id="more"></a>
-
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Ubuntu 14.04.5 LTS Server</li>
-<li>docker-compose 1.11.2</li>
-<li>docker 17.03.0-ce</li>
-</ul>
-<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<!--more-->
-
-<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
-
-<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
-
-<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>docker</tag>
-        <tag>docker-compose</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Install i40e driver into VMWare ESXi</title>
     <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
     <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
@@ -1369,6 +1336,39 @@
         <tag>vmware</tag>
         <tag>intel</tag>
         <tag>driver</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How do I use docker and docker-compose</title>
+    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
+<a id="more"></a>
+
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Ubuntu 14.04.5 LTS Server</li>
+<li>docker-compose 1.11.2</li>
+<li>docker 17.03.0-ce</li>
+</ul>
+<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
+
+<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
+
+<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>docker</tag>
+        <tag>docker-compose</tag>
       </tags>
   </entry>
   <entry>
@@ -1450,6 +1450,144 @@
         <tag>headless</tag>
         <tag>serial</tag>
         <tag>centos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>進擊的 OpenAPI!!!</title>
+    <url>/20180723-openapi-and-oas/</url>
+    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
+<a id="more"></a>
+
+<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
+<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
+<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
+<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
+<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
+<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
+<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
+<ol>
+<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
+</li>
+<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
+<blockquote>
+<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
+</blockquote>
+</li>
+<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
+<blockquote>
+<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
+</blockquote>
+</li>
+</ol>
+<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
+<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
+<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
+<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
+<p>使用方式很簡單，以 Swagger 為例</p>
+<ol>
+<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
+<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+</ol>
+<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
+<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
+<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
+<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
+<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
+<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
+<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
+<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
+<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
+<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
+<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
+<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>oas</tag>
+        <tag>openapi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>雲端大廠們的 VM 資源配置參考</title>
+    <url>/20180815-cloud-resource-sizing-reference/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
+<a id="more"></a>
+
+<p>目前有公開出來的 VM 資源配置參考如下：</p>
+<ul>
+<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP</a></li>
+<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure</a></li>
+</ul>
+<h2 id="各大廠配置清單"><a href="#各大廠配置清單" class="headerlink" title="各大廠配置清單"></a>各大廠配置清單</h2><h3 id="Amazon-AWS"><a href="#Amazon-AWS" class="headerlink" title="Amazon AWS"></a>Amazon AWS</h3><p>AWS 提供了針對幾個使用情境來供各位選擇 <a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS Machine Type</a></p>
+<ol>
+<li>一般用途 (General Purpose) T2 / M5 / M4<ul>
+<li>T2: 網站和 Web 應用程式、開發環境、建置伺服器、程式碼儲存庫、微型服務、測試和模擬環境，以及企業營運應用程式</li>
+<li>M5 / M4: 用於小型和中型資料庫、需要附加記憶體的資料處理任務以及快取叢集，也用於執行 SAP、Microsoft SharePoint、叢集運算和其他企業應用程式的後端伺服器</li>
+</ul>
+</li>
+<li>運算優化 (Compute Optimized) C5 / C4<ul>
+<li>C5 / C4: 高效能 Web 伺服器、科學建模、批次處理、分散式分析、高效能運算 (HPC)、機器/深度學習推論、廣告服務、可高度擴展的多玩家遊戲，以及影片編碼</li>
+</ul>
+</li>
+<li>記憶體優化 (Memory Optimized) X1e / X1 / R5 / R4 /z1d<ul>
+<li>X1e / X1: 高效能資料庫、記憶體內資料庫 (如 SAP HANA)，以及記憶體密集型應用程式。</li>
+<li>R5 / R4: 高效能資料庫、分散式 Web 規模記憶體內快取、中型記憶體內資料庫、即時大數據分析，以及其他企業應用程式</li>
+</ul>
+</li>
+<li>加速運算 (Accelerated Computing) P3 / P2 / G3 / F1<ul>
+<li>P3 / P2: 機器/深度學習、高效能運算、計算流體動力學、計算金融學、地震分析、語音辨識、自動駕駛汽車、藥物研發</li>
+<li>G3: 3D 視覺化、圖形密集型遠端工作站、3D 轉譯、應用程式串流、影片編碼和其他伺服器端圖形工作負載</li>
+<li>F1: 基因體研究、財務分析、即時影片處理、大數據搜尋和分析，以及安全性</li>
+</ul>
+</li>
+<li>儲存優化 (Storage Optimized) H1 / I3 / D2<ul>
+<li>H1: MapReduce 工作負載、分散式檔案系統 (如 HDFS 和 MapR-FS)、網路檔案系統、日誌或資料處理應用程式 (如 Apache Kafka) 以及大數據工作負載叢集</li>
+<li>I3: NoSQL 資料庫 (如 Cassandra、MongoDB、Redis)、記憶體內資料庫 (如 Aerospike)、可擴展交易處理資料庫、資料倉儲、Elasticsearch、分析工作負載</li>
+<li>D2: 大規模並行處理 (MPP) 資料倉儲、MapReduce 和 Hadoop 分散式運算、分散式檔案系統、網路檔案系統、日誌或資料處理應用程式</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://www.ec2instances.info/">EC2 Instance Type</a> 這網站提供即時 EC2 VM Instance 配置清單，可以直接搜尋需要的資料</p>
+<h3 id="Google-GCP"><a href="#Google-GCP" class="headerlink" title="Google GCP"></a>Google GCP</h3><p>Google GCP 也針對幾個使用情境來供各位選擇，如果有在看 Kubernetes 相關技術的人，想要落地在自家環境，或許可以以 GCP 配置為主，AWS / Azure 作為參照，這邊特別一點的是 GPU 的資源估算，可以做為參考依據</p>
+<p><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP Machine Type</a></p>
+<ol>
+<li>Standard machine types</li>
+<li>High-memory machine types</li>
+<li>High-CPU machine types</li>
+<li>Memory-optimized machine types</li>
+<li><a href="https://cloud.google.com/compute/docs/gpus/">GPU</a></li>
+</ol>
+<h3 id="Microsoft-Azure"><a href="#Microsoft-Azure" class="headerlink" title="Microsoft Azure"></a>Microsoft Azure</h3><p>Microsoft 之所以為 Microsoft 就是因為有 Windows OS，若自家環境有需要考量以 Windows 為主的環境，下列連結就是主要環境配置參照對象<br><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Azure 中 Windows 虛擬機器的大小</a></p>
+<p>當然 Azure 也有提供 Linux 為主配置選項，支持服務在混合雲上的應用<br><a href="https://docs.microsoft.com/zh-tw/azure/virtual-machines/linux/sizes">Azure 中的 Linux 虛擬機器大小</a></p>
+<p>Microsoft 所提供的資源預估還蠻全的，連 RDMA 的應用都有放進去</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP - Machine Types</a></li>
+<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS - Machine Type</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure - Machine Type</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>cloud</tag>
+        <tag>azure</tag>
+        <tag>aws</tag>
+        <tag>gcp</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,71 +1686,73 @@
       </tags>
   </entry>
   <entry>
-    <title>進擊的 OpenAPI!!!</title>
-    <url>/20180723-openapi-and-oas/</url>
-    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
 <a id="more"></a>
 
-<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
-<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
-<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
-<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
-<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
-<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
-<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
-<ol>
-<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
-</li>
-<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
 <blockquote>
-<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
 </blockquote>
-</li>
-<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
-<blockquote>
-<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
-</blockquote>
-</li>
-</ol>
-<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
-<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
-<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
-<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
-<p>使用方式很簡單，以 Swagger 為例</p>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
 <ol>
-<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
-<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
 </ol>
-<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
-<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
-<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
-<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
-<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
-<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
-<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
-<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
-<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
-<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
-<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
-<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>misc</category>
+        <category>ansible</category>
       </categories>
       <tags>
-        <tag>oas</tag>
-        <tag>openapi</tag>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
       </tags>
   </entry>
   <entry>
@@ -1760,122 +1900,6 @@
       </tags>
   </entry>
   <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
-</blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
-</ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
-<ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
-</ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -1961,6 +1985,52 @@
       </tags>
   </entry>
   <entry>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新增 SSL/TLS 憑證和金鑰</title>
     <url>/20180920-add-ssl-tls-cert-and-key/</url>
     <content><![CDATA[<h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
@@ -2013,73 +2083,31 @@
       </tags>
   </entry>
   <entry>
-    <title>雲端大廠們的 VM 資源配置參考</title>
-    <url>/20180815-cloud-resource-sizing-reference/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
+    <title>Red Hat OpenShift and VMWare NSX-T 架構點評</title>
+    <url>/20190317-openshift-and-nsx-t/</url>
+    <content><![CDATA[<p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
 <a id="more"></a>
 
-<p>目前有公開出來的 VM 資源配置參考如下：</p>
-<ul>
-<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP</a></li>
-<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure</a></li>
-</ul>
-<h2 id="各大廠配置清單"><a href="#各大廠配置清單" class="headerlink" title="各大廠配置清單"></a>各大廠配置清單</h2><h3 id="Amazon-AWS"><a href="#Amazon-AWS" class="headerlink" title="Amazon AWS"></a>Amazon AWS</h3><p>AWS 提供了針對幾個使用情境來供各位選擇 <a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS Machine Type</a></p>
-<ol>
-<li>一般用途 (General Purpose) T2 / M5 / M4<ul>
-<li>T2: 網站和 Web 應用程式、開發環境、建置伺服器、程式碼儲存庫、微型服務、測試和模擬環境，以及企業營運應用程式</li>
-<li>M5 / M4: 用於小型和中型資料庫、需要附加記憶體的資料處理任務以及快取叢集，也用於執行 SAP、Microsoft SharePoint、叢集運算和其他企業應用程式的後端伺服器</li>
-</ul>
-</li>
-<li>運算優化 (Compute Optimized) C5 / C4<ul>
-<li>C5 / C4: 高效能 Web 伺服器、科學建模、批次處理、分散式分析、高效能運算 (HPC)、機器/深度學習推論、廣告服務、可高度擴展的多玩家遊戲，以及影片編碼</li>
-</ul>
-</li>
-<li>記憶體優化 (Memory Optimized) X1e / X1 / R5 / R4 /z1d<ul>
-<li>X1e / X1: 高效能資料庫、記憶體內資料庫 (如 SAP HANA)，以及記憶體密集型應用程式。</li>
-<li>R5 / R4: 高效能資料庫、分散式 Web 規模記憶體內快取、中型記憶體內資料庫、即時大數據分析，以及其他企業應用程式</li>
-</ul>
-</li>
-<li>加速運算 (Accelerated Computing) P3 / P2 / G3 / F1<ul>
-<li>P3 / P2: 機器/深度學習、高效能運算、計算流體動力學、計算金融學、地震分析、語音辨識、自動駕駛汽車、藥物研發</li>
-<li>G3: 3D 視覺化、圖形密集型遠端工作站、3D 轉譯、應用程式串流、影片編碼和其他伺服器端圖形工作負載</li>
-<li>F1: 基因體研究、財務分析、即時影片處理、大數據搜尋和分析，以及安全性</li>
-</ul>
-</li>
-<li>儲存優化 (Storage Optimized) H1 / I3 / D2<ul>
-<li>H1: MapReduce 工作負載、分散式檔案系統 (如 HDFS 和 MapR-FS)、網路檔案系統、日誌或資料處理應用程式 (如 Apache Kafka) 以及大數據工作負載叢集</li>
-<li>I3: NoSQL 資料庫 (如 Cassandra、MongoDB、Redis)、記憶體內資料庫 (如 Aerospike)、可擴展交易處理資料庫、資料倉儲、Elasticsearch、分析工作負載</li>
-<li>D2: 大規模並行處理 (MPP) 資料倉儲、MapReduce 和 Hadoop 分散式運算、分散式檔案系統、網路檔案系統、日誌或資料處理應用程式</li>
-</ul>
-</li>
-</ol>
-<p><a href="https://www.ec2instances.info/">EC2 Instance Type</a> 這網站提供即時 EC2 VM Instance 配置清單，可以直接搜尋需要的資料</p>
-<h3 id="Google-GCP"><a href="#Google-GCP" class="headerlink" title="Google GCP"></a>Google GCP</h3><p>Google GCP 也針對幾個使用情境來供各位選擇，如果有在看 Kubernetes 相關技術的人，想要落地在自家環境，或許可以以 GCP 配置為主，AWS / Azure 作為參照，這邊特別一點的是 GPU 的資源估算，可以做為參考依據</p>
-<p><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP Machine Type</a></p>
-<ol>
-<li>Standard machine types</li>
-<li>High-memory machine types</li>
-<li>High-CPU machine types</li>
-<li>Memory-optimized machine types</li>
-<li><a href="https://cloud.google.com/compute/docs/gpus/">GPU</a></li>
-</ol>
-<h3 id="Microsoft-Azure"><a href="#Microsoft-Azure" class="headerlink" title="Microsoft Azure"></a>Microsoft Azure</h3><p>Microsoft 之所以為 Microsoft 就是因為有 Windows OS，若自家環境有需要考量以 Windows 為主的環境，下列連結就是主要環境配置參照對象<br><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Azure 中 Windows 虛擬機器的大小</a></p>
-<p>當然 Azure 也有提供 Linux 為主配置選項，支持服務在混合雲上的應用<br><a href="https://docs.microsoft.com/zh-tw/azure/virtual-machines/linux/sizes">Azure 中的 Linux 虛擬機器大小</a></p>
-<p>Microsoft 所提供的資源預估還蠻全的，連 RDMA 的應用都有放進去</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP - Machine Types</a></li>
-<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS - Machine Type</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure - Machine Type</a></li>
+<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
+<p>因為小弟工作關係和經驗，我會從 OpenShift 的觀點看待這個組合</p>
+<h2 id="Red-Hat-OpenShift"><a href="#Red-Hat-OpenShift" class="headerlink" title="Red Hat OpenShift"></a>Red Hat OpenShift</h2><p>Red Hat OpenShift 是一個企業級容器化容器平台 (Container Platform)，3.11 已經是 OpenShift v3 的長期支援版本 (Long-Term Support, LTS)，所以現行架構上也已經是非常清晰，包含三大節點角色：master / infra / compute，有興趣的可以參考一下小弟前陣子演講的投影片 - <a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></p>
+<p>OpenShift 除了有內建三個不同的 CNI Plugins (ovs-subnet / ovs-multitenant / ovs-networkpolicy) 可供使用以外，其實還有跟各大知名網路廠商有做 CNI 整合驗證，VMWare NSX-T 就是其中一個可選的方案。</p>
+<h2 id="VMWare-NSX-T"><a href="#VMWare-NSX-T" class="headerlink" title="VMWare NSX-T"></a>VMWare NSX-T</h2><p>討論 OpenShift 基礎平台資源 (Infrastructure)時，不外乎就還是 Compute / Network / Storage 這三個領域分別討論。因這個架構底層是採用 VMWare 為基底的技術，所以底層虛擬化、VM 毫無懸念都是由 VMWare vSphere 提供計算資源給上層 OS 使用。(有一個例外狀況，就是不考慮使用 VM 而用 BM 的方式部署，這邊不討論)</p>
+<p>網路資源的部分， VMWare NSX-T 基本上是針對網路虛擬化 Network Virtualization 的技術，因需要充分納管所有 OpenShift 所需要的三大 IP 網段 (host IP / Service IPs / Pod IPs)，所以這當中會需要對 OpenShift 本體的網路做抽換 CNI Plugin 及 vSwitch 的操作。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">NSX-T Integration with Openshift</a></li>
+<li><a href="https://www.youtube.com/watch?v=uEQ5UAgh770">NSX-T Openshift 3.11 Installation/Integration demo</a></li>
+<li><a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>misc</category>
+        <category>openshift</category>
       </categories>
       <tags>
-        <tag>cloud</tag>
-        <tag>azure</tag>
-        <tag>aws</tag>
-        <tag>gcp</tag>
+        <tag>vmware</tag>
+        <tag>openshift3</tag>
+        <tag>nsx-t</tag>
+        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -2109,34 +2137,6 @@
       <tags>
         <tag>container</tag>
         <tag>cnf</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat OpenShift and VMWare NSX-T 架構點評</title>
-    <url>/20190317-openshift-and-nsx-t/</url>
-    <content><![CDATA[<p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
-<a id="more"></a>
-
-<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
-<p>因為小弟工作關係和經驗，我會從 OpenShift 的觀點看待這個組合</p>
-<h2 id="Red-Hat-OpenShift"><a href="#Red-Hat-OpenShift" class="headerlink" title="Red Hat OpenShift"></a>Red Hat OpenShift</h2><p>Red Hat OpenShift 是一個企業級容器化容器平台 (Container Platform)，3.11 已經是 OpenShift v3 的長期支援版本 (Long-Term Support, LTS)，所以現行架構上也已經是非常清晰，包含三大節點角色：master / infra / compute，有興趣的可以參考一下小弟前陣子演講的投影片 - <a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></p>
-<p>OpenShift 除了有內建三個不同的 CNI Plugins (ovs-subnet / ovs-multitenant / ovs-networkpolicy) 可供使用以外，其實還有跟各大知名網路廠商有做 CNI 整合驗證，VMWare NSX-T 就是其中一個可選的方案。</p>
-<h2 id="VMWare-NSX-T"><a href="#VMWare-NSX-T" class="headerlink" title="VMWare NSX-T"></a>VMWare NSX-T</h2><p>討論 OpenShift 基礎平台資源 (Infrastructure)時，不外乎就還是 Compute / Network / Storage 這三個領域分別討論。因這個架構底層是採用 VMWare 為基底的技術，所以底層虛擬化、VM 毫無懸念都是由 VMWare vSphere 提供計算資源給上層 OS 使用。(有一個例外狀況，就是不考慮使用 VM 而用 BM 的方式部署，這邊不討論)</p>
-<p>網路資源的部分， VMWare NSX-T 基本上是針對網路虛擬化 Network Virtualization 的技術，因需要充分納管所有 OpenShift 所需要的三大 IP 網段 (host IP / Service IPs / Pod IPs)，所以這當中會需要對 OpenShift 本體的網路做抽換 CNI Plugin 及 vSwitch 的操作。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">NSX-T Integration with Openshift</a></li>
-<li><a href="https://www.youtube.com/watch?v=uEQ5UAgh770">NSX-T Openshift 3.11 Installation/Integration demo</a></li>
-<li><a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>vmware</tag>
-        <tag>openshift3</tag>
-        <tag>nsx-t</tag>
-        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -2480,6 +2480,89 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合</title>
+    <url>/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/</url>
+    <content><![CDATA[<p>有些長官看完 <a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a> 後說:<br><code>Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？</code></p>
+<a id="more"></a>
+
+<p><a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">eanylin 哥</a>剛好也分享出一系列影片: <code>用 Service Catalog 系統戳 Ansible Tower 內建的 RESTful API</code></p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24">透過 Service Catalog 部署 Web Application</a></li>
+<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU">透過 Service Catalog 新增 Web Server</a></li>
+<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0">透過 Service Catalog 下版 Web Application</a></li>
+</ul>
+<p><img src="/images/restful-api.png" alt=""></p>
+<h2 id="Q1-具體-RESTful-API-有哪些功能可以使用"><a href="#Q1-具體-RESTful-API-有哪些功能可以使用" class="headerlink" title="Q1: 具體 RESTful API 有哪些功能可以使用?"></a>Q1: 具體 RESTful API 有哪些功能可以使用?</h2><p>Red Hat 秉持著專門撰寫<code>鉅細彌遺地巨擘等級文件</code>的精神，請參考這邊 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html">Ansible Tower API Guide v3.4.3</a></p>
+<p>而具體對技術來講，這份 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a> 是最重要的，裡面完全遵循標準 OpenAPI 的 Swagger 2.0 格式，讓其他平台要接入的時候，有充分的資訊可以使用</p>
+<p>我知道你內心想問 OpenAPI 是蝦米哇歌，傳送門: <a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!! - Phil Huang</a></p>
+<h2 id="Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼"><a href="#Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼" class="headerlink" title="Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?"></a>Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?</h2><p>以 Ansible Tower 為核心，分為南北向的資訊流的話，北向就是 RESTful API，而南向就是 Ad-hoc / Playbook / Workflow 等等具體跟其他設備對接的腳本</p>
+<p><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a> 有列舉所有你可能會用到的 RESTful API，但其實真正可以讓你去執行 Ad-hoc / Playbook / Workflow 能操作其他系統的只需了解三大項:</p>
+<ol>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands">Ad Hoc Commands</a> =&gt; 操作 Ad-hoc</li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates">Job Template</a> =&gt; 操作 Playbook</li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates">Workflow Job Templates</a> =&gt;操作 Workflow</li>
+</ol>
+<h2 id="Q3-哎呦-那看起來很簡單啊-那可不可以硬刻"><a href="#Q3-哎呦-那看起來很簡單啊-那可不可以硬刻" class="headerlink" title="Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?"></a>Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?</h2><p>技術上當然可以，但你最少要了解以下幾個東西</p>
+<ul>
+<li>OpenAPI Specification</li>
+<li>Ansible module integration</li>
+<li>Fronend Service Implementation / Design</li>
+<li>Backend Service Implementation / Design</li>
+<li>System Administrator and Management knowledge / integration</li>
+<li>Integration Testing/QA</li>
+<li>所有前後端網頁常識</li>
+<li>Maintainance / Update process</li>
+<li>Project Roadmap</li>
+<li>&lt;會寫 js 這語言的各位大大…真的太偉大了&gt;</li>
+<li>&lt;我真心不了解前端的世界&gt;</li>
+<li>&lt;抱歉我天生不是前端的料，我是來騙行數的&gt;</li>
+<li>…</li>
+</ul>
+<p>有沒有發現你在做一個全新大專案出來</p>
+<h2 id="Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳"><a href="#Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳" class="headerlink" title="Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?"></a>Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?</h2><p>是的，這當然是沒什麼問題，在那個不能說的客戶們跟這個也不能說的客戶們有些是以 <code>Jenkins</code> + <code>Ansible Tower</code> 當作整個 CICD 核心引擎進行驅動</p>
+<p>寫這麼多不如來看個演講 <a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ">Red Hat Summit Demo CI/CD deployment</a> (但我知道你不想看，所以可以看下圖 XD)</p>
+<p><img src="/images/ci_cd_redhatsummit_2016.png" alt=""></p>
+<h2 id="Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色"><a href="#Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色" class="headerlink" title="Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?"></a>Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?</h2><p>因為 Ansible Tower 不是單單只會被開發團隊的 Jenkins 拿來寫在 Jenkinsfile 裡面做使用，同時之間還可以搭配 Workflow 同時進行其他的事情，類似下圖</p>
+<p><img src="/images/restful-api-1.jpg" alt=""></p>
+<p> 如果論工程差異的話，除了角色上有差異，功能性也會差異點，Ansible Tower 相比 Jenkins</p>
+<ul>
+<li>自帶能做定期排程工作</li>
+<li>RBAC 權限細粒度佳</li>
+<li>可依據不同環境分配和管理不同的 serects 和 credentials</li>
+<li>多了個 Workflow 可以用</li>
+<li>能委派工作給特定的機器使用 (防火牆內)</li>
+<li>集中化控管</li>
+<li>版本控制</li>
+<li>新手上手容易</li>
+</ul>
+<p>額外閱讀: <a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process">Integrating Ansible with Jenkins in a CI/CD process - Red Hat Blog</a></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p><code>所有服務皆 API 化</code> 這個想法讓系統整合廠商多了無限整合可能，若能好好地善用 RESTful API + Ansible Workflow 可以讓你節省掉很多的系統整合風險和持續保有優秀的架構解隅性，但又不會失去可控性</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24">CloudForms/API Driven Workflow with Ansible Tower (Part 1) - Provision Web Application (Catalog)</a></li>
+<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU">CloudForms/API Driven Workflow with Ansible Tower (Part 2) - Adding Web App Server (Catalog)</a></li>
+<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0">CloudForms/API Driven Workflow with Ansible Tower (Part 3) - Decommission Web Application (Catalog)</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html">Ansible Tower API Guide v3.4.3</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a></li>
+<li><a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!!</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates">Tower API Reference Guide - Job Template</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates">Tower API Reference Guide - Workflow Job Templates</a></li>
+<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands">Tower API Reference Guide - Ad Hoc Commands</a></li>
+<li><a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ">Red Hat Summit Demo CI/CD deployment</a></li>
+<li><a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process">Integrating Ansible with Jenkins in a CI/CD process</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>openapi</tag>
+        <tag>ansible</tag>
+        <tag>redhat</tag>
+        <tag>restful</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nvidia DGX 和 Red Hat OpenShift 會產生什麼火花?</title>
     <url>/20190330-nvidia-dgx-and-redhat-openshift-integration/</url>
     <content><![CDATA[<p>一日江湖行走，路上撿到一個問題：<code>Nvidia DGX 要怎麼跟透過容器化調度應用呀?</code> 然後我就開始了一連串的研究探索…</p>
@@ -2566,143 +2649,6 @@
         <tag>tesla</tag>
         <tag>gpu</tag>
         <tag>ngc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases</title>
-    <url>/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/</url>
-    <content><![CDATA[<p>本導讀文基於 2019/1/25 <a href="https://youtu.be/afeCtTBuppw">OpenShift Commons Telco SIG Mtg Jan 25 2019 with Guest Speakers Juniper Networks</a> 公開內容作為基礎來分享心得</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/afeCtTBuppw" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="什麼是-Juniper-Contrail"><a href="#什麼是-Juniper-Contrail" class="headerlink" title="什麼是 Juniper Contrail?"></a>什麼是 Juniper Contrail?</h2><p>Juniper Networks 出品的 SDN Controller 產品，可同時控制 Underlay 及 Overlay 網路，也可跨平台 (OpenStack/OpenShift) 整合網路，詳細介紹請洽官網 <a href="https://www.juniper.net/us/en/products-services/sdn/contrail/contrail-enterprise-multicloud/">Contrail Enterprise Multicloud</a></p>
-<p><img src="/images/juniper-0.png" alt=""></p>
-<h2 id="Service-Chain-服務鏈是"><a href="#Service-Chain-服務鏈是" class="headerlink" title="Service Chain 服務鏈是?"></a>Service Chain 服務鏈是?</h2><p>在一般網路架構中，一條資料流通常會需要通過多個網路設備 (FW/IDS/IPS/…) 最後才能到達另一端，這就是 Service Chain (a.k.a SFC, Service Function Chain) 最常見的應用場景</p>
-<p>在傳統網路中，Service Chain 有幾個天生限制:</p>
-<ol>
-<li>極受限於實體網路拓墣</li>
-<li>Service Chain 很難做到依不同需求，而短時間改變</li>
-<li>Scale-Out 工作負載不易</li>
-</ol>
-<p>上述三個問題，基本上能透過 NFV 網路功能虛擬化及 SDN 軟體定義網路兩者技術相加起來獲得到更多的靈活彈性及擴充性</p>
-<ul>
-<li>NFV: 因從實體網路設備轉換成 VNF (Virtual Network Function) 且能放在 Common Server Hardware 上，獲得到彈性且軟硬分離的優勢</li>
-<li>SDN: 而軟體定義網路則可以將不同的 VNF 或 PNF (Physical Network Function) 隨需求將流量將接在一起，形成一個動態可控的 SFC，常見案例請參考下個章節</li>
-</ul>
-<p><img src="/images/juniper-1.png" alt=""></p>
-<h2 id="Service-Chain-常見案例"><a href="#Service-Chain-常見案例" class="headerlink" title="Service Chain 常見案例"></a>Service Chain 常見案例</h2><p>Juniper 分享 4 種常見案例，分別是:</p>
-<ol>
-<li>Multiple Services in a Service Chain (include VNF, PNF)</li>
-<li>Multiple Service Chains between 2 networks</li>
-<li>Multiple Service Instances (Scale-out, a.k.a active-active HA)</li>
-<li>Service Instances Active-backup HA</li>
-</ol>
-<p>目前我個人遇到討論最多的應該還是以 <code>1. Multiple Services in a Service Chain (include VNF, PNF)</code> 為最大宗，因為這是最直覺也是第一關需要技術先克服的</p>
-<p><img src="/images/juniper-2.png" alt=""></p>
-<h2 id="CNF-是現在進行式了"><a href="#CNF-是現在進行式了" class="headerlink" title="CNF 是現在進行式了"></a>CNF 是現在進行式了</h2><p>前不久才在 <a href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">Cloud Native Network Functions (CNF) Testbed 心得感想 - Phil Workspace</a> 講說 VNF 都還沒玩熱，CNF (Cloud Native Network Funcion) 就要出來了，沒想到 Juniper 早在那先前就先推出 <a href="https://www.juniper.net/documentation/product/en_US/csrx">cSRX Container Firewall</a>，把自家的 SRX Firewall 方案放進去到容器裡面使用，還使用概念跟 <a href="https://github.com/intel/multus-cni">Multus CNI</a> 類似的 Multi-Interface Pods 技術，讓原先每一個 Pod 僅支援一個網路介面的狀況可以獲得到改善，讓容器可以獲得到更多彈性的應用</p>
-<p><img src="/images/juniper-3.png" alt=""><br><img src="/images/juniper-4.png" alt=""></p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>真心訝異有廠商針對 Container 這麼快就有對應的 CNF 於容器平台上可供使用者使用，而且的確是很面向 Telco 的需求，如果大家有興趣想看詳細的 <code>Live Demo - Juniper Contrail 和 Red Hat OpenShift</code> 可以參考一下該影片後大半段的操作介紹</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://youtu.be/afeCtTBuppw">OpenShift Commons Telco SIG Mtg Jan 25 2019 with Guest Speakers Juniper Networks</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">Cloud Native Network Functions (CNF) Testbed 心得感想 - Phil Workspace</a></li>
-<li><a href="https://www.juniper.net/documentation/product/en_US/csrx">cSRX Documentation - Juniper Networks</a></li>
-<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/24423694">SDN中的服务链（SFC）闲聊</a></li>
-<li><a href="https://www.juniper.net/us/en/products-services/sdn/contrail/contrail-enterprise-multicloud/">Contrail Enterprise Multicloud</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>redhat</tag>
-        <tag>juniper</tag>
-        <tag>contrail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合</title>
-    <url>/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/</url>
-    <content><![CDATA[<p>有些長官看完 <a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a> 後說:<br><code>Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？</code></p>
-<a id="more"></a>
-
-<p><a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">eanylin 哥</a>剛好也分享出一系列影片: <code>用 Service Catalog 系統戳 Ansible Tower 內建的 RESTful API</code></p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24">透過 Service Catalog 部署 Web Application</a></li>
-<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU">透過 Service Catalog 新增 Web Server</a></li>
-<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0">透過 Service Catalog 下版 Web Application</a></li>
-</ul>
-<p><img src="/images/restful-api.png" alt=""></p>
-<h2 id="Q1-具體-RESTful-API-有哪些功能可以使用"><a href="#Q1-具體-RESTful-API-有哪些功能可以使用" class="headerlink" title="Q1: 具體 RESTful API 有哪些功能可以使用?"></a>Q1: 具體 RESTful API 有哪些功能可以使用?</h2><p>Red Hat 秉持著專門撰寫<code>鉅細彌遺地巨擘等級文件</code>的精神，請參考這邊 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html">Ansible Tower API Guide v3.4.3</a></p>
-<p>而具體對技術來講，這份 <a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a> 是最重要的，裡面完全遵循標準 OpenAPI 的 Swagger 2.0 格式，讓其他平台要接入的時候，有充分的資訊可以使用</p>
-<p>我知道你內心想問 OpenAPI 是蝦米哇歌，傳送門: <a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!! - Phil Huang</a></p>
-<h2 id="Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼"><a href="#Q2-好吧-那我用-RESTful-API-具體上到底是控制什麼" class="headerlink" title="Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?"></a>Q2: 好吧 那我用 RESTful API 具體上到底是控制什麼?</h2><p>以 Ansible Tower 為核心，分為南北向的資訊流的話，北向就是 RESTful API，而南向就是 Ad-hoc / Playbook / Workflow 等等具體跟其他設備對接的腳本</p>
-<p><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a> 有列舉所有你可能會用到的 RESTful API，但其實真正可以讓你去執行 Ad-hoc / Playbook / Workflow 能操作其他系統的只需了解三大項:</p>
-<ol>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands">Ad Hoc Commands</a> =&gt; 操作 Ad-hoc</li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates">Job Template</a> =&gt; 操作 Playbook</li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates">Workflow Job Templates</a> =&gt;操作 Workflow</li>
-</ol>
-<h2 id="Q3-哎呦-那看起來很簡單啊-那可不可以硬刻"><a href="#Q3-哎呦-那看起來很簡單啊-那可不可以硬刻" class="headerlink" title="Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?"></a>Q3: 哎呦 那看起來很簡單啊 那可不可以硬刻?</h2><p>技術上當然可以，但你最少要了解以下幾個東西</p>
-<ul>
-<li>OpenAPI Specification</li>
-<li>Ansible module integration</li>
-<li>Fronend Service Implementation / Design</li>
-<li>Backend Service Implementation / Design</li>
-<li>System Administrator and Management knowledge / integration</li>
-<li>Integration Testing/QA</li>
-<li>所有前後端網頁常識</li>
-<li>Maintainance / Update process</li>
-<li>Project Roadmap</li>
-<li>&lt;會寫 js 這語言的各位大大…真的太偉大了&gt;</li>
-<li>&lt;我真心不了解前端的世界&gt;</li>
-<li>&lt;抱歉我天生不是前端的料，我是來騙行數的&gt;</li>
-<li>…</li>
-</ul>
-<p>有沒有發現你在做一個全新大專案出來</p>
-<h2 id="Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳"><a href="#Q4-疑…這樣-Ansible-Tower-是不是可以被-Jenkins-戳" class="headerlink" title="Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?"></a>Q4: 疑…這樣 Ansible Tower 是不是可以被 Jenkins 戳?</h2><p>是的，這當然是沒什麼問題，在那個不能說的客戶們跟這個也不能說的客戶們有些是以 <code>Jenkins</code> + <code>Ansible Tower</code> 當作整個 CICD 核心引擎進行驅動</p>
-<p>寫這麼多不如來看個演講 <a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ">Red Hat Summit Demo CI/CD deployment</a> (但我知道你不想看，所以可以看下圖 XD)</p>
-<p><img src="/images/ci_cd_redhatsummit_2016.png" alt=""></p>
-<h2 id="Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色"><a href="#Q5-阿不通通用-Jenkins-call-Ansible-就好了-幹嘛還多一個-Ansible-Tower-的角色" class="headerlink" title="Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?"></a>Q5: 阿不通通用 Jenkins call Ansible 就好了? 幹嘛還多一個 Ansible Tower 的角色?</h2><p>因為 Ansible Tower 不是單單只會被開發團隊的 Jenkins 拿來寫在 Jenkinsfile 裡面做使用，同時之間還可以搭配 Workflow 同時進行其他的事情，類似下圖</p>
-<p><img src="/images/restful-api-1.jpg" alt=""></p>
-<p> 如果論工程差異的話，除了角色上有差異，功能性也會差異點，Ansible Tower 相比 Jenkins</p>
-<ul>
-<li>自帶能做定期排程工作</li>
-<li>RBAC 權限細粒度佳</li>
-<li>可依據不同環境分配和管理不同的 serects 和 credentials</li>
-<li>多了個 Workflow 可以用</li>
-<li>能委派工作給特定的機器使用 (防火牆內)</li>
-<li>集中化控管</li>
-<li>版本控制</li>
-<li>新手上手容易</li>
-</ul>
-<p>額外閱讀: <a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process">Integrating Ansible with Jenkins in a CI/CD process - Red Hat Blog</a></p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p><code>所有服務皆 API 化</code> 這個想法讓系統整合廠商多了無限整合可能，若能好好地善用 RESTful API + Ansible Workflow 可以讓你節省掉很多的系統整合風險和持續保有優秀的架構解隅性，但又不會失去可控性</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=HOPbhlTBG24">CloudForms/API Driven Workflow with Ansible Tower (Part 1) - Provision Web Application (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=RqNtJaxHlpU">CloudForms/API Driven Workflow with Ansible Tower (Part 2) - Adding Web App Server (Catalog)</a></li>
-<li><a href="https://www.youtube.com/watch?v=2wdyneoiAX0">CloudForms/API Driven Workflow with Ansible Tower (Part 3) - Decommission Web Application (Catalog)</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a></li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html">Ansible Tower API Guide v3.4.3</a></li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html">Tower API Reference Guide</a></li>
-<li><a href="https://blog.pichuang.com.tw/20180723-openapi-and-oas/">進擊的 OpenAPI!!!</a></li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates">Tower API Reference Guide - Job Template</a></li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Workflow_Job%20Templates">Tower API Reference Guide - Workflow Job Templates</a></li>
-<li><a href="https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Ad_Hoc%20Commands">Tower API Reference Guide - Ad Hoc Commands</a></li>
-<li><a href="https://www.youtube.com/watch?v=wMTgIIJ-oqQ">Red Hat Summit Demo CI/CD deployment</a></li>
-<li><a href="https://www.redhat.com/en/blog/integrating-ansible-jenkins-cicd-process">Integrating Ansible with Jenkins in a CI/CD process</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>openapi</tag>
-        <tag>redhat</tag>
-        <tag>restful</tag>
       </tags>
   </entry>
   <entry>
@@ -2818,6 +2764,60 @@
         <tag>openshift3</tag>
         <tag>redhat</tag>
         <tag>networking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases</title>
+    <url>/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/</url>
+    <content><![CDATA[<p>本導讀文基於 2019/1/25 <a href="https://youtu.be/afeCtTBuppw">OpenShift Commons Telco SIG Mtg Jan 25 2019 with Guest Speakers Juniper Networks</a> 公開內容作為基礎來分享心得</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/afeCtTBuppw" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="什麼是-Juniper-Contrail"><a href="#什麼是-Juniper-Contrail" class="headerlink" title="什麼是 Juniper Contrail?"></a>什麼是 Juniper Contrail?</h2><p>Juniper Networks 出品的 SDN Controller 產品，可同時控制 Underlay 及 Overlay 網路，也可跨平台 (OpenStack/OpenShift) 整合網路，詳細介紹請洽官網 <a href="https://www.juniper.net/us/en/products-services/sdn/contrail/contrail-enterprise-multicloud/">Contrail Enterprise Multicloud</a></p>
+<p><img src="/images/juniper-0.png" alt=""></p>
+<h2 id="Service-Chain-服務鏈是"><a href="#Service-Chain-服務鏈是" class="headerlink" title="Service Chain 服務鏈是?"></a>Service Chain 服務鏈是?</h2><p>在一般網路架構中，一條資料流通常會需要通過多個網路設備 (FW/IDS/IPS/…) 最後才能到達另一端，這就是 Service Chain (a.k.a SFC, Service Function Chain) 最常見的應用場景</p>
+<p>在傳統網路中，Service Chain 有幾個天生限制:</p>
+<ol>
+<li>極受限於實體網路拓墣</li>
+<li>Service Chain 很難做到依不同需求，而短時間改變</li>
+<li>Scale-Out 工作負載不易</li>
+</ol>
+<p>上述三個問題，基本上能透過 NFV 網路功能虛擬化及 SDN 軟體定義網路兩者技術相加起來獲得到更多的靈活彈性及擴充性</p>
+<ul>
+<li>NFV: 因從實體網路設備轉換成 VNF (Virtual Network Function) 且能放在 Common Server Hardware 上，獲得到彈性且軟硬分離的優勢</li>
+<li>SDN: 而軟體定義網路則可以將不同的 VNF 或 PNF (Physical Network Function) 隨需求將流量將接在一起，形成一個動態可控的 SFC，常見案例請參考下個章節</li>
+</ul>
+<p><img src="/images/juniper-1.png" alt=""></p>
+<h2 id="Service-Chain-常見案例"><a href="#Service-Chain-常見案例" class="headerlink" title="Service Chain 常見案例"></a>Service Chain 常見案例</h2><p>Juniper 分享 4 種常見案例，分別是:</p>
+<ol>
+<li>Multiple Services in a Service Chain (include VNF, PNF)</li>
+<li>Multiple Service Chains between 2 networks</li>
+<li>Multiple Service Instances (Scale-out, a.k.a active-active HA)</li>
+<li>Service Instances Active-backup HA</li>
+</ol>
+<p>目前我個人遇到討論最多的應該還是以 <code>1. Multiple Services in a Service Chain (include VNF, PNF)</code> 為最大宗，因為這是最直覺也是第一關需要技術先克服的</p>
+<p><img src="/images/juniper-2.png" alt=""></p>
+<h2 id="CNF-是現在進行式了"><a href="#CNF-是現在進行式了" class="headerlink" title="CNF 是現在進行式了"></a>CNF 是現在進行式了</h2><p>前不久才在 <a href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">Cloud Native Network Functions (CNF) Testbed 心得感想 - Phil Workspace</a> 講說 VNF 都還沒玩熱，CNF (Cloud Native Network Funcion) 就要出來了，沒想到 Juniper 早在那先前就先推出 <a href="https://www.juniper.net/documentation/product/en_US/csrx">cSRX Container Firewall</a>，把自家的 SRX Firewall 方案放進去到容器裡面使用，還使用概念跟 <a href="https://github.com/intel/multus-cni">Multus CNI</a> 類似的 Multi-Interface Pods 技術，讓原先每一個 Pod 僅支援一個網路介面的狀況可以獲得到改善，讓容器可以獲得到更多彈性的應用</p>
+<p><img src="/images/juniper-3.png" alt=""><br><img src="/images/juniper-4.png" alt=""></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>真心訝異有廠商針對 Container 這麼快就有對應的 CNF 於容器平台上可供使用者使用，而且的確是很面向 Telco 的需求，如果大家有興趣想看詳細的 <code>Live Demo - Juniper Contrail 和 Red Hat OpenShift</code> 可以參考一下該影片後大半段的操作介紹</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://youtu.be/afeCtTBuppw">OpenShift Commons Telco SIG Mtg Jan 25 2019 with Guest Speakers Juniper Networks</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190319-cnf-testbed/">Cloud Native Network Functions (CNF) Testbed 心得感想 - Phil Workspace</a></li>
+<li><a href="https://www.juniper.net/documentation/product/en_US/csrx">cSRX Documentation - Juniper Networks</a></li>
+<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/24423694">SDN中的服务链（SFC）闲聊</a></li>
+<li><a href="https://www.juniper.net/us/en/products-services/sdn/contrail/contrail-enterprise-multicloud/">Contrail Enterprise Multicloud</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>redhat</tag>
+        <tag>juniper</tag>
+        <tag>contrail</tag>
       </tags>
   </entry>
   <entry>
@@ -3373,6 +3373,122 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap </title>
+    <url>/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</url>
+    <content><![CDATA[<p><img src="/images/ocp.png" alt=""></p>
+<p>就在前陣子 Red Hat 於 Boston 舉辦一年一度的 Red Hat Summit 2019 大會，在大會的前一天還特別舉辦了 OpenShift Commons Gathering 的活動，特別分享各大企業使用 OpenShift 的使用案例及技術經驗談</p>
+<a id="more"></a>
+
+<h2 id="What-is-OpenShift-Commons"><a href="#What-is-OpenShift-Commons" class="headerlink" title="What is OpenShift Commons?"></a>What is OpenShift Commons?</h2><blockquote>
+<p>Where users, partners, customers, and contributors come together to collaborate and work together on OpenShift</p>
+</blockquote>
+<p><a href="https://commons.openshift.org/">OpenShift Commons</a> 主要是由 Red Hat 所維護的社群組織，主要目的是歡迎各式各樣的基於 OpenShift 的開發、使用案例、系統整合等等的分享，同時也有相對於 Kubernetes SIG 的組織 - <a href="https://commons.openshift.org/index.html#interests">OpenShift Special Inerest Groups (SIG)</a>，針對不同的主題有特別做分享</p>
+<p>此外 OpenShift Commons 的分享大多都是線上分享，同時也會被錄影起來放到 <a href="https://www.youtube.com/user/rhopenshift/videos">Youtube - OpenShift Commons</a> 頻道內做分享，所以想要了解任何技術的部分可以直接透過 YouTube 做自我學習，尤其是大多數的用戶因為某些原因不能上到公有雲，而落地端環境的資訊相較缺乏，這邊就是一個不錯的管道可以吸收知識</p>
+<h2 id="版主小精選"><a href="#版主小精選" class="headerlink" title="版主小精選"></a>版主小精選</h2><h3 id="VMWare"><a href="#VMWare" class="headerlink" title="VMWare"></a>VMWare</h3><ul>
+<li><a href="https://blog.openshift.com/wp-content/uploads/Open-Commons-Deck-v5-FINAL.pdf">State of OpenShift on VMWare</a> 主要是 VMWare <a href="https://octo.vmware.com/vmware-red-hat-bring-red-hat-openshift-vmware-sddc/">宣布</a>之後 VMWare SDDC + Red Hat OpenShift 可以獲得到雙方的架構認可，High Level 架構如下圖，詳細內容蠻多的之後另開一篇分享</li>
+</ul>
+<p><img src="/images/ocp-1.png" alt=""></p>
+<h3 id="Royal-Bank-of-Canada-RBC"><a href="#Royal-Bank-of-Canada-RBC" class="headerlink" title="Royal Bank of Canada (RBC)"></a>Royal Bank of Canada (RBC)</h3><p>如果你想了解 Spark on Kubernetes/OpenShift 的話，可以參考世界第15大的加拿大皇家銀行的分享 <a href="https://blog.openshift.com/wp-content/uploads/RBC-Containerized-Spark-OpenShift-Commons-Deck-May-03-2019.pptx">Containerized Spark at RBC</a>，然後蠻推薦看一下簡報裡面的逐字搞 XD</p>
+<p><img src="/images/ocp-2.png" alt=""></p>
+<h3 id="Operator-Framework"><a href="#Operator-Framework" class="headerlink" title="Operator Framework"></a>Operator Framework</h3><p>去年講了一整年的 Operator Framework，而這份簡報 <a href="https://blog.openshift.com/wp-content/uploads/Talk_-OpenShift-Commons-Summit-2019.pdf">State of the Operators: Framework, SDKs, Hubs and Beyond</a> 是目前公開介紹性質最完整的，這不是曇花一現而已，之後在技術層面上只會看到越來越多的 Operator Framework 應用跟開發分享</p>
+<p><img src="/images/ocp-3.png" alt=""></p>
+<h3 id="UPS"><a href="#UPS" class="headerlink" title="UPS"></a>UPS</h3><p>世界最大的快遞貨運業 UPS 出來分享在 OpenShift Infrastructure 維運的經驗，內文蠻值得一看的 <a href="https://blog.openshift.com/wp-content/uploads/UPS-at-OpenShift-Commons-Gathering-2019-Boston.pdf">UPS and OpenShift: A Roadmap of Cloud Native Software Upgrade Delivery</a></p>
+<p><img src="/images/ocp-4.png" alt=""></p>
+<h3 id="OpenShift-Kubernetes-and-Beyond-未來展望"><a href="#OpenShift-Kubernetes-and-Beyond-未來展望" class="headerlink" title="OpenShift, Kubernetes and Beyond 未來展望"></a>OpenShift, Kubernetes and Beyond 未來展望</h3><p> 這篇 <a href="https://blog.openshift.com/wp-content/uploads/BGracely-The-Road-Ahead-OpenShift-Commons-Gathering-Boston-2019-.pdf">The Road Ahead: OpenShift, Kubernetes and Beyond</a> 雖然沒什麼技術內容，但有幾張簡報蠻值得大家思考整個容器平台的非技術性問題</p>
+<p><img src="/images/ocp-5.png" alt=""></p>
+<p>首先，<code>容器技術不單單只是平台而已</code>，還有上面一票技術需要考慮進去的，無論你今天是用 Kubernetes、OpenShift 或其他廠商的平台方案，都一定要思考平台建完之後的議題，譬如 <code>如何撰寫可以在容器平台上運行的 Contrainer App</code> 亦或者是 <code>如何優化容器化程式開發過程</code> 等一些跟平台無關的問題</p>
+<p><img src="/images/ocp-6.png" alt=""></p>
+<p>這張圖是表示從 Kubernetes Community Project Release 到各家廠商的 Commercial Product Release Time 間隔時間</p>
+<h3 id="更多資訊"><a href="#更多資訊" class="headerlink" title="更多資訊"></a>更多資訊</h3><p>如果你想看其他的使用案例內容，NASA、Volkswagen、Sabre、Thyssenkrupp Elevators、Best Buy，可以參考英文全文 <a href="https://blog.openshift.com/openshift-commons-gathering-at-red-hat-summit-boston-2019-recap-with-slides/?sc_cid=701f2000000txokAAA&utm_source=bambu&utm_medium=social&utm_campaign=abm">OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides]</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.openshift.com/openshift-commons-gathering-at-red-hat-summit-boston-2019-recap-with-slides/?sc_cid=701f2000000txokAAA&utm_source=bambu&utm_medium=social&utm_campaign=abm">OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides]</a></li>
+<li><a href="https://octo.vmware.com/vmware-red-hat-bring-red-hat-openshift-vmware-sddc/">VMware and Red Hat bring Red Hat OpenShift to the VMware SDDC</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bandwidth &amp; Throughput</title>
+    <url>/20190527-bandwidth-and-throughput/</url>
+    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
+<ul>
+<li>頻寬 (Bandwidth)：水管的大小  </li>
+<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
+<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
+</ul>
+<a id="more"></a>
+
+<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
+]]></content>
+      <categories>
+        <category>telco</category>
+      </categories>
+      <tags>
+        <tag>networking</tag>
+        <tag>telco</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ansible 如何除錯? 誰可以救救我?</title>
+    <url>/20190618-ansible-troubleshooting/</url>
+    <content><![CDATA[<p><img src="/images/ansible-logo.png" alt=""></p>
+<p>可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 <a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Release Note</a></p>
+<p>就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作  <a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1</a> 、<a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2</a></p>
+<a id="more"></a>
+
+<h2 id="經驗分享"><a href="#經驗分享" class="headerlink" title="經驗分享"></a>經驗分享</h2><h3 id="改成工程師看得懂的除錯訊息：不打迷糊仗"><a href="#改成工程師看得懂的除錯訊息：不打迷糊仗" class="headerlink" title="改成工程師看得懂的除錯訊息：不打迷糊仗"></a>改成工程師看得懂的除錯訊息：不打迷糊仗</h3><p>預設狀況下，Ansible 輸出的格式是以 JSON 格式為主，然後通常輸出的時候都會如下圖顯示變成一坨不知道在寫什麼的訊息，十分難以判讀</p>
+<p><img src="/images/ansible-callback-debug-1.png" alt=""></p>
+<p>但 <a href="https://docs.ansible.com/ansible/latest/plugins/callback.html">Ansible Callback Plugins</a> 有支援一個外掛模組叫做 <a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html"><code>debug</code></a>，主要是協助把上面那一坨東西的 stdout 及 stderr 格式化 (Format) 成下圖，讓你清晰地了解錯誤訊息在寫什麼</p>
+<p><img src="/images/ansible-callback-debug-2.png" alt=""></p>
+<p>開起來的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">stdout_callback &#x3D; debug</span><br></pre></td></tr></table></figure>
+
+<h3 id="愛用-debug-模組：其實就是多噴點資訊"><a href="#愛用-debug-模組：其實就是多噴點資訊" class="headerlink" title="愛用 debug 模組：其實就是多噴點資訊"></a>愛用 debug 模組：其實就是多噴點資訊</h3><p>若在 Ansible 執行過程中，你想要了解某一個變數裡面的值是什麼，可以使用 <a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html"><code>debug</code></a> 模組來獲取運行中的 Ansible 執行變數資訊。要留意的事情是，這邊的 debug 是一個 Ansible 模組 (Modules)，上面章節所提起的則是 Callback 外掛當中一個模組，兩者不一樣。</p>
+<p>通常 <code>debug</code> 模組都會搭配 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html?highlight=register#registering-variables"><code>register</code></a> 一併使用，<code>register</code> 最主要功用是將單一 Task 結果輸出指派給 <code>register</code> 所定義好的變數，如下程式碼</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Test connectivity</span><br><span class="line">      ping:</span><br><span class="line">      register: result</span><br><span class="line">      </span><br><span class="line">    - name: Print result</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; result &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以很清楚的看到，第一個 Task 將會執行 <code>ping</code> 模組，而它產生出來的結果將會被指向 register 所定義的 <code>result</code> 變數裡面，而第二個 Task 將會執行 <code>debug</code> 模組，將裡面 <code>result</code> 的結果倒出來顯示在如下畫面</p>
+<p><img src="/images/ansible-modules-debug.png" alt=""></p>
+<h3 id="實際執行前先跑-Dry-Run-看看：永保安康"><a href="#實際執行前先跑-Dry-Run-看看：永保安康" class="headerlink" title="實際執行前先跑 Dry Run 看看：永保安康"></a>實際執行前先跑 Dry Run 看看：永保安康</h3><p>蠻多工程師因為不熟 Ansible，很擔心會不會一執行錯誤的指令下去，就會導致災難這樣，所以 Ansible 提供一個檢查模式 <a href="https://docs.ansible.com/ansible/2.8/user_guide/playbooks_checkmode.html"><code>dry-run</code></a>，供工程師在正式執行前可以透過模擬指令的方式協助檢查一下當前執行的 Playbook 裡面打算要做什麼事</p>
+<p>一般作法應該是在下 <code>ansible-playbook</code> 指令的後面多帶 <code>--check</code> 指令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 起手式</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check</span><br><span class="line"></span><br><span class="line"># 嫌資訊太少時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check -v</span><br><span class="line"></span><br><span class="line"># 想要一個一個 Tasks 慢慢看時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --step --check</span><br></pre></td></tr></table></figure>
+<p><img src="/images/ansible-dry-run.png" alt=""></p>
+<h3 id="Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…"><a href="#Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…" class="headerlink" title="Playbook Debugger：當你想要成為 Ansible 超高級寫手時…"></a>Playbook Debugger：當你想要成為 Ansible 超高級寫手時…</h3><p>在先前的社群分享中，筆者有多次提到目前把 Ansible Playbook 寫的第一無敵複雜的範例就是 <a href="https://github.com/openshift/openshift-ansible">GitHub - openshift/openshift-ansible</a> 這個專案了，雖然整個安裝只需要跑兩三行指令，但只要變數寫錯或者是忘記寫，就要反覆跑好幾次，而跑一次大概就要花上好幾個半小時的光陰。</p>
+<p>而先前為了抓 <code>openshift-ansible</code> 安裝時的其中一個很弔詭的問題，最後動用了 <code>debugger</code> 才找到一個神奇的字串問題。正常沒寫到這麼複雜的狀況下，其他上述所列的方式其實就很夠日常維運用了。</p>
+<p>開啟 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html">Playbook Debugger</a> 的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">strategy &#x3D; debug</span><br></pre></td></tr></table></figure>
+
+<p>開啟之後， debugger 會在遇到 <code>Task Failed</code> 的時候，自動切換到 debug mode，詳細操作可以參考一下 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html#available-commands">Available Commands</a></p>
+<p><img src="/images/ansible-debugger.png" alt=""></p>
+<h2 id="後言"><a href="#後言" class="headerlink" title="後言"></a>後言</h2><p>Ansible 本質上是遵循三大要素：Simple、Agentless、Powerful，撰寫邏輯上是，能寫得簡單就盡量寫的單純，不要寫得太過複雜。依據不同的情境之下，相信大家都會將越來越多的情境考慮進去，以至於 Ansible Playbook 越來越大，不太容易進行基本除錯，故希望本篇能幫助到各位快速上手除錯技巧。而如果你對於其他 Ansible 撰寫技能有興趣的話，也可以參考一下去年拙作  <a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a>。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1 - Chengwei Chen</a></li>
+<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2 - Chengwei Chen</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback.html">Ansible Callback Plugins List</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html">Ansible Callback Plugins - Debug</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html">Ansible Modules - Debug</a></li>
+<li><a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Ansible 2.8 Release Note</a></li>
+<li><a href="https://github.com/openshift/openshift-ansible">GitHub - openshift/openshif-ansible</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html">Ansible Strategy - Playbook Debugger</a></li>
+<li><a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>troubleshooting</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>設計出 Production-Ready Container 的 5 條戒律</title>
     <url>/20190621-building-production-ready-containers/</url>
     <content><![CDATA[<p><img src="/images/rhel8-logo.jpg" alt=""></p>
@@ -3484,99 +3600,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap </title>
-    <url>/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</url>
-    <content><![CDATA[<p><img src="/images/ocp.png" alt=""></p>
-<p>就在前陣子 Red Hat 於 Boston 舉辦一年一度的 Red Hat Summit 2019 大會，在大會的前一天還特別舉辦了 OpenShift Commons Gathering 的活動，特別分享各大企業使用 OpenShift 的使用案例及技術經驗談</p>
-<a id="more"></a>
-
-<h2 id="What-is-OpenShift-Commons"><a href="#What-is-OpenShift-Commons" class="headerlink" title="What is OpenShift Commons?"></a>What is OpenShift Commons?</h2><blockquote>
-<p>Where users, partners, customers, and contributors come together to collaborate and work together on OpenShift</p>
-</blockquote>
-<p><a href="https://commons.openshift.org/">OpenShift Commons</a> 主要是由 Red Hat 所維護的社群組織，主要目的是歡迎各式各樣的基於 OpenShift 的開發、使用案例、系統整合等等的分享，同時也有相對於 Kubernetes SIG 的組織 - <a href="https://commons.openshift.org/index.html#interests">OpenShift Special Inerest Groups (SIG)</a>，針對不同的主題有特別做分享</p>
-<p>此外 OpenShift Commons 的分享大多都是線上分享，同時也會被錄影起來放到 <a href="https://www.youtube.com/user/rhopenshift/videos">Youtube - OpenShift Commons</a> 頻道內做分享，所以想要了解任何技術的部分可以直接透過 YouTube 做自我學習，尤其是大多數的用戶因為某些原因不能上到公有雲，而落地端環境的資訊相較缺乏，這邊就是一個不錯的管道可以吸收知識</p>
-<h2 id="版主小精選"><a href="#版主小精選" class="headerlink" title="版主小精選"></a>版主小精選</h2><h3 id="VMWare"><a href="#VMWare" class="headerlink" title="VMWare"></a>VMWare</h3><ul>
-<li><a href="https://blog.openshift.com/wp-content/uploads/Open-Commons-Deck-v5-FINAL.pdf">State of OpenShift on VMWare</a> 主要是 VMWare <a href="https://octo.vmware.com/vmware-red-hat-bring-red-hat-openshift-vmware-sddc/">宣布</a>之後 VMWare SDDC + Red Hat OpenShift 可以獲得到雙方的架構認可，High Level 架構如下圖，詳細內容蠻多的之後另開一篇分享</li>
-</ul>
-<p><img src="/images/ocp-1.png" alt=""></p>
-<h3 id="Royal-Bank-of-Canada-RBC"><a href="#Royal-Bank-of-Canada-RBC" class="headerlink" title="Royal Bank of Canada (RBC)"></a>Royal Bank of Canada (RBC)</h3><p>如果你想了解 Spark on Kubernetes/OpenShift 的話，可以參考世界第15大的加拿大皇家銀行的分享 <a href="https://blog.openshift.com/wp-content/uploads/RBC-Containerized-Spark-OpenShift-Commons-Deck-May-03-2019.pptx">Containerized Spark at RBC</a>，然後蠻推薦看一下簡報裡面的逐字搞 XD</p>
-<p><img src="/images/ocp-2.png" alt=""></p>
-<h3 id="Operator-Framework"><a href="#Operator-Framework" class="headerlink" title="Operator Framework"></a>Operator Framework</h3><p>去年講了一整年的 Operator Framework，而這份簡報 <a href="https://blog.openshift.com/wp-content/uploads/Talk_-OpenShift-Commons-Summit-2019.pdf">State of the Operators: Framework, SDKs, Hubs and Beyond</a> 是目前公開介紹性質最完整的，這不是曇花一現而已，之後在技術層面上只會看到越來越多的 Operator Framework 應用跟開發分享</p>
-<p><img src="/images/ocp-3.png" alt=""></p>
-<h3 id="UPS"><a href="#UPS" class="headerlink" title="UPS"></a>UPS</h3><p>世界最大的快遞貨運業 UPS 出來分享在 OpenShift Infrastructure 維運的經驗，內文蠻值得一看的 <a href="https://blog.openshift.com/wp-content/uploads/UPS-at-OpenShift-Commons-Gathering-2019-Boston.pdf">UPS and OpenShift: A Roadmap of Cloud Native Software Upgrade Delivery</a></p>
-<p><img src="/images/ocp-4.png" alt=""></p>
-<h3 id="OpenShift-Kubernetes-and-Beyond-未來展望"><a href="#OpenShift-Kubernetes-and-Beyond-未來展望" class="headerlink" title="OpenShift, Kubernetes and Beyond 未來展望"></a>OpenShift, Kubernetes and Beyond 未來展望</h3><p> 這篇 <a href="https://blog.openshift.com/wp-content/uploads/BGracely-The-Road-Ahead-OpenShift-Commons-Gathering-Boston-2019-.pdf">The Road Ahead: OpenShift, Kubernetes and Beyond</a> 雖然沒什麼技術內容，但有幾張簡報蠻值得大家思考整個容器平台的非技術性問題</p>
-<p><img src="/images/ocp-5.png" alt=""></p>
-<p>首先，<code>容器技術不單單只是平台而已</code>，還有上面一票技術需要考慮進去的，無論你今天是用 Kubernetes、OpenShift 或其他廠商的平台方案，都一定要思考平台建完之後的議題，譬如 <code>如何撰寫可以在容器平台上運行的 Contrainer App</code> 亦或者是 <code>如何優化容器化程式開發過程</code> 等一些跟平台無關的問題</p>
-<p><img src="/images/ocp-6.png" alt=""></p>
-<p>這張圖是表示從 Kubernetes Community Project Release 到各家廠商的 Commercial Product Release Time 間隔時間</p>
-<h3 id="更多資訊"><a href="#更多資訊" class="headerlink" title="更多資訊"></a>更多資訊</h3><p>如果你想看其他的使用案例內容，NASA、Volkswagen、Sabre、Thyssenkrupp Elevators、Best Buy，可以參考英文全文 <a href="https://blog.openshift.com/openshift-commons-gathering-at-red-hat-summit-boston-2019-recap-with-slides/?sc_cid=701f2000000txokAAA&utm_source=bambu&utm_medium=social&utm_campaign=abm">OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides]</a></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.openshift.com/openshift-commons-gathering-at-red-hat-summit-boston-2019-recap-with-slides/?sc_cid=701f2000000txokAAA&utm_source=bambu&utm_medium=social&utm_campaign=abm">OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap [Videos and Slides]</a></li>
-<li><a href="https://octo.vmware.com/vmware-red-hat-bring-red-hat-openshift-vmware-sddc/">VMware and Red Hat bring Red Hat OpenShift to the VMware SDDC</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ansible 如何除錯? 誰可以救救我?</title>
-    <url>/20190618-ansible-troubleshooting/</url>
-    <content><![CDATA[<p><img src="/images/ansible-logo.png" alt=""></p>
-<p>可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 <a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Release Note</a></p>
-<p>就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作  <a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1</a> 、<a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2</a></p>
-<a id="more"></a>
-
-<h2 id="經驗分享"><a href="#經驗分享" class="headerlink" title="經驗分享"></a>經驗分享</h2><h3 id="改成工程師看得懂的除錯訊息：不打迷糊仗"><a href="#改成工程師看得懂的除錯訊息：不打迷糊仗" class="headerlink" title="改成工程師看得懂的除錯訊息：不打迷糊仗"></a>改成工程師看得懂的除錯訊息：不打迷糊仗</h3><p>預設狀況下，Ansible 輸出的格式是以 JSON 格式為主，然後通常輸出的時候都會如下圖顯示變成一坨不知道在寫什麼的訊息，十分難以判讀</p>
-<p><img src="/images/ansible-callback-debug-1.png" alt=""></p>
-<p>但 <a href="https://docs.ansible.com/ansible/latest/plugins/callback.html">Ansible Callback Plugins</a> 有支援一個外掛模組叫做 <a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html"><code>debug</code></a>，主要是協助把上面那一坨東西的 stdout 及 stderr 格式化 (Format) 成下圖，讓你清晰地了解錯誤訊息在寫什麼</p>
-<p><img src="/images/ansible-callback-debug-2.png" alt=""></p>
-<p>開起來的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">stdout_callback &#x3D; debug</span><br></pre></td></tr></table></figure>
-
-<h3 id="愛用-debug-模組：其實就是多噴點資訊"><a href="#愛用-debug-模組：其實就是多噴點資訊" class="headerlink" title="愛用 debug 模組：其實就是多噴點資訊"></a>愛用 debug 模組：其實就是多噴點資訊</h3><p>若在 Ansible 執行過程中，你想要了解某一個變數裡面的值是什麼，可以使用 <a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html"><code>debug</code></a> 模組來獲取運行中的 Ansible 執行變數資訊。要留意的事情是，這邊的 debug 是一個 Ansible 模組 (Modules)，上面章節所提起的則是 Callback 外掛當中一個模組，兩者不一樣。</p>
-<p>通常 <code>debug</code> 模組都會搭配 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html?highlight=register#registering-variables"><code>register</code></a> 一併使用，<code>register</code> 最主要功用是將單一 Task 結果輸出指派給 <code>register</code> 所定義好的變數，如下程式碼</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Test connectivity</span><br><span class="line">      ping:</span><br><span class="line">      register: result</span><br><span class="line">      </span><br><span class="line">    - name: Print result</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; result &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
-
-<p>可以很清楚的看到，第一個 Task 將會執行 <code>ping</code> 模組，而它產生出來的結果將會被指向 register 所定義的 <code>result</code> 變數裡面，而第二個 Task 將會執行 <code>debug</code> 模組，將裡面 <code>result</code> 的結果倒出來顯示在如下畫面</p>
-<p><img src="/images/ansible-modules-debug.png" alt=""></p>
-<h3 id="實際執行前先跑-Dry-Run-看看：永保安康"><a href="#實際執行前先跑-Dry-Run-看看：永保安康" class="headerlink" title="實際執行前先跑 Dry Run 看看：永保安康"></a>實際執行前先跑 Dry Run 看看：永保安康</h3><p>蠻多工程師因為不熟 Ansible，很擔心會不會一執行錯誤的指令下去，就會導致災難這樣，所以 Ansible 提供一個檢查模式 <a href="https://docs.ansible.com/ansible/2.8/user_guide/playbooks_checkmode.html"><code>dry-run</code></a>，供工程師在正式執行前可以透過模擬指令的方式協助檢查一下當前執行的 Playbook 裡面打算要做什麼事</p>
-<p>一般作法應該是在下 <code>ansible-playbook</code> 指令的後面多帶 <code>--check</code> 指令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 起手式</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check</span><br><span class="line"></span><br><span class="line"># 嫌資訊太少時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --check -v</span><br><span class="line"></span><br><span class="line"># 想要一個一個 Tasks 慢慢看時</span><br><span class="line">$ ansible-playbook -i pichuang.yml --step --check</span><br></pre></td></tr></table></figure>
-<p><img src="/images/ansible-dry-run.png" alt=""></p>
-<h3 id="Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…"><a href="#Playbook-Debugger：當你想要成為-Ansible-超高級寫手時…" class="headerlink" title="Playbook Debugger：當你想要成為 Ansible 超高級寫手時…"></a>Playbook Debugger：當你想要成為 Ansible 超高級寫手時…</h3><p>在先前的社群分享中，筆者有多次提到目前把 Ansible Playbook 寫的第一無敵複雜的範例就是 <a href="https://github.com/openshift/openshift-ansible">GitHub - openshift/openshift-ansible</a> 這個專案了，雖然整個安裝只需要跑兩三行指令，但只要變數寫錯或者是忘記寫，就要反覆跑好幾次，而跑一次大概就要花上好幾個半小時的光陰。</p>
-<p>而先前為了抓 <code>openshift-ansible</code> 安裝時的其中一個很弔詭的問題，最後動用了 <code>debugger</code> 才找到一個神奇的字串問題。正常沒寫到這麼複雜的狀況下，其他上述所列的方式其實就很夠日常維運用了。</p>
-<p>開啟 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html">Playbook Debugger</a> 的方式很簡單，開啟 <code>ansible.cfg</code>，填入以下內容即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[default]</span><br><span class="line">...</span><br><span class="line">strategy &#x3D; debug</span><br></pre></td></tr></table></figure>
-
-<p>開啟之後， debugger 會在遇到 <code>Task Failed</code> 的時候，自動切換到 debug mode，詳細操作可以參考一下 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html#available-commands">Available Commands</a></p>
-<p><img src="/images/ansible-debugger.png" alt=""></p>
-<h2 id="後言"><a href="#後言" class="headerlink" title="後言"></a>後言</h2><p>Ansible 本質上是遵循三大要素：Simple、Agentless、Powerful，撰寫邏輯上是，能寫得簡單就盡量寫的單純，不要寫得太過複雜。依據不同的情境之下，相信大家都會將越來越多的情境考慮進去，以至於 Ansible Playbook 越來越大，不太容易進行基本除錯，故希望本篇能幫助到各位快速上手除錯技巧。而如果你對於其他 Ansible 撰寫技能有興趣的話，也可以參考一下去年拙作  <a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a>。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1 - Chengwei Chen</a></li>
-<li><a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2 - Chengwei Chen</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback.html">Ansible Callback Plugins List</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/plugins/callback/debug.html">Ansible Callback Plugins - Debug</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html">Ansible Modules - Debug</a></li>
-<li><a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Ansible 2.8 Release Note</a></li>
-<li><a href="https://github.com/openshift/openshift-ansible">GitHub - openshift/openshif-ansible</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html">Ansible Strategy - Playbook Debugger</a></li>
-<li><a href="https://blog.pichuang.com.tw/20180622-suggestions_to_improve_your_ansible_playbook/">幾個小建議改善你的 Ansible 技能 - Phil Huang</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>troubleshooting</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Troubleshooting from Container to Any</title>
     <url>/20190715-troubleshooting-from-container-to-any/</url>
     <content><![CDATA[<p>建立好一座 Kubernetes / OpenShift 集群後，大部分的疑難排解文章都是教你如何從 Kubernetes / OpenShift 的角度，透過 Kubernetes 的 <code>kubectl</code> 或 OpenShift 的 <code>oc</code> 指令來進行一系列的偵查，而這個查詢的結果都是基於 <code>kube-apiserver</code> 為核心的結果，中間已經抽象過很多層，距離底層資訊已有段距離。</p>
@@ -3646,32 +3669,9 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bandwidth &amp; Throughput</title>
-    <url>/20190527-bandwidth-and-throughput/</url>
-    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
-<ul>
-<li>頻寬 (Bandwidth)：水管的大小  </li>
-<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
-<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
-</ul>
-<a id="more"></a>
-
-<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
-
-<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
-]]></content>
-      <categories>
-        <category>telco</category>
-      </categories>
-      <tags>
-        <tag>networking</tag>
-        <tag>telco</tag>
       </tags>
   </entry>
   <entry>
@@ -3800,8 +3800,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
         <tag>cni</tag>
         <tag>security</tag>
@@ -4097,6 +4097,37 @@
       </tags>
   </entry>
   <entry>
+    <title>自定義 QCOW2 映像檔</title>
+    <url>/20191118-self-defined-qcow2/</url>
+    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
+<a id="more"></a>
+
+<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>qcow</tag>
+        <tag>kvm</tag>
+        <tag>libvirt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
     <url>/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</url>
     <content><![CDATA[<p>遇過非常多人使用 <code>docekr-distribution</code> 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 <a href="https://docs.docker.com/registry/insecure/"><code>insecure-registries</code></a> 來避掉，今天要來分享自簽憑證的作法</p>
@@ -4148,37 +4179,6 @@
       </tags>
   </entry>
   <entry>
-    <title>自定義 QCOW2 映像檔</title>
-    <url>/20191118-self-defined-qcow2/</url>
-    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
-<a id="more"></a>
-
-<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
-
-<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>qcow</tag>
-        <tag>kvm</tag>
-        <tag>libvirt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 年度個人回顧</title>
     <url>/20191231-2019-personal-review/</url>
     <content><![CDATA[<p>完整的日曆年過了，來個年度回顧紀錄</p>
@@ -4215,47 +4215,6 @@
       <tags>
         <tag>misc</tag>
         <tag>annual</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
-    <url>/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</url>
-    <content><![CDATA[<p>當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? </p>
-<p>本文將使用 <a href="https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&tab=tags">Workshop Terminal</a> 來當作 shell 來做使用</p>
-<p><img src="/images/terminal-quay.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="部署環境"><a href="#部署環境" class="headerlink" title="部署環境"></a>部署環境</h2><ul>
-<li>Red Hat OpenShift 4.2.7</li>
-<li>openshifthomeroom/workshop-terminal 3.4.2</li>
-</ul>
-<h2 id="部署-workshop-terminal"><a href="#部署-workshop-terminal" class="headerlink" title="部署 workshop-terminal"></a>部署 workshop-terminal</h2><p>以專案 terminal-admin 為例，很簡單，三行搞定</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change project name terminal-admin if you want </span></span><br><span class="line">oc project terminal-admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deploy workshop-terminal Template</span></span><br><span class="line">oc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Obtain URL link</span></span><br><span class="line">oc get route terminal</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>View of Object Overview<br><img src="/images/terminal-overview.png" alt=""></p>
-</li>
-<li><p>View of Object Resouces<br><img src="/images/terminal-resources.png" alt=""></p>
-</li>
-</ul>
-<h2 id="移除-workshop-terminal"><a href="#移除-workshop-terminal" class="headerlink" title="移除 workshop-terminal"></a>移除 workshop-terminal</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc project terminal-admin</span><br><span class="line">oc delete all,serviceaccount,rolebinding,configmap -l app=terminal</span><br></pre></td></tr></table></figure>
-
-<h2 id="PS1-上色"><a href="#PS1-上色" class="headerlink" title="PS1 上色"></a>PS1 上色</h2><p>因為預設的 PS1 太難看了，上個色，好使用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ &quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/terminal-environment.png" alt=""></p>
-<h2 id="設定密碼"><a href="#設定密碼" class="headerlink" title="設定密碼"></a>設定密碼</h2><p>上個 <code>HTTP Basic authentication</code> 用用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change the USERNAME and PASSWORD if you want</span></span><br><span class="line">oc <span class="built_in">set</span> env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat</span><br></pre></td></tr></table></figure>
-
-<h2 id="想要打包其他的程式進去"><a href="#想要打包其他的程式進去" class="headerlink" title="想要打包其他的程式進去?"></a>想要打包其他的程式進去?</h2><p>請參考 <a href="https://github.com/openshift-homeroom/workshop-terminal#creating-a-custom-image">Creating a custom image</a> 章節</p>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>web-console</tag>
       </tags>
   </entry>
   <entry>
@@ -4323,6 +4282,47 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
+    <url>/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</url>
+    <content><![CDATA[<p>當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? </p>
+<p>本文將使用 <a href="https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&tab=tags">Workshop Terminal</a> 來當作 shell 來做使用</p>
+<p><img src="/images/terminal-quay.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="部署環境"><a href="#部署環境" class="headerlink" title="部署環境"></a>部署環境</h2><ul>
+<li>Red Hat OpenShift 4.2.7</li>
+<li>openshifthomeroom/workshop-terminal 3.4.2</li>
+</ul>
+<h2 id="部署-workshop-terminal"><a href="#部署-workshop-terminal" class="headerlink" title="部署 workshop-terminal"></a>部署 workshop-terminal</h2><p>以專案 terminal-admin 為例，很簡單，三行搞定</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change project name terminal-admin if you want </span></span><br><span class="line">oc project terminal-admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deploy workshop-terminal Template</span></span><br><span class="line">oc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Obtain URL link</span></span><br><span class="line">oc get route terminal</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>View of Object Overview<br><img src="/images/terminal-overview.png" alt=""></p>
+</li>
+<li><p>View of Object Resouces<br><img src="/images/terminal-resources.png" alt=""></p>
+</li>
+</ul>
+<h2 id="移除-workshop-terminal"><a href="#移除-workshop-terminal" class="headerlink" title="移除 workshop-terminal"></a>移除 workshop-terminal</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc project terminal-admin</span><br><span class="line">oc delete all,serviceaccount,rolebinding,configmap -l app=terminal</span><br></pre></td></tr></table></figure>
+
+<h2 id="PS1-上色"><a href="#PS1-上色" class="headerlink" title="PS1 上色"></a>PS1 上色</h2><p>因為預設的 PS1 太難看了，上個色，好使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/terminal-environment.png" alt=""></p>
+<h2 id="設定密碼"><a href="#設定密碼" class="headerlink" title="設定密碼"></a>設定密碼</h2><p>上個 <code>HTTP Basic authentication</code> 用用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change the USERNAME and PASSWORD if you want</span></span><br><span class="line">oc <span class="built_in">set</span> env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat</span><br></pre></td></tr></table></figure>
+
+<h2 id="想要打包其他的程式進去"><a href="#想要打包其他的程式進去" class="headerlink" title="想要打包其他的程式進去?"></a>想要打包其他的程式進去?</h2><p>請參考 <a href="https://github.com/openshift-homeroom/workshop-terminal#creating-a-custom-image">Creating a custom image</a> 章節</p>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>web-console</tag>
       </tags>
   </entry>
   <entry>
@@ -5200,8 +5200,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -5388,8 +5388,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -5501,8 +5501,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -6651,7 +6651,8 @@
 <a id="more"></a>
 
 <p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
-<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol>
+<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
+<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
 <li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
 <li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
 <li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
