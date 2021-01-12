@@ -104,58 +104,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
-    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
-    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
-<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
-<li><p>Setting vars for Root CA</p>
-<blockquote>
-<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
-</blockquote>
-<ul>
-<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
-<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
-</ul>
-</li>
-<li><p>Create UCC Key</p>
-<blockquote>
-<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
-</blockquote>
-</li>
-<li><p>Check Root CA key and crt</p>
-<blockquote>
-<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
-</blockquote>
-<ul>
-<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
-</ul>
-</li>
-<li><p>Check *.night9.cc crt Info</p>
-<blockquote>
-<p>openssl x509 -in *.night9.crt -text -noout</p>
-</blockquote>
-</li>
-<li><p>Show</p>
-<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
-
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
-<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
-<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>easyrsa</tag>
-        <tag>pki</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -197,6 +145,58 @@
 <li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts">Create a Public Key Infrastructure Using the easy-rsa Scripts</a></li>
 <li><a href="http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw">作者：依瑪貓 http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>easyrsa</tag>
+        <tag>pki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
+    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
+    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
+<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
+<li><p>Setting vars for Root CA</p>
+<blockquote>
+<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
+<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
+</ul>
+</li>
+<li><p>Create UCC Key</p>
+<blockquote>
+<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
+</blockquote>
+</li>
+<li><p>Check Root CA key and crt</p>
+<blockquote>
+<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
+</blockquote>
+<ul>
+<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
+</ul>
+</li>
+<li><p>Check *.night9.cc crt Info</p>
+<blockquote>
+<p>openssl x509 -in *.night9.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show</p>
+<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
+
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
 <li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
 </ul>
@@ -1830,6 +1830,76 @@
       </tags>
   </entry>
   <entry>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+</blockquote>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
+<ol>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
+</ol>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+</ol>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -1912,76 +1982,6 @@
         <tag>bonding</tag>
         <tag>teaming</tag>
         <tag>network</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
-</blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
-</ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
-<ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
-</ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
       </tags>
   </entry>
   <entry>
@@ -3809,6 +3809,76 @@
       </tags>
   </entry>
   <entry>
+    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
+    <url>/20191114-homelcloud-high-level-design-1/</url>
+    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
+<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
+<a id="more"></a>
+
+<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
+<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
+<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
+<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
+<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
+<li>所有服務，能虛擬化的全部採用虛擬化</li>
+<li>因為沒錢，所以不考慮任何高可用性的問題</li>
+<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
+<li>建立 Chat Center，用 bot 跟自己聊天</li>
+</ol>
+<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
+<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
+<ol>
+<li>SSL VPN: Synology RT2600ac</li>
+<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
+<li>Storage: Synology DS916+</li>
+<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
+</ol>
+<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
+<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
+<p>Q: 為什麼會說改造呢?</p>
+<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
+<p><img src="/images/vpn-plus.png" alt=""></p>
+<p>Q: 那有沒有可以替代的方案呢?</p>
+<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
+<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
+<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
+<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
+<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
+<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
+<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
+<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
+<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
+<p>Q: 為什麼要點點點…</p>
+<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
+<p>Q: VM 主要跑什麼?</p>
+<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
+<p><img src="/images/homecloud-powerstate.png" alt=""></p>
+<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
+<p><img src="/images/ansible-tower-approval.png" alt=""></p>
+<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
+<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
+<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
+<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
+<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
+<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
+
+<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
+<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</title>
     <url>/20191115-homelcloud-high-level-design-2/</url>
     <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
@@ -3955,65 +4025,67 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
-    <url>/20191114-homelcloud-high-level-design-1/</url>
-    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
-<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
+    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
+    <url>/20191116-homelcloud-high-level-design-4/</url>
+    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img src="/images/pfsense-logo.png" alt=""></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
 <a id="more"></a>
 
-<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
-<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
-<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
-<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
-<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
-<li>所有服務，能虛擬化的全部採用虛擬化</li>
-<li>因為沒錢，所以不考慮任何高可用性的問題</li>
-<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
-<li>建立 Chat Center，用 bot 跟自己聊天</li>
-</ol>
-<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
-<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
+<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
+<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
+<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
+<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
+<p><img src="/images/pfsense-9.png" alt=""></p>
+<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
+<p><img src="/images/pfsense-10.png" alt=""></p>
+<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
 <ol>
-<li>SSL VPN: Synology RT2600ac</li>
-<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
-<li>Storage: Synology DS916+</li>
-<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
+<li>vmx0: WAN</li>
+<li>vmx1: LAN &lt;– 選他</li>
 </ol>
-<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
-<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
-<p>Q: 為什麼會說改造呢?</p>
-<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
-<p><img src="/images/vpn-plus.png" alt=""></p>
-<p>Q: 那有沒有可以替代的方案呢?</p>
-<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
-<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
-<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
-<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
-<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
-<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
-<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
-<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
-<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
-<p>Q: 為什麼要點點點…</p>
-<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
-<p>Q: VM 主要跑什麼?</p>
-<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
-<p><img src="/images/homecloud-powerstate.png" alt=""></p>
-<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
-<p><img src="/images/ansible-tower-approval.png" alt=""></p>
-<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
-<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
-<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
-<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
-<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
-<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
-
-<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
-<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
+<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
+<p>Q: 這樣就搞定了嗎!?</p>
+<p><img src="/images/pfsense-11.png" alt=""></p>
+<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
+<p><img src="/images/pfsense-12.png" alt=""></p>
+<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
+<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
+<ol>
+<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
+<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
+<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
+</ol>
+<p><img src="/images/pfsense-14.png" alt=""></p>
+<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
+<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
+<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
+<p><img src="/images/pfsense-15.png" alt=""></p>
+<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
+<blockquote>
+<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
+</blockquote>
+<p><img src="/images/pfsense-16.png" alt=""></p>
+<p>所以你需要多一條 Rule</p>
+<ul>
+<li>Family: IPv4</li>
+<li>Protocol: any</li>
+<li>Source: any</li>
+<li>S Port: any</li>
+<li>Destination: any</li>
+<li>D Port: any</li>
+</ul>
+<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
+<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
+<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
+<ul>
+<li>Time Synchronization: ntp</li>
+<li>DNS: bind</li>
+<li>VPN: OpenVPN</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
+<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
 ]]></content>
       <categories>
         <category>homecloud</category>
@@ -4104,78 +4176,6 @@
         <tag>container</tag>
         <tag>registry</tag>
         <tag>smart start</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
-    <url>/20191116-homelcloud-high-level-design-4/</url>
-    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
-<p><img src="/images/pfsense-logo.png" alt=""></p>
-<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
-<a id="more"></a>
-
-<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
-<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
-<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
-<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
-<p><img src="/images/pfsense-9.png" alt=""></p>
-<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
-<p><img src="/images/pfsense-10.png" alt=""></p>
-<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
-<ol>
-<li>vmx0: WAN</li>
-<li>vmx1: LAN &lt;– 選他</li>
-</ol>
-<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
-<p>Q: 這樣就搞定了嗎!?</p>
-<p><img src="/images/pfsense-11.png" alt=""></p>
-<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
-<p><img src="/images/pfsense-12.png" alt=""></p>
-<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
-<p><img src="/images/pfsense-2.png" alt=""></p>
-<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
-<ol>
-<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
-<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
-<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
-</ol>
-<p><img src="/images/pfsense-14.png" alt=""></p>
-<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
-<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
-<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
-<p><img src="/images/pfsense-15.png" alt=""></p>
-<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
-<blockquote>
-<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
-</blockquote>
-<p><img src="/images/pfsense-16.png" alt=""></p>
-<p>所以你需要多一條 Rule</p>
-<ul>
-<li>Family: IPv4</li>
-<li>Protocol: any</li>
-<li>Source: any</li>
-<li>S Port: any</li>
-<li>Destination: any</li>
-<li>D Port: any</li>
-</ul>
-<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
-<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
-<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
-<ul>
-<li>Time Synchronization: ntp</li>
-<li>DNS: bind</li>
-<li>VPN: OpenVPN</li>
-</ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
-<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
       </tags>
   </entry>
   <entry>
