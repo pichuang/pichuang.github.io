@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TSCC 個人心得</title>
     <url>/20140416-tscc/</url>
     <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
@@ -101,6 +76,31 @@
       <tags>
         <tag>event</tag>
         <tag>tscc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
       </tags>
   </entry>
   <entry>
@@ -366,6 +366,243 @@
       <tags>
         <tag>sdn</tag>
         <tag>onos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl</title>
+    <url>/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</url>
+    <content><![CDATA[<p>(Working…)</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Switch<ul>
+<li>IP: 192.168.11.2</li>
+<li>Hardware<ul>
+<li>Model<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Edgecore AS5712-54X</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Software<ul>
+<li>ONL version<ul>
+<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
+</ul>
+</li>
+<li>OF-DPA version<ul>
+<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.3.1%2Baccton1.4~1-1_amd64.deb">ofdpa_3.0 EA3</a></li>
+</ul>
+</li>
+<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contorl VM<ul>
+<li>IP: 192.168.11.1</li>
+<li>OpenvSwitch<ul>
+<li>2.6.9</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Topology"><a href="#Topology" class="headerlink" title="Topology"></a>Topology</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+--------+   Port+-----------------------+Port   +--------+</span><br><span class="line">|        |      1|    AS5712-54X         |2      |        |</span><br><span class="line">| Host A +-------+    ONL: 2.0.0 Deb8    +-------+ Host B |</span><br><span class="line">|        |       |    OFDPA: 3.0.3 EA2   |       |        |</span><br><span class="line">+--------+       +-----------------------+       +--------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="L2-Switching"><a href="#L2-Switching" class="headerlink" title="L2 Switching"></a>L2 Switching</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ovs-ofctl</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flow-tables-ID"><a href="#Flow-tables-ID" class="headerlink" title="Flow tables ID"></a>Flow tables ID</h2><table>
+<thead>
+<tr>
+<th>Table Name</th>
+<th>Table ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ingress Port</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Port DSCP Trust</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Port PCP Trust</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Tunnel DSCP Trust</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Tunnel PCP Trust</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Injected OAM</td>
+<td>9</td>
+</tr>
+<tr>
+<td>VLAN</td>
+<td>10</td>
+</tr>
+<tr>
+<td>VLAN 1</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Ingress Maintenance Point</td>
+<td>12</td>
+</tr>
+<tr>
+<td>MPLS L2 Port</td>
+<td>13</td>
+</tr>
+<tr>
+<td>MPLS DSCP Trust</td>
+<td>15</td>
+</tr>
+<tr>
+<td>MPLS PCP Trust</td>
+<td>16</td>
+</tr>
+<tr>
+<td>L2 Policer</td>
+<td>18</td>
+</tr>
+<tr>
+<td>L2 Policer Actions</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Termination MAC</td>
+<td>20</td>
+</tr>
+<tr>
+<td>L3 Type</td>
+<td>21</td>
+</tr>
+<tr>
+<td>MPLS 0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>MPLS 1</td>
+<td>24</td>
+</tr>
+<tr>
+<td>MPLS 2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>MPLS-TP Maintenance Point</td>
+<td>26</td>
+</tr>
+<tr>
+<td>MPLS L3 Type</td>
+<td>27</td>
+</tr>
+<tr>
+<td>MPLS Label Trust</td>
+<td>28</td>
+</tr>
+<tr>
+<td>MPLS Type</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Unicast Routing</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Multicast Routing</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Bridging</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Policy ACL</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Color Based Actions</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Egress VLAN</td>
+<td>210</td>
+</tr>
+<tr>
+<td>Egress VLAN 1</td>
+<td>211</td>
+</tr>
+<tr>
+<td>Egress Maintenance Point</td>
+<td>226</td>
+</tr>
+<tr>
+<td>Egress DSCP PCP Remark</td>
+<td>230</td>
+</tr>
+<tr>
+<td>Egress TPID</td>
+<td>235</td>
+</tr>
+</tbody></table>
+<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://github.com/open-switch/ops/blob/master/docs/ofdpa_hybrid_functionality_guide.md#overview">OF-DPA OpenFlow Hybrid Switch Functionality Guide</a></li>
+<li><a href="http://blog.pichuang.com.tw/ovs-ofctl-and-ofdpa">OpenvSwitch ovs-ofctl and OF-DPA</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
+        <tag>queue</tag>
+        <tag>openflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade Intel Drivers on VMWare ESXi</title>
+    <url>/20170124-upgrade-intel-drivers-on-vmware-esxi/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Upgrade Intel NIC firmware (5.02-&gt;5.05) on VMWare ESXi for make sure the DirectPath I/O can work well</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>ESXi-6.0.0-20160302001</li>
+<li>Intel XL710<ul>
+<li>Including vmnic{2-5}</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Current-Version"><a href="#Check-Current-Version" class="headerlink" title="Check Current Version"></a>Check Current Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.02 0x80002248 1.33.0</span><br><span class="line">bus-info: 0000:01:00.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please enable SSH daemon on the server</li>
+</ul>
+<h3 id="Download-NVM-Update-file-and-Upgrade-NIC"><a href="#Download-NVM-Update-file-and-Upgrade-NIC" class="headerlink" title="Download NVM Update file and Upgrade NIC"></a>Download NVM Update file and Upgrade NIC</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] <span class="built_in">cd</span> /tmp</span><br><span class="line">[root@esxi:/tmp] wget http://downloadmirror.intel.com/25796/eng/XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] tar zxvf XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] <span class="built_in">cd</span> /tmp/XL710/ESXi_x64</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] chmod +x nvmupdate64e</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] ./nvmupdate64e</span><br><span class="line"></span><br><span class="line">Intel(R) Ethernet NVM Update Tool</span><br><span class="line">NVMUpdate version 1.26.17.11</span><br><span class="line">Copyright (C) 2013 - 2016 Intel Corporation.</span><br><span class="line"></span><br><span class="line">WARNING: To avoid damage to your device, <span class="keyword">do</span> not stop the update or reboot or power off the system during this update.</span><br><span class="line">Inventory <span class="keyword">in</span> progress. Please <span class="built_in">wait</span> [**********]</span><br><span class="line"></span><br><span class="line">Num Description                            Device-Id B:D   Adapter Status</span><br><span class="line">=== ====================================== ========= ===== ====================</span><br><span class="line">01) Intel(R) I210 Gigabit Network Connecti 8086-1533 09:00 Update not available</span><br><span class="line">02) Intel(R) I210 Gigabit Network Connecti 8086-1533 08:00 Update not available</span><br><span class="line">03) Intel(R) Ethernet Converged Network Ad 8086-1572 01:00 Update available</span><br><span class="line"></span><br><span class="line">Options: Adapter Index List (comma-separated), [A]ll, e[X]it</span><br><span class="line">Enter selection:a</span><br><span class="line"></span><br><span class="line">Would you like to back up the NVM images? [Y]es/[N]o: y</span><br><span class="line"></span><br><span class="line">Update <span class="keyword">in</span> progress. This operation may take several minutes.</span><br><span class="line">[**********]</span><br><span class="line">Reboot is required to complete the update process.</span><br><span class="line"></span><br><span class="line">Tool execution completed with the following status: All operations completed successfully</span><br><span class="line"></span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] reboot</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://downloadcenter.intel.com/download/24769#help">NVM Update Utility for Intel® Ethernet Converged Network Adapter XL710 and X710 Series</a></li>
+</ul>
+<h3 id="Check-Latest-Version"><a href="#Check-Latest-Version" class="headerlink" title="Check Latest Version"></a>Check Latest Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.05 0x800028ac 1.33.0</span><br><span class="line">bus-info: 0000:01:00.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.it-book.co.uk/2835/update-intel-drivers-on-vmware-esxi">update intel drivers on vmware esxi</a></li>
+<li><a href="http://www.intel.com.tw/content/www/tw/zh/embedded/products/networking/xl710-x710-performance-tuning-linux-guide.html">Intel® Ethernet Controller X710/XL710 and Intel® Ethernet Converged Network Adapter X710/XL710 Family: Linux* Performance Tuning Guide</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>vmware</tag>
+        <tag>intel</tag>
+        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -717,347 +954,85 @@
       </categories>
       <tags>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
-        <tag>ofdpa</tag>
       </tags>
   </entry>
   <entry>
-    <title>OpenvSwitch ovs-ofctl and OF-DPA</title>
-    <url>/20170106-ovs-ofctl-and-ofdpa/</url>
-    <content><![CDATA[<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
+    <title>SnapRoute FlexSwitch</title>
+    <url>/20170302-snaproute-flexswitch/</url>
+    <content><![CDATA[<p><img src="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg" alt="SnapRoute Logo"></p>
+<h2 id="Introduction-to-SnapRoute"><a href="#Introduction-to-SnapRoute" class="headerlink" title="Introduction to SnapRoute"></a>Introduction to SnapRoute</h2><p>這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。</p>
 <a id="more"></a>
 
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Switch<ul>
-<li>IP: 192.168.13.14</li>
-<li>Hardware<ul>
-<li>Model<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=43&id=12">Edgecore AS6712-32X</a></li>
+<p>這專案已經開放 L2/L3 Protocol 相關的原始碼跟其架構貢獻給 <a href="http://opencompute.org/">Open Comupter Project, OCP</a>，也把 Spec 公開在網路上 <a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf">FlexSwitch OCP Specification v0.1</a> 供大家參閱。當然若要理解 FlexSwitch 目前的架構，最準的還是以 <a href="https://github.com/OpenSnaproute">GitHub</a> 上的為主 </p>
+<p>最近他們跟 Dell/EMC 及另一個 Linux Foundation 底下的專案 <a href="http://www.openswitch.net/">OpenSwitch</a> 在進行一些<a href="https://www.linuxfoundation.org/announcements/snaproute-and-dell-emc-to-help-advance-linux-foundation%E2%80%99s-openswitch-project">整合</a>，這兩個專案之所以可以整合的原因是，SnapRoute 其實本身只是個 Debian Package，目前是建立在 <a href="https://opennetlinux.org/">Open Network Linux, ONL</a> 之上，而 OpenSwitch 則跟 ONL 地位相當，故 SnapRoute 理論上可以疊加在 OpenSwitch 之上運行，但 OpenSwitch 跟 SnapRoute L2/L3 功能互有重疊，不知道實際上要怎麼整，等後續他們的消息吧</p>
+<p><a href="http://36kr.com/coop/yidian/post/5063241.html">SnapRoute 成立的小趣事</a></p>
+<h2 id="Support-Platform"><a href="#Support-Platform" class="headerlink" title="Support Platform"></a>Support Platform</h2><p>依據 <a href="https://github.com/OpenSnaproute/reltools/blob/master/pkgInfo.json#L7">Source code - reltools/pkgInfo.json</a>，目前 OpenSource 支援以下平台:</p>
+<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Accton/Edgecore AS5712-54X</a></li>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=57&id=110">Accton/Edgecore Wedge40</a></li>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=5&cls3=67&id=128">Accton/Edgecore Wedge100</a></li>
+<li>Celestica Redstone</li>
+<li>Docker</li>
 </ul>
-</li>
-</ul>
-</li>
-<li>Software<ul>
-<li>ONL version<ul>
-<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
-</ul>
-</li>
-<li>OF-DPA version<ul>
-<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.4.0%2Baccton1.0~1-1_amd64.deb">ofdpa_3.0 EA4</a></li>
-</ul>
-</li>
-<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
-<li>Command<ul>
-<li><code>launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Contorl VM<ul>
-<li>IP: 192.168.13.2</li>
-<li>OpenvSwitch<ul>
-<li>2.7.0</li>
-<li>In this case, we just use <code>ovs-ofctl</code>, and it’s also work if you want to use dpctl which CPqD provide</li>
-<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">How to Install OpenvSwitch</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Basic-Command"><a href="#Basic-Command" class="headerlink" title="Basic Command"></a>Basic Command</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br></pre></td></tr></table></figure>
+<p>商業版本請參考 <a href="http://docs.snaproute.com/hcl/index.html">FlexSwitch - Hardware Compatibility List</a></p>
+<!--more-->
 
-<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h4 id="Show-port-information"><a href="#Show-port-information" class="headerlink" title="Show port information"></a>Show port information</h4><ul>
-<li><code>ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7a</span><br><span class="line">n_tables:23, n_buffers:0</span><br><span class="line">capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS</span><br><span class="line">OFPST_PORT_DESC reply (OF1.3) (xid=0x3):</span><br><span class="line"> 1(port1): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line"> 2(port2): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<h2 id="Installation-Process"><a href="#Installation-Process" class="headerlink" title="Installation Process"></a>Installation Process</h2><p>既然這專案是 OpenSource 想當然爾是可以自己動手編譯的，參考文件順序如下:</p>
+<ol>
+<li><p><a href="https://opensnaproute.github.io/docs/build.html#building-flexswitch-from-source">Building FlexSwitch from source</a></p>
+</li>
+<li><p><a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev">GitHub - OpenSnaproute/vagrantFlexSwitchDev</a></p>
+<ul>
+<li>如果不想用 Vagrant 的話，請自行解析 <a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev/blob/master/Vagrantfile#L67-L81">Vagrantfile</a></li>
+</ul>
+</li>
+<li><p><a href="https://github.com/OpenSnaproute/reltools">GitHub - OpenSnaproute/reltools</a></p>
+<ul>
+<li>Main Project，執行 <code>fab setupDevEnv</code><ul>
+<li>如果遇到 rake last_comment 問題，起因是 <a href="https://github.com/OpenSnaproute/reltools/blob/master/fabfile.py#L212">Apache Thrift</a> 專案的這行 <a href="https://github.com/apache/thrift/blob/master/lib/rb/thrift.gemspec#L35">code</a>，遇到 rake version 大於 11.0.1 才會遇到，解法是請把 rake version 鎖定在 11.0</li>
+<li>注意 PATH 的內容，建議是 ~/.bashrc 跟 /root/.bashrc 裡的變數要一樣</li>
+<li>如果遇到一些 git clone 問題，username 請填 <code>OpenSnapRoute</code></li>
+</ul>
 </li>
 </ul>
-<h4 id="Show-tables-information"><a href="#Show-tables-information" class="headerlink" title="Show tables information"></a>Show tables information</h4><ul>
-<li><code>ovs-ofctl dump-tables</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_TABLE reply (OF1.3) (xid=0x2):</span><br><span class="line">  table 0:</span><br><span class="line">    active=0, lookup=0, matched=0</span><br><span class="line"></span><br><span class="line">  table 5: ditto</span><br><span class="line">  table 6: ditto</span><br><span class="line">  table 7: ditto</span><br><span class="line">  table 8: ditto</span><br><span class="line">  table 10: ditto</span><br><span class="line">  table 11: ditto</span><br><span class="line">  table 13: ditto</span><br><span class="line">  table 15: ditto</span><br><span class="line">  table 16: ditto</span><br><span class="line">  table 17: ditto</span><br><span class="line">  table 20: ditto</span><br><span class="line">  table 24: ditto</span><br><span class="line">  table 28: ditto</span><br><span class="line">  table 30: ditto</span><br><span class="line">  table 40: ditto</span><br><span class="line">  table 50: ditto</span><br><span class="line">  table 60: ditto</span><br><span class="line">  table 65: ditto</span><br><span class="line">  table 210: ditto</span><br><span class="line">  table 211: ditto</span><br><span class="line">  table 230: ditto</span><br><span class="line">  table 235: ditto</span><br></pre></td></tr></table></figure>
-
 </li>
-</ul>
-<h4 id="Add-flow-entry"><a href="#Add-flow-entry" class="headerlink" title="Add flow entry"></a>Add flow entry</h4><ul>
-<li><code>ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller</code></li>
-</ul>
-<h4 id="Show-flow-entries"><a href="#Show-flow-entries" class="headerlink" title="Show flow entries"></a>Show flow entries</h4><ul>
-<li><code>ovs-ofctl dump-flows</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_FLOW reply (OF1.3) (xid=0x2):</span><br><span class="line"> cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-
+<li><p>編譯</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python makePkg.py</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<h4 id="Show-queue-stats"><a href="#Show-queue-stats" class="headerlink" title="Show queue stats"></a>Show queue stats</h4><ul>
-<li><code>ovs-ofctl queue-stats</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues</span><br><span class="line">  port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<li><p>Show Debian Packages</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pichuang@workstation-vm  ~/git/reltools (master*)</span><br><span class="line">$ ls -a |grep deb</span><br><span class="line">flexswitch_accton_wedge100-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_accton_wedge40-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_cel_redstone-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_docker-pichuang_1.0.0.171.44_amd64.deb</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>Install Debian Package on AS5712-54</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg -i flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb &amp;&amp; apt install -f</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Open Network Linux 版本建議 <code>2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3</code></li>
 </ul>
-<h4 id="Show-group-information"><a href="#Show-group-information" class="headerlink" title="Show group information"></a>Show group information</h4><ul>
-<li><code>ovs-ofctl dump-groups</code></li>
-</ul>
-<h4 id="Show-ports-information"><a href="#Show-ports-information" class="headerlink" title="Show ports information"></a>Show ports information</h4><ul>
-<li><code>ovs-ofcll dump-ports</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports</span><br><span class="line">  port  1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
 </li>
-</ul>
+<li><p>WEB UI</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;&lt;ip&gt;:8080&#x2F;api-docs&#x2F;#</span><br></pre></td></tr></table></figure>
+<p><img src="https://lh3.googleusercontent.com/5KzExo8JTIMKfZEnLtsCHcRphWCMzG4Tk5Bxhfo2swc3lElhuZJGnoVslycPlpV2IFvdYXmutnplvL00cKbG6xaL5MODPq2dmWztFghMhrPd4pXLrM0TotzGcyWjqhPLXsz7RZhf-0sIeUzIs010LdW0PI_8Q1S4848guBDjlHuxCYSn4DtNngVSLWFm43dZQJS4qhn3XKrVB6yGwjnOsAG_6Uc9u093k6511QYPRTT6sPW2Hnio-uXLrlDwnZ7utRDepXzMmyUwLmuZQ-S_dILTaHrOE63Yy_f9RAGswG6cYdFpb00GzrsSvOKaWqvqrrCL7VNENutA6PzXzl8w69fexVLJagDKaowrWIuaUFRkhG7UauHwO2FFXKj5uAWnCdXwjnno-H-mJXFc_fwX3IPxOzvXCBGJzCHIaStL7uTJS9Y7WRKebw283aHdJ_9aXoPOZGYIdj2qY6Y-wfBj9xqC8hFBRXqiwgqmKjDDgZpm5yWEdjeVsAP2WYYSeDbV1yK2pZs1xkVNLL4ETEqht_8ltmNiTHWPiXf5u8nsRsyN0vxen81_GCucfnegnLuX-AuXI2_-fte46NS1578ZNLt-t_ySaZ-dY1syhYisO75HGFhft0NGXg=w1948-h626-no" alt="FlexSwitch Screen Shot"></p>
+</li>
+</ol>
+<p>More: <a href="https://drive.google.com/open?id=0B19ucAmtemIQYkZhX2FUYi13QTA">FlexSwitch API</a></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://openvswitch.org/support/dist-docs/ovs-ofctl.8.txt">ovs-ofctl</a></li>
-<li><a href="http://www.pica8.com/wp-content/uploads/2015/09/v2.8/html/ovs-configuration-guide/">Pica8 OVS Configuration Guide 2.8.0</a></li>
-<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">Compile OpenvSwitch - pichuang</a></li>
-<li><a href="https://gist.github.com/pichuang/a901ea8d9870728bf8eebaab548e037c">ovs-ofctl help</a></li>
+<li><a href="https://snaproute.com/">SnapRoute</a></li>
+<li><a href="http://opencompute.org/">Open Compute Project</a></li>
+<li><a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf">FlexSwitch OCP Specification v0.1</a></li>
+<li><a href="https://github.com/OpenSnaproute">GitHub - OpenSnapRoute</a></li>
+<li><a href="http://packetpushers.net/virtual-toolbox/list-network-operating-systems/">List of Network Operating Systems</a></li>
 </ul>
+<h2 id="社群服務"><a href="#社群服務" class="headerlink" title="社群服務"></a>社群服務</h2><p>本人的文章大多都會發布在 <a href="https://www.facebook.com/groups/sdnds.tw/">SDNDS-TW</a>。這社團文章都跟 SDN/NFV 國內外產業新聞或資訊有關，有任何技術問題也歡迎在上面詢問。<br><img src="https://lh3.googleusercontent.com/KizynpieyTlykuyk-po1tgasnVI4Oxl9_vPXXpHYyj_JiUc0V5bRb8lHxGpZDQiTqMNCn_A6NqF-4Gx8KMex8XsjgdCGByIqtIpKBc4TvQoUtNtXf0RK_eBf2pwm8wNJRiWXfkz3vf6Tf465o2vzmH2G4iR28kf_Wc_ADeqDJDfQQlV0XTtQcSBBRG2N-zs1ue6dhg38lMoO47n0-SI6yl3x-HhyRIK8penHyHXe0i9q08IDqYEdtMGyKExcihESNthqc4r74kceAJUYhfqsFRpGLteEMXDkShC74r79Frr5aVwsYml0x1WVHkmXbxLZB381B0gkJWUXaoCeCC8rdeYtb6vn60vLsNYgYLRI0wT0VjEbJTCgcHUbNk8sBkXEiATLTKQiES5VcIEJ9nQ7FYTxsF8BiB7exUxr0b3kfTLVJF2RBqc0hpHojoiMh-nL-OY30a9rgf1vr4n-44sDGfa8-f7xWX3JEe-7RgNjwZ5glxGM1lkrf2_MHwbgVRNd2tzUrxmRNmMrVpFog-NcByDo824K8GJLxyLq0Dg12jkx90uOBKmhAE-_JUL5iIYzzUUKGJu1-ORReKmYR63UvTeUvwtxSEKUnpax4co6s6dQoS2f5bB37Q=w1652-h590-no" alt="SDNDS-TW Facebook Group"></p>
 ]]></content>
       <categories>
-        <category>infra</category>
+        <category>telco</category>
       </categories>
       <tags>
         <tag>sdn</tag>
-        <tag>ofdpa</tag>
-        <tag>ovs</tag>
-        <tag>switch</tag>
-        <tag>ovs-ofctl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl</title>
-    <url>/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</url>
-    <content><![CDATA[<p>(Working…)</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Switch<ul>
-<li>IP: 192.168.11.2</li>
-<li>Hardware<ul>
-<li>Model<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Edgecore AS5712-54X</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Software<ul>
-<li>ONL version<ul>
-<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
-</ul>
-</li>
-<li>OF-DPA version<ul>
-<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.3.1%2Baccton1.4~1-1_amd64.deb">ofdpa_3.0 EA3</a></li>
-</ul>
-</li>
-<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Contorl VM<ul>
-<li>IP: 192.168.11.1</li>
-<li>OpenvSwitch<ul>
-<li>2.6.9</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Topology"><a href="#Topology" class="headerlink" title="Topology"></a>Topology</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+--------+   Port+-----------------------+Port   +--------+</span><br><span class="line">|        |      1|    AS5712-54X         |2      |        |</span><br><span class="line">| Host A +-------+    ONL: 2.0.0 Deb8    +-------+ Host B |</span><br><span class="line">|        |       |    OFDPA: 3.0.3 EA2   |       |        |</span><br><span class="line">+--------+       +-----------------------+       +--------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="L2-Switching"><a href="#L2-Switching" class="headerlink" title="L2 Switching"></a>L2 Switching</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ovs-ofctl</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flow-tables-ID"><a href="#Flow-tables-ID" class="headerlink" title="Flow tables ID"></a>Flow tables ID</h2><table>
-<thead>
-<tr>
-<th>Table Name</th>
-<th>Table ID</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ingress Port</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Port DSCP Trust</td>
-<td>5</td>
-</tr>
-<tr>
-<td>Port PCP Trust</td>
-<td>6</td>
-</tr>
-<tr>
-<td>Tunnel DSCP Trust</td>
-<td>7</td>
-</tr>
-<tr>
-<td>Tunnel PCP Trust</td>
-<td>8</td>
-</tr>
-<tr>
-<td>Injected OAM</td>
-<td>9</td>
-</tr>
-<tr>
-<td>VLAN</td>
-<td>10</td>
-</tr>
-<tr>
-<td>VLAN 1</td>
-<td>11</td>
-</tr>
-<tr>
-<td>Ingress Maintenance Point</td>
-<td>12</td>
-</tr>
-<tr>
-<td>MPLS L2 Port</td>
-<td>13</td>
-</tr>
-<tr>
-<td>MPLS DSCP Trust</td>
-<td>15</td>
-</tr>
-<tr>
-<td>MPLS PCP Trust</td>
-<td>16</td>
-</tr>
-<tr>
-<td>L2 Policer</td>
-<td>18</td>
-</tr>
-<tr>
-<td>L2 Policer Actions</td>
-<td>19</td>
-</tr>
-<tr>
-<td>Termination MAC</td>
-<td>20</td>
-</tr>
-<tr>
-<td>L3 Type</td>
-<td>21</td>
-</tr>
-<tr>
-<td>MPLS 0</td>
-<td>23</td>
-</tr>
-<tr>
-<td>MPLS 1</td>
-<td>24</td>
-</tr>
-<tr>
-<td>MPLS 2</td>
-<td>25</td>
-</tr>
-<tr>
-<td>MPLS-TP Maintenance Point</td>
-<td>26</td>
-</tr>
-<tr>
-<td>MPLS L3 Type</td>
-<td>27</td>
-</tr>
-<tr>
-<td>MPLS Label Trust</td>
-<td>28</td>
-</tr>
-<tr>
-<td>MPLS Type</td>
-<td>29</td>
-</tr>
-<tr>
-<td>Unicast Routing</td>
-<td>30</td>
-</tr>
-<tr>
-<td>Multicast Routing</td>
-<td>40</td>
-</tr>
-<tr>
-<td>Bridging</td>
-<td>50</td>
-</tr>
-<tr>
-<td>Policy ACL</td>
-<td>60</td>
-</tr>
-<tr>
-<td>Color Based Actions</td>
-<td>65</td>
-</tr>
-<tr>
-<td>Egress VLAN</td>
-<td>210</td>
-</tr>
-<tr>
-<td>Egress VLAN 1</td>
-<td>211</td>
-</tr>
-<tr>
-<td>Egress Maintenance Point</td>
-<td>226</td>
-</tr>
-<tr>
-<td>Egress DSCP PCP Remark</td>
-<td>230</td>
-</tr>
-<tr>
-<td>Egress TPID</td>
-<td>235</td>
-</tr>
-</tbody></table>
-<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://github.com/open-switch/ops/blob/master/docs/ofdpa_hybrid_functionality_guide.md#overview">OF-DPA OpenFlow Hybrid Switch Functionality Guide</a></li>
-<li><a href="http://blog.pichuang.com.tw/ovs-ofctl-and-ofdpa">OpenvSwitch ovs-ofctl and OF-DPA</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>ofdpa</tag>
-        <tag>ovs-ofctl</tag>
-        <tag>queue</tag>
-        <tag>openflow</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Upgrade Intel Drivers on VMWare ESXi</title>
-    <url>/20170124-upgrade-intel-drivers-on-vmware-esxi/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Upgrade Intel NIC firmware (5.02-&gt;5.05) on VMWare ESXi for make sure the DirectPath I/O can work well</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>ESXi-6.0.0-20160302001</li>
-<li>Intel XL710<ul>
-<li>Including vmnic{2-5}</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Current-Version"><a href="#Check-Current-Version" class="headerlink" title="Check Current Version"></a>Check Current Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.02 0x80002248 1.33.0</span><br><span class="line">bus-info: 0000:01:00.0</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please enable SSH daemon on the server</li>
-</ul>
-<h3 id="Download-NVM-Update-file-and-Upgrade-NIC"><a href="#Download-NVM-Update-file-and-Upgrade-NIC" class="headerlink" title="Download NVM Update file and Upgrade NIC"></a>Download NVM Update file and Upgrade NIC</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] <span class="built_in">cd</span> /tmp</span><br><span class="line">[root@esxi:/tmp] wget http://downloadmirror.intel.com/25796/eng/XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] tar zxvf XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] <span class="built_in">cd</span> /tmp/XL710/ESXi_x64</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] chmod +x nvmupdate64e</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] ./nvmupdate64e</span><br><span class="line"></span><br><span class="line">Intel(R) Ethernet NVM Update Tool</span><br><span class="line">NVMUpdate version 1.26.17.11</span><br><span class="line">Copyright (C) 2013 - 2016 Intel Corporation.</span><br><span class="line"></span><br><span class="line">WARNING: To avoid damage to your device, <span class="keyword">do</span> not stop the update or reboot or power off the system during this update.</span><br><span class="line">Inventory <span class="keyword">in</span> progress. Please <span class="built_in">wait</span> [**********]</span><br><span class="line"></span><br><span class="line">Num Description                            Device-Id B:D   Adapter Status</span><br><span class="line">=== ====================================== ========= ===== ====================</span><br><span class="line">01) Intel(R) I210 Gigabit Network Connecti 8086-1533 09:00 Update not available</span><br><span class="line">02) Intel(R) I210 Gigabit Network Connecti 8086-1533 08:00 Update not available</span><br><span class="line">03) Intel(R) Ethernet Converged Network Ad 8086-1572 01:00 Update available</span><br><span class="line"></span><br><span class="line">Options: Adapter Index List (comma-separated), [A]ll, e[X]it</span><br><span class="line">Enter selection:a</span><br><span class="line"></span><br><span class="line">Would you like to back up the NVM images? [Y]es/[N]o: y</span><br><span class="line"></span><br><span class="line">Update <span class="keyword">in</span> progress. This operation may take several minutes.</span><br><span class="line">[**********]</span><br><span class="line">Reboot is required to complete the update process.</span><br><span class="line"></span><br><span class="line">Tool execution completed with the following status: All operations completed successfully</span><br><span class="line"></span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] reboot</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://downloadcenter.intel.com/download/24769#help">NVM Update Utility for Intel® Ethernet Converged Network Adapter XL710 and X710 Series</a></li>
-</ul>
-<h3 id="Check-Latest-Version"><a href="#Check-Latest-Version" class="headerlink" title="Check Latest Version"></a>Check Latest Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.05 0x800028ac 1.33.0</span><br><span class="line">bus-info: 0000:01:00.1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://www.it-book.co.uk/2835/update-intel-drivers-on-vmware-esxi">update intel drivers on vmware esxi</a></li>
-<li><a href="http://www.intel.com.tw/content/www/tw/zh/embedded/products/networking/xl710-x710-performance-tuning-linux-guide.html">Intel® Ethernet Controller X710/XL710 and Intel® Ethernet Converged Network Adapter X710/XL710 Family: Linux* Performance Tuning Guide</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>vmware</tag>
-        <tag>intel</tag>
-        <tag>driver</tag>
+        <tag>snaproute</tag>
+        <tag>flexswitch</tag>
       </tags>
   </entry>
   <entry>
@@ -1217,79 +1192,104 @@
       </tags>
   </entry>
   <entry>
-    <title>SnapRoute FlexSwitch</title>
-    <url>/20170302-snaproute-flexswitch/</url>
-    <content><![CDATA[<p><img src="https://1v51ha1y9z9f2hpq55t67p7a3u-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/snaproute-logo-2016.jpg" alt="SnapRoute Logo"></p>
-<h2 id="Introduction-to-SnapRoute"><a href="#Introduction-to-SnapRoute" class="headerlink" title="Introduction to SnapRoute"></a>Introduction to SnapRoute</h2><p>這是 2016 年 6 月左右一群 Apple Data Center 工程師們跑出來開的網路新創公司名叫 SnapRoute，而他們開發的產品則叫 FlexSwitch。</p>
+    <title>OpenvSwitch ovs-ofctl and OF-DPA</title>
+    <url>/20170106-ovs-ofctl-and-ofdpa/</url>
+    <content><![CDATA[<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
 <a id="more"></a>
 
-<p>這專案已經開放 L2/L3 Protocol 相關的原始碼跟其架構貢獻給 <a href="http://opencompute.org/">Open Comupter Project, OCP</a>，也把 Spec 公開在網路上 <a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf">FlexSwitch OCP Specification v0.1</a> 供大家參閱。當然若要理解 FlexSwitch 目前的架構，最準的還是以 <a href="https://github.com/OpenSnaproute">GitHub</a> 上的為主 </p>
-<p>最近他們跟 Dell/EMC 及另一個 Linux Foundation 底下的專案 <a href="http://www.openswitch.net/">OpenSwitch</a> 在進行一些<a href="https://www.linuxfoundation.org/announcements/snaproute-and-dell-emc-to-help-advance-linux-foundation%E2%80%99s-openswitch-project">整合</a>，這兩個專案之所以可以整合的原因是，SnapRoute 其實本身只是個 Debian Package，目前是建立在 <a href="https://opennetlinux.org/">Open Network Linux, ONL</a> 之上，而 OpenSwitch 則跟 ONL 地位相當，故 SnapRoute 理論上可以疊加在 OpenSwitch 之上運行，但 OpenSwitch 跟 SnapRoute L2/L3 功能互有重疊，不知道實際上要怎麼整，等後續他們的消息吧</p>
-<p><a href="http://36kr.com/coop/yidian/post/5063241.html">SnapRoute 成立的小趣事</a></p>
-<h2 id="Support-Platform"><a href="#Support-Platform" class="headerlink" title="Support Platform"></a>Support Platform</h2><p>依據 <a href="https://github.com/OpenSnaproute/reltools/blob/master/pkgInfo.json#L7">Source code - reltools/pkgInfo.json</a>，目前 OpenSource 支援以下平台:</p>
-<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Accton/Edgecore AS5712-54X</a></li>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=57&id=110">Accton/Edgecore Wedge40</a></li>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=5&cls3=67&id=128">Accton/Edgecore Wedge100</a></li>
-<li>Celestica Redstone</li>
-<li>Docker</li>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Switch<ul>
+<li>IP: 192.168.13.14</li>
+<li>Hardware<ul>
+<li>Model<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=43&id=12">Edgecore AS6712-32X</a></li>
 </ul>
-<p>商業版本請參考 <a href="http://docs.snaproute.com/hcl/index.html">FlexSwitch - Hardware Compatibility List</a></p>
-<!--more-->
+</li>
+</ul>
+</li>
+<li>Software<ul>
+<li>ONL version<ul>
+<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
+</ul>
+</li>
+<li>OF-DPA version<ul>
+<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.4.0%2Baccton1.0~1-1_amd64.deb">ofdpa_3.0 EA4</a></li>
+</ul>
+</li>
+<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
+<li>Command<ul>
+<li><code>launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contorl VM<ul>
+<li>IP: 192.168.13.2</li>
+<li>OpenvSwitch<ul>
+<li>2.7.0</li>
+<li>In this case, we just use <code>ovs-ofctl</code>, and it’s also work if you want to use dpctl which CPqD provide</li>
+<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">How to Install OpenvSwitch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Basic-Command"><a href="#Basic-Command" class="headerlink" title="Basic Command"></a>Basic Command</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br></pre></td></tr></table></figure>
 
-<h2 id="Installation-Process"><a href="#Installation-Process" class="headerlink" title="Installation Process"></a>Installation Process</h2><p>既然這專案是 OpenSource 想當然爾是可以自己動手編譯的，參考文件順序如下:</p>
-<ol>
-<li><p><a href="https://opensnaproute.github.io/docs/build.html#building-flexswitch-from-source">Building FlexSwitch from source</a></p>
-</li>
-<li><p><a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev">GitHub - OpenSnaproute/vagrantFlexSwitchDev</a></p>
-<ul>
-<li>如果不想用 Vagrant 的話，請自行解析 <a href="https://github.com/OpenSnaproute/vagrantFlexSwitchDev/blob/master/Vagrantfile#L67-L81">Vagrantfile</a></li>
-</ul>
-</li>
-<li><p><a href="https://github.com/OpenSnaproute/reltools">GitHub - OpenSnaproute/reltools</a></p>
-<ul>
-<li>Main Project，執行 <code>fab setupDevEnv</code><ul>
-<li>如果遇到 rake last_comment 問題，起因是 <a href="https://github.com/OpenSnaproute/reltools/blob/master/fabfile.py#L212">Apache Thrift</a> 專案的這行 <a href="https://github.com/apache/thrift/blob/master/lib/rb/thrift.gemspec#L35">code</a>，遇到 rake version 大於 11.0.1 才會遇到，解法是請把 rake version 鎖定在 11.0</li>
-<li>注意 PATH 的內容，建議是 ~/.bashrc 跟 /root/.bashrc 裡的變數要一樣</li>
-<li>如果遇到一些 git clone 問題，username 請填 <code>OpenSnapRoute</code></li>
-</ul>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h4 id="Show-port-information"><a href="#Show-port-information" class="headerlink" title="Show port information"></a>Show port information</h4><ul>
+<li><code>ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7a</span><br><span class="line">n_tables:23, n_buffers:0</span><br><span class="line">capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS</span><br><span class="line">OFPST_PORT_DESC reply (OF1.3) (xid=0x3):</span><br><span class="line"> 1(port1): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line"> 2(port2): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
+<h4 id="Show-tables-information"><a href="#Show-tables-information" class="headerlink" title="Show tables information"></a>Show tables information</h4><ul>
+<li><code>ovs-ofctl dump-tables</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_TABLE reply (OF1.3) (xid=0x2):</span><br><span class="line">  table 0:</span><br><span class="line">    active=0, lookup=0, matched=0</span><br><span class="line"></span><br><span class="line">  table 5: ditto</span><br><span class="line">  table 6: ditto</span><br><span class="line">  table 7: ditto</span><br><span class="line">  table 8: ditto</span><br><span class="line">  table 10: ditto</span><br><span class="line">  table 11: ditto</span><br><span class="line">  table 13: ditto</span><br><span class="line">  table 15: ditto</span><br><span class="line">  table 16: ditto</span><br><span class="line">  table 17: ditto</span><br><span class="line">  table 20: ditto</span><br><span class="line">  table 24: ditto</span><br><span class="line">  table 28: ditto</span><br><span class="line">  table 30: ditto</span><br><span class="line">  table 40: ditto</span><br><span class="line">  table 50: ditto</span><br><span class="line">  table 60: ditto</span><br><span class="line">  table 65: ditto</span><br><span class="line">  table 210: ditto</span><br><span class="line">  table 211: ditto</span><br><span class="line">  table 230: ditto</span><br><span class="line">  table 235: ditto</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>編譯</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python makePkg.py</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Show Debian Packages</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pichuang@workstation-vm  ~/git/reltools (master*)</span><br><span class="line">$ ls -a |grep deb</span><br><span class="line">flexswitch_accton_wedge100-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_accton_wedge40-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_cel_redstone-pichuang_1.0.0.171.44_amd64.deb</span><br><span class="line">flexswitch_docker-pichuang_1.0.0.171.44_amd64.deb</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Install Debian Package on AS5712-54</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg -i flexswitch_bcm_accton_as5712-pichuang_1.0.0.171.44_amd64.deb &amp;&amp; apt install -f</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Open Network Linux 版本建議 <code>2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3</code></li>
 </ul>
+<h4 id="Add-flow-entry"><a href="#Add-flow-entry" class="headerlink" title="Add flow entry"></a>Add flow entry</h4><ul>
+<li><code>ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller</code></li>
+</ul>
+<h4 id="Show-flow-entries"><a href="#Show-flow-entries" class="headerlink" title="Show flow entries"></a>Show flow entries</h4><ul>
+<li><code>ovs-ofctl dump-flows</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_FLOW reply (OF1.3) (xid=0x2):</span><br><span class="line"> cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>WEB UI</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;&lt;ip&gt;:8080&#x2F;api-docs&#x2F;#</span><br></pre></td></tr></table></figure>
-<p><img src="https://lh3.googleusercontent.com/5KzExo8JTIMKfZEnLtsCHcRphWCMzG4Tk5Bxhfo2swc3lElhuZJGnoVslycPlpV2IFvdYXmutnplvL00cKbG6xaL5MODPq2dmWztFghMhrPd4pXLrM0TotzGcyWjqhPLXsz7RZhf-0sIeUzIs010LdW0PI_8Q1S4848guBDjlHuxCYSn4DtNngVSLWFm43dZQJS4qhn3XKrVB6yGwjnOsAG_6Uc9u093k6511QYPRTT6sPW2Hnio-uXLrlDwnZ7utRDepXzMmyUwLmuZQ-S_dILTaHrOE63Yy_f9RAGswG6cYdFpb00GzrsSvOKaWqvqrrCL7VNENutA6PzXzl8w69fexVLJagDKaowrWIuaUFRkhG7UauHwO2FFXKj5uAWnCdXwjnno-H-mJXFc_fwX3IPxOzvXCBGJzCHIaStL7uTJS9Y7WRKebw283aHdJ_9aXoPOZGYIdj2qY6Y-wfBj9xqC8hFBRXqiwgqmKjDDgZpm5yWEdjeVsAP2WYYSeDbV1yK2pZs1xkVNLL4ETEqht_8ltmNiTHWPiXf5u8nsRsyN0vxen81_GCucfnegnLuX-AuXI2_-fte46NS1578ZNLt-t_ySaZ-dY1syhYisO75HGFhft0NGXg=w1948-h626-no" alt="FlexSwitch Screen Shot"></p>
+</ul>
+<h4 id="Show-queue-stats"><a href="#Show-queue-stats" class="headerlink" title="Show queue stats"></a>Show queue stats</h4><ul>
+<li><code>ovs-ofctl queue-stats</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues</span><br><span class="line">  port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 </li>
-</ol>
-<p>More: <a href="https://drive.google.com/open?id=0B19ucAmtemIQYkZhX2FUYi13QTA">FlexSwitch API</a></p>
+</ul>
+<h4 id="Show-group-information"><a href="#Show-group-information" class="headerlink" title="Show group information"></a>Show group information</h4><ul>
+<li><code>ovs-ofctl dump-groups</code></li>
+</ul>
+<h4 id="Show-ports-information"><a href="#Show-ports-information" class="headerlink" title="Show ports information"></a>Show ports information</h4><ul>
+<li><code>ovs-ofcll dump-ports</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports</span><br><span class="line">  port  1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://snaproute.com/">SnapRoute</a></li>
-<li><a href="http://opencompute.org/">Open Compute Project</a></li>
-<li><a href="https://www.circleb.eu/wp-content/uploads/2016/06/FlexSwitch_OCP_Specification_v0.1.pdf">FlexSwitch OCP Specification v0.1</a></li>
-<li><a href="https://github.com/OpenSnaproute">GitHub - OpenSnapRoute</a></li>
-<li><a href="http://packetpushers.net/virtual-toolbox/list-network-operating-systems/">List of Network Operating Systems</a></li>
+<li><a href="http://openvswitch.org/support/dist-docs/ovs-ofctl.8.txt">ovs-ofctl</a></li>
+<li><a href="http://www.pica8.com/wp-content/uploads/2015/09/v2.8/html/ovs-configuration-guide/">Pica8 OVS Configuration Guide 2.8.0</a></li>
+<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">Compile OpenvSwitch - pichuang</a></li>
+<li><a href="https://gist.github.com/pichuang/a901ea8d9870728bf8eebaab548e037c">ovs-ofctl help</a></li>
 </ul>
-<h2 id="社群服務"><a href="#社群服務" class="headerlink" title="社群服務"></a>社群服務</h2><p>本人的文章大多都會發布在 <a href="https://www.facebook.com/groups/sdnds.tw/">SDNDS-TW</a>。這社團文章都跟 SDN/NFV 國內外產業新聞或資訊有關，有任何技術問題也歡迎在上面詢問。<br><img src="https://lh3.googleusercontent.com/KizynpieyTlykuyk-po1tgasnVI4Oxl9_vPXXpHYyj_JiUc0V5bRb8lHxGpZDQiTqMNCn_A6NqF-4Gx8KMex8XsjgdCGByIqtIpKBc4TvQoUtNtXf0RK_eBf2pwm8wNJRiWXfkz3vf6Tf465o2vzmH2G4iR28kf_Wc_ADeqDJDfQQlV0XTtQcSBBRG2N-zs1ue6dhg38lMoO47n0-SI6yl3x-HhyRIK8penHyHXe0i9q08IDqYEdtMGyKExcihESNthqc4r74kceAJUYhfqsFRpGLteEMXDkShC74r79Frr5aVwsYml0x1WVHkmXbxLZB381B0gkJWUXaoCeCC8rdeYtb6vn60vLsNYgYLRI0wT0VjEbJTCgcHUbNk8sBkXEiATLTKQiES5VcIEJ9nQ7FYTxsF8BiB7exUxr0b3kfTLVJF2RBqc0hpHojoiMh-nL-OY30a9rgf1vr4n-44sDGfa8-f7xWX3JEe-7RgNjwZ5glxGM1lkrf2_MHwbgVRNd2tzUrxmRNmMrVpFog-NcByDo824K8GJLxyLq0Dg12jkx90uOBKmhAE-_JUL5iIYzzUUKGJu1-ORReKmYR63UvTeUvwtxSEKUnpax4co6s6dQoS2f5bB37Q=w1652-h590-no" alt="SDNDS-TW Facebook Group"></p>
 ]]></content>
       <categories>
-        <category>telco</category>
+        <category>infra</category>
       </categories>
       <tags>
         <tag>sdn</tag>
-        <tag>snaproute</tag>
-        <tag>flexswitch</tag>
+        <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
+        <tag>ovs</tag>
+        <tag>switch</tag>
       </tags>
   </entry>
   <entry>
@@ -1323,6 +1323,52 @@
         <tag>linux</tag>
         <tag>docker</tag>
         <tag>docker-compose</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Install i40e driver into VMWare ESXi</title>
+    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>ESXi-6.0.0-20160302001</li>
+<li>i40e<ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
+</ul>
+</li>
+<li>Intel XL710<ul>
+<li>Including vmnic{2-5}</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please enable SSH daemon on the server</li>
+</ul>
+<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
+<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
+<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
+<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
+<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>vmware</tag>
+        <tag>intel</tag>
+        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -1404,52 +1450,6 @@
         <tag>headless</tag>
         <tag>serial</tag>
         <tag>centos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Install i40e driver into VMWare ESXi</title>
-    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>ESXi-6.0.0-20160302001</li>
-<li>i40e<ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
-</ul>
-</li>
-<li>Intel XL710<ul>
-<li>Including vmnic{2-5}</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please enable SSH daemon on the server</li>
-</ul>
-<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
-<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
-<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
-<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
-<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>vmware</tag>
-        <tag>intel</tag>
-        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -1616,146 +1616,6 @@
       </tags>
   </entry>
   <entry>
-    <title>雲端大廠們的 VM 資源配置參考</title>
-    <url>/20180815-cloud-resource-sizing-reference/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
-<a id="more"></a>
-
-<p>目前有公開出來的 VM 資源配置參考如下：</p>
-<ul>
-<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP</a></li>
-<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure</a></li>
-</ul>
-<h2 id="各大廠配置清單"><a href="#各大廠配置清單" class="headerlink" title="各大廠配置清單"></a>各大廠配置清單</h2><h3 id="Amazon-AWS"><a href="#Amazon-AWS" class="headerlink" title="Amazon AWS"></a>Amazon AWS</h3><p>AWS 提供了針對幾個使用情境來供各位選擇 <a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS Machine Type</a></p>
-<ol>
-<li>一般用途 (General Purpose) T2 / M5 / M4<ul>
-<li>T2: 網站和 Web 應用程式、開發環境、建置伺服器、程式碼儲存庫、微型服務、測試和模擬環境，以及企業營運應用程式</li>
-<li>M5 / M4: 用於小型和中型資料庫、需要附加記憶體的資料處理任務以及快取叢集，也用於執行 SAP、Microsoft SharePoint、叢集運算和其他企業應用程式的後端伺服器</li>
-</ul>
-</li>
-<li>運算優化 (Compute Optimized) C5 / C4<ul>
-<li>C5 / C4: 高效能 Web 伺服器、科學建模、批次處理、分散式分析、高效能運算 (HPC)、機器/深度學習推論、廣告服務、可高度擴展的多玩家遊戲，以及影片編碼</li>
-</ul>
-</li>
-<li>記憶體優化 (Memory Optimized) X1e / X1 / R5 / R4 /z1d<ul>
-<li>X1e / X1: 高效能資料庫、記憶體內資料庫 (如 SAP HANA)，以及記憶體密集型應用程式。</li>
-<li>R5 / R4: 高效能資料庫、分散式 Web 規模記憶體內快取、中型記憶體內資料庫、即時大數據分析，以及其他企業應用程式</li>
-</ul>
-</li>
-<li>加速運算 (Accelerated Computing) P3 / P2 / G3 / F1<ul>
-<li>P3 / P2: 機器/深度學習、高效能運算、計算流體動力學、計算金融學、地震分析、語音辨識、自動駕駛汽車、藥物研發</li>
-<li>G3: 3D 視覺化、圖形密集型遠端工作站、3D 轉譯、應用程式串流、影片編碼和其他伺服器端圖形工作負載</li>
-<li>F1: 基因體研究、財務分析、即時影片處理、大數據搜尋和分析，以及安全性</li>
-</ul>
-</li>
-<li>儲存優化 (Storage Optimized) H1 / I3 / D2<ul>
-<li>H1: MapReduce 工作負載、分散式檔案系統 (如 HDFS 和 MapR-FS)、網路檔案系統、日誌或資料處理應用程式 (如 Apache Kafka) 以及大數據工作負載叢集</li>
-<li>I3: NoSQL 資料庫 (如 Cassandra、MongoDB、Redis)、記憶體內資料庫 (如 Aerospike)、可擴展交易處理資料庫、資料倉儲、Elasticsearch、分析工作負載</li>
-<li>D2: 大規模並行處理 (MPP) 資料倉儲、MapReduce 和 Hadoop 分散式運算、分散式檔案系統、網路檔案系統、日誌或資料處理應用程式</li>
-</ul>
-</li>
-</ol>
-<p><a href="https://www.ec2instances.info/">EC2 Instance Type</a> 這網站提供即時 EC2 VM Instance 配置清單，可以直接搜尋需要的資料</p>
-<h3 id="Google-GCP"><a href="#Google-GCP" class="headerlink" title="Google GCP"></a>Google GCP</h3><p>Google GCP 也針對幾個使用情境來供各位選擇，如果有在看 Kubernetes 相關技術的人，想要落地在自家環境，或許可以以 GCP 配置為主，AWS / Azure 作為參照，這邊特別一點的是 GPU 的資源估算，可以做為參考依據</p>
-<p><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP Machine Type</a></p>
-<ol>
-<li>Standard machine types</li>
-<li>High-memory machine types</li>
-<li>High-CPU machine types</li>
-<li>Memory-optimized machine types</li>
-<li><a href="https://cloud.google.com/compute/docs/gpus/">GPU</a></li>
-</ol>
-<h3 id="Microsoft-Azure"><a href="#Microsoft-Azure" class="headerlink" title="Microsoft Azure"></a>Microsoft Azure</h3><p>Microsoft 之所以為 Microsoft 就是因為有 Windows OS，若自家環境有需要考量以 Windows 為主的環境，下列連結就是主要環境配置參照對象<br><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Azure 中 Windows 虛擬機器的大小</a></p>
-<p>當然 Azure 也有提供 Linux 為主配置選項，支持服務在混合雲上的應用<br><a href="https://docs.microsoft.com/zh-tw/azure/virtual-machines/linux/sizes">Azure 中的 Linux 虛擬機器大小</a></p>
-<p>Microsoft 所提供的資源預估還蠻全的，連 RDMA 的應用都有放進去</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP - Machine Types</a></li>
-<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS - Machine Type</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure - Machine Type</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>cloud</tag>
-        <tag>azure</tag>
-        <tag>aws</tag>
-        <tag>gcp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
-</blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
-</ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
-<ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
-</ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>再讀 Twelve-Factor Apps</title>
     <url>/20180821-review-twelve-factor-apps/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前陣子因為各種原因，被問及要如何在大型軟體開發專案中，在容器平台上有效避免程式發生相依性錯誤 (Dependency Hell)? 這問題的其實可以轉換成，有沒有一個容器構建規範是可以讓開發者可以參考的開發指南？</p>
@@ -1900,6 +1760,76 @@
       </tags>
   </entry>
   <entry>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+</blockquote>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
+<ol>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
+</ol>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+</ol>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -2028,6 +1958,76 @@
         <tag>container</tag>
         <tag>skopeo</tag>
         <tag>images</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>雲端大廠們的 VM 資源配置參考</title>
+    <url>/20180815-cloud-resource-sizing-reference/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
+<a id="more"></a>
+
+<p>目前有公開出來的 VM 資源配置參考如下：</p>
+<ul>
+<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP</a></li>
+<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure</a></li>
+</ul>
+<h2 id="各大廠配置清單"><a href="#各大廠配置清單" class="headerlink" title="各大廠配置清單"></a>各大廠配置清單</h2><h3 id="Amazon-AWS"><a href="#Amazon-AWS" class="headerlink" title="Amazon AWS"></a>Amazon AWS</h3><p>AWS 提供了針對幾個使用情境來供各位選擇 <a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS Machine Type</a></p>
+<ol>
+<li>一般用途 (General Purpose) T2 / M5 / M4<ul>
+<li>T2: 網站和 Web 應用程式、開發環境、建置伺服器、程式碼儲存庫、微型服務、測試和模擬環境，以及企業營運應用程式</li>
+<li>M5 / M4: 用於小型和中型資料庫、需要附加記憶體的資料處理任務以及快取叢集，也用於執行 SAP、Microsoft SharePoint、叢集運算和其他企業應用程式的後端伺服器</li>
+</ul>
+</li>
+<li>運算優化 (Compute Optimized) C5 / C4<ul>
+<li>C5 / C4: 高效能 Web 伺服器、科學建模、批次處理、分散式分析、高效能運算 (HPC)、機器/深度學習推論、廣告服務、可高度擴展的多玩家遊戲，以及影片編碼</li>
+</ul>
+</li>
+<li>記憶體優化 (Memory Optimized) X1e / X1 / R5 / R4 /z1d<ul>
+<li>X1e / X1: 高效能資料庫、記憶體內資料庫 (如 SAP HANA)，以及記憶體密集型應用程式。</li>
+<li>R5 / R4: 高效能資料庫、分散式 Web 規模記憶體內快取、中型記憶體內資料庫、即時大數據分析，以及其他企業應用程式</li>
+</ul>
+</li>
+<li>加速運算 (Accelerated Computing) P3 / P2 / G3 / F1<ul>
+<li>P3 / P2: 機器/深度學習、高效能運算、計算流體動力學、計算金融學、地震分析、語音辨識、自動駕駛汽車、藥物研發</li>
+<li>G3: 3D 視覺化、圖形密集型遠端工作站、3D 轉譯、應用程式串流、影片編碼和其他伺服器端圖形工作負載</li>
+<li>F1: 基因體研究、財務分析、即時影片處理、大數據搜尋和分析，以及安全性</li>
+</ul>
+</li>
+<li>儲存優化 (Storage Optimized) H1 / I3 / D2<ul>
+<li>H1: MapReduce 工作負載、分散式檔案系統 (如 HDFS 和 MapR-FS)、網路檔案系統、日誌或資料處理應用程式 (如 Apache Kafka) 以及大數據工作負載叢集</li>
+<li>I3: NoSQL 資料庫 (如 Cassandra、MongoDB、Redis)、記憶體內資料庫 (如 Aerospike)、可擴展交易處理資料庫、資料倉儲、Elasticsearch、分析工作負載</li>
+<li>D2: 大規模並行處理 (MPP) 資料倉儲、MapReduce 和 Hadoop 分散式運算、分散式檔案系統、網路檔案系統、日誌或資料處理應用程式</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://www.ec2instances.info/">EC2 Instance Type</a> 這網站提供即時 EC2 VM Instance 配置清單，可以直接搜尋需要的資料</p>
+<h3 id="Google-GCP"><a href="#Google-GCP" class="headerlink" title="Google GCP"></a>Google GCP</h3><p>Google GCP 也針對幾個使用情境來供各位選擇，如果有在看 Kubernetes 相關技術的人，想要落地在自家環境，或許可以以 GCP 配置為主，AWS / Azure 作為參照，這邊特別一點的是 GPU 的資源估算，可以做為參考依據</p>
+<p><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP Machine Type</a></p>
+<ol>
+<li>Standard machine types</li>
+<li>High-memory machine types</li>
+<li>High-CPU machine types</li>
+<li>Memory-optimized machine types</li>
+<li><a href="https://cloud.google.com/compute/docs/gpus/">GPU</a></li>
+</ol>
+<h3 id="Microsoft-Azure"><a href="#Microsoft-Azure" class="headerlink" title="Microsoft Azure"></a>Microsoft Azure</h3><p>Microsoft 之所以為 Microsoft 就是因為有 Windows OS，若自家環境有需要考量以 Windows 為主的環境，下列連結就是主要環境配置參照對象<br><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Azure 中 Windows 虛擬機器的大小</a></p>
+<p>當然 Azure 也有提供 Linux 為主配置選項，支持服務在混合雲上的應用<br><a href="https://docs.microsoft.com/zh-tw/azure/virtual-machines/linux/sizes">Azure 中的 Linux 虛擬機器大小</a></p>
+<p>Microsoft 所提供的資源預估還蠻全的，連 RDMA 的應用都有放進去</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://cloud.google.com/compute/docs/machine-types">Google GCP - Machine Types</a></li>
+<li><a href="https://aws.amazon.com/tw/ec2/instance-types/">Amazon AWS - Machine Type</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes">Microsoft Azure - Machine Type</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>cloud</tag>
+        <tag>azure</tag>
+        <tag>aws</tag>
+        <tag>gcp</tag>
       </tags>
   </entry>
   <entry>
@@ -2260,78 +2260,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</title>
-    <url>/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</url>
-    <content><![CDATA[<p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-</ul>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/UHXNen1ZXq4" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
-<a id="more"></a>
-
-<ul>
-<li>控制誰 Who =&gt; Inventory</li>
-<li>做什麼 Do What =&gt; Ansible Workflow</li>
-<li>怎麼做 How to do =&gt; Ansible Playbook</li>
-</ul>
-<h2 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h2><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
-<p>然而一本 Playbook 劇本通常裡面包含了:</p>
-<ul>
-<li>主角 (Inventory)</li>
-<li>劇情 (Tasks)</li>
-<li>道具 (Modules)</li>
-</ul>
-<p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
-<p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">Workflow 工作流</a></p>
-<h2 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h2><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
-<ol>
-<li>On Succesful (綠線)</li>
-<li>On Failure (紅線)</li>
-<li>Always (藍線)</li>
-</ol>
-<p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
-<p><img src="/images/workflow-1.jpg" alt=""></p>
-<h2 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h2><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
-<p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
-<ul>
-<li>IaC, Infrastructure as Code</li>
-<li>ZTP, Zero Touch Provisioning</li>
-<li>DevOps: Automation / Measuring</li>
-</ul>
-<p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
-<p>意者請洽詢台灣紅帽 XD </p>
-<h2 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h2><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
-<p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;nodes&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line">    <span class="attr">fail:</span></span><br><span class="line">      <span class="attr">msg:</span> <span class="string">&quot;openshift_kubelet_name_override Cannot be defined for new hosts&quot;</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line">  <span class="attr">vars:</span></span><br><span class="line">    <span class="attr">l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line">    <span class="attr">l_repo_hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;oo_all_hosts&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line">  <span class="attr">when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">|</span> <span class="string">default(False))</span></span><br></pre></td></tr></table></figure>
-
-<p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
-<p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a> 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
-<p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
-<p><img src="/images/workflow-2.png" alt=""></p>
-<p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-<li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">Ansible 技術概觀介紹_20190130</a></li>
-<li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
-<li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">GitHub - openshift/openshift-ansible</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html">Ansible Galaxy</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>iac</tag>
-        <tag>redhat</tag>
-        <tag>tower</tag>
-        <tag>ztp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift v3.11 儲存類型建議</title>
     <url>/20190325-redhat-openshift-v3.11-storage-recommendation/</url>
     <content><![CDATA[<p>在小弟先前的演講中 <a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao">20190218_OpenShift Storage 架構思考</a>，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：</p>
@@ -2477,6 +2405,78 @@
         <tag>openshift3</tag>
         <tag>redhat</tag>
         <tag>storage</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</title>
+    <url>/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</url>
+    <content><![CDATA[<p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
+</ul>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/UHXNen1ZXq4" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
+<a id="more"></a>
+
+<ul>
+<li>控制誰 Who =&gt; Inventory</li>
+<li>做什麼 Do What =&gt; Ansible Workflow</li>
+<li>怎麼做 How to do =&gt; Ansible Playbook</li>
+</ul>
+<h2 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h2><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
+<p>然而一本 Playbook 劇本通常裡面包含了:</p>
+<ul>
+<li>主角 (Inventory)</li>
+<li>劇情 (Tasks)</li>
+<li>道具 (Modules)</li>
+</ul>
+<p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
+<p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">Workflow 工作流</a></p>
+<h2 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h2><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
+<ol>
+<li>On Succesful (綠線)</li>
+<li>On Failure (紅線)</li>
+<li>Always (藍線)</li>
+</ol>
+<p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
+<p><img src="/images/workflow-1.jpg" alt=""></p>
+<h2 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h2><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
+<p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
+<ul>
+<li>IaC, Infrastructure as Code</li>
+<li>ZTP, Zero Touch Provisioning</li>
+<li>DevOps: Automation / Measuring</li>
+</ul>
+<p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
+<p>意者請洽詢台灣紅帽 XD </p>
+<h2 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h2><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
+<p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;nodes&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line">    <span class="attr">fail:</span></span><br><span class="line">      <span class="attr">msg:</span> <span class="string">&quot;openshift_kubelet_name_override Cannot be defined for new hosts&quot;</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line">  <span class="attr">vars:</span></span><br><span class="line">    <span class="attr">l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line">    <span class="attr">l_repo_hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;oo_all_hosts&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line">  <span class="attr">when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">|</span> <span class="string">default(False))</span></span><br></pre></td></tr></table></figure>
+
+<p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
+<p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a> 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
+<p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
+<p><img src="/images/workflow-2.png" alt=""></p>
+<p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
+<li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">Ansible 技術概觀介紹_20190130</a></li>
+<li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
+<li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">GitHub - openshift/openshift-ansible</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html">Ansible Galaxy</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>iac</tag>
+        <tag>redhat</tag>
+        <tag>tower</tag>
+        <tag>ztp</tag>
       </tags>
   </entry>
   <entry>
@@ -2878,101 +2878,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Container Bare Metal for Networking 參考架構</title>
-    <url>/20190411-container-bare-metal-for-networking-references-architecture/</url>
-    <content><![CDATA[<blockquote>
-<p>Intel 網卡黑科技 + 容器網路的現在進行式</p>
-</blockquote>
-<p>在 April 2019 的時候, Intel 釋放出這份 Reference Architecture <a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></p>
-<p>各位看看以 Multus Plugin 為核心的上下層整合，上面另外接了 Flannel / SR-IOV / Userspace CNI Plugin，下面接的是容器化的 CNF (Cloud-native Network Function) 應用，還順便針對 vBNG / vCMTS 做了 ovs-dpdk/VPP 的網卡加速</p>
-<p><img src="/images/intel-1.png" alt=""></p>
-<a id="more"></a>
-
-<p>若想要詳細了解裡面技術內容的話可以參考此篇 <a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></p>
-<p>倘若想看影片 Demo 的話，不能錯過這個 <a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></p>
-<p><img src="/images/intel-2.png" alt=""></p>
-<p><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a> 在這網站提供了最新的 Container Networking + Intel Technology 相關的技術文件，而目前 Red Hat 跟 Intel 正在如火如荼地合作把重中之重的 <a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a> 加緊進行驗證測試中要準備要在 OpenShift 上 GA 了 </p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></li>
-<li><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a></li>
-<li><a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></li>
-<li><a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></li>
-<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>intel</tag>
-        <tag>networking</tag>
-        <tag>cni</tag>
-        <tag>multus-cni</tag>
-        <tag>nfv</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat OpenShift 把 VM 當 Container 管!?</title>
-    <url>/20190420-redhat-openshift-kubevirt/</url>
-    <content><![CDATA[<p><img src="https://avatars2.githubusercontent.com/u/18700703?s=280&v=4" alt=""></p>
-<p>Kubevirt 是由 Red Hat 於 2017 年初發起的一個容器虛擬化技術 Container-native Virtulaization (CNV) 專案，主要功能是以 Kubernetes 管理容器的角度來管理 VM</p>
-<blockquote>
-<p>Kubervirt: Add virtual machines as you know them to your OpenShift projects</p>
-</blockquote>
-<a id="more"></a>
-
-<h2 id="Why-Kubevirt"><a href="#Why-Kubevirt" class="headerlink" title="Why Kubevirt?"></a>Why Kubevirt?</h2><p>如同<a href="https://kubevirt.io/">官網</a>所說，這個專案的主要目的是認為說雖然不是所有的原生在 VM  上的服務都適合進行容器化 (Containerized)，但卻又想要享有 Container Platform 原生所帶來的彈性調度能力，所以才會誕生出這麼一個專案，讓開發團隊在同一個 Container Platform 上依據不同的需求放置 VM 或 Container</p>
-<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/images/kubevirt.png" alt=""></p>
-<p>從底層開始，依然是需要依靠 Bare Metal / OS / Kubernetes 建立基本 Container Platform 的能力，但原先上層所乘載的 Pod 裡面的型態應該是 Container，但現在有了 Kubevirt 這樣的專案後，可以在一個 Pod 裡面起 VM 來讓使用者做使用</p>
-<p>技術上來說這個 VM Instance 的實作是採用 <code>KVM/QEMU</code> 的方式進行使用，而他的資源配置則是採用跟 Container 的方式依樣用 YAML 描繪資源需求，有趣的事情是 CNV 掛載硬碟的方式也是要透過 OpenShift PV/PVC 機制來進行使用</p>
-<p>而目前 Kubevirt 的能力可以做到以下事情</p>
-<ul>
-<li>Create a predefined VM</li>
-<li>Schedule a VM on a Kubernetes cluster</li>
-<li>Launch a VM</li>
-<li>Stop a VM</li>
-<li>Delete a VM</li>
-</ul>
-<h2 id="技術分析"><a href="#技術分析" class="headerlink" title="技術分析"></a>技術分析</h2><p><img src="/images/kubevirt-1.png" alt=""></p>
-<p>從 <a href="https://github.com/kubevirt/kubevirt">kubevirt/kubevirt - GitHub</a> 得知，Kubevirt 有使用 CRD (CustomResourceDefinition) 實作專門控制 KVM 的 <code>VMI CRD</code>，而這個 CRD 包含:</p>
-<ul>
-<li>Machine type</li>
-<li>CPU type</li>
-<li>Amount of RAM and vCPUs</li>
-<li>Number and type of NICs</li>
-<li>…</li>
-</ul>
-<p>而除此之外還有實作三個不同的程式來接受和執行來至 VMI CRD 的要求 - <code>virt-controller</code> 、 <code>virt-handler</code> 和 <code>virt-launcher</code>，而整個處理流程可以參考下圖</p>
-<p><img src="https://github.com/kubevirt/kubevirt/raw/master/docs/architecture.png" alt=""></p>
-<h2 id="跟-Red-Hat-的關係"><a href="#跟-Red-Hat-的關係" class="headerlink" title="跟 Red Hat 的關係?"></a>跟 Red Hat 的關係?</h2><p>Kubevirt 是所謂的 Upstream Project，也就是大家可以任意使用的 Community 版本，可以隨意下載安裝在自己的環境自己玩<br>而 <a href="https://docs.openshift.com/container-platform/3.11/cnv_release_notes/cnv_release_notes.html#cnv_introduction_to_cnv-cnv-release-notes">Container-native Virtualization (CNV)</a> 則是 Red Hat Downstream product，面向的是終端客戶使用，有任何問題會由 Red Hat 工程師處理 (基本上就是那些在 GitHub 上飄來飄去的大大們)</p>
-<h2 id="Demo-of-CNV"><a href="#Demo-of-CNV" class="headerlink" title="Demo of CNV"></a>Demo of CNV</h2><p>可以觀看以下的 Youtube 影片，這個 Demo 是釋放於 Red Hat Summit 2018 上</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/_jzZqi4qQDM" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<p>若意猶未盡的話，可以參考更詳細的簡報 <a href="https://www.slideshare.net/sgordon2/introducing-containernative-virtualization">Introducing Container-native Virtualization - Red Hat Summit 2018</a></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://kubevirt.io/">Kubevirt.io</a></li>
-<li><a href="https://blog.openshift.com/getting-started-with-kubevirt/">Getting Started with KubeVirt Containers and Virtual Machines Together - Red Hat OpenShift Blog</a></li>
-<li><a href="https://docs.openshift.com/container-platform/3.11/cnv_release_notes/cnv_release_notes.html#cnv_introduction_to_cnv-cnv-release-notes">Container-native Virtualization Release Notes - Red Hat OpenShift v3.11 Officail Docs</a></li>
-<li><a href="https://blog.openshift.com/wp-content/uploads/201708-KubeVirt.pdf">KubeVirt - Kubernetes, Virtualization and Your Future Data Center</a></li>
-<li><a href="https://www.ithome.com.tw/news/125386">紅帽正在研發原生容器虛擬化技術 -  iThome</a></li>
-<li><a href="https://blog.openshift.com/a-first-look-at-kubevirt/">A First Look at KubeVirt  - Red Hat OpenShift Blog</a></li>
-<li><a href="https://www.slideshare.net/sgordon2/introducing-containernative-virtualization">Introducing Container-native Virtualization - Red Hat Summit 2018</a></li>
-<li><a href="https://github.com/kubevirt/kubevirt">kubevirt/kubevirt - GitHub</a></li>
-<li><a href="https://static.sched.com/hosted_files/ossalsjp19/64/Running%20Legacy%20VMs%20with%20Kubernetes.pdf">Running Legacy VM’s along with containers in Kubernetes… Delusion or Reality? NTT Open Source Software Center</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>redhat</tag>
-        <tag>cnv</tag>
-        <tag>kubevirt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>到底 Operator Framework 用起來會長得如何?</title>
     <url>/20190407-how-look-like-operator-framework-in-production/</url>
     <content><![CDATA[<p>打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？</p>
@@ -3070,6 +2975,101 @@
         <tag>openshift</tag>
         <tag>redhat</tag>
         <tag>operator</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Container Bare Metal for Networking 參考架構</title>
+    <url>/20190411-container-bare-metal-for-networking-references-architecture/</url>
+    <content><![CDATA[<blockquote>
+<p>Intel 網卡黑科技 + 容器網路的現在進行式</p>
+</blockquote>
+<p>在 April 2019 的時候, Intel 釋放出這份 Reference Architecture <a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></p>
+<p>各位看看以 Multus Plugin 為核心的上下層整合，上面另外接了 Flannel / SR-IOV / Userspace CNI Plugin，下面接的是容器化的 CNF (Cloud-native Network Function) 應用，還順便針對 vBNG / vCMTS 做了 ovs-dpdk/VPP 的網卡加速</p>
+<p><img src="/images/intel-1.png" alt=""></p>
+<a id="more"></a>
+
+<p>若想要詳細了解裡面技術內容的話可以參考此篇 <a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></p>
+<p>倘若想看影片 Demo 的話，不能錯過這個 <a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></p>
+<p><img src="/images/intel-2.png" alt=""></p>
+<p><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a> 在這網站提供了最新的 Container Networking + Intel Technology 相關的技術文件，而目前 Red Hat 跟 Intel 正在如火如荼地合作把重中之重的 <a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a> 加緊進行驗證測試中要準備要在 OpenShift 上 GA 了 </p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></li>
+<li><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a></li>
+<li><a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></li>
+<li><a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></li>
+<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>intel</tag>
+        <tag>networking</tag>
+        <tag>cni</tag>
+        <tag>multus-cni</tag>
+        <tag>nfv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Red Hat OpenShift 把 VM 當 Container 管!?</title>
+    <url>/20190420-redhat-openshift-kubevirt/</url>
+    <content><![CDATA[<p><img src="https://avatars2.githubusercontent.com/u/18700703?s=280&v=4" alt=""></p>
+<p>Kubevirt 是由 Red Hat 於 2017 年初發起的一個容器虛擬化技術 Container-native Virtulaization (CNV) 專案，主要功能是以 Kubernetes 管理容器的角度來管理 VM</p>
+<blockquote>
+<p>Kubervirt: Add virtual machines as you know them to your OpenShift projects</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="Why-Kubevirt"><a href="#Why-Kubevirt" class="headerlink" title="Why Kubevirt?"></a>Why Kubevirt?</h2><p>如同<a href="https://kubevirt.io/">官網</a>所說，這個專案的主要目的是認為說雖然不是所有的原生在 VM  上的服務都適合進行容器化 (Containerized)，但卻又想要享有 Container Platform 原生所帶來的彈性調度能力，所以才會誕生出這麼一個專案，讓開發團隊在同一個 Container Platform 上依據不同的需求放置 VM 或 Container</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p><img src="/images/kubevirt.png" alt=""></p>
+<p>從底層開始，依然是需要依靠 Bare Metal / OS / Kubernetes 建立基本 Container Platform 的能力，但原先上層所乘載的 Pod 裡面的型態應該是 Container，但現在有了 Kubevirt 這樣的專案後，可以在一個 Pod 裡面起 VM 來讓使用者做使用</p>
+<p>技術上來說這個 VM Instance 的實作是採用 <code>KVM/QEMU</code> 的方式進行使用，而他的資源配置則是採用跟 Container 的方式依樣用 YAML 描繪資源需求，有趣的事情是 CNV 掛載硬碟的方式也是要透過 OpenShift PV/PVC 機制來進行使用</p>
+<p>而目前 Kubevirt 的能力可以做到以下事情</p>
+<ul>
+<li>Create a predefined VM</li>
+<li>Schedule a VM on a Kubernetes cluster</li>
+<li>Launch a VM</li>
+<li>Stop a VM</li>
+<li>Delete a VM</li>
+</ul>
+<h2 id="技術分析"><a href="#技術分析" class="headerlink" title="技術分析"></a>技術分析</h2><p><img src="/images/kubevirt-1.png" alt=""></p>
+<p>從 <a href="https://github.com/kubevirt/kubevirt">kubevirt/kubevirt - GitHub</a> 得知，Kubevirt 有使用 CRD (CustomResourceDefinition) 實作專門控制 KVM 的 <code>VMI CRD</code>，而這個 CRD 包含:</p>
+<ul>
+<li>Machine type</li>
+<li>CPU type</li>
+<li>Amount of RAM and vCPUs</li>
+<li>Number and type of NICs</li>
+<li>…</li>
+</ul>
+<p>而除此之外還有實作三個不同的程式來接受和執行來至 VMI CRD 的要求 - <code>virt-controller</code> 、 <code>virt-handler</code> 和 <code>virt-launcher</code>，而整個處理流程可以參考下圖</p>
+<p><img src="https://github.com/kubevirt/kubevirt/raw/master/docs/architecture.png" alt=""></p>
+<h2 id="跟-Red-Hat-的關係"><a href="#跟-Red-Hat-的關係" class="headerlink" title="跟 Red Hat 的關係?"></a>跟 Red Hat 的關係?</h2><p>Kubevirt 是所謂的 Upstream Project，也就是大家可以任意使用的 Community 版本，可以隨意下載安裝在自己的環境自己玩<br>而 <a href="https://docs.openshift.com/container-platform/3.11/cnv_release_notes/cnv_release_notes.html#cnv_introduction_to_cnv-cnv-release-notes">Container-native Virtualization (CNV)</a> 則是 Red Hat Downstream product，面向的是終端客戶使用，有任何問題會由 Red Hat 工程師處理 (基本上就是那些在 GitHub 上飄來飄去的大大們)</p>
+<h2 id="Demo-of-CNV"><a href="#Demo-of-CNV" class="headerlink" title="Demo of CNV"></a>Demo of CNV</h2><p>可以觀看以下的 Youtube 影片，這個 Demo 是釋放於 Red Hat Summit 2018 上</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/_jzZqi4qQDM" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>若意猶未盡的話，可以參考更詳細的簡報 <a href="https://www.slideshare.net/sgordon2/introducing-containernative-virtualization">Introducing Container-native Virtualization - Red Hat Summit 2018</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://kubevirt.io/">Kubevirt.io</a></li>
+<li><a href="https://blog.openshift.com/getting-started-with-kubevirt/">Getting Started with KubeVirt Containers and Virtual Machines Together - Red Hat OpenShift Blog</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.11/cnv_release_notes/cnv_release_notes.html#cnv_introduction_to_cnv-cnv-release-notes">Container-native Virtualization Release Notes - Red Hat OpenShift v3.11 Officail Docs</a></li>
+<li><a href="https://blog.openshift.com/wp-content/uploads/201708-KubeVirt.pdf">KubeVirt - Kubernetes, Virtualization and Your Future Data Center</a></li>
+<li><a href="https://www.ithome.com.tw/news/125386">紅帽正在研發原生容器虛擬化技術 -  iThome</a></li>
+<li><a href="https://blog.openshift.com/a-first-look-at-kubevirt/">A First Look at KubeVirt  - Red Hat OpenShift Blog</a></li>
+<li><a href="https://www.slideshare.net/sgordon2/introducing-containernative-virtualization">Introducing Container-native Virtualization - Red Hat Summit 2018</a></li>
+<li><a href="https://github.com/kubevirt/kubevirt">kubevirt/kubevirt - GitHub</a></li>
+<li><a href="https://static.sched.com/hosted_files/ossalsjp19/64/Running%20Legacy%20VMs%20with%20Kubernetes.pdf">Running Legacy VM’s along with containers in Kubernetes… Delusion or Reality? NTT Open Source Software Center</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>redhat</tag>
+        <tag>cnv</tag>
+        <tag>kubevirt</tag>
       </tags>
   </entry>
   <entry>
@@ -3489,6 +3489,140 @@
       </tags>
   </entry>
   <entry>
+    <title>容器平台強固化保護思路</title>
+    <url>/20190723-container-and-container-platform-hardening/</url>
+    <content><![CDATA[<p>不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點</p>
+<p><img src="/images/container-platform-technology-stack.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="一座-Kubenetes-最小技術棧"><a href="#一座-Kubenetes-最小技術棧" class="headerlink" title="一座 Kubenetes 最小技術棧?"></a>一座 Kubenetes 最小技術棧?</h2><p>剔除掉多出的上層整合功能部分，最小情況下任何說自己是 Kubernetes 的平台方案，<code>最少</code>皆須具備以下的技術棧：</p>
+<ol>
+<li>Operating System (如： Ubuntu、CentOS、RHEL、Fedora CoreOS)</li>
+<li>Container Runtime Interface (如：Docker、CRI-O) </li>
+<li>Container Network Interface (如：Calico、Flannel) </li>
+<li>Container Orchestration  (如：Kubernetes、Docker Swarm)</li>
+</ol>
+<p>如同上述所述，Kubenetes 是 CNCF 其中一個專案，且它需要很多不同的專案一同協作才能把它運行起來，包含像是操作系統 (Operating System, OS)。相關的專案都已經羅列在下面 <a href="https://landscape.cncf.io/images/landscape.png">CNCF Cloud Native Interactive Landscape</a> 的大圖裡</p>
+<p><img src="https://landscape.cncf.io/images/landscape.png" alt=""></p>
+<p>若想要體驗全手工安裝過程來理解細節的話，可以參考 <a href="https://k2r2bai.com/2018/07/17/kubernetes/deploy/manual-install/">Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog</a>，而從中可以透過手把手安裝可以清楚地了解到，其實 Kubernetes 不是真的只有 Kubernetes 一個專案 (Project) 而已，還有 CNI、Etcd、Container Runtime 等組件要做選擇</p>
+<h2 id="OS-在這邊重要嗎"><a href="#OS-在這邊重要嗎" class="headerlink" title="OS 在這邊重要嗎?"></a>OS 在這邊重要嗎?</h2><p>蠻多看倌在使用 Kubernetes 的時候，都會不小心遺忘其實容器平台的相關技術是仰賴於操作系統的技術 cgroup、selinux、seccomp 等達成，所以 OS 本身的選型和組態強固化是非常重要的一環，並不是使用了容器平台就可以忽視其安全性。對於想要了解實際上容器技術的本質，可以參考 <a href="http://crunchtools.com/files/2019/05/Linux-Container-Internals-2.0.pdf">Linux Container Intermals - How They Really Work</a></p>
+<p>以 RH 體系的套件管理系統為例，實務上，對於作業系統的加固，除了看到 CVE 要上修補 (Patch)、定期更新套件 <code>yum --secure update</code>，有時候也會依據各自公司政策上的不同會搭配合規性驗證 (Compliance Validation)，以確保於操作系統層級上，與其他的環境是保持一致的，也就是常講的系統強化或系統標準化 (Standard of Environment, SoE)。</p>
+<p>而常見的稽核準則有下列 5 個標準可以參考：</p>
+<ol>
+<li>美國聯邦資訊處理標準 (Federal Information Processing Standard, FIPS 140-2)</li>
+<li>信用卡產業資料安全標準 (Payment Card Industray Data Security Standard, PCI DSS)</li>
+<li>美國國家工業安全計畫操作手冊 (National Industrial Security Program Operating Manual, NISPOM, or DoD. 5220.22-M)</li>
+<li>美國防禦資訊系統代理機構之安全性技術實作指南 (DISA Security Technical Implementation Guide, STIG)</li>
+<li>美國政府組態基準 (United States Government Configuration Baseline, USGCB)</li>
+</ol>
+<p>或者 <a href="https://static.open-scap.org/">OpenSCAP Security Guides</a> 提出的參考基準：</p>
+<ol>
+<li><a href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-rht-ccp.html">Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)</a></li>
+<li><a href="https://static.open-scap.org/ssg-guides/ssg-centos7-guide-standard.html">Standard System Security Profile for RHEL7</a></li>
+</ol>
+<p>當然如果有各自公司有內部的稽核規則，也可以透過 Ansible + OpenSCAP 一併規劃使用，以達到 <a href="https://www.ansible.com/hubfs/2018_Content/AnsibleAutomates-AnsibleForSecurityAutomation.pdf?hsLang=en-us">Security Automation</a> 的效果</p>
+<h2 id="那-Kubernetes-也同樣有類似的規範可依循嗎"><a href="#那-Kubernetes-也同樣有類似的規範可依循嗎" class="headerlink" title="那 Kubernetes 也同樣有類似的規範可依循嗎?"></a>那 Kubernetes 也同樣有類似的規範可依循嗎?</h2><p>目前筆者知道的就以下 5 個規範：</p>
+<ol>
+<li>應用容器資安手冊 (NIST SP 800-190. Application Container Security Guide)</li>
+<li>互聯網安全中心 (The Center for Internet Security, CIS) Kubernetes Benchmark</li>
+<li>資訊安全國際標準 ISO/IEC 27001:2013</li>
+<li>美國聯邦資訊安全管理法 (Federal Information Security Management Act, FISMA)</li>
+<li>信用卡產業資料安全標準 (Payment Card Industray Data Security Standard 3.2, PCI DSS 3.2)</li>
+</ol>
+<p>因為 Kubernetes 所帶動的技術發展太快了，如果是一直衝非常前沿的技術基本上這個章節沒有參考價值，但如果是為了企業內長久穩定使用則可以參考一下這些不同的規範來做強固化依據</p>
+<p>(工<del>商</del>時<del>間</del>) 目前 Red Hat OpenShift 3.11 截至今日為止共提供以下 3 個驗證規範手冊:</p>
+<ol>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-red-hat-openshift-product-applicability-guide-datasheet-f8620-201708-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-fisma-moderate-analyst-paper-f15232bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-iso-iec-27001-analyst-paper-f15231bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013</a></li>
+</ol>
+<h2 id="那-Kubernetes-裝完就可以不需升級了嗎"><a href="#那-Kubernetes-裝完就可以不需升級了嗎" class="headerlink" title="那 Kubernetes 裝完就可以不需升級了嗎?"></a>那 Kubernetes 裝完就可以不需升級了嗎?</h2><p><a href="https://www.ithome.com.tw/news/127431">Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome</a>，Kubernetes 2018/12 發出了第一個重大漏洞 <a href="https://github.com/kubernetes/kubernetes/issues/71411"><code>CVE-2018-1002105</code></a>。該漏洞是可以在 Kubernetes 上直接提權殺到底層去，還不會留 Log。Common Vulnerability Scoring System (CVSS) 直接給了 <a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H">9.8</a> 分數 (滿分10分)，而解決的唯一辦法就是：</p>
+<blockquote>
+<p>請升級</p>
+</blockquote>
+<p>而今年初，<a href="https://www.ithome.com.tw/news/128718">容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome</a>，<a href="https://kubernetes.io/blog/2019/02/11/runc-and-cve-2019-5736/">CVE-2019-5736</a> - RunC Escape Vulnerability，CVSS 給了 <a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H">7.7</a> 分</p>
+<p>依據 Kubenetes 這種發展神速的步調下去 (現在已經來到 1.15 了)，可以預期往後的 CVE 也會隨著大家越來越熟悉 Kubernetes 而慢慢多起來，故不可能完全避免資安風險。結論上，不是裝完 Kubernetes 就沒事了，得要考慮後續長期維護和升級的作法。當然，如果只是自用或可以做到短時間重建 (Re-build)，就不用考慮這麼遠就是了。</p>
+<h2 id="CNI-Plugin-可以亂選嗎"><a href="#CNI-Plugin-可以亂選嗎" class="headerlink" title="CNI Plugin 可以亂選嗎?"></a>CNI Plugin 可以亂選嗎?</h2><p>容器網路介面 (Container Network Interface, CNI) 在 Kubernetes 來說是一個抽象的標準介面和規範，功能需額外實踐，而該介面是掌控 Kubernetes 網路的核心組件，在技術選型上就格外重要，詳細可參閱 <a href="https://www.hwchiu.com/cni-compare.html">常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu</a> 及 <a href="https://www.hwchiu.com/cni-questions.html">CNI 常見問題整理 - hwchiu</a> (編: Hwchiu 這人跑去美國爽，羨慕嫉妒)</p>
+<p>而發展至今，以包含虛擬網路 (Overlay Networking)、實體網路 (Underlay Networking) 之整體網路觀點來看，可以區分以下 5 種類型 (編: 這邊的歸納名是自取，並非通用說法，雖然目前也沒有通用說法，歡迎修正)：</p>
+<ol>
+<li>Pure CNI Plugin: 可獨立運作，不需要深度依靠實體網路能力，絕大部分 CNI Plugins 皆屬此類，如 Calico、Flannel、OVN 等</li>
+<li>Hypervisor CNI Plugin: 基於 Hypervisor 提供的虛擬化技術，不需要深度依靠實體網路能力，提供整合能力，如 VMware NSX-T Container Plugin (NCP)</li>
+<li>Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 <a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">Juniper Contrail</a>、<a href="https://github.com/sonaproject/sona-cni">ONOS SONA-CNI</a></li>
+<li>Mixed CNI Plugin: 需與實體網路進行整合，如 Cisco ACI、BigSwitch Big Cloud Fabric (BCF)</li>
+<li>Proxy CNI Plugin: 可透過該網路介面再接其他的 CNI Plugin，以達到單 Pod 多網卡的需求，如 <a href="https://github.com/intel/multus-cni">Intel Multus</a>、<a href="https://github.com/Huawei-PaaS/CNI-Genie">Huawei Genie</a>、<a href="https://github.com/nokia/danm">Nokia DAMN</a></li>
+</ol>
+<p>說 CNI 是整個 Kubernetes 的核心靈魂也不為過，為了 Kubernetes 平台系統穩定，通常建議是依下列項目依序考慮：</p>
+<ol>
+<li>功能</li>
+<li>整合穩定度</li>
+<li>有否支援</li>
+</ol>
+<p>實務上，常見選擇帶有 <code>NetworkPolicy</code> 能力的 CNI Plugin，因可基於策略 (Policy) 來隔離 Pod/Namespace 等級的內部流量或者是外部來減少攻擊面</p>
+<h2 id="我的容器映像檔乾淨嗎"><a href="#我的容器映像檔乾淨嗎" class="headerlink" title="我的容器映像檔乾淨嗎?"></a>我的容器映像檔乾淨嗎?</h2><p><img src="/images/docker-dig.png" alt=""></p>
+<p><a href="https://www.ithome.com.tw/news/123887">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a> 這新聞應該是最實際的例子，塞了挖礦程式的容器映像檔存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 <a href="https://www.ithome.com.tw/news/129018">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a> 等漏洞存在在映像檔內等情事發生。</p>
+<p>為了避免類似情況發生，會有以下 3 種建議作法：</p>
+<ol>
+<li>只用官方提供的映像檔: DockerHub library/*、Red Hat Container Catalog (RHCC) 等</li>
+<li>執行前要弱掃: Clair、KubeXray、Snyk 等</li>
+<li>容器標準化 (Standardize)</li>
+</ol>
+<p>除了筆者前陣子有分享過 <a href="https://blog.pichuang.com.tw/20190621-building-production-ready-containers/">設計出 Production-Ready Container 的 5 條戒律 - Phil Workspace</a>，Red Hat 官方也針對 Container Security 提出了一套概念 <a href="https://www.redhat.com/en/resources/container-security-openshift-cloud-devops-whitepaper">Ten layers of container security - Red Hat</a>。而當中針對容器標準化的基礎映像檔也提出了<code>通用基礎映像檔</code> <a href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Universal Base Image, UBI</a> 的設計思考。</p>
+<blockquote>
+<p>好的開始是成功的一半，好的映像檔能讓你睡眠品質提升</p>
+</blockquote>
+<p>真心不知道怎麼開始的話，建議就先從 <code>第一戒律：Standardize</code> 開始慢慢做起吧</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><ul>
+<li>我最一開始只是想強調的是 OS 真的是很重要，請不要忽視他 XD</li>
+<li>呈上，整體系統整合穩定度也是一樣很重要，還記得木桶理論嗎?</li>
+<li>Multus 穩定釋出後，對於所有規劃容器平台網路的人都會是一個 __ 的開始，Container Network Function (CNF) 笑而不語中</li>
+<li>感謝 iThome 讓我充實了很多版面</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.ithome.com.tw/article/129426">【關鍵資安議題：容器安全】剖析容器的資安風險與防護 - iThome</a></li>
+<li><a href="https://snyk.io/blog/10-docker-image-security-best-practices/">10 Docker Image Security Best Practices - synk</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-container-security-openshift-cloud-devops-tech-detail-f7530kc-201705-en.pdf">Technical Details - TEN LAYERS OF CONTAINER SECURITY Red Hat</a></li>
+<li><a href="https://landscape.cncf.io/images/landscape.png">CNCF Cloud Native Interactive Landscape</a></li>
+<li><a href="https://sysdig.com/blog/33-kubernetes-security-tools">33 Kubernetes security tools - Sysdig</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%81%AF%E9%82%A6%E8%B3%87%E8%A8%8A%E8%99%95%E7%90%86%E6%A8%99%E6%BA%96">聯邦資訊處理標準 - Wiki</a></li>
+<li><a href="https://k2r2bai.com/2018/07/17/kubernetes/deploy/manual-install/">Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog</a></li>
+<li><a href="http://crunchtools.com/files/2019/05/Linux-Container-Internals-2.0.pdf">Linux Container Intermals - How They Really Work</a></li>
+<li><a href="https://www.ansible.com/hubfs/2018_Content/AnsibleAutomates-AnsibleForSecurityAutomation.pdf?hsLang=en-us">Security Automation with Ansible</a></li>
+<li><a href="https://www.hwchiu.com/cni-compare.html">常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu</a></li>
+<li><a href="https://www.slideshare.net/MengZeLi4/how-to-deal-second-interface-service-discovery-and-load-balancer-in-kubernetes">How to deal second interface service discovery and load balancer in kubernetes</a></li>
+<li><a href="https://www.hwchiu.com/cni-questions.html">CNI 常見問題整理 - hwchiu</a></li>
+<li><a href="https://blog.openshift.com/wp-content/uploads/openshift_commons_.GOV-SIG_briefing-20170104-2.pptx.pdf">FISMA Compliance for the OpenShift Container Platform</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-red-hat-openshift-product-applicability-guide-datasheet-f8620-201708-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-fisma-moderate-analyst-paper-f15232bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate</a></li>
+<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-iso-iec-27001-analyst-paper-f15231bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013</a></li>
+<li><a href="https://www.ithome.com.tw/news/127431">Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome</a></li>
+<li><a href="https://www.redhat.com/en/blog/kubernetes-privilege-escalation-flaw-innovation-still-needs-it-security-expertise">The Kubernetes privilege escalation flaw: Innovation still needs IT security expertise</a></li>
+<li><a href="https://github.com/kubernetes/kubernetes/issues/71411">CVE-2018-1002105: proxy request handling in kube-apiserver can leave vulnerable TCP connections #71411 - kubernetes/kubernetes</a></li>
+<li><a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H">CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</a></li>
+<li><a href="https://www.ithome.com.tw/news/128718">容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome</a></li>
+<li><a href="https://kubernetes.io/blog/2019/02/11/runc-and-cve-2019-5736/">Runc and CVE-2019-5736 - Kubernetes</a></li>
+<li><a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html">CVE Details - Kubernetes Security Vulnerabilities</a></li>
+<li><a href="https://www.ithome.com.tw/news/123887">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190621-building-production-ready-containers/">設計出 Production-Ready Container 的 5 條戒律 - Phil Huang</a></li>
+<li><a href="https://www.redhat.com/en/resources/container-security-openshift-cloud-devops-whitepaper">Ten layers of container security - Red Hat</a></li>
+<li><a href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Introducing the Red Hat Universal Base Image - Red Hat</a></li>
+<li><a href="https://www.ithome.com.tw/news/129018">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>container</tag>
+        <tag>openshift3</tag>
+        <tag>cni</tag>
+        <tag>security</tag>
+        <tag>harden8</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>設計出 Production-Ready Container 的 5 條戒律</title>
     <url>/20190621-building-production-ready-containers/</url>
     <content><![CDATA[<p><img src="/images/rhel8-logo.jpg" alt=""></p>
@@ -3675,210 +3809,6 @@
       </tags>
   </entry>
   <entry>
-    <title>容器平台強固化保護思路</title>
-    <url>/20190723-container-and-container-platform-hardening/</url>
-    <content><![CDATA[<p>不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點</p>
-<p><img src="/images/container-platform-technology-stack.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="一座-Kubenetes-最小技術棧"><a href="#一座-Kubenetes-最小技術棧" class="headerlink" title="一座 Kubenetes 最小技術棧?"></a>一座 Kubenetes 最小技術棧?</h2><p>剔除掉多出的上層整合功能部分，最小情況下任何說自己是 Kubernetes 的平台方案，<code>最少</code>皆須具備以下的技術棧：</p>
-<ol>
-<li>Operating System (如： Ubuntu、CentOS、RHEL、Fedora CoreOS)</li>
-<li>Container Runtime Interface (如：Docker、CRI-O) </li>
-<li>Container Network Interface (如：Calico、Flannel) </li>
-<li>Container Orchestration  (如：Kubernetes、Docker Swarm)</li>
-</ol>
-<p>如同上述所述，Kubenetes 是 CNCF 其中一個專案，且它需要很多不同的專案一同協作才能把它運行起來，包含像是操作系統 (Operating System, OS)。相關的專案都已經羅列在下面 <a href="https://landscape.cncf.io/images/landscape.png">CNCF Cloud Native Interactive Landscape</a> 的大圖裡</p>
-<p><img src="https://landscape.cncf.io/images/landscape.png" alt=""></p>
-<p>若想要體驗全手工安裝過程來理解細節的話，可以參考 <a href="https://k2r2bai.com/2018/07/17/kubernetes/deploy/manual-install/">Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog</a>，而從中可以透過手把手安裝可以清楚地了解到，其實 Kubernetes 不是真的只有 Kubernetes 一個專案 (Project) 而已，還有 CNI、Etcd、Container Runtime 等組件要做選擇</p>
-<h2 id="OS-在這邊重要嗎"><a href="#OS-在這邊重要嗎" class="headerlink" title="OS 在這邊重要嗎?"></a>OS 在這邊重要嗎?</h2><p>蠻多看倌在使用 Kubernetes 的時候，都會不小心遺忘其實容器平台的相關技術是仰賴於操作系統的技術 cgroup、selinux、seccomp 等達成，所以 OS 本身的選型和組態強固化是非常重要的一環，並不是使用了容器平台就可以忽視其安全性。對於想要了解實際上容器技術的本質，可以參考 <a href="http://crunchtools.com/files/2019/05/Linux-Container-Internals-2.0.pdf">Linux Container Intermals - How They Really Work</a></p>
-<p>以 RH 體系的套件管理系統為例，實務上，對於作業系統的加固，除了看到 CVE 要上修補 (Patch)、定期更新套件 <code>yum --secure update</code>，有時候也會依據各自公司政策上的不同會搭配合規性驗證 (Compliance Validation)，以確保於操作系統層級上，與其他的環境是保持一致的，也就是常講的系統強化或系統標準化 (Standard of Environment, SoE)。</p>
-<p>而常見的稽核準則有下列 5 個標準可以參考：</p>
-<ol>
-<li>美國聯邦資訊處理標準 (Federal Information Processing Standard, FIPS 140-2)</li>
-<li>信用卡產業資料安全標準 (Payment Card Industray Data Security Standard, PCI DSS)</li>
-<li>美國國家工業安全計畫操作手冊 (National Industrial Security Program Operating Manual, NISPOM, or DoD. 5220.22-M)</li>
-<li>美國防禦資訊系統代理機構之安全性技術實作指南 (DISA Security Technical Implementation Guide, STIG)</li>
-<li>美國政府組態基準 (United States Government Configuration Baseline, USGCB)</li>
-</ol>
-<p>或者 <a href="https://static.open-scap.org/">OpenSCAP Security Guides</a> 提出的參考基準：</p>
-<ol>
-<li><a href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-rht-ccp.html">Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)</a></li>
-<li><a href="https://static.open-scap.org/ssg-guides/ssg-centos7-guide-standard.html">Standard System Security Profile for RHEL7</a></li>
-</ol>
-<p>當然如果有各自公司有內部的稽核規則，也可以透過 Ansible + OpenSCAP 一併規劃使用，以達到 <a href="https://www.ansible.com/hubfs/2018_Content/AnsibleAutomates-AnsibleForSecurityAutomation.pdf?hsLang=en-us">Security Automation</a> 的效果</p>
-<h2 id="那-Kubernetes-也同樣有類似的規範可依循嗎"><a href="#那-Kubernetes-也同樣有類似的規範可依循嗎" class="headerlink" title="那 Kubernetes 也同樣有類似的規範可依循嗎?"></a>那 Kubernetes 也同樣有類似的規範可依循嗎?</h2><p>目前筆者知道的就以下 5 個規範：</p>
-<ol>
-<li>應用容器資安手冊 (NIST SP 800-190. Application Container Security Guide)</li>
-<li>互聯網安全中心 (The Center for Internet Security, CIS) Kubernetes Benchmark</li>
-<li>資訊安全國際標準 ISO/IEC 27001:2013</li>
-<li>美國聯邦資訊安全管理法 (Federal Information Security Management Act, FISMA)</li>
-<li>信用卡產業資料安全標準 (Payment Card Industray Data Security Standard 3.2, PCI DSS 3.2)</li>
-</ol>
-<p>因為 Kubernetes 所帶動的技術發展太快了，如果是一直衝非常前沿的技術基本上這個章節沒有參考價值，但如果是為了企業內長久穩定使用則可以參考一下這些不同的規範來做強固化依據</p>
-<p>(工<del>商</del>時<del>間</del>) 目前 Red Hat OpenShift 3.11 截至今日為止共提供以下 3 個驗證規範手冊:</p>
-<ol>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-red-hat-openshift-product-applicability-guide-datasheet-f8620-201708-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-fisma-moderate-analyst-paper-f15232bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-iso-iec-27001-analyst-paper-f15231bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013</a></li>
-</ol>
-<h2 id="那-Kubernetes-裝完就可以不需升級了嗎"><a href="#那-Kubernetes-裝完就可以不需升級了嗎" class="headerlink" title="那 Kubernetes 裝完就可以不需升級了嗎?"></a>那 Kubernetes 裝完就可以不需升級了嗎?</h2><p><a href="https://www.ithome.com.tw/news/127431">Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome</a>，Kubernetes 2018/12 發出了第一個重大漏洞 <a href="https://github.com/kubernetes/kubernetes/issues/71411"><code>CVE-2018-1002105</code></a>。該漏洞是可以在 Kubernetes 上直接提權殺到底層去，還不會留 Log。Common Vulnerability Scoring System (CVSS) 直接給了 <a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H">9.8</a> 分數 (滿分10分)，而解決的唯一辦法就是：</p>
-<blockquote>
-<p>請升級</p>
-</blockquote>
-<p>而今年初，<a href="https://www.ithome.com.tw/news/128718">容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome</a>，<a href="https://kubernetes.io/blog/2019/02/11/runc-and-cve-2019-5736/">CVE-2019-5736</a> - RunC Escape Vulnerability，CVSS 給了 <a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H">7.7</a> 分</p>
-<p>依據 Kubenetes 這種發展神速的步調下去 (現在已經來到 1.15 了)，可以預期往後的 CVE 也會隨著大家越來越熟悉 Kubernetes 而慢慢多起來，故不可能完全避免資安風險。結論上，不是裝完 Kubernetes 就沒事了，得要考慮後續長期維護和升級的作法。當然，如果只是自用或可以做到短時間重建 (Re-build)，就不用考慮這麼遠就是了。</p>
-<h2 id="CNI-Plugin-可以亂選嗎"><a href="#CNI-Plugin-可以亂選嗎" class="headerlink" title="CNI Plugin 可以亂選嗎?"></a>CNI Plugin 可以亂選嗎?</h2><p>容器網路介面 (Container Network Interface, CNI) 在 Kubernetes 來說是一個抽象的標準介面和規範，功能需額外實踐，而該介面是掌控 Kubernetes 網路的核心組件，在技術選型上就格外重要，詳細可參閱 <a href="https://www.hwchiu.com/cni-compare.html">常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu</a> 及 <a href="https://www.hwchiu.com/cni-questions.html">CNI 常見問題整理 - hwchiu</a> (編: Hwchiu 這人跑去美國爽，羨慕嫉妒)</p>
-<p>而發展至今，以包含虛擬網路 (Overlay Networking)、實體網路 (Underlay Networking) 之整體網路觀點來看，可以區分以下 5 種類型 (編: 這邊的歸納名是自取，並非通用說法，雖然目前也沒有通用說法，歡迎修正)：</p>
-<ol>
-<li>Pure CNI Plugin: 可獨立運作，不需要深度依靠實體網路能力，絕大部分 CNI Plugins 皆屬此類，如 Calico、Flannel、OVN 等</li>
-<li>Hypervisor CNI Plugin: 基於 Hypervisor 提供的虛擬化技術，不需要深度依靠實體網路能力，提供整合能力，如 VMware NSX-T Container Plugin (NCP)</li>
-<li>Hybrid CNI Plugin: 可獨立運作或可與實體網路進行虛實整合，如 <a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">Juniper Contrail</a>、<a href="https://github.com/sonaproject/sona-cni">ONOS SONA-CNI</a></li>
-<li>Mixed CNI Plugin: 需與實體網路進行整合，如 Cisco ACI、BigSwitch Big Cloud Fabric (BCF)</li>
-<li>Proxy CNI Plugin: 可透過該網路介面再接其他的 CNI Plugin，以達到單 Pod 多網卡的需求，如 <a href="https://github.com/intel/multus-cni">Intel Multus</a>、<a href="https://github.com/Huawei-PaaS/CNI-Genie">Huawei Genie</a>、<a href="https://github.com/nokia/danm">Nokia DAMN</a></li>
-</ol>
-<p>說 CNI 是整個 Kubernetes 的核心靈魂也不為過，為了 Kubernetes 平台系統穩定，通常建議是依下列項目依序考慮：</p>
-<ol>
-<li>功能</li>
-<li>整合穩定度</li>
-<li>有否支援</li>
-</ol>
-<p>實務上，常見選擇帶有 <code>NetworkPolicy</code> 能力的 CNI Plugin，因可基於策略 (Policy) 來隔離 Pod/Namespace 等級的內部流量或者是外部來減少攻擊面</p>
-<h2 id="我的容器映像檔乾淨嗎"><a href="#我的容器映像檔乾淨嗎" class="headerlink" title="我的容器映像檔乾淨嗎?"></a>我的容器映像檔乾淨嗎?</h2><p><img src="/images/docker-dig.png" alt=""></p>
-<p><a href="https://www.ithome.com.tw/news/123887">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a> 這新聞應該是最實際的例子，塞了挖礦程式的容器映像檔存在公開網路一年，下載次數超過 500 萬，還真的有挖到幣 XD。另外還有 <a href="https://www.ithome.com.tw/news/129018">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a> 等漏洞存在在映像檔內等情事發生。</p>
-<p>為了避免類似情況發生，會有以下 3 種建議作法：</p>
-<ol>
-<li>只用官方提供的映像檔: DockerHub library/*、Red Hat Container Catalog (RHCC) 等</li>
-<li>執行前要弱掃: Clair、KubeXray、Snyk 等</li>
-<li>容器標準化 (Standardize)</li>
-</ol>
-<p>除了筆者前陣子有分享過 <a href="https://blog.pichuang.com.tw/20190621-building-production-ready-containers/">設計出 Production-Ready Container 的 5 條戒律 - Phil Workspace</a>，Red Hat 官方也針對 Container Security 提出了一套概念 <a href="https://www.redhat.com/en/resources/container-security-openshift-cloud-devops-whitepaper">Ten layers of container security - Red Hat</a>。而當中針對容器標準化的基礎映像檔也提出了<code>通用基礎映像檔</code> <a href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Universal Base Image, UBI</a> 的設計思考。</p>
-<blockquote>
-<p>好的開始是成功的一半，好的映像檔能讓你睡眠品質提升</p>
-</blockquote>
-<p>真心不知道怎麼開始的話，建議就先從 <code>第一戒律：Standardize</code> 開始慢慢做起吧</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><ul>
-<li>我最一開始只是想強調的是 OS 真的是很重要，請不要忽視他 XD</li>
-<li>呈上，整體系統整合穩定度也是一樣很重要，還記得木桶理論嗎?</li>
-<li>Multus 穩定釋出後，對於所有規劃容器平台網路的人都會是一個 __ 的開始，Container Network Function (CNF) 笑而不語中</li>
-<li>感謝 iThome 讓我充實了很多版面</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.ithome.com.tw/article/129426">【關鍵資安議題：容器安全】剖析容器的資安風險與防護 - iThome</a></li>
-<li><a href="https://snyk.io/blog/10-docker-image-security-best-practices/">10 Docker Image Security Best Practices - synk</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-container-security-openshift-cloud-devops-tech-detail-f7530kc-201705-en.pdf">Technical Details - TEN LAYERS OF CONTAINER SECURITY Red Hat</a></li>
-<li><a href="https://landscape.cncf.io/images/landscape.png">CNCF Cloud Native Interactive Landscape</a></li>
-<li><a href="https://sysdig.com/blog/33-kubernetes-security-tools">33 Kubernetes security tools - Sysdig</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E8%81%AF%E9%82%A6%E8%B3%87%E8%A8%8A%E8%99%95%E7%90%86%E6%A8%99%E6%BA%96">聯邦資訊處理標準 - Wiki</a></li>
-<li><a href="https://k2r2bai.com/2018/07/17/kubernetes/deploy/manual-install/">Kubernetes v1.11.x HA 全手動苦工安裝教學(TL;DR) - KaiRen’s Blog</a></li>
-<li><a href="http://crunchtools.com/files/2019/05/Linux-Container-Internals-2.0.pdf">Linux Container Intermals - How They Really Work</a></li>
-<li><a href="https://www.ansible.com/hubfs/2018_Content/AnsibleAutomates-AnsibleForSecurityAutomation.pdf?hsLang=en-us">Security Automation with Ansible</a></li>
-<li><a href="https://www.hwchiu.com/cni-compare.html">常見 CNI (Container Network Interface) Plugin 介紹 - hwchiu</a></li>
-<li><a href="https://www.slideshare.net/MengZeLi4/how-to-deal-second-interface-service-discovery-and-load-balancer-in-kubernetes">How to deal second interface service discovery and load balancer in kubernetes</a></li>
-<li><a href="https://www.hwchiu.com/cni-questions.html">CNI 常見問題整理 - hwchiu</a></li>
-<li><a href="https://blog.openshift.com/wp-content/uploads/openshift_commons_.GOV-SIG_briefing-20170104-2.pptx.pdf">FISMA Compliance for the OpenShift Container Platform</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-red-hat-openshift-product-applicability-guide-datasheet-f8620-201708-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for PCI DSS 3.2</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-fisma-moderate-analyst-paper-f15232bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for FISMA Moderate</a></li>
-<li><a href="https://www.redhat.com/cms/managed-files/cl-openshift-applicability-guide-iso-iec-27001-analyst-paper-f15231bf-201811-en.pdf">Red Hat OpenShift Container Platform Product Applicability Guide for ISO/IEC 27001:2013</a></li>
-<li><a href="https://www.ithome.com.tw/news/127431">Kubernetes爆重大漏洞！不法人士可取得管理員權限，竊取機敏資料、癱瘓企業應用 - iThome</a></li>
-<li><a href="https://www.redhat.com/en/blog/kubernetes-privilege-escalation-flaw-innovation-still-needs-it-security-expertise">The Kubernetes privilege escalation flaw: Innovation still needs IT security expertise</a></li>
-<li><a href="https://github.com/kubernetes/kubernetes/issues/71411">CVE-2018-1002105: proxy request handling in kube-apiserver can leave vulnerable TCP connections #71411 - kubernetes/kubernetes</a></li>
-<li><a href="https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H">CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</a></li>
-<li><a href="https://www.ithome.com.tw/news/128718">容器執行元件runC含有安全漏洞，波及Docker、containerd及CRI-O等眾多容器平台 - iThome</a></li>
-<li><a href="https://kubernetes.io/blog/2019/02/11/runc-and-cve-2019-5736/">Runc and CVE-2019-5736 - Kubernetes</a></li>
-<li><a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html">CVE Details - Kubernetes Security Vulnerabilities</a></li>
-<li><a href="https://www.ithome.com.tw/news/123887">Docker移除17個暗藏挖礦程式的惡意容器 - iThome</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190621-building-production-ready-containers/">設計出 Production-Ready Container 的 5 條戒律 - Phil Huang</a></li>
-<li><a href="https://www.redhat.com/en/resources/container-security-openshift-cloud-devops-whitepaper">Ten layers of container security - Red Hat</a></li>
-<li><a href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Introducing the Red Hat Universal Base Image - Red Hat</a></li>
-<li><a href="https://www.ithome.com.tw/news/129018">報告：前十大熱門Docker映像檔都有至少30個以上的漏洞 - iThome</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190405-guide-openshift-commons-telco-sig-juniper-contrail-kubernetes-multi-interface-pods-for-telco-use-cases/">導讀 OpenShift Commons Telco SIG: Juniper Contrail: Kubernetes Multi-Interface Pods For Telco Use Cases</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>container</tag>
-        <tag>openshift3</tag>
-        <tag>cni</tag>
-        <tag>security</tag>
-        <tag>harden8</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
-    <url>/20191114-homelcloud-high-level-design-1/</url>
-    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
-<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
-<a id="more"></a>
-
-<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
-<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
-<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
-<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
-<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
-<li>所有服務，能虛擬化的全部採用虛擬化</li>
-<li>因為沒錢，所以不考慮任何高可用性的問題</li>
-<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
-<li>建立 Chat Center，用 bot 跟自己聊天</li>
-</ol>
-<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
-<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
-<ol>
-<li>SSL VPN: Synology RT2600ac</li>
-<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
-<li>Storage: Synology DS916+</li>
-<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
-</ol>
-<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
-<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
-<p>Q: 為什麼會說改造呢?</p>
-<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
-<p><img src="/images/vpn-plus.png" alt=""></p>
-<p>Q: 那有沒有可以替代的方案呢?</p>
-<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
-<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
-<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
-<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
-<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
-<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
-<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
-<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
-<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
-<p>Q: 為什麼要點點點…</p>
-<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
-<p>Q: VM 主要跑什麼?</p>
-<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
-<p><img src="/images/homecloud-powerstate.png" alt=""></p>
-<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
-<p><img src="/images/ansible-tower-approval.png" alt=""></p>
-<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
-<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
-<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
-<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
-<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
-<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
-
-<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
-<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</title>
     <url>/20191115-homelcloud-high-level-design-2/</url>
     <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
@@ -4025,6 +3955,107 @@
       </tags>
   </entry>
   <entry>
+    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
+    <url>/20191114-homelcloud-high-level-design-1/</url>
+    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
+<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
+<a id="more"></a>
+
+<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
+<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
+<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
+<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
+<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
+<li>所有服務，能虛擬化的全部採用虛擬化</li>
+<li>因為沒錢，所以不考慮任何高可用性的問題</li>
+<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
+<li>建立 Chat Center，用 bot 跟自己聊天</li>
+</ol>
+<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
+<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
+<ol>
+<li>SSL VPN: Synology RT2600ac</li>
+<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
+<li>Storage: Synology DS916+</li>
+<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
+</ol>
+<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
+<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
+<p>Q: 為什麼會說改造呢?</p>
+<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
+<p><img src="/images/vpn-plus.png" alt=""></p>
+<p>Q: 那有沒有可以替代的方案呢?</p>
+<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
+<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
+<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
+<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
+<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
+<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
+<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
+<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
+<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
+<p>Q: 為什麼要點點點…</p>
+<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
+<p>Q: VM 主要跑什麼?</p>
+<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
+<p><img src="/images/homecloud-powerstate.png" alt=""></p>
+<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
+<p><img src="/images/ansible-tower-approval.png" alt=""></p>
+<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
+<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
+<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
+<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
+<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
+<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
+
+<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
+<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定義 QCOW2 映像檔</title>
+    <url>/20191118-self-defined-qcow2/</url>
+    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
+<a id="more"></a>
+
+<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>qcow</tag>
+        <tag>kvm</tag>
+        <tag>libvirt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
     <url>/20191116-homelcloud-high-level-design-4/</url>
     <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
@@ -4094,37 +4125,6 @@
         <tag>infra</tag>
         <tag>linux</tag>
         <tag>homecloud</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自定義 QCOW2 映像檔</title>
-    <url>/20191118-self-defined-qcow2/</url>
-    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
-<a id="more"></a>
-
-<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
-
-<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>qcow</tag>
-        <tag>kvm</tag>
-        <tag>libvirt</tag>
       </tags>
   </entry>
   <entry>
@@ -5394,29 +5394,6 @@
       </tags>
   </entry>
   <entry>
-    <title>第一次の網管人雜誌面談</title>
-    <url>/20200406-netadmin-interview-ansible/</url>
-    <content><![CDATA[<blockquote>
-<p>媽！我上雜誌了</p>
-</blockquote>
-<p>雖然這次的約訪是公司指派執行，但第一次弄還是蠻新鮮的，可能大家都只會看到最後的產業趨勢報導 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a>，但中間有些過程我可以分享一下</p>
-<a id="more"></a>
-
-<p>基本上，在正式面談之前，編輯會事先丟一些題目會丟出來給我，大概抓一下談話方向，編輯題目開的相當專業，若不是天天都在跟技術發展走的人應該會需要點時間準備</p>
-<p>等到面談當日，就是由編輯、小弟和行銷一起參與會談，中間都會錄音，好讓編輯回去寫稿及潤稿，當日執行的編輯是<a href="https://www.netadmin.com.tw/netadmin/Author.aspx?Id=120">洪羿漣</a>女士，相當健談 XD，完全不用怕沒話說。最後，就會需要拍張半身照，好放在文章上，代表真的有這個人 (?)，假設文章內文太唬爛可以憑臉找人，而本人自認相當不上相，所以拍完的結果，就是一個 <code>尷尬又不失禮貌的微笑</code> XD 蠻好笑的</p>
-<p><img src="/images/netadmin-fb.png" alt=""></p>
-<p>面談結束，就慢慢等，等了一陣子有一天就忽然蹦出來在雜誌上，就是各位看到的 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a> 這篇文章，另外文章內所說<a href="https://blog.pichuang.com.tw/20200309-ansible-30m/">30分鐘內從開始到入門的 Ansible</a>連結在此，可以同步閱讀</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>interview</tag>
-        <tag>netadmin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</title>
     <url>/20200412-openshift-with-coreos-part-3/</url>
     <content><![CDATA[<p>承襲愛的走馬看花系列的亂寫亂紀錄優良傳統，繼續記錄操作，有興趣想要看前面的文章可以參考這兩邊</p>
@@ -5544,6 +5521,29 @@
       <tags>
         <tag>openshift4</tag>
         <tag>k9s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一次の網管人雜誌面談</title>
+    <url>/20200406-netadmin-interview-ansible/</url>
+    <content><![CDATA[<blockquote>
+<p>媽！我上雜誌了</p>
+</blockquote>
+<p>雖然這次的約訪是公司指派執行，但第一次弄還是蠻新鮮的，可能大家都只會看到最後的產業趨勢報導 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a>，但中間有些過程我可以分享一下</p>
+<a id="more"></a>
+
+<p>基本上，在正式面談之前，編輯會事先丟一些題目會丟出來給我，大概抓一下談話方向，編輯題目開的相當專業，若不是天天都在跟技術發展走的人應該會需要點時間準備</p>
+<p>等到面談當日，就是由編輯、小弟和行銷一起參與會談，中間都會錄音，好讓編輯回去寫稿及潤稿，當日執行的編輯是<a href="https://www.netadmin.com.tw/netadmin/Author.aspx?Id=120">洪羿漣</a>女士，相當健談 XD，完全不用怕沒話說。最後，就會需要拍張半身照，好放在文章上，代表真的有這個人 (?)，假設文章內文太唬爛可以憑臉找人，而本人自認相當不上相，所以拍完的結果，就是一個 <code>尷尬又不失禮貌的微笑</code> XD 蠻好笑的</p>
+<p><img src="/images/netadmin-fb.png" alt=""></p>
+<p>面談結束，就慢慢等，等了一陣子有一天就忽然蹦出來在雜誌上，就是各位看到的 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a> 這篇文章，另外文章內所說<a href="https://blog.pichuang.com.tw/20200309-ansible-30m/">30分鐘內從開始到入門的 Ansible</a>連結在此，可以同步閱讀</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>interview</tag>
+        <tag>netadmin</tag>
       </tags>
   </entry>
   <entry>
@@ -6729,7 +6729,7 @@
 <li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個或多個門入口管控</li>
 <li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個或多個門出口管控</li>
 <li>Internal DNS：大樓住戶黃頁簿 (怕有人看不懂，這個技術上常見是 CoreDNS)</li>
-<li>External DNS：各大樓集中命名第 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
+<li>External DNS：指向各大樓的路標 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
 <li>Service：家族，同一個家族包含多個住戶，聯繫的時候會透過 Pod IP 也就是住戶的門牌號碼聯繫 （求更好的譬喻）</li>
 <li>Service Mesh：（求更好的譬喻）</li>
 <li>Containers：被打開的且正在被使用的行李箱，在一個住戶裡面，可以放一個或者是多個以上</li>
