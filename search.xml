@@ -1,6 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>TSCC 個人心得</title>
+    <url>/20140416-tscc/</url>
+    <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
+<a id="more"></a>
+
+<p>這比賽比兩個部分, HPL tunning 及 Application 跑分, 簡單來說就是比linux tunning, 和誰時間分配比較好, 比賽時間有限, 測資不少.</p>
+<ul>
+<li>HPL (High-Performance Linpack) 是一個利用 Distribution System 的特性, 使用 MPI 運算一些數據, 最後會產生出一個數值出來, 依照數值互相比較.</li>
+<li>Application 每年都不太一樣, 但大部分都跟科學運算脫不了關係, 這只能去參加 NCHC 的教育訓練才知道在幹嘛</li>
+</ul>
+<h2 id="比賽環境-以TSCC-2014為主"><a href="#比賽環境-以TSCC-2014為主" class="headerlink" title="比賽環境 (以TSCC 2014為主)"></a>比賽環境 (以TSCC 2014為主)</h2><ul>
+<li>處理器：Intel Xeon X5570 2.93GHz *2</li>
+<li>記憶體：24GB DDR3 1066</li>
+<li>乙太網路介面:GbE *4</li>
+<li>Infiniband Card:Mellanox ConnectX QDR 40Gb/s *1</li>
+<li>硬碟:SAS2 300GB *1</li>
+<li>GPU:NVIDIA TESLA C1060 *2</li>
+</ul>
+<p>處理器 Intel Xeon X5570 廠牌的選擇可以影響到 Compiler 的選擇, 另外不要開 VT-d.</p>
+<p>記憶體有 24GB 可以分配, 調教重點當然是越省越好, 讓 Memory Free space 越多越好, 多的部份都拿去運算.</p>
+<p>網路會採用 <code>Infiniband Card:Mellanox ConnectX QDR 40Gb/s</code>, 這種莫名奇妙的網路卡XD, 每秒好幾個影片子上下, 基本上整體系統的 bottleneck 不會在 network 傳輸部分, 比賽的時候他們也不會希望是卡在這個. 至於 GbE 在這種比賽只是拿來當一開始安裝軟體傳輸用, 等 Infiniband 設定完能動了, 就可以 down 下去了.</p>
+<p>硬碟 SSD 在這種 Heavy I/O 比賽來說, 算是慢的, 只是當儲存資料及 OS 用.</p>
+<p>GPU 是專門對 Application 做使用, HPL 其實也有 CUDA 版的, 但要跟官方簽 NDA 才行. 關於電力上控制是不用特別注意的, 但聽說全球大賽 SCC(Student Cluster Challenge) 是連電力都要考量進去, 不知道是真是假, 很想去但已經沒機會(碩一)了.</p>
+<h2 id="TSCC-要點"><a href="#TSCC-要點" class="headerlink" title="TSCC 要點"></a>TSCC 要點</h2><ol>
+<li>測資通通都要跑過一次</li>
+<li>碰到 swap 必輸</li>
+<li>先求穩 再求好</li>
+</ol>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>這種比賽分為 Linux tunning + Compiler + MPI + Math Library + HPL config 這五個部分來看.</p>
+<ol>
+<li><p>Linux tunning </p>
+<ul>
+<li>一般安裝軟體、調教參數及分析 Bottleneck 皆屬此類, 需求是要有個 System Administrator 等級的來碰會比較清楚.</li>
+<li>挑選 OS 只有一個大重點 <code>有沒有支援 infiniband</code> 不支援 infiniband 的話, 只用 GbE 跑的話, 會發現整個瓶頸都會在網路傳輸部分.</li>
+<li><a href="http://roan.logdown.com/posts/193253-linux-performance">Linux Performance</a> 所列分析工具可參考一下, <code>dstat</code> 萬用</li>
+<li>Kernel tunning 其實可以嘗試看看, 應該會有不錯的報酬, 但要考量的風險是自編 Kernel 會不會在比賽現場發生 Kernel panic, 只要發生了就會浪費非常多時間在這上面.</li>
+<li><a href="http://roan.logdown.com/posts/165596-scientific-linux-64-to-minimize-the-installation">工商服務 - Scientific Linux 6.4 最小化安裝</a></li>
+</ul>
+</li>
+<li><p>Compiler</p>
+<ul>
+<li>{gcc, icc(商業), …}</li>
+<li>icc is better than gcc</li>
+</ul>
+</li>
+<li><p>MPI</p>
+<ul>
+<li>{OpenMPI, MPICH}</li>
+<li>常用 OpenMPI</li>
+</ul>
+</li>
+<li><p>Math Library</p>
+<ul>
+<li>{Gotoblas2, OpenBlas, MKL}</li>
+<li>這裡的選擇是關鍵, 好的跟較差的可以差上好幾%</li>
+</ul>
+</li>
+<li><p>HPL Config</p>
+<ul>
+<li>這裡我沒有涉略, 不太清楚怎麼調</li>
+</ul>
+</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>這比賽很注重時間分配及能否有效快速的準備好系統, 當設定完之後, 透過一些小測資微調數據, 之後比賽大部分就會在漫長的等待中渡過了, 還有清大這方面的技術真的很強, 有興趣的人可以找一下他們研究這方面的技術.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://event.nchc.org.tw/2014/tscc/">2014全國學生叢集電腦競賽</a></li>
+<li><a href="http://www.netlib.org/benchmark/hpl/">HPL - A Portable Implementation of the High-Performance Linpack Benchmark for Distributed-Memory Computers</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>event</tag>
+        <tag>tscc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -105,109 +208,6 @@
         <tag>infra</tag>
         <tag>easyrsa</tag>
         <tag>pki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TSCC 個人心得</title>
-    <url>/20140416-tscc/</url>
-    <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
-<a id="more"></a>
-
-<p>這比賽比兩個部分, HPL tunning 及 Application 跑分, 簡單來說就是比linux tunning, 和誰時間分配比較好, 比賽時間有限, 測資不少.</p>
-<ul>
-<li>HPL (High-Performance Linpack) 是一個利用 Distribution System 的特性, 使用 MPI 運算一些數據, 最後會產生出一個數值出來, 依照數值互相比較.</li>
-<li>Application 每年都不太一樣, 但大部分都跟科學運算脫不了關係, 這只能去參加 NCHC 的教育訓練才知道在幹嘛</li>
-</ul>
-<h2 id="比賽環境-以TSCC-2014為主"><a href="#比賽環境-以TSCC-2014為主" class="headerlink" title="比賽環境 (以TSCC 2014為主)"></a>比賽環境 (以TSCC 2014為主)</h2><ul>
-<li>處理器：Intel Xeon X5570 2.93GHz *2</li>
-<li>記憶體：24GB DDR3 1066</li>
-<li>乙太網路介面:GbE *4</li>
-<li>Infiniband Card:Mellanox ConnectX QDR 40Gb/s *1</li>
-<li>硬碟:SAS2 300GB *1</li>
-<li>GPU:NVIDIA TESLA C1060 *2</li>
-</ul>
-<p>處理器 Intel Xeon X5570 廠牌的選擇可以影響到 Compiler 的選擇, 另外不要開 VT-d.</p>
-<p>記憶體有 24GB 可以分配, 調教重點當然是越省越好, 讓 Memory Free space 越多越好, 多的部份都拿去運算.</p>
-<p>網路會採用 <code>Infiniband Card:Mellanox ConnectX QDR 40Gb/s</code>, 這種莫名奇妙的網路卡XD, 每秒好幾個影片子上下, 基本上整體系統的 bottleneck 不會在 network 傳輸部分, 比賽的時候他們也不會希望是卡在這個. 至於 GbE 在這種比賽只是拿來當一開始安裝軟體傳輸用, 等 Infiniband 設定完能動了, 就可以 down 下去了.</p>
-<p>硬碟 SSD 在這種 Heavy I/O 比賽來說, 算是慢的, 只是當儲存資料及 OS 用.</p>
-<p>GPU 是專門對 Application 做使用, HPL 其實也有 CUDA 版的, 但要跟官方簽 NDA 才行. 關於電力上控制是不用特別注意的, 但聽說全球大賽 SCC(Student Cluster Challenge) 是連電力都要考量進去, 不知道是真是假, 很想去但已經沒機會(碩一)了.</p>
-<h2 id="TSCC-要點"><a href="#TSCC-要點" class="headerlink" title="TSCC 要點"></a>TSCC 要點</h2><ol>
-<li>測資通通都要跑過一次</li>
-<li>碰到 swap 必輸</li>
-<li>先求穩 再求好</li>
-</ol>
-<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>這種比賽分為 Linux tunning + Compiler + MPI + Math Library + HPL config 這五個部分來看.</p>
-<ol>
-<li><p>Linux tunning </p>
-<ul>
-<li>一般安裝軟體、調教參數及分析 Bottleneck 皆屬此類, 需求是要有個 System Administrator 等級的來碰會比較清楚.</li>
-<li>挑選 OS 只有一個大重點 <code>有沒有支援 infiniband</code> 不支援 infiniband 的話, 只用 GbE 跑的話, 會發現整個瓶頸都會在網路傳輸部分.</li>
-<li><a href="http://roan.logdown.com/posts/193253-linux-performance">Linux Performance</a> 所列分析工具可參考一下, <code>dstat</code> 萬用</li>
-<li>Kernel tunning 其實可以嘗試看看, 應該會有不錯的報酬, 但要考量的風險是自編 Kernel 會不會在比賽現場發生 Kernel panic, 只要發生了就會浪費非常多時間在這上面.</li>
-<li><a href="http://roan.logdown.com/posts/165596-scientific-linux-64-to-minimize-the-installation">工商服務 - Scientific Linux 6.4 最小化安裝</a></li>
-</ul>
-</li>
-<li><p>Compiler</p>
-<ul>
-<li>{gcc, icc(商業), …}</li>
-<li>icc is better than gcc</li>
-</ul>
-</li>
-<li><p>MPI</p>
-<ul>
-<li>{OpenMPI, MPICH}</li>
-<li>常用 OpenMPI</li>
-</ul>
-</li>
-<li><p>Math Library</p>
-<ul>
-<li>{Gotoblas2, OpenBlas, MKL}</li>
-<li>這裡的選擇是關鍵, 好的跟較差的可以差上好幾%</li>
-</ul>
-</li>
-<li><p>HPL Config</p>
-<ul>
-<li>這裡我沒有涉略, 不太清楚怎麼調</li>
-</ul>
-</li>
-</ol>
-<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>這比賽很注重時間分配及能否有效快速的準備好系統, 當設定完之後, 透過一些小測資微調數據, 之後比賽大部分就會在漫長的等待中渡過了, 還有清大這方面的技術真的很強, 有興趣的人可以找一下他們研究這方面的技術.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://event.nchc.org.tw/2014/tscc/">2014全國學生叢集電腦競賽</a></li>
-<li><a href="http://www.netlib.org/benchmark/hpl/">HPL - A Portable Implementation of the High-Performance Linpack Benchmark for Distributed-Memory Computers</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>event</tag>
-        <tag>tscc</tag>
       </tags>
   </entry>
   <entry>
@@ -1326,6 +1326,52 @@
       </tags>
   </entry>
   <entry>
+    <title>Install i40e driver into VMWare ESXi</title>
+    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>ESXi-6.0.0-20160302001</li>
+<li>i40e<ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
+</ul>
+</li>
+<li>Intel XL710<ul>
+<li>Including vmnic{2-5}</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please enable SSH daemon on the server</li>
+</ul>
+<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
+<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
+<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
+<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
+<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>vmware</tag>
+        <tag>intel</tag>
+        <tag>driver</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>How to contribute on GitHub</title>
     <url>/20170413-how-to-contribute-on-github/</url>
     <content><![CDATA[<p>Fork from <a href="https://gist.github.com/timdream/5968469">Github 發 Pull Request &amp; 貢獻流程速查/timdream</a></p>
@@ -1376,52 +1422,6 @@
       <tags>
         <tag>misc</tag>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Install i40e driver into VMWare ESXi</title>
-    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>ESXi-6.0.0-20160302001</li>
-<li>i40e<ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
-</ul>
-</li>
-<li>Intel XL710<ul>
-<li>Including vmnic{2-5}</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please enable SSH daemon on the server</li>
-</ul>
-<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
-<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
-<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
-<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
-<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>vmware</tag>
-        <tag>intel</tag>
-        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -2821,63 +2821,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Oracle WebLogic 正式支援跑在 Red Hat OpenShift 上</title>
-    <url>/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/</url>
-    <content><![CDATA[<p>Oracle Blog 於 2019/3/11 釋放出一則文章 <a href="https://blogs.oracle.com/weblogicserver/weblogic-server-is-now-certified-to-run-on-openshift-v2">WebLogic Server is now certified to run on OpenShift! - ORACLE</a>，是的，Oracle WebLogic 可以正式運行在 Kubernetes / OpenShift 上的平台了!</p>
-<p><img src="/images/weblogic.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="版本支援"><a href="#版本支援" class="headerlink" title="版本支援"></a>版本支援</h2><table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Version</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>WebLogic Server</td>
-<td>12.2.1.3+</td>
-</tr>
-<tr>
-<td>WebLogic Kubernetes Operator</td>
-<td>2.0.1+</td>
-</tr>
-<tr>
-<td>Red Hat OpenShift</td>
-<td>3.11.43+</td>
-</tr>
-<tr>
-<td>Kubernetes</td>
-<td>1.11.0+</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>1.13.1ce+</td>
-</tr>
-</tbody></table>
-<p>有關於容器平台的部分，是以 Kubernetes 1.11 對齊，所以 Red Hat OpenShift v3.11 是完全可以使用的</p>
-<h2 id="Red-Hat-Container-Catalog-RHCC-現正放送中"><a href="#Red-Hat-Container-Catalog-RHCC-現正放送中" class="headerlink" title="Red Hat Container Catalog (RHCC) 現正放送中"></a>Red Hat Container Catalog (RHCC) 現正放送中</h2><p><img src="/images/weblogic-1.png" alt=""></p>
-<h2 id="技術概觀"><a href="#技術概觀" class="headerlink" title="技術概觀"></a>技術概觀</h2><p>基礎上就是將 Oracle WebLogic 透過 <a href="https://coreos.com/operators/">Operator 化</a>後，產生出一個專案 <a href="https://github.com/oracle/weblogic-kubernetes-operator">oracle/weblogic-kubernetes-operator - GitHub</a>，爾後所有的安裝維護都是透過 Operator 協助，詳細的安裝過程可以參考 <a href="https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift">Running WebLogic on OpenShift - ORACLE</a>，更詳細的技術說明文件可參考 <a href="https://oracle.github.io/weblogic-kubernetes-operator/quickstart/">Oracle WebLogic Server Kubernetes Operator</a></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blogs.oracle.com/weblogicserver/weblogic-server-is-now-certified-to-run-on-openshift-v2">WebLogic Server is now certified to run on OpenShift! - ORACLE</a></li>
-<li><a href="https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift">Running WebLogic on OpenShift - ORACLE</a></li>
-<li><a href="https://github.com/oracle/weblogic-kubernetes-operator">oracle/weblogic-kubernetes-operator - GitHub</a></li>
-<li><a href="https://oracle.github.io/weblogic-kubernetes-operator/quickstart/">Oracle WebLogic Server Kubernetes Operator</a></li>
-<li><a href="https://coreos.com/operators/">Operator Framework</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>redhat</tag>
-        <tag>weblogic</tag>
-        <tag>oracle</tag>
-        <tag>operator</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>到底 Operator Framework 用起來會長得如何?</title>
     <url>/20190407-how-look-like-operator-framework-in-production/</url>
     <content><![CDATA[<p>打從 Red Hat 收購 CoreOS 後，底下的子專案也一併地納入紅帽的管理，其中 Operator Framework 也在其中。而很多朋友只聞 Operator Framework 聲響，不聞 Operator Framework 身影，今天透過此篇文章來介紹一下 Operator Framework 實際上對 Red Hat OpenShift 容器平台會有怎樣的玩法？</p>
@@ -2978,41 +2921,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Container Bare Metal for Networking 參考架構</title>
-    <url>/20190411-container-bare-metal-for-networking-references-architecture/</url>
-    <content><![CDATA[<blockquote>
-<p>Intel 網卡黑科技 + 容器網路的現在進行式</p>
-</blockquote>
-<p>在 April 2019 的時候, Intel 釋放出這份 Reference Architecture <a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></p>
-<p>各位看看以 Multus Plugin 為核心的上下層整合，上面另外接了 Flannel / SR-IOV / Userspace CNI Plugin，下面接的是容器化的 CNF (Cloud-native Network Function) 應用，還順便針對 vBNG / vCMTS 做了 ovs-dpdk/VPP 的網卡加速</p>
-<p><img src="/images/intel-1.png" alt=""></p>
-<a id="more"></a>
-
-<p>若想要詳細了解裡面技術內容的話可以參考此篇 <a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></p>
-<p>倘若想看影片 Demo 的話，不能錯過這個 <a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></p>
-<p><img src="/images/intel-2.png" alt=""></p>
-<p><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a> 在這網站提供了最新的 Container Networking + Intel Technology 相關的技術文件，而目前 Red Hat 跟 Intel 正在如火如荼地合作把重中之重的 <a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a> 加緊進行驗證測試中要準備要在 OpenShift 上 GA 了 </p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></li>
-<li><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a></li>
-<li><a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></li>
-<li><a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></li>
-<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>intel</tag>
-        <tag>networking</tag>
-        <tag>cni</tag>
-        <tag>multus-cni</tag>
-        <tag>nfv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift 把 VM 當 Container 管!?</title>
     <url>/20190420-redhat-openshift-kubevirt/</url>
     <content><![CDATA[<p><img src="https://avatars2.githubusercontent.com/u/18700703?s=280&v=4" alt=""></p>
@@ -3070,6 +2978,98 @@
         <tag>redhat</tag>
         <tag>cnv</tag>
         <tag>kubevirt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Container Bare Metal for Networking 參考架構</title>
+    <url>/20190411-container-bare-metal-for-networking-references-architecture/</url>
+    <content><![CDATA[<blockquote>
+<p>Intel 網卡黑科技 + 容器網路的現在進行式</p>
+</blockquote>
+<p>在 April 2019 的時候, Intel 釋放出這份 Reference Architecture <a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></p>
+<p>各位看看以 Multus Plugin 為核心的上下層整合，上面另外接了 Flannel / SR-IOV / Userspace CNI Plugin，下面接的是容器化的 CNF (Cloud-native Network Function) 應用，還順便針對 vBNG / vCMTS 做了 ovs-dpdk/VPP 的網卡加速</p>
+<p><img src="/images/intel-1.png" alt=""></p>
+<a id="more"></a>
+
+<p>若想要詳細了解裡面技術內容的話可以參考此篇 <a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></p>
+<p>倘若想看影片 Demo 的話，不能錯過這個 <a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></p>
+<p><img src="/images/intel-2.png" alt=""></p>
+<p><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a> 在這網站提供了最新的 Container Networking + Intel Technology 相關的技術文件，而目前 Red Hat 跟 Intel 正在如火如荼地合作把重中之重的 <a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a> 加緊進行驗證測試中要準備要在 OpenShift 上 GA 了 </p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://builders.intel.com/docs/networkbuilders/container-bare-metal-for-2nd-generation-intel-xeon-scalable-processor.pdf">Intel Network Builders: Containers Experience Kits - Container Bare Metal for 2nd Generation Intel® Xeon® Scalable Processor Reference Architecture</a></li>
+<li><a href="https://networkbuilders.intel.com/network-technologies/container-experience-kits">Intel Network Builders: Containers Experience Kits</a></li>
+<li><a href="https://builders.intel.com/docs/networkbuilders/adv-network-features-in-kubernetes-app-note.pdf">Intel Network Builders: Containers Experience Kits - Advanced Networking Features in Kubernetes* and Container Bare Metal</a></li>
+<li><a href="https://networkbuilders.intel.com/social-hub/video/doxsehe0">Multiple Network Interfaces in Kubernetes Demo</a></li>
+<li><a href="https://github.com/intel/multus-cni">intel/multus-cni - GitHub</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>intel</tag>
+        <tag>networking</tag>
+        <tag>cni</tag>
+        <tag>multus-cni</tag>
+        <tag>nfv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Oracle WebLogic 正式支援跑在 Red Hat OpenShift 上</title>
+    <url>/20190406-oracle-weblogic-server-is-now-certified-to-run-on-redhat-openshift/</url>
+    <content><![CDATA[<p>Oracle Blog 於 2019/3/11 釋放出一則文章 <a href="https://blogs.oracle.com/weblogicserver/weblogic-server-is-now-certified-to-run-on-openshift-v2">WebLogic Server is now certified to run on OpenShift! - ORACLE</a>，是的，Oracle WebLogic 可以正式運行在 Kubernetes / OpenShift 上的平台了!</p>
+<p><img src="/images/weblogic.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="版本支援"><a href="#版本支援" class="headerlink" title="版本支援"></a>版本支援</h2><table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WebLogic Server</td>
+<td>12.2.1.3+</td>
+</tr>
+<tr>
+<td>WebLogic Kubernetes Operator</td>
+<td>2.0.1+</td>
+</tr>
+<tr>
+<td>Red Hat OpenShift</td>
+<td>3.11.43+</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>1.11.0+</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>1.13.1ce+</td>
+</tr>
+</tbody></table>
+<p>有關於容器平台的部分，是以 Kubernetes 1.11 對齊，所以 Red Hat OpenShift v3.11 是完全可以使用的</p>
+<h2 id="Red-Hat-Container-Catalog-RHCC-現正放送中"><a href="#Red-Hat-Container-Catalog-RHCC-現正放送中" class="headerlink" title="Red Hat Container Catalog (RHCC) 現正放送中"></a>Red Hat Container Catalog (RHCC) 現正放送中</h2><p><img src="/images/weblogic-1.png" alt=""></p>
+<h2 id="技術概觀"><a href="#技術概觀" class="headerlink" title="技術概觀"></a>技術概觀</h2><p>基礎上就是將 Oracle WebLogic 透過 <a href="https://coreos.com/operators/">Operator 化</a>後，產生出一個專案 <a href="https://github.com/oracle/weblogic-kubernetes-operator">oracle/weblogic-kubernetes-operator - GitHub</a>，爾後所有的安裝維護都是透過 Operator 協助，詳細的安裝過程可以參考 <a href="https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift">Running WebLogic on OpenShift - ORACLE</a>，更詳細的技術說明文件可參考 <a href="https://oracle.github.io/weblogic-kubernetes-operator/quickstart/">Oracle WebLogic Server Kubernetes Operator</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blogs.oracle.com/weblogicserver/weblogic-server-is-now-certified-to-run-on-openshift-v2">WebLogic Server is now certified to run on OpenShift! - ORACLE</a></li>
+<li><a href="https://blogs.oracle.com/weblogicserver/running-weblogic-on-openshift">Running WebLogic on OpenShift - ORACLE</a></li>
+<li><a href="https://github.com/oracle/weblogic-kubernetes-operator">oracle/weblogic-kubernetes-operator - GitHub</a></li>
+<li><a href="https://oracle.github.io/weblogic-kubernetes-operator/quickstart/">Oracle WebLogic Server Kubernetes Operator</a></li>
+<li><a href="https://coreos.com/operators/">Operator Framework</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>redhat</tag>
+        <tag>operator</tag>
+        <tag>weblogic</tag>
+        <tag>oracle</tag>
       </tags>
   </entry>
   <entry>
@@ -4097,37 +4097,6 @@
       </tags>
   </entry>
   <entry>
-    <title>自定義 QCOW2 映像檔</title>
-    <url>/20191118-self-defined-qcow2/</url>
-    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
-<a id="more"></a>
-
-<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
-
-<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>qcow</tag>
-        <tag>kvm</tag>
-        <tag>libvirt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
     <url>/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</url>
     <content><![CDATA[<p>遇過非常多人使用 <code>docekr-distribution</code> 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 <a href="https://docs.docker.com/registry/insecure/"><code>insecure-registries</code></a> 來避掉，今天要來分享自簽憑證的作法</p>
@@ -4176,6 +4145,37 @@
         <tag>container</tag>
         <tag>registry</tag>
         <tag>smart start</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定義 QCOW2 映像檔</title>
+    <url>/20191118-self-defined-qcow2/</url>
+    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
+<a id="more"></a>
+
+<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>qcow</tag>
+        <tag>kvm</tag>
+        <tag>libvirt</tag>
       </tags>
   </entry>
   <entry>
@@ -5628,55 +5628,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何跟妹子介紹數位轉型?</title>
-    <url>/20200421-what-is-digital-transformation/</url>
-    <content><![CDATA[<p>最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望小弟去錄影介紹 <code>Cloud Native API</code> 是蝦毀東西。而該場活動有位主持人 - 妹子E，順稿的時候遇到了一個問題，我們親愛的妹子E 因為非本科系，所以很難理解稿子裡面講的<code>數位轉型</code>等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，這邊可以用下圖 (非當事人) 來推測她的內心心情</p>
-<p><img src="/images/dt.jpg" alt=""></p>
-<p>為了展現出身為一個專業的解決方案架(ㄗㄨㄟˇ)構(ㄆㄠˋ)師，紀錄一下我如何對妹子解釋數位轉型 (Digital Transformation)</p>
-<a id="more"></a>
-
-<h2 id="如何跟妹子介紹數位轉型"><a href="#如何跟妹子介紹數位轉型" class="headerlink" title="如何跟妹子介紹數位轉型"></a>如何跟妹子介紹數位轉型</h2><blockquote>
-<p>每個人都有屬於自己的數位轉型歷程</p>
-</blockquote>
-<p>其實每個人都已經(或正在)經歷過了數位轉型的時代，我是 78 年出生，舉個以下幾個例子</p>
-<ol>
-<li><code>上課傳紙條 -&gt; 去網咖上 MSN / 即時通 -&gt; 手機傳 Line / FB</code></li>
-<li>沖洗相片 -&gt; 日本美肌拍立得 -&gt; 美圖秀秀 / Foodie</li>
-<li>卡帶 -&gt; CD -&gt; MP3 -&gt; KKBox / YouTube Music / Spotify</li>
-<li>錄影帶 -&gt; 電影院 -&gt; 租 DVD -&gt; Netflix</li>
-</ol>
-<p>以上這些過程其實就涵蓋了我個人的<code>小學 -&gt; 中學 -&gt; 高中 -&gt; 大學 -&gt; 現在</code>的歷程</p>
-<p>如果跟不同年紀段的人討論這些變化，可能得到的答案是不太一樣的，但有渡過 MSN / Yahoo 即時通年代的朋友，應該會相當有感覺，每個階段都是時代的眼淚啊</p>
-<h2 id="對於修車廠的數位轉型"><a href="#對於修車廠的數位轉型" class="headerlink" title="對於修車廠的數位轉型"></a>對於修車廠的數位轉型</h2><blockquote>
-<p>手動 -&gt; 電腦化輔助<br>線下 -&gt; 線上</p>
-</blockquote>
-<p>我家是開修車廠的，雖然我不會修車，但旁邊也觀察到了一些改變</p>
-<ol>
-<li>現金 -&gt; <a href="https://judy-pan.blogspot.com/2014/06/credit-card.html?m=1">信用卡手動刷卡機</a> -&gt; 信用卡磁條晶片讀卡機 -&gt; 信用卡感應式讀卡機 -&gt; 手機支付</li>
-<li>手動記帳單 -&gt; 電腦化帳單</li>
-<li>定期買雜誌給客人看 -&gt; 裝 Wireless Router 給客人用</li>
-<li>師傅個人經驗技術 -&gt; 各廠牌維修手冊 -&gt; 電腦診斷系統</li>
-<li>口耳相傳介紹 -&gt; <a href="https://www.chyp.com.tw/print-ads.html">中華黃頁</a> -&gt; Google 店家註冊 -&gt; Facebook 粉絲頁</li>
-</ol>
-<p>我相信那個信用卡手動刷卡機一定很多人沒玩過 XD，以前信用卡是<code>凸字</code>的，不像現在都是平面的，主要就是要給這種舊式刷卡機下面放三聯單 + 信用卡，手動刷過去印上信用卡號碼</p>
-<h2 id="共通點"><a href="#共通點" class="headerlink" title="共通點?"></a>共通點?</h2><blockquote>
-<p>以重新定位客戶體驗、商業模式及供應流程，來創造新的價值</p>
-</blockquote>
-<p>有沒有發現其實走到最後，轉到後面都是透過以電腦/手機為數位化媒介，以前要用很多工具或流程才能搞定的事情，現在則是在小小的螢幕前敲敲打打就能搞定，整體效率還更好，所帶來的主客體驗也跟隨提高</p>
-<p>隨著使用工具和習慣不同，大家消費習性也有所改變，現在無論各行各業都在提及的數位轉型，無非都是希望能發現到適合當今潮流的商業模式來賺到更多的錢</p>
-<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="如何跟同性解釋數位轉型"><a href="#如何跟同性解釋數位轉型" class="headerlink" title="如何跟同性解釋數位轉型?"></a>如何跟同性解釋數位轉型?</h3><ol>
-<li>不好的例子: PS1 -&gt; PS2 -&gt; PS3 -&gt; PS4</li>
-<li>不知道為何共鳴度很高的例子: 高雄建國路 -&gt; BT / eMule 存 D 槽 -&gt; 線上串流 -&gt; AR / VR</li>
-</ol>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>digitaltransformation</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>於 OpenShift 4 上運行混沌工程測試 KubeInvaders</title>
     <url>/20200414-kubeInvaders-openshift4/</url>
     <content><![CDATA[<p>混沌工程 (Chaos Engineering)，最早期我知道這個單字是因為做 SDN 網路的時候，BigSwitch Network (現已被 Arista 收購) 那時候有實作出對網路進行不定期、無法預知之斷線行為，來確保網路 HA 是否暢通，<a href="http://go.bigswitch.com/rs/974-WXR-561/images/Chaos_Monkey_and_Big_Cloud_Fabric.pdf">Chaos Monkey and Big Cloud Fabric - Big Switch Networks</a>。當時才認真看了下最源頭來自於 NetFlix 的 <a href="https://github.com/Netflix/chaosmonkey">Netflix/chaosmonkey</a> 指導原則</p>
@@ -5746,6 +5697,55 @@
         <tag>openshift4</tag>
         <tag>chaos engineering</tag>
         <tag>kubeinvaders</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何跟妹子介紹數位轉型?</title>
+    <url>/20200421-what-is-digital-transformation/</url>
+    <content><![CDATA[<p>最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望小弟去錄影介紹 <code>Cloud Native API</code> 是蝦毀東西。而該場活動有位主持人 - 妹子E，順稿的時候遇到了一個問題，我們親愛的妹子E 因為非本科系，所以很難理解稿子裡面講的<code>數位轉型</code>等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，這邊可以用下圖 (非當事人) 來推測她的內心心情</p>
+<p><img src="/images/dt.jpg" alt=""></p>
+<p>為了展現出身為一個專業的解決方案架(ㄗㄨㄟˇ)構(ㄆㄠˋ)師，紀錄一下我如何對妹子解釋數位轉型 (Digital Transformation)</p>
+<a id="more"></a>
+
+<h2 id="如何跟妹子介紹數位轉型"><a href="#如何跟妹子介紹數位轉型" class="headerlink" title="如何跟妹子介紹數位轉型"></a>如何跟妹子介紹數位轉型</h2><blockquote>
+<p>每個人都有屬於自己的數位轉型歷程</p>
+</blockquote>
+<p>其實每個人都已經(或正在)經歷過了數位轉型的時代，我是 78 年出生，舉個以下幾個例子</p>
+<ol>
+<li><code>上課傳紙條 -&gt; 去網咖上 MSN / 即時通 -&gt; 手機傳 Line / FB</code></li>
+<li>沖洗相片 -&gt; 日本美肌拍立得 -&gt; 美圖秀秀 / Foodie</li>
+<li>卡帶 -&gt; CD -&gt; MP3 -&gt; KKBox / YouTube Music / Spotify</li>
+<li>錄影帶 -&gt; 電影院 -&gt; 租 DVD -&gt; Netflix</li>
+</ol>
+<p>以上這些過程其實就涵蓋了我個人的<code>小學 -&gt; 中學 -&gt; 高中 -&gt; 大學 -&gt; 現在</code>的歷程</p>
+<p>如果跟不同年紀段的人討論這些變化，可能得到的答案是不太一樣的，但有渡過 MSN / Yahoo 即時通年代的朋友，應該會相當有感覺，每個階段都是時代的眼淚啊</p>
+<h2 id="對於修車廠的數位轉型"><a href="#對於修車廠的數位轉型" class="headerlink" title="對於修車廠的數位轉型"></a>對於修車廠的數位轉型</h2><blockquote>
+<p>手動 -&gt; 電腦化輔助<br>線下 -&gt; 線上</p>
+</blockquote>
+<p>我家是開修車廠的，雖然我不會修車，但旁邊也觀察到了一些改變</p>
+<ol>
+<li>現金 -&gt; <a href="https://judy-pan.blogspot.com/2014/06/credit-card.html?m=1">信用卡手動刷卡機</a> -&gt; 信用卡磁條晶片讀卡機 -&gt; 信用卡感應式讀卡機 -&gt; 手機支付</li>
+<li>手動記帳單 -&gt; 電腦化帳單</li>
+<li>定期買雜誌給客人看 -&gt; 裝 Wireless Router 給客人用</li>
+<li>師傅個人經驗技術 -&gt; 各廠牌維修手冊 -&gt; 電腦診斷系統</li>
+<li>口耳相傳介紹 -&gt; <a href="https://www.chyp.com.tw/print-ads.html">中華黃頁</a> -&gt; Google 店家註冊 -&gt; Facebook 粉絲頁</li>
+</ol>
+<p>我相信那個信用卡手動刷卡機一定很多人沒玩過 XD，以前信用卡是<code>凸字</code>的，不像現在都是平面的，主要就是要給這種舊式刷卡機下面放三聯單 + 信用卡，手動刷過去印上信用卡號碼</p>
+<h2 id="共通點"><a href="#共通點" class="headerlink" title="共通點?"></a>共通點?</h2><blockquote>
+<p>以重新定位客戶體驗、商業模式及供應流程，來創造新的價值</p>
+</blockquote>
+<p>有沒有發現其實走到最後，轉到後面都是透過以電腦/手機為數位化媒介，以前要用很多工具或流程才能搞定的事情，現在則是在小小的螢幕前敲敲打打就能搞定，整體效率還更好，所帶來的主客體驗也跟隨提高</p>
+<p>隨著使用工具和習慣不同，大家消費習性也有所改變，現在無論各行各業都在提及的數位轉型，無非都是希望能發現到適合當今潮流的商業模式來賺到更多的錢</p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="如何跟同性解釋數位轉型"><a href="#如何跟同性解釋數位轉型" class="headerlink" title="如何跟同性解釋數位轉型?"></a>如何跟同性解釋數位轉型?</h3><ol>
+<li>不好的例子: PS1 -&gt; PS2 -&gt; PS3 -&gt; PS4</li>
+<li>不知道為何共鳴度很高的例子: 高雄建國路 -&gt; BT / eMule 存 D 槽 -&gt; 線上串流 -&gt; AR / VR</li>
+</ol>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>digitaltransformation</tag>
       </tags>
   </entry>
   <entry>
@@ -6036,71 +6036,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
-    <url>/20200521-openshift-with-coreos-part-7/</url>
-    <content><![CDATA[<p>這幾天有位客戶問了一個很不錯的問題</p>
-<blockquote>
-<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
-</blockquote>
-<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
-<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/Kx110kqoHo0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="走馬看花之旅-第七天"><a href="#走馬看花之旅-第七天" class="headerlink" title="走馬看花之旅: 第七天"></a>走馬看花之旅: 第七天</h2><h3 id="顯示一個-Pods-裡面所包含的-Container"><a href="#顯示一個-Pods-裡面所包含的-Container" class="headerlink" title="顯示一個 Pods 裡面所包含的 Container"></a>顯示一個 Pods 裡面所包含的 Container</h3><p>預設狀況下，其實內建的 <code>api-resources</code> 並沒有包含一個類型是 <code>container</code>，所以如果要知道一個 Pod 裡面有包含多少個 Container 能用下列 2 個方式找</p>
-<ol>
-<li><p>透過 oc 指令 filter 出來</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先獲得到 Pod 清單，這邊選擇 productpage-v1-597b74b4c-x2pgk</span></span><br><span class="line">$ oc get pods</span><br><span class="line"></span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE</span><br><span class="line">details-v1-6657b8bdf-mm4r4       2/2     Running   0          34m</span><br><span class="line">productpage-v1-597b74b4c-x2pgk   2/2     Running   0          34m</span><br><span class="line">ratings-v1-66cddbfb8f-wvpbz      2/2     Running   0          34m</span><br><span class="line">reviews-v1-6788566f98-slm9q      2/2     Running   0          34m</span><br><span class="line">reviews-v2-7c4bffdcc4-6wmg2      2/2     Running   0          34m</span><br><span class="line">reviews-v3-69b6d8786-rbhw5       2/2     Running   0          34m</span><br><span class="line"></span><br><span class="line"><span class="comment"># oc get pods &lt;PDO NAME&gt; -o jsonpath=&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line">$ oc get pods productpage-v1-597b74b4c-x2pgk -o jsonpath=<span class="string">&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">productpage istio-proxy</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>透過 OpenShift Web Console</p>
-</li>
-</ol>
-<p>這個做法是直接透過相當好用的 Web Console 直接觀察，直觀方便</p>
-<p><img src="/images/show-containes.png" alt=""></p>
-<h3 id="登入其中一個-Container-裡面"><a href="#登入其中一個-Container-裡面" class="headerlink" title="登入其中一個 Container 裡面"></a>登入其中一個 Container 裡面</h3><p>一樣也是 2 種方式</p>
-<ol>
-<li>透過 oc rsh 指令</li>
-</ol>
-<p>Red Hat OpenShift 有一個內建的指令可以做到 - <code>oc rsh</code></p>
-<blockquote>
-<p>oc rsh = Open a remote shell session to a container</p>
-</blockquote>
-<p>一般狀況下，<code>oc rsh &lt;PDO NAME&gt;</code> 都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc rsh -h</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Open a shell session on the container named &#x27;index&#x27; inside a pod</span></span><br><span class="line"><span class="comment"># oc rsh -c &lt;CONTAINER NAME&gt; pod/&lt;PDO NAME&gt;</span></span><br><span class="line">$ oc rsh -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line"></span><br><span class="line">$ oc rsh -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static      stdout.log  test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  stderr.log  templates</span><br></pre></td></tr></table></figure>
-
-<p>好我知道各位一定看不懂，下面有截圖</p>
-<p><img src="/images/rsh-container.png" alt=""></p>
-<ol start="2">
-<li>透過 OpenShift Web Console</li>
-</ol>
-<p>相當直觀就是直接對 Web Console 操作，如下圖示表現</p>
-<p><img src="/images/terminal-container.gif" alt=""></p>
-<h3 id="針對其中一個-Container-除錯"><a href="#針對其中一個-Container-除錯" class="headerlink" title="針對其中一個 Container 除錯"></a>針對其中一個 Container 除錯</h3><p>只有一個作法，透過 Red Hat OpenShift 內建的指令 - <code>oc debug</code></p>
-<blockquote>
-<p>oc debug = Launch a command shell to debug a running application</p>
-</blockquote>
-<p>一般狀況下，如同 <code>oc rsh</code>，使用 <code>oc debug</code> 時，都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc debug -h</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc debug -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.27</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line">sh-4.4$</span><br><span class="line"></span><br><span class="line">$ oc debug -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.28</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static     test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  templates</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
-
-<p>一樣我知道各位還是看不懂，截圖如下</p>
-<p><img src="/images/debug-container.png" alt=""></p>
-<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>如果有仔細看內容的話，其實我的操作環境就是建好一個 bookinfo 之後，Service Mesh 自動注入 (inject) Sidecard 進去到每一個 Pod，所以才會有 1 個 Pod 會有 2 個 Container 的現象發生，除此之外，個人經驗還有如果需要整合網路廠商所提供的 CNI Plugin，也有機會會遇到這種等級的操作</p>
-<p>結論上來說，雖然 Kubernetes 最小單位是 Pod，一般操作的層級都是在這個層級，但若想在 OpenShift 上針對特定的 Container 進行指令操作、除錯，都還是可以很輕鬆地辦到，也相當的直覺</p>
-<p>最後，請大家多多訂閱 Red Hat 服務、分享開源技術及開啟技術友善好環境，我們宅宅們就靠各位客戶養了 XD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift RBAC 最小權限實踐</title>
     <url>/20200502-openshift-with-coreos-part-6/</url>
     <content><![CDATA[<p>繼<a href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/">上一篇</a>準備好了基礎的 OpenShift 4 超級管理員 <code>ocproot</code> 設定後，接下來就是比較針對 Project/Namespace 來進行比較細微的 RBAC 設定，盡可能讓 User 或 Group 適用於<code>最小權限原則</code></p>
@@ -6221,6 +6156,71 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
+    <url>/20200521-openshift-with-coreos-part-7/</url>
+    <content><![CDATA[<p>這幾天有位客戶問了一個很不錯的問題</p>
+<blockquote>
+<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
+</blockquote>
+<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
+<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/Kx110kqoHo0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="走馬看花之旅-第七天"><a href="#走馬看花之旅-第七天" class="headerlink" title="走馬看花之旅: 第七天"></a>走馬看花之旅: 第七天</h2><h3 id="顯示一個-Pods-裡面所包含的-Container"><a href="#顯示一個-Pods-裡面所包含的-Container" class="headerlink" title="顯示一個 Pods 裡面所包含的 Container"></a>顯示一個 Pods 裡面所包含的 Container</h3><p>預設狀況下，其實內建的 <code>api-resources</code> 並沒有包含一個類型是 <code>container</code>，所以如果要知道一個 Pod 裡面有包含多少個 Container 能用下列 2 個方式找</p>
+<ol>
+<li><p>透過 oc 指令 filter 出來</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先獲得到 Pod 清單，這邊選擇 productpage-v1-597b74b4c-x2pgk</span></span><br><span class="line">$ oc get pods</span><br><span class="line"></span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE</span><br><span class="line">details-v1-6657b8bdf-mm4r4       2/2     Running   0          34m</span><br><span class="line">productpage-v1-597b74b4c-x2pgk   2/2     Running   0          34m</span><br><span class="line">ratings-v1-66cddbfb8f-wvpbz      2/2     Running   0          34m</span><br><span class="line">reviews-v1-6788566f98-slm9q      2/2     Running   0          34m</span><br><span class="line">reviews-v2-7c4bffdcc4-6wmg2      2/2     Running   0          34m</span><br><span class="line">reviews-v3-69b6d8786-rbhw5       2/2     Running   0          34m</span><br><span class="line"></span><br><span class="line"><span class="comment"># oc get pods &lt;PDO NAME&gt; -o jsonpath=&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line">$ oc get pods productpage-v1-597b74b4c-x2pgk -o jsonpath=<span class="string">&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">productpage istio-proxy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>透過 OpenShift Web Console</p>
+</li>
+</ol>
+<p>這個做法是直接透過相當好用的 Web Console 直接觀察，直觀方便</p>
+<p><img src="/images/show-containes.png" alt=""></p>
+<h3 id="登入其中一個-Container-裡面"><a href="#登入其中一個-Container-裡面" class="headerlink" title="登入其中一個 Container 裡面"></a>登入其中一個 Container 裡面</h3><p>一樣也是 2 種方式</p>
+<ol>
+<li>透過 oc rsh 指令</li>
+</ol>
+<p>Red Hat OpenShift 有一個內建的指令可以做到 - <code>oc rsh</code></p>
+<blockquote>
+<p>oc rsh = Open a remote shell session to a container</p>
+</blockquote>
+<p>一般狀況下，<code>oc rsh &lt;PDO NAME&gt;</code> 都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc rsh -h</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Open a shell session on the container named &#x27;index&#x27; inside a pod</span></span><br><span class="line"><span class="comment"># oc rsh -c &lt;CONTAINER NAME&gt; pod/&lt;PDO NAME&gt;</span></span><br><span class="line">$ oc rsh -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line"></span><br><span class="line">$ oc rsh -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static      stdout.log  test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  stderr.log  templates</span><br></pre></td></tr></table></figure>
+
+<p>好我知道各位一定看不懂，下面有截圖</p>
+<p><img src="/images/rsh-container.png" alt=""></p>
+<ol start="2">
+<li>透過 OpenShift Web Console</li>
+</ol>
+<p>相當直觀就是直接對 Web Console 操作，如下圖示表現</p>
+<p><img src="/images/terminal-container.gif" alt=""></p>
+<h3 id="針對其中一個-Container-除錯"><a href="#針對其中一個-Container-除錯" class="headerlink" title="針對其中一個 Container 除錯"></a>針對其中一個 Container 除錯</h3><p>只有一個作法，透過 Red Hat OpenShift 內建的指令 - <code>oc debug</code></p>
+<blockquote>
+<p>oc debug = Launch a command shell to debug a running application</p>
+</blockquote>
+<p>一般狀況下，如同 <code>oc rsh</code>，使用 <code>oc debug</code> 時，都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc debug -h</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc debug -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.27</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line">sh-4.4$</span><br><span class="line"></span><br><span class="line">$ oc debug -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.28</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static     test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  templates</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p>一樣我知道各位還是看不懂，截圖如下</p>
+<p><img src="/images/debug-container.png" alt=""></p>
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>如果有仔細看內容的話，其實我的操作環境就是建好一個 bookinfo 之後，Service Mesh 自動注入 (inject) Sidecard 進去到每一個 Pod，所以才會有 1 個 Pod 會有 2 個 Container 的現象發生，除此之外，個人經驗還有如果需要整合網路廠商所提供的 CNI Plugin，也有機會會遇到這種等級的操作</p>
+<p>結論上來說，雖然 Kubernetes 最小單位是 Pod，一般操作的層級都是在這個層級，但若想在 OpenShift 上針對特定的 Container 進行指令操作、除錯，都還是可以很輕鬆地辦到，也相當的直覺</p>
+<p>最後，請大家多多訂閱 Red Hat 服務、分享開源技術及開啟技術友善好環境，我們宅宅們就靠各位客戶養了 XD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</title>
     <url>/20200528-openshift-etcd-operator-1/</url>
     <content><![CDATA[<p>打從 OpenShift 4 之後，etcd 的安裝變成是透過 <code>etcd-operator</code> 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄</p>
@@ -6268,126 +6268,6 @@
         <tag>openshift</tag>
         <tag>openshift4</tag>
         <tag>etcd</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</title>
-    <url>/20200529-openshift-etcd-operator-2/</url>
-    <content><![CDATA[<p>承襲上文 <a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a>，繼續針對硬碟的部分進行調整，畢竟 etcd 對<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">硬碟</a> IOPS 相當要求，建議用 SSD 比較好</p>
-<p>沒意外的，開場分享個 <a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a>，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/PdyNQXpYknI" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="etcd-節點硬碟調教"><a href="#etcd-節點硬碟調教" class="headerlink" title="etcd 節點硬碟調教"></a>etcd 節點硬碟調教</h2><blockquote>
-<p>ionice: set or get process I/O scheduling class and priority</p>
-</blockquote>
-<p>這邊使用 <a href="https://www.systutorials.com/docs/linux/man/1-ionice/">ionice (1) - Linux Man Pages</a> 來完成這件事，剛好 CoreOS 內建有支援這個指令 XD，差點就要包一個 Container 而且要蠻高的權限 (需要 root) 去定期執行了</p>
-<h3 id="Before"><a href="#Before" class="headerlink" title="Before"></a>Before</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[core@control-plane-2 ~]$ pgrep etcd</span><br><span class="line">740369</span><br><span class="line">740441</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ ps uax |grep 740369</span><br><span class="line">root      740369  7.6  8.4 9672968 1382392 ?     Ssl  17:05   4:25 etcd --initial-advertise-peer-urls=https://10.0.97.3:2380 --cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.crt --key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.key --trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-serving-ca/ca-bundle.crt --client-cert-auth=<span class="literal">true</span> --peer-cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --peer-key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --peer-trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --peer-client-cert-auth=<span class="literal">true</span> --advertise-client-urls=https://10.0.97.3:2379 --listen-client-urls=https://0.0.0.0:2379 --listen-peer-urls=https://0.0.0.0:2380 --listen-metrics-urls=https://0.0.0.0:9978</span><br><span class="line">core      901685  0.0  0.0  12760  1076 pts/0    S+   18:03   0:00 grep --color=auto 740369</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ ps uax |grep 740441</span><br><span class="line">root      740441  0.9  0.1 124764 25288 ?        Ssl  17:05   0:32 etcd grpc-proxy start --endpoints https://10.0.97.3:9978 --metrics-addr https://0.0.0.0:9979 --listen-addr 127.0.0.1:9977 --key /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --key-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.key --cert /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --cert-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.crt --cacert /etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --trusted-ca-file /etc/kubernetes/static-pod-certs/configmaps/etcd-metrics-proxy-serving-ca/ca-bundle.crt</span><br><span class="line">core      902165  0.0  0.0  12760  1060 pts/0    S+   18:03   0:00 grep --color=auto 740441</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get priority and class</span></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -p 740369 740441</span><br><span class="line">none: prio 4</span><br><span class="line">none: prio 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Tuning"><a href="#Tuning" class="headerlink" title="Tuning"></a>Tuning</h3><p>我們可以直接登入 CoreOS 後下 <code>ionice</code> 對特定 PID 和硬碟處理權限拉高，可以搭配 ansible 來針對 master node 執行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Set priority and class</span></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -c2 -n0 -p `pgrep etcd`</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>-c2</code>: best-effort</li>
-<li><code>-n0</code>: the highest priority level</li>
-</ul>
-<h3 id="After"><a href="#After" class="headerlink" title="After"></a>After</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[core@control-plane-2 ~]$ pgrep etcd</span><br><span class="line">740369</span><br><span class="line">740441</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -p 740369 740441</span><br><span class="line">best-effort: prio 0</span><br><span class="line">best-effort: prio 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>恩…反正裝 etcd 的那個節點之硬碟選用高 IOPS，例如用 SSD，效率和穩定性會提升不少</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.systutorials.com/docs/linux/man/1-ionice/">ionice (1) - Linux Man Pages</a></li>
-<li><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/tuning.md">etcd - tuning</a></li>
-<li><a href="https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html">machineconfig</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/111245626">etcd 性能测试与调优</a></li>
-<li><a href="https://docs.openshift.com/container-platform/4.4/nodes/jobs/nodes-pods-daemonsets.html">Running background tasks on nodes automatically with daemonsets</a></li>
-<li><a href="https://rancher.com/docs/rancher/v2.x/en/installation/options/etcd/">Tuning etcd for Large Installations - Rancher</a></li>
-<li><a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></li>
-<li><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">etcd - hardware</a></li>
-<li><a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>etcd</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通用抽象網路邏輯介紹</title>
-    <url>/20200602-network-logical-plane/</url>
-    <content><![CDATA[<blockquote>
-<p>這世界上沒有完美的架構，只有權衡後的辦法，但…</p>
-</blockquote>
-<p>來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考</p>
-<p><img src="/images/network-logical.png" alt=""></p>
-<p>但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係</p>
-<a id="more"></a>
-
-<h2 id="RHEL-網路流量抽象邏輯"><a href="#RHEL-網路流量抽象邏輯" class="headerlink" title="RHEL 網路流量抽象邏輯"></a>RHEL 網路流量抽象邏輯</h2><p>其實因為他本身就是一台 VM 你加多少網卡，決定該網卡要幹嘛，他就是什麼角色，就像上面那張圖一樣，這比較沒什麼特別的</p>
-<h2 id="OpenShift-網路流量抽象邏輯"><a href="#OpenShift-網路流量抽象邏輯" class="headerlink" title="OpenShift 網路流量抽象邏輯"></a>OpenShift 網路流量抽象邏輯</h2><p>以一個 <code>OpenShift 的 Networking</code> 為觀點出發的話，針對網路的流量分類，常見會分為下面 3 + 1 種但不限於之類型</p>
-<ol>
-<li>資料層 (Data Plane, DP)：有時候有會被叫做轉發層 (Forwarding Plane, FP) 或 User Plane (UP)，主要講的就是實際上資料封包傳輸所流經的路線</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/ovs -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">ovs    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br><span class="line"></span><br><span class="line">$ oc get daemonset.apps/sdn -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">sdn    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br></pre></td></tr></table></figure>
-
-<p>如果更詳細要講的話，其實就是透過基於 CNI 定義下實做出來的網路模組，如預設的 <code>ovs-networkpolicy</code>，裡面就是節點間建立歸屬能辦到 L2 over L3 的 VXLAN 進行 Pod to Pod 或 Pod to Services 等 Kubernetes 內建之機制溝通</p>
-<ol start="2">
-<li>控制層 (Control Plane, CP)：主要是針對 Data Plane 的資料流控制進行能管理和上一些規範，在 OpenShift 角度上來說就是</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/sdn-controller -n openshift-sdn</span><br><span class="line">NAME             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                     AGE</span><br><span class="line">sdn-controller   2         2         2       2            2           node-role.kubernetes.io/master=   77d</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>管理層 (Management Plane, MP)：能夠管理和監視 Control Plane 的路線，譬如透過 SSH / SNMP / Telnet 登入管理皆屬此類</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh core@control-plane-2 -i ~/.ssh/id_rsa_ocp4_vcenter.pub</span><br><span class="line">Red Hat Enterprise Linux CoreOS 44.81.202005062110-0</span><br><span class="line">  Part of OpenShift 4.4, RHCOS is a Kubernetes native operating system</span><br><span class="line">  managed by the Machine Config Operator (`clusteroperator/machine-config`).</span><br><span class="line"></span><br><span class="line">WARNING: Direct SSH access to machines is not recommended; instead,</span><br><span class="line">make configuration changes via `machineconfig` objects:</span><br><span class="line">  https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">Last login: Sat May 30 15:21:52 2020 from 10.0.97.100</span><br><span class="line">[core@control-plane-2 ~]$</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>儲存層 (Storage Plane, SP)：嚴格來說，這個不算在常見的網路架構中，連 OpenShift 網路都沒有特別定義，這是從 Data Plane 拆分一個角色出來，特別針對 OS 跟儲存設備中間拉一個專門的網路，譬如你的 nfs mount point <code>通常</code>都不會跟你的一般流量混在一起</li>
-</ol>
-<h3 id="所以"><a href="#所以" class="headerlink" title="所以?"></a>所以?</h3><p>正常 OpenShift 架構下，其實 CP/MP/DP 都是透過同一個 IP 出去溝通的，有特別要拆開的話就會跟其他家的 SDN 廠商合作了，譬如像</p>
-<ul>
-<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco ACI</a></li>
-</ul>
-<p><img src="/images/cisco-aci.png" alt=""></p>
-<ul>
-<li><a href="https://www.juniper.net/documentation/en_US/contrail20/topics/task/configuration/install-openshift-using-anible-311.html">Juniper Contrail</a></li>
-</ul>
-<p><img src="/images/juniper-contrail.png" alt=""></p>
-<ul>
-<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">VMware NSX-T</a></li>
-</ul>
-<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
-<p>如果想要了解更多 CNI 的話，可以參考一下這份列表 <a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路</a></p>
-<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>最後啊…要比較留意就是</p>
-<blockquote>
-<p>不同的設備觀點，對於 CP / DP / MP 會有不一樣的解釋，所以要講架構前一定要很清楚知道是從哪個設備觀點出發</p>
-</blockquote>
-<p>譬如說以我比較熟的 SDN 架構來說，對照如下</p>
-<p><img src="http://thenewstack.io/wp-content/uploads/2014/11/img1.png" alt=""></p>
-<ul>
-<li>DP: SDN Switch，實際轉發跟處理封包的路線</li>
-<li>CP: SDN Controller，負責決定 SDN Switch 內部資料流量的走向</li>
-<li>MP: SDN Switch 內建的 SNMP / Telnet / SSH 等標準協定可供日常管理的路線</li>
-</ul>
-<p>當然啦，現在大多數的架構，都還是混合在一起的，總是有利有弊</p>
-<p>我開頭講了一段好像很有道理的話，但後面缺了一小段，有興趣知道的可以當面找我聊 XD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://networkengineering.stackexchange.com/questions/38573/difference-between-control-plane-data-plane-and-management-plane">Difference between control plane, data plane and management plane?</a></li>
-<li><a href="https://thenewstack.io/defining-software-defined-networking-part-1/">SDN Series Part One: Defining Software Defined Networking</a></li>
-<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco - ACI Plugin for Red Hat OpenShift Container Architecture and Design Guide</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路 - Phil Huang</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>network</tag>
-        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -6493,6 +6373,126 @@
       <tags>
         <tag>openshift</tag>
         <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用抽象網路邏輯介紹</title>
+    <url>/20200602-network-logical-plane/</url>
+    <content><![CDATA[<blockquote>
+<p>這世界上沒有完美的架構，只有權衡後的辦法，但…</p>
+</blockquote>
+<p>來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考</p>
+<p><img src="/images/network-logical.png" alt=""></p>
+<p>但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係</p>
+<a id="more"></a>
+
+<h2 id="RHEL-網路流量抽象邏輯"><a href="#RHEL-網路流量抽象邏輯" class="headerlink" title="RHEL 網路流量抽象邏輯"></a>RHEL 網路流量抽象邏輯</h2><p>其實因為他本身就是一台 VM 你加多少網卡，決定該網卡要幹嘛，他就是什麼角色，就像上面那張圖一樣，這比較沒什麼特別的</p>
+<h2 id="OpenShift-網路流量抽象邏輯"><a href="#OpenShift-網路流量抽象邏輯" class="headerlink" title="OpenShift 網路流量抽象邏輯"></a>OpenShift 網路流量抽象邏輯</h2><p>以一個 <code>OpenShift 的 Networking</code> 為觀點出發的話，針對網路的流量分類，常見會分為下面 3 + 1 種但不限於之類型</p>
+<ol>
+<li>資料層 (Data Plane, DP)：有時候有會被叫做轉發層 (Forwarding Plane, FP) 或 User Plane (UP)，主要講的就是實際上資料封包傳輸所流經的路線</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/ovs -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">ovs    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br><span class="line"></span><br><span class="line">$ oc get daemonset.apps/sdn -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">sdn    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br></pre></td></tr></table></figure>
+
+<p>如果更詳細要講的話，其實就是透過基於 CNI 定義下實做出來的網路模組，如預設的 <code>ovs-networkpolicy</code>，裡面就是節點間建立歸屬能辦到 L2 over L3 的 VXLAN 進行 Pod to Pod 或 Pod to Services 等 Kubernetes 內建之機制溝通</p>
+<ol start="2">
+<li>控制層 (Control Plane, CP)：主要是針對 Data Plane 的資料流控制進行能管理和上一些規範，在 OpenShift 角度上來說就是</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/sdn-controller -n openshift-sdn</span><br><span class="line">NAME             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                     AGE</span><br><span class="line">sdn-controller   2         2         2       2            2           node-role.kubernetes.io/master=   77d</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>管理層 (Management Plane, MP)：能夠管理和監視 Control Plane 的路線，譬如透過 SSH / SNMP / Telnet 登入管理皆屬此類</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh core@control-plane-2 -i ~/.ssh/id_rsa_ocp4_vcenter.pub</span><br><span class="line">Red Hat Enterprise Linux CoreOS 44.81.202005062110-0</span><br><span class="line">  Part of OpenShift 4.4, RHCOS is a Kubernetes native operating system</span><br><span class="line">  managed by the Machine Config Operator (`clusteroperator/machine-config`).</span><br><span class="line"></span><br><span class="line">WARNING: Direct SSH access to machines is not recommended; instead,</span><br><span class="line">make configuration changes via `machineconfig` objects:</span><br><span class="line">  https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">Last login: Sat May 30 15:21:52 2020 from 10.0.97.100</span><br><span class="line">[core@control-plane-2 ~]$</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>儲存層 (Storage Plane, SP)：嚴格來說，這個不算在常見的網路架構中，連 OpenShift 網路都沒有特別定義，這是從 Data Plane 拆分一個角色出來，特別針對 OS 跟儲存設備中間拉一個專門的網路，譬如你的 nfs mount point <code>通常</code>都不會跟你的一般流量混在一起</li>
+</ol>
+<h3 id="所以"><a href="#所以" class="headerlink" title="所以?"></a>所以?</h3><p>正常 OpenShift 架構下，其實 CP/MP/DP 都是透過同一個 IP 出去溝通的，有特別要拆開的話就會跟其他家的 SDN 廠商合作了，譬如像</p>
+<ul>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco ACI</a></li>
+</ul>
+<p><img src="/images/cisco-aci.png" alt=""></p>
+<ul>
+<li><a href="https://www.juniper.net/documentation/en_US/contrail20/topics/task/configuration/install-openshift-using-anible-311.html">Juniper Contrail</a></li>
+</ul>
+<p><img src="/images/juniper-contrail.png" alt=""></p>
+<ul>
+<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">VMware NSX-T</a></li>
+</ul>
+<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
+<p>如果想要了解更多 CNI 的話，可以參考一下這份列表 <a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路</a></p>
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>最後啊…要比較留意就是</p>
+<blockquote>
+<p>不同的設備觀點，對於 CP / DP / MP 會有不一樣的解釋，所以要講架構前一定要很清楚知道是從哪個設備觀點出發</p>
+</blockquote>
+<p>譬如說以我比較熟的 SDN 架構來說，對照如下</p>
+<p><img src="http://thenewstack.io/wp-content/uploads/2014/11/img1.png" alt=""></p>
+<ul>
+<li>DP: SDN Switch，實際轉發跟處理封包的路線</li>
+<li>CP: SDN Controller，負責決定 SDN Switch 內部資料流量的走向</li>
+<li>MP: SDN Switch 內建的 SNMP / Telnet / SSH 等標準協定可供日常管理的路線</li>
+</ul>
+<p>當然啦，現在大多數的架構，都還是混合在一起的，總是有利有弊</p>
+<p>我開頭講了一段好像很有道理的話，但後面缺了一小段，有興趣知道的可以當面找我聊 XD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://networkengineering.stackexchange.com/questions/38573/difference-between-control-plane-data-plane-and-management-plane">Difference between control plane, data plane and management plane?</a></li>
+<li><a href="https://thenewstack.io/defining-software-defined-networking-part-1/">SDN Series Part One: Defining Software Defined Networking</a></li>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco - ACI Plugin for Red Hat OpenShift Container Architecture and Design Guide</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路 - Phil Huang</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>network</tag>
+        <tag>redhat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</title>
+    <url>/20200529-openshift-etcd-operator-2/</url>
+    <content><![CDATA[<p>承襲上文 <a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a>，繼續針對硬碟的部分進行調整，畢竟 etcd 對<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">硬碟</a> IOPS 相當要求，建議用 SSD 比較好</p>
+<p>沒意外的，開場分享個 <a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a>，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/PdyNQXpYknI" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="etcd-節點硬碟調教"><a href="#etcd-節點硬碟調教" class="headerlink" title="etcd 節點硬碟調教"></a>etcd 節點硬碟調教</h2><blockquote>
+<p>ionice: set or get process I/O scheduling class and priority</p>
+</blockquote>
+<p>這邊使用 <a href="https://www.systutorials.com/docs/linux/man/1-ionice/">ionice (1) - Linux Man Pages</a> 來完成這件事，剛好 CoreOS 內建有支援這個指令 XD，差點就要包一個 Container 而且要蠻高的權限 (需要 root) 去定期執行了</p>
+<h3 id="Before"><a href="#Before" class="headerlink" title="Before"></a>Before</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[core@control-plane-2 ~]$ pgrep etcd</span><br><span class="line">740369</span><br><span class="line">740441</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ ps uax |grep 740369</span><br><span class="line">root      740369  7.6  8.4 9672968 1382392 ?     Ssl  17:05   4:25 etcd --initial-advertise-peer-urls=https://10.0.97.3:2380 --cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.crt --key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-serving/etcd-serving-control-plane-2.key --trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-serving-ca/ca-bundle.crt --client-cert-auth=<span class="literal">true</span> --peer-cert-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --peer-key-file=/etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --peer-trusted-ca-file=/etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --peer-client-cert-auth=<span class="literal">true</span> --advertise-client-urls=https://10.0.97.3:2379 --listen-client-urls=https://0.0.0.0:2379 --listen-peer-urls=https://0.0.0.0:2380 --listen-metrics-urls=https://0.0.0.0:9978</span><br><span class="line">core      901685  0.0  0.0  12760  1076 pts/0    S+   18:03   0:00 grep --color=auto 740369</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ ps uax |grep 740441</span><br><span class="line">root      740441  0.9  0.1 124764 25288 ?        Ssl  17:05   0:32 etcd grpc-proxy start --endpoints https://10.0.97.3:9978 --metrics-addr https://0.0.0.0:9979 --listen-addr 127.0.0.1:9977 --key /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.key --key-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.key --cert /etc/kubernetes/static-pod-certs/secrets/etcd-all-peer/etcd-peer-control-plane-2.crt --cert-file /etc/kubernetes/static-pod-certs/secrets/etcd-all-serving-metrics/etcd-serving-metrics-control-plane-2.crt --cacert /etc/kubernetes/static-pod-certs/configmaps/etcd-peer-client-ca/ca-bundle.crt --trusted-ca-file /etc/kubernetes/static-pod-certs/configmaps/etcd-metrics-proxy-serving-ca/ca-bundle.crt</span><br><span class="line">core      902165  0.0  0.0  12760  1060 pts/0    S+   18:03   0:00 grep --color=auto 740441</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get priority and class</span></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -p 740369 740441</span><br><span class="line">none: prio 4</span><br><span class="line">none: prio 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tuning"><a href="#Tuning" class="headerlink" title="Tuning"></a>Tuning</h3><p>我們可以直接登入 CoreOS 後下 <code>ionice</code> 對特定 PID 和硬碟處理權限拉高，可以搭配 ansible 來針對 master node 執行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Set priority and class</span></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -c2 -n0 -p `pgrep etcd`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-c2</code>: best-effort</li>
+<li><code>-n0</code>: the highest priority level</li>
+</ul>
+<h3 id="After"><a href="#After" class="headerlink" title="After"></a>After</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[core@control-plane-2 ~]$ pgrep etcd</span><br><span class="line">740369</span><br><span class="line">740441</span><br><span class="line"></span><br><span class="line">[core@control-plane-2 ~]$ sudo ionice -p 740369 740441</span><br><span class="line">best-effort: prio 0</span><br><span class="line">best-effort: prio 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>恩…反正裝 etcd 的那個節點之硬碟選用高 IOPS，例如用 SSD，效率和穩定性會提升不少</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.systutorials.com/docs/linux/man/1-ionice/">ionice (1) - Linux Man Pages</a></li>
+<li><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/tuning.md">etcd - tuning</a></li>
+<li><a href="https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html">machineconfig</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/111245626">etcd 性能测试与调优</a></li>
+<li><a href="https://docs.openshift.com/container-platform/4.4/nodes/jobs/nodes-pods-daemonsets.html">Running background tasks on nodes automatically with daemonsets</a></li>
+<li><a href="https://rancher.com/docs/rancher/v2.x/en/installation/options/etcd/">Tuning etcd for Large Installations - Rancher</a></li>
+<li><a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></li>
+<li><a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">etcd - hardware</a></li>
+<li><a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>etcd</tag>
       </tags>
   </entry>
   <entry>
@@ -6718,7 +6718,7 @@
 <li>虛擬機、實體機、公有雲：住戶社區內一棟一棟的大樓</li>
 <li>OS 作業系統：大樓骨幹跟地基</li>
 <li>Master Node：住戶社區管委會主要居住大樓，為保持高可用最少要 3 棟</li>
-<li>Etcd Cluster：三位管委，互相投票選出一位委員長</li>
+<li>Etcd Cluster：為保持高可用，故建議最少三位管委，互相投票選出一位委員長</li>
 <li>Worker Node：住戶們主要居住大樓</li>
 <li>OCI (Open Container Initiative)：訂立大樓鋼筋水泥及行李箱標準的組織</li>
 <li>CRI (Container Runtime Interface)：大樓鋼筋水泥廠商</li>
@@ -6759,6 +6759,7 @@
 <h3 id="Q9-常聽到-Node-Scaling-是什麼意思"><a href="#Q9-常聽到-Node-Scaling-是什麼意思" class="headerlink" title="Q9: 常聽到 Node Scaling 是什麼意思?"></a>Q9: 常聽到 Node Scaling 是什麼意思?</h3><p>當住戶太多的時候，Kubernetes 可以自動或手動興建大樓，然後把多出來的住戶塞進去</p>
 <div class="video-container"><iframe src="https://www.youtube.com/embed/MGm47ncUp6o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
+<h3 id="Q10-OS-作業系統在-Kubernetes-的領域中重不重要"><a href="#Q10-OS-作業系統在-Kubernetes-的領域中重不重要" class="headerlink" title="Q10: OS 作業系統在 Kubernetes 的領域中重不重要?"></a>Q10: OS 作業系統在 Kubernetes 的領域中重不重要?</h3><p>當有地震還是什麼災害來襲的時候，你會覺得地基跟骨幹很穩很重要…</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p><img src="/images/redhat-building.jpeg" alt=""></p>
 <p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
 ]]></content>
