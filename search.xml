@@ -1,109 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>TSCC 個人心得</title>
-    <url>/20140416-tscc/</url>
-    <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
-<a id="more"></a>
-
-<p>這比賽比兩個部分, HPL tunning 及 Application 跑分, 簡單來說就是比linux tunning, 和誰時間分配比較好, 比賽時間有限, 測資不少.</p>
-<ul>
-<li>HPL (High-Performance Linpack) 是一個利用 Distribution System 的特性, 使用 MPI 運算一些數據, 最後會產生出一個數值出來, 依照數值互相比較.</li>
-<li>Application 每年都不太一樣, 但大部分都跟科學運算脫不了關係, 這只能去參加 NCHC 的教育訓練才知道在幹嘛</li>
-</ul>
-<h2 id="比賽環境-以TSCC-2014為主"><a href="#比賽環境-以TSCC-2014為主" class="headerlink" title="比賽環境 (以TSCC 2014為主)"></a>比賽環境 (以TSCC 2014為主)</h2><ul>
-<li>處理器：Intel Xeon X5570 2.93GHz *2</li>
-<li>記憶體：24GB DDR3 1066</li>
-<li>乙太網路介面:GbE *4</li>
-<li>Infiniband Card:Mellanox ConnectX QDR 40Gb/s *1</li>
-<li>硬碟:SAS2 300GB *1</li>
-<li>GPU:NVIDIA TESLA C1060 *2</li>
-</ul>
-<p>處理器 Intel Xeon X5570 廠牌的選擇可以影響到 Compiler 的選擇, 另外不要開 VT-d.</p>
-<p>記憶體有 24GB 可以分配, 調教重點當然是越省越好, 讓 Memory Free space 越多越好, 多的部份都拿去運算.</p>
-<p>網路會採用 <code>Infiniband Card:Mellanox ConnectX QDR 40Gb/s</code>, 這種莫名奇妙的網路卡XD, 每秒好幾個影片子上下, 基本上整體系統的 bottleneck 不會在 network 傳輸部分, 比賽的時候他們也不會希望是卡在這個. 至於 GbE 在這種比賽只是拿來當一開始安裝軟體傳輸用, 等 Infiniband 設定完能動了, 就可以 down 下去了.</p>
-<p>硬碟 SSD 在這種 Heavy I/O 比賽來說, 算是慢的, 只是當儲存資料及 OS 用.</p>
-<p>GPU 是專門對 Application 做使用, HPL 其實也有 CUDA 版的, 但要跟官方簽 NDA 才行. 關於電力上控制是不用特別注意的, 但聽說全球大賽 SCC(Student Cluster Challenge) 是連電力都要考量進去, 不知道是真是假, 很想去但已經沒機會(碩一)了.</p>
-<h2 id="TSCC-要點"><a href="#TSCC-要點" class="headerlink" title="TSCC 要點"></a>TSCC 要點</h2><ol>
-<li>測資通通都要跑過一次</li>
-<li>碰到 swap 必輸</li>
-<li>先求穩 再求好</li>
-</ol>
-<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>這種比賽分為 Linux tunning + Compiler + MPI + Math Library + HPL config 這五個部分來看.</p>
-<ol>
-<li><p>Linux tunning </p>
-<ul>
-<li>一般安裝軟體、調教參數及分析 Bottleneck 皆屬此類, 需求是要有個 System Administrator 等級的來碰會比較清楚.</li>
-<li>挑選 OS 只有一個大重點 <code>有沒有支援 infiniband</code> 不支援 infiniband 的話, 只用 GbE 跑的話, 會發現整個瓶頸都會在網路傳輸部分.</li>
-<li><a href="http://roan.logdown.com/posts/193253-linux-performance">Linux Performance</a> 所列分析工具可參考一下, <code>dstat</code> 萬用</li>
-<li>Kernel tunning 其實可以嘗試看看, 應該會有不錯的報酬, 但要考量的風險是自編 Kernel 會不會在比賽現場發生 Kernel panic, 只要發生了就會浪費非常多時間在這上面.</li>
-<li><a href="http://roan.logdown.com/posts/165596-scientific-linux-64-to-minimize-the-installation">工商服務 - Scientific Linux 6.4 最小化安裝</a></li>
-</ul>
-</li>
-<li><p>Compiler</p>
-<ul>
-<li>{gcc, icc(商業), …}</li>
-<li>icc is better than gcc</li>
-</ul>
-</li>
-<li><p>MPI</p>
-<ul>
-<li>{OpenMPI, MPICH}</li>
-<li>常用 OpenMPI</li>
-</ul>
-</li>
-<li><p>Math Library</p>
-<ul>
-<li>{Gotoblas2, OpenBlas, MKL}</li>
-<li>這裡的選擇是關鍵, 好的跟較差的可以差上好幾%</li>
-</ul>
-</li>
-<li><p>HPL Config</p>
-<ul>
-<li>這裡我沒有涉略, 不太清楚怎麼調</li>
-</ul>
-</li>
-</ol>
-<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>這比賽很注重時間分配及能否有效快速的準備好系統, 當設定完之後, 透過一些小測資微調數據, 之後比賽大部分就會在漫長的等待中渡過了, 還有清大這方面的技術真的很強, 有興趣的人可以找一下他們研究這方面的技術.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://event.nchc.org.tw/2014/tscc/">2014全國學生叢集電腦競賽</a></li>
-<li><a href="http://www.netlib.org/benchmark/hpl/">HPL - A Portable Implementation of the High-Performance Linpack Benchmark for Distributed-Memory Computers</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>event</tag>
-        <tag>tscc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -208,6 +105,109 @@
         <tag>infra</tag>
         <tag>easyrsa</tag>
         <tag>pki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TSCC 個人心得</title>
+    <url>/20140416-tscc/</url>
+    <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
+<a id="more"></a>
+
+<p>這比賽比兩個部分, HPL tunning 及 Application 跑分, 簡單來說就是比linux tunning, 和誰時間分配比較好, 比賽時間有限, 測資不少.</p>
+<ul>
+<li>HPL (High-Performance Linpack) 是一個利用 Distribution System 的特性, 使用 MPI 運算一些數據, 最後會產生出一個數值出來, 依照數值互相比較.</li>
+<li>Application 每年都不太一樣, 但大部分都跟科學運算脫不了關係, 這只能去參加 NCHC 的教育訓練才知道在幹嘛</li>
+</ul>
+<h2 id="比賽環境-以TSCC-2014為主"><a href="#比賽環境-以TSCC-2014為主" class="headerlink" title="比賽環境 (以TSCC 2014為主)"></a>比賽環境 (以TSCC 2014為主)</h2><ul>
+<li>處理器：Intel Xeon X5570 2.93GHz *2</li>
+<li>記憶體：24GB DDR3 1066</li>
+<li>乙太網路介面:GbE *4</li>
+<li>Infiniband Card:Mellanox ConnectX QDR 40Gb/s *1</li>
+<li>硬碟:SAS2 300GB *1</li>
+<li>GPU:NVIDIA TESLA C1060 *2</li>
+</ul>
+<p>處理器 Intel Xeon X5570 廠牌的選擇可以影響到 Compiler 的選擇, 另外不要開 VT-d.</p>
+<p>記憶體有 24GB 可以分配, 調教重點當然是越省越好, 讓 Memory Free space 越多越好, 多的部份都拿去運算.</p>
+<p>網路會採用 <code>Infiniband Card:Mellanox ConnectX QDR 40Gb/s</code>, 這種莫名奇妙的網路卡XD, 每秒好幾個影片子上下, 基本上整體系統的 bottleneck 不會在 network 傳輸部分, 比賽的時候他們也不會希望是卡在這個. 至於 GbE 在這種比賽只是拿來當一開始安裝軟體傳輸用, 等 Infiniband 設定完能動了, 就可以 down 下去了.</p>
+<p>硬碟 SSD 在這種 Heavy I/O 比賽來說, 算是慢的, 只是當儲存資料及 OS 用.</p>
+<p>GPU 是專門對 Application 做使用, HPL 其實也有 CUDA 版的, 但要跟官方簽 NDA 才行. 關於電力上控制是不用特別注意的, 但聽說全球大賽 SCC(Student Cluster Challenge) 是連電力都要考量進去, 不知道是真是假, 很想去但已經沒機會(碩一)了.</p>
+<h2 id="TSCC-要點"><a href="#TSCC-要點" class="headerlink" title="TSCC 要點"></a>TSCC 要點</h2><ol>
+<li>測資通通都要跑過一次</li>
+<li>碰到 swap 必輸</li>
+<li>先求穩 再求好</li>
+</ol>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>這種比賽分為 Linux tunning + Compiler + MPI + Math Library + HPL config 這五個部分來看.</p>
+<ol>
+<li><p>Linux tunning </p>
+<ul>
+<li>一般安裝軟體、調教參數及分析 Bottleneck 皆屬此類, 需求是要有個 System Administrator 等級的來碰會比較清楚.</li>
+<li>挑選 OS 只有一個大重點 <code>有沒有支援 infiniband</code> 不支援 infiniband 的話, 只用 GbE 跑的話, 會發現整個瓶頸都會在網路傳輸部分.</li>
+<li><a href="http://roan.logdown.com/posts/193253-linux-performance">Linux Performance</a> 所列分析工具可參考一下, <code>dstat</code> 萬用</li>
+<li>Kernel tunning 其實可以嘗試看看, 應該會有不錯的報酬, 但要考量的風險是自編 Kernel 會不會在比賽現場發生 Kernel panic, 只要發生了就會浪費非常多時間在這上面.</li>
+<li><a href="http://roan.logdown.com/posts/165596-scientific-linux-64-to-minimize-the-installation">工商服務 - Scientific Linux 6.4 最小化安裝</a></li>
+</ul>
+</li>
+<li><p>Compiler</p>
+<ul>
+<li>{gcc, icc(商業), …}</li>
+<li>icc is better than gcc</li>
+</ul>
+</li>
+<li><p>MPI</p>
+<ul>
+<li>{OpenMPI, MPICH}</li>
+<li>常用 OpenMPI</li>
+</ul>
+</li>
+<li><p>Math Library</p>
+<ul>
+<li>{Gotoblas2, OpenBlas, MKL}</li>
+<li>這裡的選擇是關鍵, 好的跟較差的可以差上好幾%</li>
+</ul>
+</li>
+<li><p>HPL Config</p>
+<ul>
+<li>這裡我沒有涉略, 不太清楚怎麼調</li>
+</ul>
+</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>這比賽很注重時間分配及能否有效快速的準備好系統, 當設定完之後, 透過一些小測資微調數據, 之後比賽大部分就會在漫長的等待中渡過了, 還有清大這方面的技術真的很強, 有興趣的人可以找一下他們研究這方面的技術.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://event.nchc.org.tw/2014/tscc/">2014全國學生叢集電腦競賽</a></li>
+<li><a href="http://www.netlib.org/benchmark/hpl/">HPL - A Portable Implementation of the High-Performance Linpack Benchmark for Distributed-Memory Computers</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>event</tag>
+        <tag>tscc</tag>
       </tags>
   </entry>
   <entry>
@@ -1326,52 +1326,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Install i40e driver into VMWare ESXi</title>
-    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>ESXi-6.0.0-20160302001</li>
-<li>i40e<ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
-</ul>
-</li>
-<li>Intel XL710<ul>
-<li>Including vmnic{2-5}</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please enable SSH daemon on the server</li>
-</ul>
-<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
-<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
-<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
-<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
-<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>vmware</tag>
-        <tag>intel</tag>
-        <tag>driver</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to contribute on GitHub</title>
     <url>/20170413-how-to-contribute-on-github/</url>
     <content><![CDATA[<p>Fork from <a href="https://gist.github.com/timdream/5968469">Github 發 Pull Request &amp; 貢獻流程速查/timdream</a></p>
@@ -1422,6 +1376,52 @@
       <tags>
         <tag>misc</tag>
         <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Install i40e driver into VMWare ESXi</title>
+    <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>ESXi-6.0.0-20160302001</li>
+<li>i40e<ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">i40e-1.4.28-1331820-4075203</a></li>
+</ul>
+</li>
+<li>Intel XL710<ul>
+<li>Including vmnic{2-5}</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Status"><a href="#Check-Status" class="headerlink" title="Check Status"></a>Check Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  -------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please enable SSH daemon on the server</li>
+</ul>
+<h3 id="Download-i40e-driver-and-unzip"><a href="#Download-i40e-driver-and-unzip" class="headerlink" title="Download i40e driver and unzip"></a>Download i40e driver and unzip</h3><ul>
+<li>Please download i40e driver from <a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">here</a> first</li>
+<li>Unzip and transfer to ESXi <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[pichuang@nu11:~] unzip i40e-1.4.28-1331820-4075203.zip</span><br><span class="line">Archive:  i40e-1.4.28-1331820-4075203.zip</span><br><span class="line"> extracting: i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line"> extracting: net-i40e-1.4.28-1OEM.550.0.0.1331820.x86_64.vib</span><br><span class="line"> extracting: doc/README.txt</span><br><span class="line"> extracting: <span class="built_in">source</span>/driver_source_net-i40e_1.4.28-1OEM.550.0.0.1331820.tgz</span><br><span class="line"> extracting: doc/open_source_licenses_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"> extracting: doc/release_note_net-i40e_1.4.28-1OEM.550.0.0.1331820.txt</span><br><span class="line"></span><br><span class="line">[pichuang@nu11:~] scp i40e-1.4.28-1331820-offline_bundle-4075203.zip root@esxi-1.roadshow.ec:/tmp/</span><br><span class="line">i40e-1.4.28-1331820-offline_bundle-4075203.zip                                  100%  141KB   9.9MB/s</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Install-VIB"><a href="#Install-VIB" class="headerlink" title="Install VIB"></a>Install VIB</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli software vib install -d &#x2F;tmp&#x2F;i40e-1.4.28-1331820-offline_bundle-4075203.zip</span><br><span class="line">Installation Result</span><br><span class="line">   Message: The update completed successfully, but the system needs to be rebooted for the changes to be effective.</span><br><span class="line">   Reboot Required: true</span><br><span class="line">   VIBs Installed: Intel_bootbank_net-i40e_1.4.28-1OEM.550.0.0.1331820</span><br><span class="line">   VIBs Removed:</span><br><span class="line">   VIBs Skipped:</span><br><span class="line">[root@esxi-1:~] reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-NIC-Status"><a href="#Check-NIC-Status" class="headerlink" title="Check NIC Status"></a>Check NIC Status</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi-1:~] esxcli network nic list</span><br><span class="line">Name    PCI Device    Driver  Admin Status  Link Status  Speed  Duplex  MAC Address         MTU  Description</span><br><span class="line">------  ------------  ------  ------------  -----------  -----  ------  -----------------  ----  ---------------------------------------------------------</span><br><span class="line">vmnic0  0000:08:00.0  igb     Up            Up             100  Full    8c:ea:1b:30:da:2b  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic1  0000:09:00.0  igb     Up            Down             0  Half    8c:ea:1b:30:da:2c  1500  Intel Corporation I210 Gigabit Network Connection</span><br><span class="line">vmnic2  0000:01:00.0  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e5  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic3  0000:01:00.1  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e6  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic4  0000:01:00.2  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e7  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br><span class="line">vmnic5  0000:01:00.3  i40e    Up            Down             0  Half    cc:37:ab:dd:f1:e8  1500  Intel Corporation Ethernet Controller X710 <span class="keyword">for</span> 10GbE SFP+</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://my.vmware.com/web/vmware/details?downloadGroup=DT-ESXI55-INTEL-I40E-1428&productId=353">VMware ESXi 5.5 i40e 1.4.28 NIC Driver for Intel(R) Ethernet Controllers X710 and XL710 family</a></li>
+<li><a href="http://www.vmware.com/resources/compatibility/detail.php?deviceCategory=io&productid=37993">VMware Compatibility Guide - Intel(R) Ethernet Controller XL710 for 10GbE QSFP+</a></li>
+<li><a href="http://support.lenovo.com/tw/zh/downloads/ds112423">Intel Server Adapter XL710 Card (NIC) Driver for Vmware ESXi 5.5 &amp; 6 - ThinkServer Systems</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>vmware</tag>
+        <tag>intel</tag>
+        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -5628,6 +5628,55 @@
       </tags>
   </entry>
   <entry>
+    <title>如何跟妹子介紹數位轉型?</title>
+    <url>/20200421-what-is-digital-transformation/</url>
+    <content><![CDATA[<p>最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望小弟去錄影介紹 <code>Cloud Native API</code> 是蝦毀東西。而該場活動有位主持人 - 妹子E，順稿的時候遇到了一個問題，我們親愛的妹子E 因為非本科系，所以很難理解稿子裡面講的<code>數位轉型</code>等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，這邊可以用下圖 (非當事人) 來推測她的內心心情</p>
+<p><img src="/images/dt.jpg" alt=""></p>
+<p>為了展現出身為一個專業的解決方案架(ㄗㄨㄟˇ)構(ㄆㄠˋ)師，紀錄一下我如何對妹子解釋數位轉型 (Digital Transformation)</p>
+<a id="more"></a>
+
+<h2 id="如何跟妹子介紹數位轉型"><a href="#如何跟妹子介紹數位轉型" class="headerlink" title="如何跟妹子介紹數位轉型"></a>如何跟妹子介紹數位轉型</h2><blockquote>
+<p>每個人都有屬於自己的數位轉型歷程</p>
+</blockquote>
+<p>其實每個人都已經(或正在)經歷過了數位轉型的時代，我是 78 年出生，舉個以下幾個例子</p>
+<ol>
+<li><code>上課傳紙條 -&gt; 去網咖上 MSN / 即時通 -&gt; 手機傳 Line / FB</code></li>
+<li>沖洗相片 -&gt; 日本美肌拍立得 -&gt; 美圖秀秀 / Foodie</li>
+<li>卡帶 -&gt; CD -&gt; MP3 -&gt; KKBox / YouTube Music / Spotify</li>
+<li>錄影帶 -&gt; 電影院 -&gt; 租 DVD -&gt; Netflix</li>
+</ol>
+<p>以上這些過程其實就涵蓋了我個人的<code>小學 -&gt; 中學 -&gt; 高中 -&gt; 大學 -&gt; 現在</code>的歷程</p>
+<p>如果跟不同年紀段的人討論這些變化，可能得到的答案是不太一樣的，但有渡過 MSN / Yahoo 即時通年代的朋友，應該會相當有感覺，每個階段都是時代的眼淚啊</p>
+<h2 id="對於修車廠的數位轉型"><a href="#對於修車廠的數位轉型" class="headerlink" title="對於修車廠的數位轉型"></a>對於修車廠的數位轉型</h2><blockquote>
+<p>手動 -&gt; 電腦化輔助<br>線下 -&gt; 線上</p>
+</blockquote>
+<p>我家是開修車廠的，雖然我不會修車，但旁邊也觀察到了一些改變</p>
+<ol>
+<li>現金 -&gt; <a href="https://judy-pan.blogspot.com/2014/06/credit-card.html?m=1">信用卡手動刷卡機</a> -&gt; 信用卡磁條晶片讀卡機 -&gt; 信用卡感應式讀卡機 -&gt; 手機支付</li>
+<li>手動記帳單 -&gt; 電腦化帳單</li>
+<li>定期買雜誌給客人看 -&gt; 裝 Wireless Router 給客人用</li>
+<li>師傅個人經驗技術 -&gt; 各廠牌維修手冊 -&gt; 電腦診斷系統</li>
+<li>口耳相傳介紹 -&gt; <a href="https://www.chyp.com.tw/print-ads.html">中華黃頁</a> -&gt; Google 店家註冊 -&gt; Facebook 粉絲頁</li>
+</ol>
+<p>我相信那個信用卡手動刷卡機一定很多人沒玩過 XD，以前信用卡是<code>凸字</code>的，不像現在都是平面的，主要就是要給這種舊式刷卡機下面放三聯單 + 信用卡，手動刷過去印上信用卡號碼</p>
+<h2 id="共通點"><a href="#共通點" class="headerlink" title="共通點?"></a>共通點?</h2><blockquote>
+<p>以重新定位客戶體驗、商業模式及供應流程，來創造新的價值</p>
+</blockquote>
+<p>有沒有發現其實走到最後，轉到後面都是透過以電腦/手機為數位化媒介，以前要用很多工具或流程才能搞定的事情，現在則是在小小的螢幕前敲敲打打就能搞定，整體效率還更好，所帶來的主客體驗也跟隨提高</p>
+<p>隨著使用工具和習慣不同，大家消費習性也有所改變，現在無論各行各業都在提及的數位轉型，無非都是希望能發現到適合當今潮流的商業模式來賺到更多的錢</p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="如何跟同性解釋數位轉型"><a href="#如何跟同性解釋數位轉型" class="headerlink" title="如何跟同性解釋數位轉型?"></a>如何跟同性解釋數位轉型?</h3><ol>
+<li>不好的例子: PS1 -&gt; PS2 -&gt; PS3 -&gt; PS4</li>
+<li>不知道為何共鳴度很高的例子: 高雄建國路 -&gt; BT / eMule 存 D 槽 -&gt; 線上串流 -&gt; AR / VR</li>
+</ol>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>digitaltransformation</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>於 OpenShift 4 上運行混沌工程測試 KubeInvaders</title>
     <url>/20200414-kubeInvaders-openshift4/</url>
     <content><![CDATA[<p>混沌工程 (Chaos Engineering)，最早期我知道這個單字是因為做 SDN 網路的時候，BigSwitch Network (現已被 Arista 收購) 那時候有實作出對網路進行不定期、無法預知之斷線行為，來確保網路 HA 是否暢通，<a href="http://go.bigswitch.com/rs/974-WXR-561/images/Chaos_Monkey_and_Big_Cloud_Fabric.pdf">Chaos Monkey and Big Cloud Fabric - Big Switch Networks</a>。當時才認真看了下最源頭來自於 NetFlix 的 <a href="https://github.com/Netflix/chaosmonkey">Netflix/chaosmonkey</a> 指導原則</p>
@@ -5697,55 +5746,6 @@
         <tag>openshift4</tag>
         <tag>chaos engineering</tag>
         <tag>kubeinvaders</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何跟妹子介紹數位轉型?</title>
-    <url>/20200421-what-is-digital-transformation/</url>
-    <content><![CDATA[<p>最近我的眾老闆之一行銷長官莎小姐派了一個任務給我，希望小弟去錄影介紹 <code>Cloud Native API</code> 是蝦毀東西。而該場活動有位主持人 - 妹子E，順稿的時候遇到了一個問題，我們親愛的妹子E 因為非本科系，所以很難理解稿子裡面講的<code>數位轉型</code>等看起來很像是有這麼一回事但實際上不知道在幹嘛的單字，這邊可以用下圖 (非當事人) 來推測她的內心心情</p>
-<p><img src="/images/dt.jpg" alt=""></p>
-<p>為了展現出身為一個專業的解決方案架(ㄗㄨㄟˇ)構(ㄆㄠˋ)師，紀錄一下我如何對妹子解釋數位轉型 (Digital Transformation)</p>
-<a id="more"></a>
-
-<h2 id="如何跟妹子介紹數位轉型"><a href="#如何跟妹子介紹數位轉型" class="headerlink" title="如何跟妹子介紹數位轉型"></a>如何跟妹子介紹數位轉型</h2><blockquote>
-<p>每個人都有屬於自己的數位轉型歷程</p>
-</blockquote>
-<p>其實每個人都已經(或正在)經歷過了數位轉型的時代，我是 78 年出生，舉個以下幾個例子</p>
-<ol>
-<li><code>上課傳紙條 -&gt; 去網咖上 MSN / 即時通 -&gt; 手機傳 Line / FB</code></li>
-<li>沖洗相片 -&gt; 日本美肌拍立得 -&gt; 美圖秀秀 / Foodie</li>
-<li>卡帶 -&gt; CD -&gt; MP3 -&gt; KKBox / YouTube Music / Spotify</li>
-<li>錄影帶 -&gt; 電影院 -&gt; 租 DVD -&gt; Netflix</li>
-</ol>
-<p>以上這些過程其實就涵蓋了我個人的<code>小學 -&gt; 中學 -&gt; 高中 -&gt; 大學 -&gt; 現在</code>的歷程</p>
-<p>如果跟不同年紀段的人討論這些變化，可能得到的答案是不太一樣的，但有渡過 MSN / Yahoo 即時通年代的朋友，應該會相當有感覺，每個階段都是時代的眼淚啊</p>
-<h2 id="對於修車廠的數位轉型"><a href="#對於修車廠的數位轉型" class="headerlink" title="對於修車廠的數位轉型"></a>對於修車廠的數位轉型</h2><blockquote>
-<p>手動 -&gt; 電腦化輔助<br>線下 -&gt; 線上</p>
-</blockquote>
-<p>我家是開修車廠的，雖然我不會修車，但旁邊也觀察到了一些改變</p>
-<ol>
-<li>現金 -&gt; <a href="https://judy-pan.blogspot.com/2014/06/credit-card.html?m=1">信用卡手動刷卡機</a> -&gt; 信用卡磁條晶片讀卡機 -&gt; 信用卡感應式讀卡機 -&gt; 手機支付</li>
-<li>手動記帳單 -&gt; 電腦化帳單</li>
-<li>定期買雜誌給客人看 -&gt; 裝 Wireless Router 給客人用</li>
-<li>師傅個人經驗技術 -&gt; 各廠牌維修手冊 -&gt; 電腦診斷系統</li>
-<li>口耳相傳介紹 -&gt; <a href="https://www.chyp.com.tw/print-ads.html">中華黃頁</a> -&gt; Google 店家註冊 -&gt; Facebook 粉絲頁</li>
-</ol>
-<p>我相信那個信用卡手動刷卡機一定很多人沒玩過 XD，以前信用卡是<code>凸字</code>的，不像現在都是平面的，主要就是要給這種舊式刷卡機下面放三聯單 + 信用卡，手動刷過去印上信用卡號碼</p>
-<h2 id="共通點"><a href="#共通點" class="headerlink" title="共通點?"></a>共通點?</h2><blockquote>
-<p>以重新定位客戶體驗、商業模式及供應流程，來創造新的價值</p>
-</blockquote>
-<p>有沒有發現其實走到最後，轉到後面都是透過以電腦/手機為數位化媒介，以前要用很多工具或流程才能搞定的事情，現在則是在小小的螢幕前敲敲打打就能搞定，整體效率還更好，所帶來的主客體驗也跟隨提高</p>
-<p>隨著使用工具和習慣不同，大家消費習性也有所改變，現在無論各行各業都在提及的數位轉型，無非都是希望能發現到適合當今潮流的商業模式來賺到更多的錢</p>
-<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="如何跟同性解釋數位轉型"><a href="#如何跟同性解釋數位轉型" class="headerlink" title="如何跟同性解釋數位轉型?"></a>如何跟同性解釋數位轉型?</h3><ol>
-<li>不好的例子: PS1 -&gt; PS2 -&gt; PS3 -&gt; PS4</li>
-<li>不知道為何共鳴度很高的例子: 高雄建國路 -&gt; BT / eMule 存 D 槽 -&gt; 線上串流 -&gt; AR / VR</li>
-</ol>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>digitaltransformation</tag>
       </tags>
   </entry>
   <entry>
@@ -6591,57 +6591,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2020 年度個人回顧</title>
-    <url>/20201231-2020-personal-review/</url>
-    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
-<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
-<a id="more"></a>
-
-<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
-<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
-<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
-<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
-<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
-<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
-<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
-<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
-<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
-<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
-<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
-<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
-<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
-<li>今年沒失戀 1 次，也失戀 1 次</li>
-<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
-<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
-<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
-<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
-<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
-<li>榮獲”找死王”稱號</li>
-<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
-<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
-<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
-</ol>
-<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
-<li>活下去!!! 無論是工作還是生命</li>
-<li>挑戰 1 場國外社群演講</li>
-<li>瘦這麼多，參加個健美比賽不為過吧</li>
-<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
-<li>希望房價能降下去讓我買個宅窩 QQ</li>
-<li>該寫 1 本書了</li>
-</ol>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
-<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
-<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>annual</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes API 服務及跟各組件的交互關係</title>
     <url>/20201009-kubernetes-api-communication%20copy/</url>
     <content><![CDATA[<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
@@ -6695,6 +6644,57 @@
       </tags>
   </entry>
   <entry>
+    <title>2020 年度個人回顧</title>
+    <url>/20201231-2020-personal-review/</url>
+    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
+<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
+<a id="more"></a>
+
+<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
+<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
+<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
+<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
+<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
+<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
+<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
+<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
+<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
+<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
+<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
+<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
+<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
+<li>今年沒失戀 1 次，也失戀 1 次</li>
+<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
+<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
+<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
+<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
+<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
+<li>榮獲”找死王”稱號</li>
+<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
+<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
+<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
+</ol>
+<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
+<li>活下去!!! 無論是工作還是生命</li>
+<li>挑戰 1 場國外社群演講</li>
+<li>瘦這麼多，參加個健美比賽不為過吧</li>
+<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
+<li>希望房價能降下去讓我買個宅窩 QQ</li>
+<li>該寫 1 本書了</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
+<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
+<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
     <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
     <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
@@ -6726,8 +6726,8 @@
 <li>CSI (Container Storage Interface)：大樓空間規劃廠商</li>
 <li>Pod：住戶，而一棟大樓裡面可以有很多的住戶</li>
 <li>Pod IP：每個住戶的門牌號碼</li>
-<li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個門入口管控</li>
-<li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個門出口管控</li>
+<li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個或多個門入口管控</li>
+<li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個或多個門出口管控</li>
 <li>Internal DNS：大樓住戶黃頁簿 (怕有人看不懂，這個技術上常見是 CoreDNS)</li>
 <li>External DNS：各大樓集中命名第 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
 <li>Service：家族，同一個家族包含多個住戶，聯繫的時候會透過 Pod IP 也就是住戶的門牌號碼聯繫 （求更好的譬喻）</li>
