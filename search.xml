@@ -79,6 +79,31 @@
       </tags>
   </entry>
   <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -131,31 +156,6 @@
         <tag>infra</tag>
         <tag>easyrsa</tag>
         <tag>pki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
       </tags>
   </entry>
   <entry>
@@ -824,44 +824,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Upgrade Intel Drivers on VMWare ESXi</title>
-    <url>/20170124-upgrade-intel-drivers-on-vmware-esxi/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Upgrade Intel NIC firmware (5.02-&gt;5.05) on VMWare ESXi for make sure the DirectPath I/O can work well</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>ESXi-6.0.0-20160302001</li>
-<li>Intel XL710<ul>
-<li>Including vmnic{2-5}</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Current-Version"><a href="#Check-Current-Version" class="headerlink" title="Check Current Version"></a>Check Current Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.02 0x80002248 1.33.0</span><br><span class="line">bus-info: 0000:01:00.0</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please enable SSH daemon on the server</li>
-</ul>
-<h3 id="Download-NVM-Update-file-and-Upgrade-NIC"><a href="#Download-NVM-Update-file-and-Upgrade-NIC" class="headerlink" title="Download NVM Update file and Upgrade NIC"></a>Download NVM Update file and Upgrade NIC</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] <span class="built_in">cd</span> /tmp</span><br><span class="line">[root@esxi:/tmp] wget http://downloadmirror.intel.com/25796/eng/XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] tar zxvf XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] <span class="built_in">cd</span> /tmp/XL710/ESXi_x64</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] chmod +x nvmupdate64e</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] ./nvmupdate64e</span><br><span class="line"></span><br><span class="line">Intel(R) Ethernet NVM Update Tool</span><br><span class="line">NVMUpdate version 1.26.17.11</span><br><span class="line">Copyright (C) 2013 - 2016 Intel Corporation.</span><br><span class="line"></span><br><span class="line">WARNING: To avoid damage to your device, <span class="keyword">do</span> not stop the update or reboot or power off the system during this update.</span><br><span class="line">Inventory <span class="keyword">in</span> progress. Please <span class="built_in">wait</span> [**********]</span><br><span class="line"></span><br><span class="line">Num Description                            Device-Id B:D   Adapter Status</span><br><span class="line">=== ====================================== ========= ===== ====================</span><br><span class="line">01) Intel(R) I210 Gigabit Network Connecti 8086-1533 09:00 Update not available</span><br><span class="line">02) Intel(R) I210 Gigabit Network Connecti 8086-1533 08:00 Update not available</span><br><span class="line">03) Intel(R) Ethernet Converged Network Ad 8086-1572 01:00 Update available</span><br><span class="line"></span><br><span class="line">Options: Adapter Index List (comma-separated), [A]ll, e[X]it</span><br><span class="line">Enter selection:a</span><br><span class="line"></span><br><span class="line">Would you like to back up the NVM images? [Y]es/[N]o: y</span><br><span class="line"></span><br><span class="line">Update <span class="keyword">in</span> progress. This operation may take several minutes.</span><br><span class="line">[**********]</span><br><span class="line">Reboot is required to complete the update process.</span><br><span class="line"></span><br><span class="line">Tool execution completed with the following status: All operations completed successfully</span><br><span class="line"></span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] reboot</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://downloadcenter.intel.com/download/24769#help">NVM Update Utility for Intel® Ethernet Converged Network Adapter XL710 and X710 Series</a></li>
-</ul>
-<h3 id="Check-Latest-Version"><a href="#Check-Latest-Version" class="headerlink" title="Check Latest Version"></a>Check Latest Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.05 0x800028ac 1.33.0</span><br><span class="line">bus-info: 0000:01:00.1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://www.it-book.co.uk/2835/update-intel-drivers-on-vmware-esxi">update intel drivers on vmware esxi</a></li>
-<li><a href="http://www.intel.com.tw/content/www/tw/zh/embedded/products/networking/xl710-x710-performance-tuning-linux-guide.html">Intel® Ethernet Controller X710/XL710 and Intel® Ethernet Converged Network Adapter X710/XL710 Family: Linux* Performance Tuning Guide</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>vmware</tag>
-        <tag>intel</tag>
-        <tag>driver</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl</title>
     <url>/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</url>
     <content><![CDATA[<p>(Working…)</p>
@@ -1058,6 +1020,44 @@
         <tag>ovs-ofctl</tag>
         <tag>queue</tag>
         <tag>openflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade Intel Drivers on VMWare ESXi</title>
+    <url>/20170124-upgrade-intel-drivers-on-vmware-esxi/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Upgrade Intel NIC firmware (5.02-&gt;5.05) on VMWare ESXi for make sure the DirectPath I/O can work well</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>ESXi-6.0.0-20160302001</li>
+<li>Intel XL710<ul>
+<li>Including vmnic{2-5}</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="Check-Current-Version"><a href="#Check-Current-Version" class="headerlink" title="Check Current Version"></a>Check Current Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.02 0x80002248 1.33.0</span><br><span class="line">bus-info: 0000:01:00.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please enable SSH daemon on the server</li>
+</ul>
+<h3 id="Download-NVM-Update-file-and-Upgrade-NIC"><a href="#Download-NVM-Update-file-and-Upgrade-NIC" class="headerlink" title="Download NVM Update file and Upgrade NIC"></a>Download NVM Update file and Upgrade NIC</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] <span class="built_in">cd</span> /tmp</span><br><span class="line">[root@esxi:/tmp] wget http://downloadmirror.intel.com/25796/eng/XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] tar zxvf XL710_NVMUpdatePackage_v5_05_ESX.tar.gz</span><br><span class="line">[root@esxi:/tmp] <span class="built_in">cd</span> /tmp/XL710/ESXi_x64</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] chmod +x nvmupdate64e</span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] ./nvmupdate64e</span><br><span class="line"></span><br><span class="line">Intel(R) Ethernet NVM Update Tool</span><br><span class="line">NVMUpdate version 1.26.17.11</span><br><span class="line">Copyright (C) 2013 - 2016 Intel Corporation.</span><br><span class="line"></span><br><span class="line">WARNING: To avoid damage to your device, <span class="keyword">do</span> not stop the update or reboot or power off the system during this update.</span><br><span class="line">Inventory <span class="keyword">in</span> progress. Please <span class="built_in">wait</span> [**********]</span><br><span class="line"></span><br><span class="line">Num Description                            Device-Id B:D   Adapter Status</span><br><span class="line">=== ====================================== ========= ===== ====================</span><br><span class="line">01) Intel(R) I210 Gigabit Network Connecti 8086-1533 09:00 Update not available</span><br><span class="line">02) Intel(R) I210 Gigabit Network Connecti 8086-1533 08:00 Update not available</span><br><span class="line">03) Intel(R) Ethernet Converged Network Ad 8086-1572 01:00 Update available</span><br><span class="line"></span><br><span class="line">Options: Adapter Index List (comma-separated), [A]ll, e[X]it</span><br><span class="line">Enter selection:a</span><br><span class="line"></span><br><span class="line">Would you like to back up the NVM images? [Y]es/[N]o: y</span><br><span class="line"></span><br><span class="line">Update <span class="keyword">in</span> progress. This operation may take several minutes.</span><br><span class="line">[**********]</span><br><span class="line">Reboot is required to complete the update process.</span><br><span class="line"></span><br><span class="line">Tool execution completed with the following status: All operations completed successfully</span><br><span class="line"></span><br><span class="line">[root@esxi:/tmp/XL710/ESXi_x64] reboot</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://downloadcenter.intel.com/download/24769#help">NVM Update Utility for Intel® Ethernet Converged Network Adapter XL710 and X710 Series</a></li>
+</ul>
+<h3 id="Check-Latest-Version"><a href="#Check-Latest-Version" class="headerlink" title="Check Latest Version"></a>Check Latest Version</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@esxi:~] ethtool -i vmnic2</span><br><span class="line">driver: i40e</span><br><span class="line">version: 1.3.38</span><br><span class="line">firmware-version: 5.05 0x800028ac 1.33.0</span><br><span class="line">bus-info: 0000:01:00.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://www.it-book.co.uk/2835/update-intel-drivers-on-vmware-esxi">update intel drivers on vmware esxi</a></li>
+<li><a href="http://www.intel.com.tw/content/www/tw/zh/embedded/products/networking/xl710-x710-performance-tuning-linux-guide.html">Intel® Ethernet Controller X710/XL710 and Intel® Ethernet Converged Network Adapter X710/XL710 Family: Linux* Performance Tuning Guide</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>vmware</tag>
+        <tag>intel</tag>
+        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,6 +1548,74 @@
       </tags>
   </entry>
   <entry>
+    <title>進擊的 OpenAPI!!!</title>
+    <url>/20180723-openapi-and-oas/</url>
+    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
+<a id="more"></a>
+
+<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
+<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
+<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
+<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
+<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
+<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
+<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
+<ol>
+<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
+</li>
+<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
+<blockquote>
+<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
+</blockquote>
+</li>
+<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
+<blockquote>
+<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
+</blockquote>
+</li>
+</ol>
+<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
+<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
+<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
+<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
+<p>使用方式很簡單，以 Swagger 為例</p>
+<ol>
+<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
+<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+</ol>
+<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
+<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
+<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
+<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
+<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
+<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
+<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
+<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
+<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
+<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
+<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
+<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>oas</tag>
+        <tag>openapi</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雲端大廠們的 VM 資源配置參考</title>
     <url>/20180815-cloud-resource-sizing-reference/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
@@ -1615,74 +1683,6 @@
         <tag>azure</tag>
         <tag>aws</tag>
         <tag>gcp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>進擊的 OpenAPI!!!</title>
-    <url>/20180723-openapi-and-oas/</url>
-    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
-<a id="more"></a>
-
-<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
-<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
-<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
-<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
-<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
-<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
-<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
-<ol>
-<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
-</li>
-<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
-<blockquote>
-<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
-</blockquote>
-</li>
-<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
-<blockquote>
-<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
-</blockquote>
-</li>
-</ol>
-<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
-<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
-<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
-<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
-<p>使用方式很簡單，以 Swagger 為例</p>
-<ol>
-<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
-<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
-</ol>
-<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
-<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
-<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
-<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
-<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
-<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
-<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
-<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
-<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
-<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
-<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
-<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>oas</tag>
-        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -1900,52 +1900,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -2028,6 +1982,52 @@
         <tag>bonding</tag>
         <tag>teaming</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -2140,6 +2140,46 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
+    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
+    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
+<a id="more"></a>
+
+<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
+<ol>
+<li>Red Hat Ansible + HashiCorp Terraform</li>
+<li>HashiCorp Terraform + Red Hat Ansible </li>
+</ol>
+<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
+<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
+
+<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
+<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
+<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
+<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
+<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
+<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>redhat</tag>
+        <tag>terraform</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
     <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
     <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
@@ -2217,46 +2257,6 @@
         <tag>router</tag>
         <tag>services</tag>
         <tag>pods</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
-    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
-    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
-<a id="more"></a>
-
-<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
-<ol>
-<li>Red Hat Ansible + HashiCorp Terraform</li>
-<li>HashiCorp Terraform + Red Hat Ansible </li>
-</ol>
-<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
-<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
-
-<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
-<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
-<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
-<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
-<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
-<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>redhat</tag>
-        <tag>terraform</tag>
       </tags>
   </entry>
   <entry>
@@ -6760,7 +6760,8 @@
 <h3 id="Q9-常聽到-Node-Scaling-是什麼意思"><a href="#Q9-常聽到-Node-Scaling-是什麼意思" class="headerlink" title="Q9: 常聽到 Node Scaling 是什麼意思?"></a>Q9: 常聽到 Node Scaling 是什麼意思?</h3><p>當住戶太多的時候，Kubernetes 可以自動或手動興建大樓，然後把多出來的住戶塞進去</p>
 <div class="video-container"><iframe src="https://www.youtube.com/embed/MGm47ncUp6o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p><img src="/images/redhat-building.jpeg" alt=""></p>
+<p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
 ]]></content>
       <categories>
         <category>kubernetes</category>
