@@ -2140,126 +2140,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
-    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
-    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
-<a id="more"></a>
-
-<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
-<ol>
-<li>Red Hat Ansible + HashiCorp Terraform</li>
-<li>HashiCorp Terraform + Red Hat Ansible </li>
-</ol>
-<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
-<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
-
-<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
-<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
-<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
-<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
-<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
-<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>redhat</tag>
-        <tag>terraform</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
-    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
-    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
-<ol>
-<li>Hosts subnet</li>
-<li>Service subnet</li>
-<li>Pod subnet</li>
-</ol>
-<a id="more"></a>
-
-<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
-<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
-<ol>
-<li>Pod mapping to host</li>
-<li>Service mapping to host</li>
-</ol>
-<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
-<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
-<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
-<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
-
-<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
-<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
-<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
-<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
-<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<p>可以做成下面的效果</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
-
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
-<ol>
-<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
-<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
-<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
-<li>若需要提供對外服務，有下列三種做法:<ol>
-<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
-<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
-<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
-<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
-<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
-<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>openshift3</tag>
-        <tag>redhat</tag>
-        <tag>router</tag>
-        <tag>services</tag>
-        <tag>pods</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift v3.11 儲存類型建議</title>
     <url>/20190325-redhat-openshift-v3.11-storage-recommendation/</url>
     <content><![CDATA[<p>在小弟先前的演講中 <a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao">20190218_OpenShift Storage 架構思考</a>，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：</p>
@@ -2408,6 +2288,198 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
+    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
+    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
+<a id="more"></a>
+
+<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
+<ol>
+<li>Red Hat Ansible + HashiCorp Terraform</li>
+<li>HashiCorp Terraform + Red Hat Ansible </li>
+</ol>
+<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
+<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
+
+<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
+<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
+<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
+<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
+<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
+<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>redhat</tag>
+        <tag>terraform</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
+    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
+    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
+<ol>
+<li>Hosts subnet</li>
+<li>Service subnet</li>
+<li>Pod subnet</li>
+</ol>
+<a id="more"></a>
+
+<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
+<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
+<ol>
+<li>Pod mapping to host</li>
+<li>Service mapping to host</li>
+</ol>
+<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
+<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
+<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
+<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
+
+<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
+<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
+<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
+<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
+<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<p>可以做成下面的效果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
+<ol>
+<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
+<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
+<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
+<li>若需要提供對外服務，有下列三種做法:<ol>
+<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
+<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
+<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
+<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
+<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>openshift3</tag>
+        <tag>redhat</tag>
+        <tag>router</tag>
+        <tag>services</tag>
+        <tag>pods</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</title>
+    <url>/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</url>
+    <content><![CDATA[<p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
+</ul>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/UHXNen1ZXq4" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
+<a id="more"></a>
+
+<ul>
+<li>控制誰 Who =&gt; Inventory</li>
+<li>做什麼 Do What =&gt; Ansible Workflow</li>
+<li>怎麼做 How to do =&gt; Ansible Playbook</li>
+</ul>
+<h2 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h2><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
+<p>然而一本 Playbook 劇本通常裡面包含了:</p>
+<ul>
+<li>主角 (Inventory)</li>
+<li>劇情 (Tasks)</li>
+<li>道具 (Modules)</li>
+</ul>
+<p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
+<p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">Workflow 工作流</a></p>
+<h2 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h2><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
+<ol>
+<li>On Succesful (綠線)</li>
+<li>On Failure (紅線)</li>
+<li>Always (藍線)</li>
+</ol>
+<p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
+<p><img src="/images/workflow-1.jpg" alt=""></p>
+<h2 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h2><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
+<p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
+<ul>
+<li>IaC, Infrastructure as Code</li>
+<li>ZTP, Zero Touch Provisioning</li>
+<li>DevOps: Automation / Measuring</li>
+</ul>
+<p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
+<p>意者請洽詢台灣紅帽 XD </p>
+<h2 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h2><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
+<p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;nodes&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line">    <span class="attr">fail:</span></span><br><span class="line">      <span class="attr">msg:</span> <span class="string">&quot;openshift_kubelet_name_override Cannot be defined for new hosts&quot;</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line">  <span class="attr">vars:</span></span><br><span class="line">    <span class="attr">l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line">    <span class="attr">l_repo_hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;oo_all_hosts&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line">  <span class="attr">when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">|</span> <span class="string">default(False))</span></span><br></pre></td></tr></table></figure>
+
+<p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
+<p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a> 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
+<p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
+<p><img src="/images/workflow-2.png" alt=""></p>
+<p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
+<li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">Ansible 技術概觀介紹_20190130</a></li>
+<li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
+<li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">GitHub - openshift/openshift-ansible</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html">Ansible Galaxy</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>iac</tag>
+        <tag>redhat</tag>
+        <tag>tower</tag>
+        <tag>ztp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Red Hat Ansible Tower 常見使用案例: 用 RESTful API 與第三方產品結合</title>
     <url>/20190329-redhat-ansible-tower-use-case-integration-with-3rd-party-using-restful-api/</url>
     <content><![CDATA[<p>有些長官看完 <a href="https://blog.pichuang.com.tw/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/">Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</a> 後說:<br><code>Ansible Tower 看起來好棒棒，但自家已經有自有的 Service Catalog，而我就是不想用 Ansible Tower 當作我的第一層服務，那怎麼辦？</code></p>
@@ -2488,78 +2560,6 @@
         <tag>openapi</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat Ansible Tower 常見使用案例: 跨多平台設備管理</title>
-    <url>/20190328-ansible-use-case-multi-network-devices-configuration-management-using-ansible-tower/</url>
-    <content><![CDATA[<p>最近<a href="https://www.youtube.com/channel/UCsAGOvR4jdcFQLyTFHnIJgQ/featured">強者我朋友 eanylin 哥</a>分享個整合的 Ansible Tower 實際整合案例，推薦用兩倍速看</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-</ul>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/UHXNen1ZXq4" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<p>這影片有個核心技術關鍵，就是<code>工作流 (Ansible Workflow)</code> 概念，而這裡面包含幾個角色…</p>
-<a id="more"></a>
-
-<ul>
-<li>控制誰 Who =&gt; Inventory</li>
-<li>做什麼 Do What =&gt; Ansible Workflow</li>
-<li>怎麼做 How to do =&gt; Ansible Playbook</li>
-</ul>
-<h2 id="Q1-什麼是-Ansible-Workflow"><a href="#Q1-什麼是-Ansible-Workflow" class="headerlink" title="Q1: 什麼是 Ansible Workflow?"></a>Q1: 什麼是 Ansible Workflow?</h2><p>假設你對於 Ansible 有一定的<a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">了解</a>，你應該會知道一個正常能運作的腳本稱之為 Ansible Playbook 劇本</p>
-<p>然而一本 Playbook 劇本通常裡面包含了:</p>
-<ul>
-<li>主角 (Inventory)</li>
-<li>劇情 (Tasks)</li>
-<li>道具 (Modules)</li>
-</ul>
-<p>但不會是一本劇本就可以演完全整齣戲 (不然我們幹嘛常要追劇/追番 XD)，一齣好的大戲，是要用結合多本 Playbook 劇本，分別做到承上啟下的作用</p>
-<p>而將這些不同的劇本串再一起變成一齣大戲，在 Ansible 術語稱作 <a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">Workflow 工作流</a></p>
-<h2 id="Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了"><a href="#Q2-怎麼那麼麻煩，阿不就依序執行-Ansible-Playbook-下來就好了" class="headerlink" title="Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?"></a>Q2: 怎麼那麼麻煩，阿不就依序執行 Ansible Playbook 下來就好了?</h2><p>NoNoNo, 每一次 Playbook 劇本演完之後，會拋出三種狀態之一的情況出來:</p>
-<ol>
-<li>On Succesful (綠線)</li>
-<li>On Failure (紅線)</li>
-<li>Always (藍線)</li>
-</ol>
-<p>依據不同的狀態，可以讓你的工作流方向也能走的不太一樣，可以做到如下圖這樣的多個工作流</p>
-<p><img src="/images/workflow-1.jpg" alt=""></p>
-<h2 id="Q3-疑…等等-為什麼-Ansible-有-WEB-介面"><a href="#Q3-疑…等等-為什麼-Ansible-有-WEB-介面" class="headerlink" title="Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?"></a>Q3: 疑…等等 為什麼 Ansible 有 WEB 介面?</h2><p>這是紅帽全球賣的嚇嚇叫的產品 <code>Red Hat Ansible Tower</code></p>
-<p>他的角色就類似中央指揮塔，負責存放大家的 Workflow / Playbook 和兼顧企業運作時該有的功能，還有支援自助表單 (Survey) 的功能，團隊要操作 Ansible Playbook/Workflow 都是集中登入到 Tower 上面做操作，按照這個做法下來…</p>
-<ul>
-<li>IaC, Infrastructure as Code</li>
-<li>ZTP, Zero Touch Provisioning</li>
-<li>DevOps: Automation / Measuring</li>
-</ul>
-<p>通通都能在上面做到最佳實踐，搭一個版控系統 (GitHub/Gitlab/BitBucket)，簡直神鵰俠侶組合</p>
-<p>意者請洽詢台灣紅帽 XD </p>
-<h2 id="Q4-那我硬刻-Workflow-總可以吧"><a href="#Q4-那我硬刻-Workflow-總可以吧" class="headerlink" title="Q4: 那我硬刻 Workflow 總可以吧?"></a>Q4: 那我硬刻 Workflow 總可以吧?</h2><p>技術上能做到，範例就是紅帽自家容器平台的安裝程式 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a><br>這個等級是<code>用 Ansible 寫 Ansible</code> 了，用腦袋當 debugger 算變數傳遞位置 XD</p>
-<p>舉其中一定會用到的 Playbook 為例 <code>prerequisites.yml</code>，截其中一小段 code 來看</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">for</span> <span class="string">new</span> <span class="string">hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;nodes&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Fail</span> <span class="string">when</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line">    <span class="attr">fail:</span></span><br><span class="line">      <span class="attr">msg:</span> <span class="string">&quot;openshift_kubelet_name_override Cannot be defined for new hosts&quot;</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">openshift_kubelet_name_override</span> <span class="string">is</span> <span class="string">defined</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/main.yml</span></span><br><span class="line">  <span class="attr">vars:</span></span><br><span class="line">    <span class="attr">l_install_base_packages:</span> <span class="literal">True</span></span><br><span class="line">    <span class="attr">l_repo_hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; l_scale_up_hosts | default(&#x27;oo_all_hosts&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">init/validate_hostnames.yml</span></span><br><span class="line">  <span class="attr">when:</span> <span class="string">not</span> <span class="string">(skip_validate_hostnames</span> <span class="string">|</span> <span class="string">default(False))</span></span><br></pre></td></tr></table></figure>
-
-<p>試問：我要如何知道之前 playbook 跑完的狀態跟當下要怎麼喂參數及最後如何寫判斷 (condition)? 很遺憾地，寫到後面你會發現你在寫超複雜的程式，而不是專注你的真正的工作價值上</p>
-<p>無論任何時候，撰寫或設計階段應該都要保持 KISS (Keep It Simple and Stupid) 原則<br>Ansible Playbook 能解耦 (拆成tasks) 就別聚合，而 Ansible Workflow 再做聚合的事情 (串串樂)</p>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Ansible 是一個極易學難精的 DSL，任何技術職位只要花點時間，基本上都能很快應用上，而老實說多數情況之下，完全也不必要學到像 <a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">openshift/openshift-ansible</a> 這專案的奇淫技巧，那是有眾多歷史因素而成的</p>
-<p>而我自己寫到現在，只需要能了解 <code>ansible-galaxy init</code> 所建出來的資料結構就夠了，也會用 <code>ansible -i hosts -m command -a oxxx</code> 就差不多可以開始應用了</p>
-<p><img src="/images/workflow-2.png" alt=""></p>
-<p>什麼?? 你問我說 <a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html"><code>ansible-galaxy</code></a> 是什麼東西? 欲知詳請，請待下回我心血來潮的時候再寫</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=UHXNen1ZXq4">Multi-Network Devices Configuration Management Using Ansible Tower</a></li>
-<li><a href="https://speakerdeck.com/pichuang/ansible-ji-shu-gai-guan-jie-shao-20190130">Ansible 技術概觀介紹_20190130</a></li>
-<li><a href="https://www.ansible.com/blog/getting-started-workflow-job-templates">GETTING STARTED: WORKFLOW JOB TEMPLATES</a></li>
-<li><a href="https://github.com/openshift/openshift-ansible/tree/release-3.11">GitHub - openshift/openshift-ansible</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html">Ansible Galaxy</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>iac</tag>
-        <tag>redhat</tag>
-        <tag>tower</tag>
-        <tag>ztp</tag>
       </tags>
   </entry>
   <entry>
@@ -3373,6 +3373,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Bandwidth &amp; Throughput</title>
+    <url>/20190527-bandwidth-and-throughput/</url>
+    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
+<ul>
+<li>頻寬 (Bandwidth)：水管的大小  </li>
+<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
+<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
+</ul>
+<a id="more"></a>
+
+<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
+]]></content>
+      <categories>
+        <category>telco</category>
+      </categories>
+      <tags>
+        <tag>networking</tag>
+        <tag>telco</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap </title>
     <url>/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</url>
     <content><![CDATA[<p><img src="/images/ocp.png" alt=""></p>
@@ -3410,29 +3433,6 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bandwidth &amp; Throughput</title>
-    <url>/20190527-bandwidth-and-throughput/</url>
-    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
-<ul>
-<li>頻寬 (Bandwidth)：水管的大小  </li>
-<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
-<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
-</ul>
-<a id="more"></a>
-
-<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
-
-<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
-]]></content>
-      <categories>
-        <category>telco</category>
-      </categories>
-      <tags>
-        <tag>networking</tag>
-        <tag>telco</tag>
       </tags>
   </entry>
   <entry>
@@ -3879,6 +3879,61 @@
       </tags>
   </entry>
   <entry>
+    <title>2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</title>
+    <url>/20191115-homelcloud-high-level-design-2/</url>
+    <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
+<a id="more"></a>
+
+<h2 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h2><p>這台是我在 2018 年尾的時候採購的一台塔式伺服器，當初會買這台的理由非常簡單，<code>為了深刻理解 Red Hat OpenShift 3.11 on VMware vSphere 跑起來的樣子會長什麼樣子</code>，我自稱這個叫做 <code>客戶驅動部署 Customer Driven Deployment</code> (???)</p>
+<p>但因為這台會放在我住宿的地方，所以我一開始的設計要求如下：</p>
+<ol>
+<li>安靜第一第二第三</li>
+<li>效能第四</li>
+<li>省電第五</li>
+</ol>
+<p>所以整體上的選擇就是<code>靜音</code>為優先的設計，實際上開機後也真的是蠻安靜的，比 Synolgy DS916+ 裡面硬碟運轉的聲音還小…</p>
+<h3 id="硬體菜單"><a href="#硬體菜單" class="headerlink" title="硬體菜單"></a>硬體菜單</h3><p><img src="/images/tower-details.png" alt=""></p>
+<p>以前在 Mobile01 不知哪裡看到一篇開箱文，跟我需求蠻像的，所以拿來修改成如下：</p>
+<ul>
+<li>CPU: Intel Xeon E5-2620 v4 (8C/16T) / 2011 / 2.1G / 無內顯 * 1</li>
+<li>MB: ASUS Z10PE-D16 WS (E-ATX / C612 / 雙 2011-V3.V4 / 16*DDR4 / M.2 / 2 * NIC) * 1</li>
+<li>Memory: Samsung 16GB DDR 2133MHz ECC Reg * 16</li>
+<li>OS Disk: HIKVISION E100NI 256G / M.2 SATA / R:500M / W 250M / TLC * 1</li>
+<li>機箱: Corsair Obsidian 750D Airflow 顯卡長45 / CPU高17 / SSD x 8 (6共用) / 前面板網孔 /E-ATX  * 1</li>
+<li>CPU 散熱器: Corsair H60 12cm冷排/ 扁平化幫浦/ (方)銅底冷頭/ 厚:5.2cm * 1</li>
+<li>裝機顯卡: ASUS GT 710-1-SL / 954MHz / 1G DDR3 / 靜音版 / 13.5cm * 1</li>
+<li>Power: be quiet! Straight Power 11(E11) 650W/金牌/全模/5年保/LLC+DC-DC/CPU主線:16AWG * 1</li>
+<li>(Optional) 外掛網卡: Intel i350-T4 * 1</li>
+</ul>
+<p>Q: 該買?</p>
+<p>光華歡迎你，最近記憶體便宜到爆炸錢包君覺得非常哀傷</p>
+<h3 id="詳細說明"><a href="#詳細說明" class="headerlink" title="詳細說明"></a>詳細說明</h3><p>關於計算資源，<a href="https://ark.intel.com/content/www/us/en/ark/products/92986/intel-xeon-processor-e5-2620-v4-20m-cache-2-10-ghz.html">Intel E5-2620 v4</a> 一顆很貴啊…錢包君真的會吃土，所以那時候先只買一顆，然後記憶體先買滿，但實際上只會用到一半而已。等人捐贈另一顆 E5-2620 v4 或等拋售 QQ。另外要注意的地方是，Memory Types 僅支援到 DDR4 2133 ECC Reg，所以一開始沒注意買 DDR4 2600 ECC Reg 當冤大頭。</p>
+<p>關於機箱，直接看別人開箱文章 <a href="https://www.mobile01.com/topicdetail.php?f=299&t=5074578">Corsair Obsidian 750D ATX機殼之裝機使用分享</a> 比較快，配上 Corsair H60 散熱整體上蠻安靜的，如果有點聲音的話拿吸塵器吸一吸風扇就好了。然後這個機箱給 E-ATX 主機板，所以真的是蠻大台的，相對擴充性也蠻好的，等待好心人捐 Nvidia V100 / T4 玩玩。</p>
+<p><img src="/images/tower-view.jpg" alt=""></p>
+<p>關於電源，無愛好，我就是被 <code>be quiet!</code> 這名字打到，<strong>產品命名很重要</strong></p>
+<p>關於網路，這個就蠻重要的，首先主機板 <a href="https://www.asus.com/tw/Motherboards/Z10PED16_WS/">ASUS Z10PE-D16 WS </a> 有加裝一個 BMC，支援相容於 <code>IPMI 2.0</code> 的 ASMB8-iKVM 晶片，所以就可以用 <code>ipmitool</code> 或 <a href="https://pypi.org/project/pyghmi/"><code>pyghmi</code></a> 來做 OOB 遠端伺服器管理，個人使用主要都是用 <a href="https://docs.ansible.com/ansible/latest/modules/ipmi_power_module.html#ipmi-power-module">ansible/ipmi_power</a> 這個模組為主。</p>
+<p>Q: 如果主機板沒有 BMC，那有沒有替代 IPMI 的方案?</p>
+<p>有，但我個人覺得不太好，PDU 遠端 IPMI 切開關電源的方式，或者是一些 IoT 有類似這種遠端開關電源的方案。這個要謹慎設計使用，因為跟直接拔電源沒啥兩樣 ，屬於冷關機，如果真要用的話，記得要先做熱關機，再切電源比較好。</p>
+<blockquote>
+<p>Ansible Workflow &lt;3 你</p>
+</blockquote>
+<p>另外主機板有提供兩個內建 1Gb 可以用，這邊選了一個當 WAN 使用，這應該是沒什麼懸念的</p>
+<p><img src="/images/tower-nics.jpg" alt=""></p>
+<p>Q: 為什麼會有一個 Intel i350-T4 在那邊晾著?</p>
+<p>完全是一個腦衝的結果，原先預期目標是要做以這台塔式 Server 為核心的架構設計，做 Two-Arm，但看了看覺得有點顧慮就不搞了。如果對網路處理吃重的，可以把 <code>SR-IOV</code> 開起來，可以直接有 8 VFs 可以使用，網路效率會蠻好的。</p>
+<p>後面會有一篇解釋 {pfSense, OPNsense, ooxx UTM} on {vSphere, Proxmox, KVM Libvirt} 虛擬網路設計怎麼做 Two-Arm，自建 Lab 來說還蠻好用的架構</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>整體上來說，IPMI 這個功能對於我從 Bastion 堡壘機上，透過 Ansible Tower 控制服務器來講非常重要，其他資源都是為了要承載 Lab 所需要的運算資源而生的，可以自行做刪減。</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</title>
     <url>/20191116-homelcloud-high-level-design-3/</url>
     <content><![CDATA[<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
@@ -3967,61 +4022,6 @@
       </categories>
       <tags>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</title>
-    <url>/20191115-homelcloud-high-level-design-2/</url>
-    <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
-<a id="more"></a>
-
-<h2 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h2><p>這台是我在 2018 年尾的時候採購的一台塔式伺服器，當初會買這台的理由非常簡單，<code>為了深刻理解 Red Hat OpenShift 3.11 on VMware vSphere 跑起來的樣子會長什麼樣子</code>，我自稱這個叫做 <code>客戶驅動部署 Customer Driven Deployment</code> (???)</p>
-<p>但因為這台會放在我住宿的地方，所以我一開始的設計要求如下：</p>
-<ol>
-<li>安靜第一第二第三</li>
-<li>效能第四</li>
-<li>省電第五</li>
-</ol>
-<p>所以整體上的選擇就是<code>靜音</code>為優先的設計，實際上開機後也真的是蠻安靜的，比 Synolgy DS916+ 裡面硬碟運轉的聲音還小…</p>
-<h3 id="硬體菜單"><a href="#硬體菜單" class="headerlink" title="硬體菜單"></a>硬體菜單</h3><p><img src="/images/tower-details.png" alt=""></p>
-<p>以前在 Mobile01 不知哪裡看到一篇開箱文，跟我需求蠻像的，所以拿來修改成如下：</p>
-<ul>
-<li>CPU: Intel Xeon E5-2620 v4 (8C/16T) / 2011 / 2.1G / 無內顯 * 1</li>
-<li>MB: ASUS Z10PE-D16 WS (E-ATX / C612 / 雙 2011-V3.V4 / 16*DDR4 / M.2 / 2 * NIC) * 1</li>
-<li>Memory: Samsung 16GB DDR 2133MHz ECC Reg * 16</li>
-<li>OS Disk: HIKVISION E100NI 256G / M.2 SATA / R:500M / W 250M / TLC * 1</li>
-<li>機箱: Corsair Obsidian 750D Airflow 顯卡長45 / CPU高17 / SSD x 8 (6共用) / 前面板網孔 /E-ATX  * 1</li>
-<li>CPU 散熱器: Corsair H60 12cm冷排/ 扁平化幫浦/ (方)銅底冷頭/ 厚:5.2cm * 1</li>
-<li>裝機顯卡: ASUS GT 710-1-SL / 954MHz / 1G DDR3 / 靜音版 / 13.5cm * 1</li>
-<li>Power: be quiet! Straight Power 11(E11) 650W/金牌/全模/5年保/LLC+DC-DC/CPU主線:16AWG * 1</li>
-<li>(Optional) 外掛網卡: Intel i350-T4 * 1</li>
-</ul>
-<p>Q: 該買?</p>
-<p>光華歡迎你，最近記憶體便宜到爆炸錢包君覺得非常哀傷</p>
-<h3 id="詳細說明"><a href="#詳細說明" class="headerlink" title="詳細說明"></a>詳細說明</h3><p>關於計算資源，<a href="https://ark.intel.com/content/www/us/en/ark/products/92986/intel-xeon-processor-e5-2620-v4-20m-cache-2-10-ghz.html">Intel E5-2620 v4</a> 一顆很貴啊…錢包君真的會吃土，所以那時候先只買一顆，然後記憶體先買滿，但實際上只會用到一半而已。等人捐贈另一顆 E5-2620 v4 或等拋售 QQ。另外要注意的地方是，Memory Types 僅支援到 DDR4 2133 ECC Reg，所以一開始沒注意買 DDR4 2600 ECC Reg 當冤大頭。</p>
-<p>關於機箱，直接看別人開箱文章 <a href="https://www.mobile01.com/topicdetail.php?f=299&t=5074578">Corsair Obsidian 750D ATX機殼之裝機使用分享</a> 比較快，配上 Corsair H60 散熱整體上蠻安靜的，如果有點聲音的話拿吸塵器吸一吸風扇就好了。然後這個機箱給 E-ATX 主機板，所以真的是蠻大台的，相對擴充性也蠻好的，等待好心人捐 Nvidia V100 / T4 玩玩。</p>
-<p><img src="/images/tower-view.jpg" alt=""></p>
-<p>關於電源，無愛好，我就是被 <code>be quiet!</code> 這名字打到，<strong>產品命名很重要</strong></p>
-<p>關於網路，這個就蠻重要的，首先主機板 <a href="https://www.asus.com/tw/Motherboards/Z10PED16_WS/">ASUS Z10PE-D16 WS </a> 有加裝一個 BMC，支援相容於 <code>IPMI 2.0</code> 的 ASMB8-iKVM 晶片，所以就可以用 <code>ipmitool</code> 或 <a href="https://pypi.org/project/pyghmi/"><code>pyghmi</code></a> 來做 OOB 遠端伺服器管理，個人使用主要都是用 <a href="https://docs.ansible.com/ansible/latest/modules/ipmi_power_module.html#ipmi-power-module">ansible/ipmi_power</a> 這個模組為主。</p>
-<p>Q: 如果主機板沒有 BMC，那有沒有替代 IPMI 的方案?</p>
-<p>有，但我個人覺得不太好，PDU 遠端 IPMI 切開關電源的方式，或者是一些 IoT 有類似這種遠端開關電源的方案。這個要謹慎設計使用，因為跟直接拔電源沒啥兩樣 ，屬於冷關機，如果真要用的話，記得要先做熱關機，再切電源比較好。</p>
-<blockquote>
-<p>Ansible Workflow &lt;3 你</p>
-</blockquote>
-<p>另外主機板有提供兩個內建 1Gb 可以用，這邊選了一個當 WAN 使用，這應該是沒什麼懸念的</p>
-<p><img src="/images/tower-nics.jpg" alt=""></p>
-<p>Q: 為什麼會有一個 Intel i350-T4 在那邊晾著?</p>
-<p>完全是一個腦衝的結果，原先預期目標是要做以這台塔式 Server 為核心的架構設計，做 Two-Arm，但看了看覺得有點顧慮就不搞了。如果對網路處理吃重的，可以把 <code>SR-IOV</code> 開起來，可以直接有 8 VFs 可以使用，網路效率會蠻好的。</p>
-<p>後面會有一篇解釋 {pfSense, OPNsense, ooxx UTM} on {vSphere, Proxmox, KVM Libvirt} 虛擬網路設計怎麼做 Two-Arm，自建 Lab 來說還蠻好用的架構</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>整體上來說，IPMI 這個功能對於我從 Bastion 堡壘機上，透過 Ansible Tower 控制服務器來講非常重要，其他資源都是為了要承載 Lab 所需要的運算資源而生的，可以自行做刪減。</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
       </tags>
   </entry>
   <entry>
@@ -6715,7 +6715,7 @@
 <p>請先想像建立 Kubernetes 完整的叢集服務，其實就像是要建立一個大型住戶社區，那所對應的幾個名詞解釋就會是下面的描述</p>
 <ul>
 <li>Kubernetes：建立一個住戶社區的標準藍圖</li>
-<li>虛擬機、實體機、公有雲：住戶社區內一棟一棟的大樓</li>
+<li>虛擬機、實體機：住戶社區內一棟一棟的大樓</li>
 <li>OS 作業系統：大樓骨幹跟地基</li>
 <li>Master Node：住戶社區管委會主要居住大樓，為保持高可用最少要 3 棟</li>
 <li>Etcd Cluster：為保持高可用，故建議最少三位管委，互相投票選出一位委員長</li>
