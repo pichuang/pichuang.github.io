@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TSCC 個人心得</title>
     <url>/20140416-tscc/</url>
     <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
@@ -101,6 +76,31 @@
       <tags>
         <tag>event</tag>
         <tag>tscc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
       </tags>
   </entry>
   <entry>
@@ -1830,6 +1830,76 @@
       </tags>
   </entry>
   <entry>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+</blockquote>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
+<ol>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
+</ol>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+</ol>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -1915,76 +1985,6 @@
       </tags>
   </entry>
   <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
-</blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
-</ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
-<ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
-</ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
     <url>/20180918-skopeo/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
@@ -2028,6 +2028,58 @@
         <tag>container</tag>
         <tag>skopeo</tag>
         <tag>images</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新增 SSL/TLS 憑證和金鑰</title>
+    <url>/20180920-add-ssl-tls-cert-and-key/</url>
+    <content><![CDATA[<h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
+<a id="more"></a>
+
+<h2 id="實際做法"><a href="#實際做法" class="headerlink" title="實際做法"></a>實際做法</h2><h3 id="SSL-TLS-Self-Signed-Certificate-and-Key"><a href="#SSL-TLS-Self-Signed-Certificate-and-Key" class="headerlink" title="SSL/TLS Self-Signed Certificate and Key"></a>SSL/TLS Self-Signed Certificate and Key</h3><p>若想要一行產生出 Self-Signed Certificate 和 Key 可使用下列指令:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt</span><br></pre></td></tr></table></figure>
+
+<p>最重要的是 Common Name (CN) 的內容要寫對<br><img src="/images/ssl-1.png" alt=""></p>
+<h3 id="SSL-TLS-Signed-by-Intermediate-Certificate-and-Key"><a href="#SSL-TLS-Signed-by-Intermediate-Certificate-and-Key" class="headerlink" title="SSL/TLS Signed by Intermediate Certificate and Key"></a>SSL/TLS Signed by Intermediate Certificate and Key</h3><p>通常建立一個僅限 Intranet 使用的 Root &amp; Intermediate CA 不外乎有以下的事情要處理：</p>
+<ol>
+<li>建立 Root CA 及 Intermediate CA</li>
+<li>透過 Intermediate CA 簽出一張 Server Cert/Key 或 Wildcard domain Cert/Key</li>
+<li>將 Root CA Cert 匯入到使用系統 (e.g. Windows/MAC/Linux)上，並設定 All Trusted</li>
+</ol>
+<p>這以上的步驟可以用 <code>openssl</code> 的指令配合一大票參數可以將每一步拆解出來，詳細可以參考 <a href="https://roll.urown.net/ca/index.html">Certificate Authority - Roll Your Own Network</a> 及 <a href="https://pki-tutorial.readthedocs.io/en/latest/simple/">OpenSSL PKI Tutorial</a> 兩篇文章自行研究，但簽出來可能因為參數沒下好或是下錯導致憑證無效，故這邊提供一個比較簡單的方式，採用 Google 非官方支援的 <a href="https://github.com/google/easypki">easypki</a> 專案</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Get the CLI</span></span><br><span class="line"><span class="comment"># 別忘了要將 ~/go/bin 放到 PATH 裡</span></span><br><span class="line">go get github.com/google/easypki/cmd/easypki</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置參數</span></span><br><span class="line"><span class="built_in">export</span> PKI_ROOT=/tmp/pki</span><br><span class="line"><span class="built_in">export</span> PKI_ORGANIZATION=<span class="string">&quot;HomeLab Inc.&quot;</span></span><br><span class="line"><span class="built_in">export</span> PKI_ORGANIZATIONAL_UNIT=Home</span><br><span class="line"><span class="built_in">export</span> PKI_COUNTRY=TW</span><br><span class="line"><span class="built_in">export</span> PKI_LOCALITY=<span class="string">&quot;Taipei City&quot;</span></span><br><span class="line"><span class="built_in">export</span> PKI_PROVINCE=<span class="string">&quot;Taipei&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 Root CA</span></span><br><span class="line">easypki create --filename root --ca <span class="string">&quot;HomeLab Inc. Root Certificate Authority&quot;</span> --expire 3650</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 intermediate CA</span></span><br><span class="line">easypki create --ca-name root --filename intermediate --intermediate <span class="string">&quot;HomeLab Inc. Intermediate CA&quot;</span> --expire 730</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一張 Wildcard certificate，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns <span class="string">&quot;*.pichuang.local&quot;</span> <span class="string">&quot;*.pichuang.local&quot;</span> --expire 365</span><br><span class="line"></span><br><span class="line"><span class="comment"># (Optional) 新建一張 Server certidicate 包含 quay.pichuang.local，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns quay.pichuang.local quay.pichuang.local --expire 365</span><br><span class="line"></span><br><span class="line"><span class="comment"># (Optional) 新建一張 Server certidicate 包含 quay.pichuang.local 和 www.pichuang.local，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns quay.pichuang.local --dns www.pichuang.local quay.pichuang.local --expire 365</span><br></pre></td></tr></table></figure>
+
+<p>當你透過以上步驟建立完之後，你應該會需要三個檔案做使用</p>
+<ol>
+<li><code>/tmp/pki/root/certs/root.crt</code> 給 Client 端系統認證用</li>
+<li><code>/tmp/pki/intermediate/certs/wildcard.pichuang.local.crt</code> 給 Server side 使用或給 Client 端系統認證用</li>
+<li><code>/tmp/pki/intermediate/keys/wildcard.pichuang.local.key</code> 給 Server side 使用</li>
+</ol>
+<h2 id="僅供參考用的-SSL-Certificate-等級"><a href="#僅供參考用的-SSL-Certificate-等級" class="headerlink" title="僅供參考用的 SSL Certificate 等級"></a>僅供參考用的 SSL Certificate 等級</h2><p>因應各家的系統規模都不盡相同，所切分的 Class 可能也會有不同<br>大體上可分為</p>
+<ol>
+<li>Class 1 for individuals, intended for email.</li>
+<li>Class 2 for organizations, for which proof of identity is required.</li>
+<li>Class 3 for servers and software signing, for which independent 4. verification and checking of identity and authority is done by the issuing certificate authority.</li>
+<li>Class 4 for online business transactions between companies.</li>
+<li>Class 5 for private organizations or governmental security.</li>
+</ol>
+<h2 id="於-RHEL7-系統裡匯入-TLS-SSL-憑證"><a href="#於-RHEL7-系統裡匯入-TLS-SSL-憑證" class="headerlink" title="於 RHEL7 系統裡匯入 TLS/SSL 憑證"></a>於 RHEL7 系統裡匯入 TLS/SSL 憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp *.crt /etc/pki/ca-trust/<span class="built_in">source</span>/anchors/</span><br><span class="line">update-ca-trust <span class="built_in">enable</span></span><br><span class="line">update-ca-trust extract</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://roll.urown.net/ca/index.html">Certificate Authority - Roll Your Own Network</a></li>
+<li><a href="https://pki-tutorial.readthedocs.io/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
+<li><a href="https://github.com/google/easypki">GitHub - google/easypki</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Public_key_certificate">Public key certificate</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>openssl</tag>
+        <tag>rhel</tag>
+        <tag>ssl</tag>
       </tags>
   </entry>
   <entry>
@@ -2125,58 +2177,6 @@
         <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>terraform</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新增 SSL/TLS 憑證和金鑰</title>
-    <url>/20180920-add-ssl-tls-cert-and-key/</url>
-    <content><![CDATA[<h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
-<a id="more"></a>
-
-<h2 id="實際做法"><a href="#實際做法" class="headerlink" title="實際做法"></a>實際做法</h2><h3 id="SSL-TLS-Self-Signed-Certificate-and-Key"><a href="#SSL-TLS-Self-Signed-Certificate-and-Key" class="headerlink" title="SSL/TLS Self-Signed Certificate and Key"></a>SSL/TLS Self-Signed Certificate and Key</h3><p>若想要一行產生出 Self-Signed Certificate 和 Key 可使用下列指令:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt</span><br></pre></td></tr></table></figure>
-
-<p>最重要的是 Common Name (CN) 的內容要寫對<br><img src="/images/ssl-1.png" alt=""></p>
-<h3 id="SSL-TLS-Signed-by-Intermediate-Certificate-and-Key"><a href="#SSL-TLS-Signed-by-Intermediate-Certificate-and-Key" class="headerlink" title="SSL/TLS Signed by Intermediate Certificate and Key"></a>SSL/TLS Signed by Intermediate Certificate and Key</h3><p>通常建立一個僅限 Intranet 使用的 Root &amp; Intermediate CA 不外乎有以下的事情要處理：</p>
-<ol>
-<li>建立 Root CA 及 Intermediate CA</li>
-<li>透過 Intermediate CA 簽出一張 Server Cert/Key 或 Wildcard domain Cert/Key</li>
-<li>將 Root CA Cert 匯入到使用系統 (e.g. Windows/MAC/Linux)上，並設定 All Trusted</li>
-</ol>
-<p>這以上的步驟可以用 <code>openssl</code> 的指令配合一大票參數可以將每一步拆解出來，詳細可以參考 <a href="https://roll.urown.net/ca/index.html">Certificate Authority - Roll Your Own Network</a> 及 <a href="https://pki-tutorial.readthedocs.io/en/latest/simple/">OpenSSL PKI Tutorial</a> 兩篇文章自行研究，但簽出來可能因為參數沒下好或是下錯導致憑證無效，故這邊提供一個比較簡單的方式，採用 Google 非官方支援的 <a href="https://github.com/google/easypki">easypki</a> 專案</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Get the CLI</span></span><br><span class="line"><span class="comment"># 別忘了要將 ~/go/bin 放到 PATH 裡</span></span><br><span class="line">go get github.com/google/easypki/cmd/easypki</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置參數</span></span><br><span class="line"><span class="built_in">export</span> PKI_ROOT=/tmp/pki</span><br><span class="line"><span class="built_in">export</span> PKI_ORGANIZATION=<span class="string">&quot;HomeLab Inc.&quot;</span></span><br><span class="line"><span class="built_in">export</span> PKI_ORGANIZATIONAL_UNIT=Home</span><br><span class="line"><span class="built_in">export</span> PKI_COUNTRY=TW</span><br><span class="line"><span class="built_in">export</span> PKI_LOCALITY=<span class="string">&quot;Taipei City&quot;</span></span><br><span class="line"><span class="built_in">export</span> PKI_PROVINCE=<span class="string">&quot;Taipei&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 Root CA</span></span><br><span class="line">easypki create --filename root --ca <span class="string">&quot;HomeLab Inc. Root Certificate Authority&quot;</span> --expire 3650</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建 intermediate CA</span></span><br><span class="line">easypki create --ca-name root --filename intermediate --intermediate <span class="string">&quot;HomeLab Inc. Intermediate CA&quot;</span> --expire 730</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一張 Wildcard certificate，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns <span class="string">&quot;*.pichuang.local&quot;</span> <span class="string">&quot;*.pichuang.local&quot;</span> --expire 365</span><br><span class="line"></span><br><span class="line"><span class="comment"># (Optional) 新建一張 Server certidicate 包含 quay.pichuang.local，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns quay.pichuang.local quay.pichuang.local --expire 365</span><br><span class="line"></span><br><span class="line"><span class="comment"># (Optional) 新建一張 Server certidicate 包含 quay.pichuang.local 和 www.pichuang.local，且透過 intermediate ca 簽核</span></span><br><span class="line">easypki create --ca-name intermediate --dns quay.pichuang.local --dns www.pichuang.local quay.pichuang.local --expire 365</span><br></pre></td></tr></table></figure>
-
-<p>當你透過以上步驟建立完之後，你應該會需要三個檔案做使用</p>
-<ol>
-<li><code>/tmp/pki/root/certs/root.crt</code> 給 Client 端系統認證用</li>
-<li><code>/tmp/pki/intermediate/certs/wildcard.pichuang.local.crt</code> 給 Server side 使用或給 Client 端系統認證用</li>
-<li><code>/tmp/pki/intermediate/keys/wildcard.pichuang.local.key</code> 給 Server side 使用</li>
-</ol>
-<h2 id="僅供參考用的-SSL-Certificate-等級"><a href="#僅供參考用的-SSL-Certificate-等級" class="headerlink" title="僅供參考用的 SSL Certificate 等級"></a>僅供參考用的 SSL Certificate 等級</h2><p>因應各家的系統規模都不盡相同，所切分的 Class 可能也會有不同<br>大體上可分為</p>
-<ol>
-<li>Class 1 for individuals, intended for email.</li>
-<li>Class 2 for organizations, for which proof of identity is required.</li>
-<li>Class 3 for servers and software signing, for which independent 4. verification and checking of identity and authority is done by the issuing certificate authority.</li>
-<li>Class 4 for online business transactions between companies.</li>
-<li>Class 5 for private organizations or governmental security.</li>
-</ol>
-<h2 id="於-RHEL7-系統裡匯入-TLS-SSL-憑證"><a href="#於-RHEL7-系統裡匯入-TLS-SSL-憑證" class="headerlink" title="於 RHEL7 系統裡匯入 TLS/SSL 憑證"></a>於 RHEL7 系統裡匯入 TLS/SSL 憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp *.crt /etc/pki/ca-trust/<span class="built_in">source</span>/anchors/</span><br><span class="line">update-ca-trust <span class="built_in">enable</span></span><br><span class="line">update-ca-trust extract</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://roll.urown.net/ca/index.html">Certificate Authority - Roll Your Own Network</a></li>
-<li><a href="https://pki-tutorial.readthedocs.io/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
-<li><a href="https://github.com/google/easypki">GitHub - google/easypki</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Public_key_certificate">Public key certificate</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>openssl</tag>
-        <tag>rhel</tag>
-        <tag>ssl</tag>
       </tags>
   </entry>
   <entry>
@@ -3669,8 +3669,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
       </tags>
   </entry>
@@ -3800,8 +3800,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>openshift3</tag>
         <tag>cni</tag>
         <tag>security</tag>
@@ -5200,8 +5200,8 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -5320,29 +5320,6 @@
       </tags>
   </entry>
   <entry>
-    <title>第一次の網管人雜誌面談</title>
-    <url>/20200406-netadmin-interview-ansible/</url>
-    <content><![CDATA[<blockquote>
-<p>媽！我上雜誌了</p>
-</blockquote>
-<p>雖然這次的約訪是公司指派執行，但第一次弄還是蠻新鮮的，可能大家都只會看到最後的產業趨勢報導 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a>，但中間有些過程我可以分享一下</p>
-<a id="more"></a>
-
-<p>基本上，在正式面談之前，編輯會事先丟一些題目會丟出來給我，大概抓一下談話方向，編輯題目開的相當專業，若不是天天都在跟技術發展走的人應該會需要點時間準備</p>
-<p>等到面談當日，就是由編輯、小弟和行銷一起參與會談，中間都會錄音，好讓編輯回去寫稿及潤稿，當日執行的編輯是<a href="https://www.netadmin.com.tw/netadmin/Author.aspx?Id=120">洪羿漣</a>女士，相當健談 XD，完全不用怕沒話說。最後，就會需要拍張半身照，好放在文章上，代表真的有這個人 (?)，假設文章內文太唬爛可以憑臉找人，而本人自認相當不上相，所以拍完的結果，就是一個 <code>尷尬又不失禮貌的微笑</code> XD 蠻好笑的</p>
-<p><img src="/images/netadmin-fb.png" alt=""></p>
-<p>面談結束，就慢慢等，等了一陣子有一天就忽然蹦出來在雜誌上，就是各位看到的 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a> 這篇文章，另外文章內所說<a href="https://blog.pichuang.com.tw/20200309-ansible-30m/">30分鐘內從開始到入門的 Ansible</a>連結在此，可以同步閱讀</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>interview</tag>
-        <tag>netadmin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2</title>
     <url>/20200403-openshift-with-coreos-part-2/</url>
     <content><![CDATA[<p>上個月寫了一篇愛的走馬看花 <a href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</a>，繼續逛下去</p>
@@ -5411,9 +5388,32 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一次の網管人雜誌面談</title>
+    <url>/20200406-netadmin-interview-ansible/</url>
+    <content><![CDATA[<blockquote>
+<p>媽！我上雜誌了</p>
+</blockquote>
+<p>雖然這次的約訪是公司指派執行，但第一次弄還是蠻新鮮的，可能大家都只會看到最後的產業趨勢報導 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a>，但中間有些過程我可以分享一下</p>
+<a id="more"></a>
+
+<p>基本上，在正式面談之前，編輯會事先丟一些題目會丟出來給我，大概抓一下談話方向，編輯題目開的相當專業，若不是天天都在跟技術發展走的人應該會需要點時間準備</p>
+<p>等到面談當日，就是由編輯、小弟和行銷一起參與會談，中間都會錄音，好讓編輯回去寫稿及潤稿，當日執行的編輯是<a href="https://www.netadmin.com.tw/netadmin/Author.aspx?Id=120">洪羿漣</a>女士，相當健談 XD，完全不用怕沒話說。最後，就會需要拍張半身照，好放在文章上，代表真的有這個人 (?)，假設文章內文太唬爛可以憑臉找人，而本人自認相當不上相，所以拍完的結果，就是一個 <code>尷尬又不失禮貌的微笑</code> XD 蠻好笑的</p>
+<p><img src="/images/netadmin-fb.png" alt=""></p>
+<p>面談結束，就慢慢等，等了一陣子有一天就忽然蹦出來在雜誌上，就是各位看到的 <a href="http://www.netadmin.com.tw/netadmin/zh-tw/trend/C8B32F0FE91F417DA1A4CC5C24675284">善用組態管理自動化機制　輔助IT維持正常維運 - 網管人 NetAdmin</a> 這篇文章，另外文章內所說<a href="https://blog.pichuang.com.tw/20200309-ansible-30m/">30分鐘內從開始到入門的 Ansible</a>連結在此，可以同步閱讀</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>interview</tag>
+        <tag>netadmin</tag>
       </tags>
   </entry>
   <entry>
@@ -5501,8 +5501,8 @@
         <category>openshift</category>
       </categories>
       <tags>
-        <tag>container</tag>
         <tag>openshift4</tag>
+        <tag>container</tag>
         <tag>coreos</tag>
       </tags>
   </entry>
@@ -6036,6 +6036,71 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
+    <url>/20200521-openshift-with-coreos-part-7/</url>
+    <content><![CDATA[<p>這幾天有位客戶問了一個很不錯的問題</p>
+<blockquote>
+<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
+</blockquote>
+<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
+<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/Kx110kqoHo0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="走馬看花之旅-第七天"><a href="#走馬看花之旅-第七天" class="headerlink" title="走馬看花之旅: 第七天"></a>走馬看花之旅: 第七天</h2><h3 id="顯示一個-Pods-裡面所包含的-Container"><a href="#顯示一個-Pods-裡面所包含的-Container" class="headerlink" title="顯示一個 Pods 裡面所包含的 Container"></a>顯示一個 Pods 裡面所包含的 Container</h3><p>預設狀況下，其實內建的 <code>api-resources</code> 並沒有包含一個類型是 <code>container</code>，所以如果要知道一個 Pod 裡面有包含多少個 Container 能用下列 2 個方式找</p>
+<ol>
+<li><p>透過 oc 指令 filter 出來</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先獲得到 Pod 清單，這邊選擇 productpage-v1-597b74b4c-x2pgk</span></span><br><span class="line">$ oc get pods</span><br><span class="line"></span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE</span><br><span class="line">details-v1-6657b8bdf-mm4r4       2/2     Running   0          34m</span><br><span class="line">productpage-v1-597b74b4c-x2pgk   2/2     Running   0          34m</span><br><span class="line">ratings-v1-66cddbfb8f-wvpbz      2/2     Running   0          34m</span><br><span class="line">reviews-v1-6788566f98-slm9q      2/2     Running   0          34m</span><br><span class="line">reviews-v2-7c4bffdcc4-6wmg2      2/2     Running   0          34m</span><br><span class="line">reviews-v3-69b6d8786-rbhw5       2/2     Running   0          34m</span><br><span class="line"></span><br><span class="line"><span class="comment"># oc get pods &lt;PDO NAME&gt; -o jsonpath=&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line">$ oc get pods productpage-v1-597b74b4c-x2pgk -o jsonpath=<span class="string">&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">productpage istio-proxy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>透過 OpenShift Web Console</p>
+</li>
+</ol>
+<p>這個做法是直接透過相當好用的 Web Console 直接觀察，直觀方便</p>
+<p><img src="/images/show-containes.png" alt=""></p>
+<h3 id="登入其中一個-Container-裡面"><a href="#登入其中一個-Container-裡面" class="headerlink" title="登入其中一個 Container 裡面"></a>登入其中一個 Container 裡面</h3><p>一樣也是 2 種方式</p>
+<ol>
+<li>透過 oc rsh 指令</li>
+</ol>
+<p>Red Hat OpenShift 有一個內建的指令可以做到 - <code>oc rsh</code></p>
+<blockquote>
+<p>oc rsh = Open a remote shell session to a container</p>
+</blockquote>
+<p>一般狀況下，<code>oc rsh &lt;PDO NAME&gt;</code> 都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc rsh -h</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Open a shell session on the container named &#x27;index&#x27; inside a pod</span></span><br><span class="line"><span class="comment"># oc rsh -c &lt;CONTAINER NAME&gt; pod/&lt;PDO NAME&gt;</span></span><br><span class="line">$ oc rsh -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line"></span><br><span class="line">$ oc rsh -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static      stdout.log  test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  stderr.log  templates</span><br></pre></td></tr></table></figure>
+
+<p>好我知道各位一定看不懂，下面有截圖</p>
+<p><img src="/images/rsh-container.png" alt=""></p>
+<ol start="2">
+<li>透過 OpenShift Web Console</li>
+</ol>
+<p>相當直觀就是直接對 Web Console 操作，如下圖示表現</p>
+<p><img src="/images/terminal-container.gif" alt=""></p>
+<h3 id="針對其中一個-Container-除錯"><a href="#針對其中一個-Container-除錯" class="headerlink" title="針對其中一個 Container 除錯"></a>針對其中一個 Container 除錯</h3><p>只有一個作法，透過 Red Hat OpenShift 內建的指令 - <code>oc debug</code></p>
+<blockquote>
+<p>oc debug = Launch a command shell to debug a running application</p>
+</blockquote>
+<p>一般狀況下，如同 <code>oc rsh</code>，使用 <code>oc debug</code> 時，都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc debug -h</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc debug -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.27</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line">sh-4.4$</span><br><span class="line"></span><br><span class="line">$ oc debug -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.28</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static     test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  templates</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p>一樣我知道各位還是看不懂，截圖如下</p>
+<p><img src="/images/debug-container.png" alt=""></p>
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>如果有仔細看內容的話，其實我的操作環境就是建好一個 bookinfo 之後，Service Mesh 自動注入 (inject) Sidecard 進去到每一個 Pod，所以才會有 1 個 Pod 會有 2 個 Container 的現象發生，除此之外，個人經驗還有如果需要整合網路廠商所提供的 CNI Plugin，也有機會會遇到這種等級的操作</p>
+<p>結論上來說，雖然 Kubernetes 最小單位是 Pod，一般操作的層級都是在這個層級，但若想在 OpenShift 上針對特定的 Container 進行指令操作、除錯，都還是可以很輕鬆地辦到，也相當的直覺</p>
+<p>最後，請大家多多訂閱 Red Hat 服務、分享開源技術及開啟技術友善好環境，我們宅宅們就靠各位客戶養了 XD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Red Hat OpenShift RBAC 最小權限實踐</title>
     <url>/20200502-openshift-with-coreos-part-6/</url>
     <content><![CDATA[<p>繼<a href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/">上一篇</a>準備好了基礎的 OpenShift 4 超級管理員 <code>ocproot</code> 設定後，接下來就是比較針對 Project/Namespace 來進行比較細微的 RBAC 設定，盡可能讓 User 或 Group 適用於<code>最小權限原則</code></p>
@@ -6145,71 +6210,6 @@
 <li><a href="https://blog.csdn.net/weixin_43902588/article/details/104470294">OpenShift 4 Hands-on Lab (9) 用户身份认证和资源访问限制</a></li>
 <li><a href="https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 5</a></li>
 <li><a href="https://www.slideshare.net/chakrekevin/introduction-to-ethical-hacking-41597834">Introduction To Ethical Hacking</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat OpenShift Pod 與 Container 的愛恨情仇</title>
-    <url>/20200521-openshift-with-coreos-part-7/</url>
-    <content><![CDATA[<p>這幾天有位客戶問了一個很不錯的問題</p>
-<blockquote>
-<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
-</blockquote>
-<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
-<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/Kx110kqoHo0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="走馬看花之旅-第七天"><a href="#走馬看花之旅-第七天" class="headerlink" title="走馬看花之旅: 第七天"></a>走馬看花之旅: 第七天</h2><h3 id="顯示一個-Pods-裡面所包含的-Container"><a href="#顯示一個-Pods-裡面所包含的-Container" class="headerlink" title="顯示一個 Pods 裡面所包含的 Container"></a>顯示一個 Pods 裡面所包含的 Container</h3><p>預設狀況下，其實內建的 <code>api-resources</code> 並沒有包含一個類型是 <code>container</code>，所以如果要知道一個 Pod 裡面有包含多少個 Container 能用下列 2 個方式找</p>
-<ol>
-<li><p>透過 oc 指令 filter 出來</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先獲得到 Pod 清單，這邊選擇 productpage-v1-597b74b4c-x2pgk</span></span><br><span class="line">$ oc get pods</span><br><span class="line"></span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE</span><br><span class="line">details-v1-6657b8bdf-mm4r4       2/2     Running   0          34m</span><br><span class="line">productpage-v1-597b74b4c-x2pgk   2/2     Running   0          34m</span><br><span class="line">ratings-v1-66cddbfb8f-wvpbz      2/2     Running   0          34m</span><br><span class="line">reviews-v1-6788566f98-slm9q      2/2     Running   0          34m</span><br><span class="line">reviews-v2-7c4bffdcc4-6wmg2      2/2     Running   0          34m</span><br><span class="line">reviews-v3-69b6d8786-rbhw5       2/2     Running   0          34m</span><br><span class="line"></span><br><span class="line"><span class="comment"># oc get pods &lt;PDO NAME&gt; -o jsonpath=&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line">$ oc get pods productpage-v1-597b74b4c-x2pgk -o jsonpath=<span class="string">&#x27;&#123;.spec.containers[*].name&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">productpage istio-proxy</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>透過 OpenShift Web Console</p>
-</li>
-</ol>
-<p>這個做法是直接透過相當好用的 Web Console 直接觀察，直觀方便</p>
-<p><img src="/images/show-containes.png" alt=""></p>
-<h3 id="登入其中一個-Container-裡面"><a href="#登入其中一個-Container-裡面" class="headerlink" title="登入其中一個 Container 裡面"></a>登入其中一個 Container 裡面</h3><p>一樣也是 2 種方式</p>
-<ol>
-<li>透過 oc rsh 指令</li>
-</ol>
-<p>Red Hat OpenShift 有一個內建的指令可以做到 - <code>oc rsh</code></p>
-<blockquote>
-<p>oc rsh = Open a remote shell session to a container</p>
-</blockquote>
-<p>一般狀況下，<code>oc rsh &lt;PDO NAME&gt;</code> 都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc rsh -h</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Open a shell session on the container named &#x27;index&#x27; inside a pod</span></span><br><span class="line"><span class="comment"># oc rsh -c &lt;CONTAINER NAME&gt; pod/&lt;PDO NAME&gt;</span></span><br><span class="line">$ oc rsh -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line"></span><br><span class="line">$ oc rsh -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static      stdout.log  test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  stderr.log  templates</span><br></pre></td></tr></table></figure>
-
-<p>好我知道各位一定看不懂，下面有截圖</p>
-<p><img src="/images/rsh-container.png" alt=""></p>
-<ol start="2">
-<li>透過 OpenShift Web Console</li>
-</ol>
-<p>相當直觀就是直接對 Web Console 操作，如下圖示表現</p>
-<p><img src="/images/terminal-container.gif" alt=""></p>
-<h3 id="針對其中一個-Container-除錯"><a href="#針對其中一個-Container-除錯" class="headerlink" title="針對其中一個 Container 除錯"></a>針對其中一個 Container 除錯</h3><p>只有一個作法，透過 Red Hat OpenShift 內建的指令 - <code>oc debug</code></p>
-<blockquote>
-<p>oc debug = Launch a command shell to debug a running application</p>
-</blockquote>
-<p>一般狀況下，如同 <code>oc rsh</code>，使用 <code>oc debug</code> 時，都是直接連到<code>第一個</code> Container，如果要選擇裡面的第二個，更甚至是第三個的容器，則需要特別多一個 <code>--container</code> 指定，更多內容可以直接參考 <code>oc debug -h</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc debug -c istio-proxy pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line"></span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.27</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.4$ ls</span><br><span class="line">bin   dev  home  lib64       media  opt   root  sbin  sys  usr</span><br><span class="line">boot  etc  lib   lost+found  mnt    proc  run   srv   tmp  var</span><br><span class="line">sh-4.4$</span><br><span class="line"></span><br><span class="line">$ oc debug -c productpage pod/productpage-v1-597b74b4c-x2pgk</span><br><span class="line">Starting pod/productpage-v1-597b74b4c-x2pgk-debug ...</span><br><span class="line">Pod IP: 10.128.2.28</span><br><span class="line">If you dont see a <span class="built_in">command</span> prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">__pycache__       productpage.py    static     test_productpage.py</span><br><span class="line">microservice.log  requirements.txt  templates</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
-
-<p>一樣我知道各位還是看不懂，截圖如下</p>
-<p><img src="/images/debug-container.png" alt=""></p>
-<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>如果有仔細看內容的話，其實我的操作環境就是建好一個 bookinfo 之後，Service Mesh 自動注入 (inject) Sidecard 進去到每一個 Pod，所以才會有 1 個 Pod 會有 2 個 Container 的現象發生，除此之外，個人經驗還有如果需要整合網路廠商所提供的 CNI Plugin，也有機會會遇到這種等級的操作</p>
-<p>結論上來說，雖然 Kubernetes 最小單位是 Pod，一般操作的層級都是在這個層級，但若想在 OpenShift 上針對特定的 Container 進行指令操作、除錯，都還是可以很輕鬆地辦到，也相當的直覺</p>
-<p>最後，請大家多多訂閱 Red Hat 服務、分享開源技術及開啟技術友善好環境，我們宅宅們就靠各位客戶養了 XD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -6591,6 +6591,57 @@
       </tags>
   </entry>
   <entry>
+    <title>2020 年度個人回顧</title>
+    <url>/20201231-2020-personal-review/</url>
+    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
+<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
+<a id="more"></a>
+
+<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
+<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
+<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
+<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
+<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
+<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
+<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
+<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
+<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
+<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
+<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
+<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
+<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
+<li>今年沒失戀 1 次，也失戀 1 次</li>
+<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
+<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
+<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
+<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
+<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
+<li>榮獲”找死王”稱號</li>
+<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
+<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
+<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
+</ol>
+<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
+<li>活下去!!! 無論是工作還是生命</li>
+<li>挑戰 1 場國外社群演講</li>
+<li>瘦這麼多，參加個健美比賽不為過吧</li>
+<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
+<li>希望房價能降下去讓我買個宅窩 QQ</li>
+<li>該寫 1 本書了</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
+<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
+<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kubernetes API 服務及跟各組件的交互關係</title>
     <url>/20201009-kubernetes-api-communication%20copy/</url>
     <content><![CDATA[<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
@@ -6644,57 +6695,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2020 年度個人回顧</title>
-    <url>/20201231-2020-personal-review/</url>
-    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
-<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
-<a id="more"></a>
-
-<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
-<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
-<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
-<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
-<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
-<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
-<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
-<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
-<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
-<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
-<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
-<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
-<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
-<li>今年沒失戀 1 次，也失戀 1 次</li>
-<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
-<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
-<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
-<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
-<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
-<li>榮獲”找死王”稱號</li>
-<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
-<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
-<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
-</ol>
-<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
-<li>活下去!!! 無論是工作還是生命</li>
-<li>挑戰 1 場國外社群演講</li>
-<li>瘦這麼多，參加個健美比賽不為過吧</li>
-<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
-<li>希望房價能降下去讓我買個宅窩 QQ</li>
-<li>該寫 1 本書了</li>
-</ol>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
-<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
-<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>annual</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
     <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
     <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
@@ -6737,8 +6737,7 @@
 <li>Container Registry：行李箱集中存放中心</li>
 <li>Bastion：維護整座社區的工程車</li>
 </ul>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p><img src="/images/zbuilder.jpeg" alt=""></p>
-<p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
 <blockquote>
 <p>你應該不會說每一個建商所蓋出的大樓品質都會是一樣的吧？有些只有蓋好大樓，內裝、外觀、拼裝、工法、維護都亂七八糟，這也是個大樓</p>
 </blockquote>
