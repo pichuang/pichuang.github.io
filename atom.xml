@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.pichuang.com.tw/"/>
-  <updated>2020-12-31T09:59:09.070Z</updated>
+  <updated>2021-01-12T15:22:10.919Z</updated>
   <id>https://blog.pichuang.com.tw/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
+    <link href="https://blog.pichuang.com.tw/20210111-Kubernetes-for-sales-and-marketing/"/>
+    <id>https://blog.pichuang.com.tw/20210111-Kubernetes-for-sales-and-marketing/</id>
+    <published>2021-01-01T04:55:32.000Z</published>
+    <updated>2021-01-12T15:22:10.919Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes&lt;/p&gt;
+&lt;p&gt;有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考&lt;/p&gt;
+&lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/yGhcPmTtoPU&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
+    
+    </summary>
+    
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/categories/kubernetes/"/>
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/kubernetes/openshift/"/>
+    
+    
+      <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
+    
+      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
+    
+      <category term="kubernetes" scheme="https://blog.pichuang.com.tw/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>2020 年度個人回顧</title>
@@ -510,43 +539,6 @@
       <category term="openshift" scheme="https://blog.pichuang.com.tw/tags/openshift/"/>
     
       <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</title>
-    <link href="https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/"/>
-    <id>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/</id>
-    <published>2020-04-12T13:59:29.000Z</published>
-    <updated>2020-04-28T07:48:27.426Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;承襲愛的走馬看花系列的亂寫亂紀錄優良傳統，繼續記錄操作，有興趣想要看前面的文章可以參考這兩邊&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1 - Phil Huang&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/&quot;&gt;愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2 - Phil Huang&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;第三天要來操作的是&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;實裝 Kubernetes NFS-Client Provisioner&lt;/li&gt;
-&lt;li&gt;升級 OpenShift 4.y.z&lt;/li&gt;
-&lt;li&gt;正確匯出 YAML 方式&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;另外我依然沒梗圖，所以開場 Po 個影片 &lt;code&gt;Installing OpenShift to Red Hat Virtualization using full-stack automation&lt;/code&gt;，現在 &lt;code&gt;libvirt&lt;/code&gt; 體系平台也可以使用 &lt;code&gt;node scaling&lt;/code&gt; 的能力了，影片三分鐘，OpenShift 4.4 之後就會開始支援了&lt;/p&gt;
-&lt;div class=&quot;video-container&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/uFypQRWEKqo&quot; frameborder=&quot;0&quot; loading=&quot;lazy&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
-    
-    </summary>
-    
-    
-      <category term="openshift" scheme="https://blog.pichuang.com.tw/categories/openshift/"/>
-    
-    
-      <category term="openshift4" scheme="https://blog.pichuang.com.tw/tags/openshift4/"/>
-    
-      <category term="container" scheme="https://blog.pichuang.com.tw/tags/container/"/>
-    
-      <category term="coreos" scheme="https://blog.pichuang.com.tw/tags/coreos/"/>
     
   </entry>
   

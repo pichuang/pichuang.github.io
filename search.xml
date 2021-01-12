@@ -104,6 +104,58 @@
       </tags>
   </entry>
   <entry>
+    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
+    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
+    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
+<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
+<li><p>Setting vars for Root CA</p>
+<blockquote>
+<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
+<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
+</ul>
+</li>
+<li><p>Create UCC Key</p>
+<blockquote>
+<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
+</blockquote>
+</li>
+<li><p>Check Root CA key and crt</p>
+<blockquote>
+<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
+</blockquote>
+<ul>
+<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
+</ul>
+</li>
+<li><p>Check *.night9.cc crt Info</p>
+<blockquote>
+<p>openssl x509 -in *.night9.crt -text -noout</p>
+</blockquote>
+</li>
+<li><p>Show</p>
+<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
+
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
+<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
+<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>easyrsa</tag>
+        <tag>pki</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PKI Lab$1 Create Root CA</title>
     <url>/20150726-pki-lab-1-create-root-ca/</url>
     <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA</p>
@@ -145,58 +197,6 @@
 <li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts">Create a Public Key Infrastructure Using the easy-rsa Scripts</a></li>
 <li><a href="http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw">作者：依瑪貓 http://www.imacat.idv.tw/tech/sslcerts.html.zh-tw</a></li>
-<li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
-<li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>easyrsa</tag>
-        <tag>pki</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PKI Lab$2 Create Multiple domain (UCC) SSL Certificate</title>
-    <url>/20150727-pki-lab-2-create-multiple-domain-ssl-ucc-certificate/</url>
-    <content><![CDATA[<p>採用 <code>easyrsa</code> 來建立 PKI CA, 必需要有 Root CA, 可參考 <a href="http://blog.pichuang.com.tw/pki-lab-1-create-root-ca/">PKI Lab$1 Create Root CA</a> 做建立的動作</p>
-<h3 id="Step-by-Step"><a href="#Step-by-Step" class="headerlink" title="Step by Step"></a>Step by Step</h3><ul>
-<li><p>Setting vars for Root CA</p>
-<blockquote>
-<p>export KEY_SIZE=2048<br>export CA_EXPIRE=365<br>export KEY_EXPIRE=365<br>export KEY_COUNTRY=”TW”<br>export KEY_PROVINCE=”Taiwan”<br>export KEY_CITY=”HsinChu”<br>export KEY_ORG=”Night9 Studios”<br>export KEY_EMAIL=”<a href="mailto:www@night9.cc">www@night9.cc</a>“<br>export KEY_OU=”<a href="http://www.night9.cc&quot;">www.night9.cc&quot;</a><br>export KEY_NAME=””<br>export KEY_CN=”*.night9.cc”  </p>
-</blockquote>
-<ul>
-<li><a href="https://github.com/pichuang/easy-rsa/blob/ucc/vars">Source</a></li>
-<li>重點在於 <code>KEY_CN</code>, 此設定可以 match <code>www.night9.cc</code> <code>roan.night9.cc</code>, 但不能 match <code>night9.cc</code></li>
-</ul>
-</li>
-<li><p>Create UCC Key</p>
-<blockquote>
-<p>source ./vars<br>./build-key-server *.night9.cc<br>&lt;enter&gt;…&lt;enter&gt;  </p>
-</blockquote>
-</li>
-<li><p>Check Root CA key and crt</p>
-<blockquote>
-<p>ls -la ./keys/*.night9.cc.{key,crt}</p>
-</blockquote>
-<ul>
-<li>建議將 <code>*.night9.cc</code> 做個改名的動作</li>
-</ul>
-</li>
-<li><p>Check *.night9.cc crt Info</p>
-<blockquote>
-<p>openssl x509 -in *.night9.crt -text -noout</p>
-</blockquote>
-</li>
-<li><p>Show</p>
-<img src="https://lh3.googleusercontent.com/KXjKo-YlEfVaCoXYT--BTAqYCAj1Ca54dL7MqiIqOvs=w874-h1076-no" width="600" height="700">
-
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="http://pki-tutorial.readthedocs.org/en/latest/simple/">OpenSSL PKI Tutorial</a></li>
 <li><a href="http://pages.cs.wisc.edu/~zmiller/ca-howto/">How To Setup a CA</a></li>
 <li><a href="https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html">OpenSSL command line Root and Intermediate CA including OCSP, CRL and revocation</a></li>
 </ul>
@@ -260,57 +260,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Upgrade ONOS Cluster</title>
-    <url>/20160514-upgrade-onos-cluster/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
-<a id="more"></a>
-
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Build Machine<ul>
-<li>MAC OSX 10.11.3</li>
-<li>Java 1.8.0</li>
-<li>Apache Karaf 3.0.5</li>
-<li>Apache Maven 3.3.9</li>
-<li>Misc<ul>
-<li>IP: 10.211.55.2</li>
-<li>Cell name: pichuang</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ONOS1 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.10</li>
-</ul>
-</li>
-<li>ONOS2 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.11</li>
-</ul>
-</li>
-</ul>
-<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
-</ul>
-<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>onos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ONS 2016 之旅</title>
     <url>/20160423-open-networking-summit-2016/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 2016/2 - 2016/3 的時候，我接到了一個頗重的任務，目標是趕在 <a href="http://events.linuxfoundation.org/events/open-networking-summit">ONS 2016</a> 要把 <a href="http://onlab.us">ON.LAB</a> 所主導 SDN Controller 專案 <a href="http://onosproject.org">ONOS</a> 當中的一個 Use Case  <a href="https://wiki.onosproject.org/display/ONOS/SDN-IP">SDN-IP</a> 於台灣交通大學建立起來，並跟國際 REN (Research and Education Network) 連接在一起，專案執行時間不到一個月。</p>
@@ -366,6 +315,57 @@
       <tags>
         <tag>event</tag>
         <tag>ons</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade ONOS Cluster</title>
+    <url>/20160514-upgrade-onos-cluster/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
+<a id="more"></a>
+
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Build Machine<ul>
+<li>MAC OSX 10.11.3</li>
+<li>Java 1.8.0</li>
+<li>Apache Karaf 3.0.5</li>
+<li>Apache Maven 3.3.9</li>
+<li>Misc<ul>
+<li>IP: 10.211.55.2</li>
+<li>Cell name: pichuang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ONOS1 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.10</li>
+</ul>
+</li>
+<li>ONOS2 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.11</li>
+</ul>
+</li>
+</ul>
+<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
+</ul>
+<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>onos</tag>
       </tags>
   </entry>
   <entry>
@@ -1293,6 +1293,39 @@
       </tags>
   </entry>
   <entry>
+    <title>How do I use docker and docker-compose</title>
+    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
+<a id="more"></a>
+
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Ubuntu 14.04.5 LTS Server</li>
+<li>docker-compose 1.11.2</li>
+<li>docker 17.03.0-ce</li>
+</ul>
+<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
+
+<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
+
+<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>docker</tag>
+        <tag>docker-compose</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Install i40e driver into VMWare ESXi</title>
     <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
     <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
@@ -1336,39 +1369,6 @@
         <tag>vmware</tag>
         <tag>intel</tag>
         <tag>driver</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How do I use docker and docker-compose</title>
-    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
-<a id="more"></a>
-
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Ubuntu 14.04.5 LTS Server</li>
-<li>docker-compose 1.11.2</li>
-<li>docker 17.03.0-ce</li>
-</ul>
-<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<!--more-->
-
-<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
-
-<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
-
-<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>docker</tag>
-        <tag>docker-compose</tag>
       </tags>
   </entry>
   <entry>
@@ -1450,6 +1450,101 @@
         <tag>headless</tag>
         <tag>serial</tag>
         <tag>centos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>幾個小建議改善你的 Ansible 技能</title>
+    <url>/20180622-suggestions_to_improve_your_ansible_playbook/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先說本文謹代表個人撰寫 Ansible Playbook 及 Ansible Tower 之經驗累積，不定期會更新內容，僅供參考 XD</p>
+<p>Ansible 本身具備著幾個很顯著的特性: <code>好寫</code>, <code>易讀</code>, <code>Agentless</code>，但說到好寫，也因為寫的花樣特別多，所以 特別撰寫此文留下平時我寫 Ansible Playbook 時會注意的一些地方。當然有些內容會從 Ansible 官方所列的 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#best-practices">Best Practices</a> 截錄過來，但多數還是由我個人撰寫經驗的角度為出發點。</p>
+<a id="more"></a>
+
+<h2 id="Suggestion-1-建議遵從最佳實踐的-Ansible-Direcory-Layout-最佳建議"><a href="#Suggestion-1-建議遵從最佳實踐的-Ansible-Direcory-Layout-最佳建議" class="headerlink" title="Suggestion 1: 建議遵從最佳實踐的 Ansible Direcory Layout 最佳建議"></a>Suggestion 1: 建議遵從最佳實踐的 Ansible Direcory Layout 最佳建議</h2><p>若有常在撰寫 Anisble 的人都知道，若改 <code>ansible.cfg</code> 可以讓很多 playbook 呼叫變數及路徑變得非常的彈性。可以改，但十分不建議這樣做。主要是你同事或跟你交接的工程師不一定會知道你的個人習慣是什麼，建議走最佳實踐及建議之資料夾命名</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">production_inventory</span>         <span class="comment"># production servers 主機目錄</span></span><br><span class="line"><span class="string">staging_inventory</span>            <span class="comment"># staging environment 主機目錄</span></span><br><span class="line"></span><br><span class="line"><span class="string">group_vars/</span></span><br><span class="line">   <span class="string">group1</span>                 <span class="comment"># 以 Group 為單位，賦予對應之變數</span></span><br><span class="line">   <span class="string">group2</span>                 </span><br><span class="line"><span class="string">host_vars/</span></span><br><span class="line">   <span class="string">hostname1</span>              <span class="comment"># 以 host 為單位，賦予對應之變數</span></span><br><span class="line">   <span class="string">hostname2</span>              </span><br><span class="line"></span><br><span class="line"><span class="string">library/</span>                  <span class="comment"># 任何自己寫或自己維護 (也就是非 Built-in) 的 module 都建議放這邊</span></span><br><span class="line"><span class="string">module_utils/</span>             <span class="comment"># 個人很少在用</span></span><br><span class="line">                          <span class="comment"># 可參考 `/usr/lib/python2.7/site-packages/ansible/module_utils` 的內容</span></span><br><span class="line"><span class="string">filter_plugins/</span>           <span class="comment"># 任何自己寫或自己維護 (也就是非 Built-in) 的filter 都建議放這邊</span></span><br><span class="line"></span><br><span class="line"><span class="string">Do_something_for_someone_1.yml</span>       <span class="comment"># 為了某個服務做某事，後面會有詳細建議</span></span><br><span class="line"><span class="string">Do_something_for_someone_2.yml</span></span><br><span class="line"><span class="string">Do_something_for_someone_3.yml</span></span><br><span class="line"></span><br><span class="line"><span class="string">roles/</span></span><br><span class="line">    <span class="string">common/</span>               <span class="comment"># 其中一個 role 的名字 `common`</span></span><br><span class="line">        <span class="string">tasks/</span>            <span class="comment"># common 的 tasks 資料夾</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># common 相關的 tasks action 請先寫在這</span></span><br><span class="line">        <span class="string">handlers/</span>         <span class="comment"># common 裡的事件處理</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># common 相關的 event handler 請先寫在這</span></span><br><span class="line">        <span class="string">templates/</span>        <span class="comment"># common 相關的 jinja2 模板</span></span><br><span class="line">            <span class="string">ntp.conf.j2</span>   <span class="comment"># common 相關的 file template 請先寫在這</span></span><br><span class="line">        <span class="string">files/</span>            <span class="comment"># common 相關的檔案庫</span></span><br><span class="line">            <span class="string">bar.txt</span>       <span class="comment"># common 相關的檔案</span></span><br><span class="line">            <span class="string">foo.sh</span>        <span class="comment"># common 相關的 script 放這邊</span></span><br><span class="line">        <span class="string">vars/</span>             <span class="comment">#</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 跟這個 common 有相關的區域變數宣告請放這邊</span></span><br><span class="line">        <span class="string">defaults/</span>         <span class="comment"># common 相關的預設變數</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 可以寫變數預設值在這邊，但我個人比較推薦寫到 tasks 裡面的 playbook 裡，後面會有詳細建議和寫法</span></span><br><span class="line">        <span class="string">meta/</span>             <span class="comment"># common 相關的其他角色依賴</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 宣告角色依賴</span></span><br><span class="line">        <span class="string">library/</span>          <span class="comment"># 針對 common role 的函式庫</span></span><br><span class="line">        <span class="string">module_utils/</span>     <span class="comment"># 個人很少在用</span></span><br><span class="line">        <span class="string">lookup_plugins/</span>   <span class="comment"># 個人很少在用</span></span><br><span class="line"></span><br><span class="line">    <span class="string">webtier/</span>              <span class="comment"># 呈上的結構</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">        <span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-2-建議-Playbook-命名法"><a href="#Suggestion-2-建議-Playbook-命名法" class="headerlink" title="Suggestion 2: 建議 Playbook 命名法"></a>Suggestion 2: 建議 Playbook 命名法</h2><p><code>Do something for someone</code> 為命名遵照，我知道很多人都是直接用 someone 當作 Playbook 的命名，但因為後面會帶入的其中一個建議 Ansible Tower 所帶來 Workflow 的觀念 - <code>多個 Playbook 序列化執行</code> 及期望維護者能一眼看出這份 Playbook 主要是在針對<code>什麼目標做什麼事情</code>，所以建議此規範。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#不建議</span></span><br><span class="line"><span class="string">webserver.yml</span></span><br><span class="line"><span class="string">database.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#建議</span></span><br><span class="line"><span class="string">deploy-webserver.yml</span></span><br><span class="line"><span class="string">deploy-database.yml</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-3-一個專案一個業務目標"><a href="#Suggestion-3-一個專案一個業務目標" class="headerlink" title="Suggestion 3: 一個專案一個業務目標"></a>Suggestion 3: 一個專案一個業務目標</h2><p>Ansible 最頂端的資料夾叫做 <code>專案 (Project)</code>，其次才是 Playbook 及 roles 等等的文件結構。</p>
+<p>假設今天要部署一個 http server，需要有 lb、www、db，我會將 Playbook 分為以下幾個：</p>
+<ul>
+<li>Deploy_http_server<ul>
+<li>install_lb.yml</li>
+<li>install_<a href="http://www.yml">www.yml</a></li>
+<li>install_db.yml</li>
+<li>check_www_service.yml</li>
+</ul>
+</li>
+</ul>
+<p>以此案例，專案名字叫做 Deploy_http_server，裡面包含上述所列的 playbook，以<code>一個專案一個業務目標</code>為核心，進行 playbook 的撰寫。</p>
+<h2 id="Suggestion-4-變數無給值，預設帶入-default-值"><a href="#Suggestion-4-變數無給值，預設帶入-default-值" class="headerlink" title="Suggestion 4: 變數無給值，預設帶入 default 值"></a>Suggestion 4: 變數無給值，預設帶入 default 值</h2><p>常寫 Shell Script 的人應該常寫以下寫法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FOO=<span class="variable">$&#123;VARIABLE:-default&#125;</span> <span class="comment"># 如果 VARIABLE 無給值，及使用 default 值</span></span><br></pre></td></tr></table></figure>
+
+<p>其實 ansible 也有支援這寫法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: <span class="string">&quot;&#123;&#123; variable_host | default(&#x27;all&#x27;) &#125;&#125;&quot;</span></span><br><span class="line">  tasks:</span><br><span class="line">    - name: ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<p>這個使用情境我個人是應用在部署新 VM 或更新系統時，針對<code>特定主機</code>時會用到，過去要針對新部署的機器上一些修正時，都要去改 hosts 裡面的值，現在用這個寫法可以直接…</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i inventory deploy_new_vm_env --extra-vars=<span class="string">&#x27;variable_host=192.168.100.1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>針對 192.168.100.1 這台機器作部署或上 patch，倘若我都沒有下任何 extra-vars 的話就會直接針對 inventory 內所有機器 all 做處理。</p>
+<p>這個寫法也可以結合 Ansible Tower 裡 Survey 功能進行 Self-service 應用。</p>
+<h2 id="Suggestion-5-Ansible-Workflow-實作提示"><a href="#Suggestion-5-Ansible-Workflow-實作提示" class="headerlink" title="Suggestion 5: Ansible Workflow 實作提示"></a>Suggestion 5: Ansible Workflow 實作提示</h2><p>其實這概念是從 Ansible Tower 延伸出來的，將 <code>將多個 Playbook 序列化執行</code>，這個是在你的業務目標是由多個業務目標所建立起來才會需要的一個作法，你可以把它想成 Agile 專案術語 Epic / Story / Task 對應到 Ansible Workflow / Playbook / Roles。</p>
+<p>Workflow 具體寫法是…</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">deploy_openshift_cluster.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">prerequisite_env.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">deploy_core_componets.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">check_componets.yml</span></span><br></pre></td></tr></table></figure>
+
+<p>倘若你想要的話，也可以 workflow in workflow 持續疊下去，除非你對抽象化程度非常有把握，不然頂多做一層 workflow 應可應付多數需求。</p>
+<p>此外這功能主要是為了 Ansible Tower 設計的，除了具備可視化 Workflow 以外，還有多加錯誤處理，當 playbook 跑道有問題的時候，可以跳到錯誤處理進行應對，譬如發信通知等等。</p>
+<h2 id="Suggestion-6-上版本控制系統-Version-Control-System"><a href="#Suggestion-6-上版本控制系統-Version-Control-System" class="headerlink" title="Suggestion 6: 上版本控制系統 Version Control System"></a>Suggestion 6: 上版本控制系統 Version Control System</h2><p>這邊的版控可以是任何一家的方案 git, svn, mercurial …etc，沒有最佳只有最適合自己的方案，我自己是一律推崇使用 <code>git</code>，無論你是用中央式或分散式的管理方式，都可以用 git 辦到，極度好用</p>
+<p>遵照 Infrastrcture as Code 的思想，盡量對所有 source code 的變動都要有所記錄。上版控有幾個好處，可以…</p>
+<ul>
+<li>允許使用者將檔案恢復到某個時間的狀態</li>
+<li>進行不同時間點的修改</li>
+<li>確認該時間點誰進行了變更導致問題產生</li>
+<li>容易進行備份管理</li>
+</ul>
+<p>Ansible Tower 的專案內容更新也是需要<code>基於版本控制</code>進行設定檔的變動，方便進行 playbook 的內容管理</p>
+<h2 id="Suggestion-7-一-host-搭配多-group-無妨"><a href="#Suggestion-7-一-host-搭配多-group-無妨" class="headerlink" title="Suggestion 7: 一 host 搭配多 group 無妨"></a>Suggestion 7: 一 host 搭配多 group 無妨</h2><p>host 是唯一值，而 group 可以將多個 host 定義再一起，還可以多重定義 host，換個角度說，你可以把 group 當作 tag 來用，對不同的角色、位置、任務來定義，這在下<code>--limit</code> 時會非常好用。</p>
+<p>具體 inventory 寫法如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">infra:children</span>]</span><br><span class="line"><span class="string">db</span></span><br><span class="line"><span class="string">www</span></span><br><span class="line"><span class="string">lb</span></span><br><span class="line"></span><br><span class="line">[<span class="string">db</span>]</span><br><span class="line"><span class="string">tw-db.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">www</span>]</span><br><span class="line"><span class="string">tw-www.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">lb</span>]</span><br><span class="line"><span class="string">tw-lb.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">tw</span>]</span><br><span class="line"><span class="string">tw-db.pichuang.local</span></span><br><span class="line"><span class="string">tw-lb.pichuang.local</span></span><br><span class="line"><span class="string">tw-www.pichuang.local</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-8-少用-ansible-connection-local，改用-ansible-connection-ssh"><a href="#Suggestion-8-少用-ansible-connection-local，改用-ansible-connection-ssh" class="headerlink" title="Suggestion 8: 少用 ansible_connection=local，改用 ansible_connection=ssh"></a>Suggestion 8: 少用 <code>ansible_connection=local</code>，改用 <code>ansible_connection=ssh</code></h2><p>這邊不是要各位不能用 local，而是設計的時候請先以 ssh 連線為優先考量，有其他特殊需求再用 local，這主要會牽扯到 Ansible 連線行為，可以使用 -vvv 觀察；先前有遇過地雷是用 local 執行時，發現會有 permission 和環境變數的問題，經研究 issue 後，確定改成以 ssh 連線後就沒有此問題。此外 Ansible 預設 ansible_connection=ssh 在 inventory 不用特別明寫沒關係。</p>
+<p>具體寫法如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不建議</span></span><br><span class="line"><span class="string">localhost</span> <span class="string">ansible_connection=local</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建議</span></span><br><span class="line"><span class="string">localhost</span> <span class="string">ansible_connection=ssh</span> <span class="string">ansible_host=localhost</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-9-多利用-ping-模組"><a href="#Suggestion-9-多利用-ping-模組" class="headerlink" title="Suggestion 9: 多利用 ping 模組"></a>Suggestion 9: 多利用 <code>ping</code> 模組</h2><p>習慣會在跑任何 playbook 前，先針對我要執行的機器跑 ping 確保我的機器狀況連接是正常，有時候可以透過這個動作提早發生網路跟執行問題。多數時候我都是把這個工作寫成一份通用 playbook，搭配 workflow 來做檢查。此外 Ansible 的 ping 是一個 Ansible 模組，不是單純的 linux tools - ping。</p>
+<p>具體 ping playbook 寫法如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">pingall.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; variable_host | default(&#x27;all&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Test</span> <span class="string">connectivity</span></span><br><span class="line">      <span class="attr">ping:</span></span><br><span class="line">      <span class="attr">register:</span> <span class="string">result</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Print</span> <span class="string">result</span></span><br><span class="line">      <span class="attr">debug:</span></span><br><span class="line">        <span class="attr">msg:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; result &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-10-關閉-gather-facts-加速執行速度"><a href="#Suggestion-10-關閉-gather-facts-加速執行速度" class="headerlink" title="Suggestion 10: 關閉 gather_facts 加速執行速度"></a>Suggestion 10: 關閉 gather_facts 加速執行速度</h2><p>因為 Ansible 本身是 agentless，執行程式預設一開始會先去收集 host 上的環境資訊 (e.g. IP, hostnmae, OS version…)，但管理的機器太多的時候，發現到收集的時間過長，可以選擇把 gather_facts: false，節省收集資訊的時間。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">...</span></span><br><span class="line">      <span class="string">...</span></span><br><span class="line">      <span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-11-設定-fact-cache-用快取環境變數"><a href="#Suggestion-11-設定-fact-cache-用快取環境變數" class="headerlink" title="Suggestion 11: 設定 fact_cache 用快取環境變數"></a>Suggestion 11: 設定 fact_cache 用快取環境變數</h2><p>倘若你真的需要用到 gather_facts 環境資訊，但又不想要短時間內一直等候收集資訊的時間，可以在 ansible.cfg 使用 fact_caching 來當作快取</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">defaults</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="comment"># 除了支援JSON file 以外，還另外支援 redis、memcached，在管大量機器的時候才需要搭配這方面的方案</span></span><br><span class="line"><span class="string">fact_caching</span> <span class="string">=</span> <span class="string">jsonfile</span></span><br><span class="line"><span class="string">fact_caching_connection</span> <span class="string">=</span> <span class="string">/tmp/facts</span></span><br><span class="line"><span class="comment"># hardtimeout</span></span><br><span class="line"><span class="string">fact_caching_timeout</span> <span class="string">=</span> <span class="number">600</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-12-增加-ssh-參數來提升連線的效率"><a href="#Suggestion-12-增加-ssh-參數來提升連線的效率" class="headerlink" title="Suggestion 12: 增加 ssh 參數來提升連線的效率"></a>Suggestion 12: 增加 ssh 參數來提升連線的效率</h2><p>其實這個比較偏向是 ssh 的傳輸調教，最主要是 ControlPersist，可以讓 ssh 建立的連線一直保持著連線，建議開起來以減少重複連線的時間，而 Pipelining 則可以減少 ansible control node 到 host 之間的連線數量，也有助於執行效率</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">ssh_connection</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">ssh_args</span> <span class="string">=</span> <span class="string">-o</span> <span class="string">ControlMaster=auto</span> <span class="string">-o</span> <span class="string">ControlPersist=300s</span></span><br><span class="line"><span class="string">control_path</span> <span class="string">=</span> <span class="string">%(directory)s/%%h-%%r</span></span><br><span class="line"><span class="string">pipelining</span> <span class="string">=</span> <span class="literal">True</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-13-收集-tasks-處理時間"><a href="#Suggestion-13-收集-tasks-處理時間" class="headerlink" title="Suggestion 13: 收集 tasks 處理時間"></a>Suggestion 13: 收集 tasks 處理時間</h2><p>如果每次執行都不知道到底哪個 task 跑得最久和卡在哪裡，可以多加一個 ansible plugin profile_tasks 來做統計處理時間。各位可以看看那精美的 Gathering Facts 所消耗的時間有多久…</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">defaults</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">callback_whitelist</span> <span class="string">=</span> <span class="string">profile_tasks</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-14-盡可能對-Inventory-提供資訊"><a href="#Suggestion-14-盡可能對-Inventory-提供資訊" class="headerlink" title="Suggestion 14: 盡可能對 Inventory 提供資訊"></a>Suggestion 14: 盡可能對 Inventory 提供資訊</h2><p>盡可能在 Inventory 提供明喻資訊，而不採用隱喻資訊，尤其是 <code>ansible_host</code>，確保每個人看到這份 Inventory 的認知是一樣的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不建議</span></span><br><span class="line">db1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建議</span></span><br><span class="line">db1 ansible_host=10.1.2.75</span><br></pre></td></tr></table></figure>
+
+<h2 id="Suggestion-15-對敏感工作不留-Log"><a href="#Suggestion-15-對敏感工作不留-Log" class="headerlink" title="Suggestion 15: 對敏感工作不留 Log"></a>Suggestion 15: 對敏感工作不留 Log</h2><p>若不想在 log 留下任何敏感性資料，可以在該 Task 多加一個 <code>no_log: True</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">- name: Secret Task</span><br><span class="line">  shell: /usr/bin/gg --value=&#123;&#123; secret_value &#125;&#125;</span><br><span class="line">  no_log: True</span><br></pre></td></tr></table></figure>
+
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#best-practices">Ansible - Best Practies</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#directory-layout">Best Pratices - Directory Layout</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>automation</tag>
+        <tag>ansible</tag>
+        <tag>iac</tag>
       </tags>
   </entry>
   <entry>
@@ -1588,171 +1683,6 @@
         <tag>azure</tag>
         <tag>aws</tag>
         <tag>gcp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>幾個小建議改善你的 Ansible 技能</title>
-    <url>/20180622-suggestions_to_improve_your_ansible_playbook/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先說本文謹代表個人撰寫 Ansible Playbook 及 Ansible Tower 之經驗累積，不定期會更新內容，僅供參考 XD</p>
-<p>Ansible 本身具備著幾個很顯著的特性: <code>好寫</code>, <code>易讀</code>, <code>Agentless</code>，但說到好寫，也因為寫的花樣特別多，所以 特別撰寫此文留下平時我寫 Ansible Playbook 時會注意的一些地方。當然有些內容會從 Ansible 官方所列的 <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#best-practices">Best Practices</a> 截錄過來，但多數還是由我個人撰寫經驗的角度為出發點。</p>
-<a id="more"></a>
-
-<h2 id="Suggestion-1-建議遵從最佳實踐的-Ansible-Direcory-Layout-最佳建議"><a href="#Suggestion-1-建議遵從最佳實踐的-Ansible-Direcory-Layout-最佳建議" class="headerlink" title="Suggestion 1: 建議遵從最佳實踐的 Ansible Direcory Layout 最佳建議"></a>Suggestion 1: 建議遵從最佳實踐的 Ansible Direcory Layout 最佳建議</h2><p>若有常在撰寫 Anisble 的人都知道，若改 <code>ansible.cfg</code> 可以讓很多 playbook 呼叫變數及路徑變得非常的彈性。可以改，但十分不建議這樣做。主要是你同事或跟你交接的工程師不一定會知道你的個人習慣是什麼，建議走最佳實踐及建議之資料夾命名</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">production_inventory</span>         <span class="comment"># production servers 主機目錄</span></span><br><span class="line"><span class="string">staging_inventory</span>            <span class="comment"># staging environment 主機目錄</span></span><br><span class="line"></span><br><span class="line"><span class="string">group_vars/</span></span><br><span class="line">   <span class="string">group1</span>                 <span class="comment"># 以 Group 為單位，賦予對應之變數</span></span><br><span class="line">   <span class="string">group2</span>                 </span><br><span class="line"><span class="string">host_vars/</span></span><br><span class="line">   <span class="string">hostname1</span>              <span class="comment"># 以 host 為單位，賦予對應之變數</span></span><br><span class="line">   <span class="string">hostname2</span>              </span><br><span class="line"></span><br><span class="line"><span class="string">library/</span>                  <span class="comment"># 任何自己寫或自己維護 (也就是非 Built-in) 的 module 都建議放這邊</span></span><br><span class="line"><span class="string">module_utils/</span>             <span class="comment"># 個人很少在用</span></span><br><span class="line">                          <span class="comment"># 可參考 `/usr/lib/python2.7/site-packages/ansible/module_utils` 的內容</span></span><br><span class="line"><span class="string">filter_plugins/</span>           <span class="comment"># 任何自己寫或自己維護 (也就是非 Built-in) 的filter 都建議放這邊</span></span><br><span class="line"></span><br><span class="line"><span class="string">Do_something_for_someone_1.yml</span>       <span class="comment"># 為了某個服務做某事，後面會有詳細建議</span></span><br><span class="line"><span class="string">Do_something_for_someone_2.yml</span></span><br><span class="line"><span class="string">Do_something_for_someone_3.yml</span></span><br><span class="line"></span><br><span class="line"><span class="string">roles/</span></span><br><span class="line">    <span class="string">common/</span>               <span class="comment"># 其中一個 role 的名字 `common`</span></span><br><span class="line">        <span class="string">tasks/</span>            <span class="comment"># common 的 tasks 資料夾</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># common 相關的 tasks action 請先寫在這</span></span><br><span class="line">        <span class="string">handlers/</span>         <span class="comment"># common 裡的事件處理</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># common 相關的 event handler 請先寫在這</span></span><br><span class="line">        <span class="string">templates/</span>        <span class="comment"># common 相關的 jinja2 模板</span></span><br><span class="line">            <span class="string">ntp.conf.j2</span>   <span class="comment"># common 相關的 file template 請先寫在這</span></span><br><span class="line">        <span class="string">files/</span>            <span class="comment"># common 相關的檔案庫</span></span><br><span class="line">            <span class="string">bar.txt</span>       <span class="comment"># common 相關的檔案</span></span><br><span class="line">            <span class="string">foo.sh</span>        <span class="comment"># common 相關的 script 放這邊</span></span><br><span class="line">        <span class="string">vars/</span>             <span class="comment">#</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 跟這個 common 有相關的區域變數宣告請放這邊</span></span><br><span class="line">        <span class="string">defaults/</span>         <span class="comment"># common 相關的預設變數</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 可以寫變數預設值在這邊，但我個人比較推薦寫到 tasks 裡面的 playbook 裡，後面會有詳細建議和寫法</span></span><br><span class="line">        <span class="string">meta/</span>             <span class="comment"># common 相關的其他角色依賴</span></span><br><span class="line">            <span class="string">main.yml</span>      <span class="comment"># 宣告角色依賴</span></span><br><span class="line">        <span class="string">library/</span>          <span class="comment"># 針對 common role 的函式庫</span></span><br><span class="line">        <span class="string">module_utils/</span>     <span class="comment"># 個人很少在用</span></span><br><span class="line">        <span class="string">lookup_plugins/</span>   <span class="comment"># 個人很少在用</span></span><br><span class="line"></span><br><span class="line">    <span class="string">webtier/</span>              <span class="comment"># 呈上的結構</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">        <span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-2-建議-Playbook-命名法"><a href="#Suggestion-2-建議-Playbook-命名法" class="headerlink" title="Suggestion 2: 建議 Playbook 命名法"></a>Suggestion 2: 建議 Playbook 命名法</h2><p><code>Do something for someone</code> 為命名遵照，我知道很多人都是直接用 someone 當作 Playbook 的命名，但因為後面會帶入的其中一個建議 Ansible Tower 所帶來 Workflow 的觀念 - <code>多個 Playbook 序列化執行</code> 及期望維護者能一眼看出這份 Playbook 主要是在針對<code>什麼目標做什麼事情</code>，所以建議此規範。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#不建議</span></span><br><span class="line"><span class="string">webserver.yml</span></span><br><span class="line"><span class="string">database.yml</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#建議</span></span><br><span class="line"><span class="string">deploy-webserver.yml</span></span><br><span class="line"><span class="string">deploy-database.yml</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-3-一個專案一個業務目標"><a href="#Suggestion-3-一個專案一個業務目標" class="headerlink" title="Suggestion 3: 一個專案一個業務目標"></a>Suggestion 3: 一個專案一個業務目標</h2><p>Ansible 最頂端的資料夾叫做 <code>專案 (Project)</code>，其次才是 Playbook 及 roles 等等的文件結構。</p>
-<p>假設今天要部署一個 http server，需要有 lb、www、db，我會將 Playbook 分為以下幾個：</p>
-<ul>
-<li>Deploy_http_server<ul>
-<li>install_lb.yml</li>
-<li>install_<a href="http://www.yml">www.yml</a></li>
-<li>install_db.yml</li>
-<li>check_www_service.yml</li>
-</ul>
-</li>
-</ul>
-<p>以此案例，專案名字叫做 Deploy_http_server，裡面包含上述所列的 playbook，以<code>一個專案一個業務目標</code>為核心，進行 playbook 的撰寫。</p>
-<h2 id="Suggestion-4-變數無給值，預設帶入-default-值"><a href="#Suggestion-4-變數無給值，預設帶入-default-值" class="headerlink" title="Suggestion 4: 變數無給值，預設帶入 default 值"></a>Suggestion 4: 變數無給值，預設帶入 default 值</h2><p>常寫 Shell Script 的人應該常寫以下寫法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FOO=<span class="variable">$&#123;VARIABLE:-default&#125;</span> <span class="comment"># 如果 VARIABLE 無給值，及使用 default 值</span></span><br></pre></td></tr></table></figure>
-
-<p>其實 ansible 也有支援這寫法</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: <span class="string">&quot;&#123;&#123; variable_host | default(&#x27;all&#x27;) &#125;&#125;&quot;</span></span><br><span class="line">  tasks:</span><br><span class="line">    - name: ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-
-<p>這個使用情境我個人是應用在部署新 VM 或更新系統時，針對<code>特定主機</code>時會用到，過去要針對新部署的機器上一些修正時，都要去改 hosts 裡面的值，現在用這個寫法可以直接…</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ansible-playbook -i inventory deploy_new_vm_env --extra-vars=<span class="string">&#x27;variable_host=192.168.100.1&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>針對 192.168.100.1 這台機器作部署或上 patch，倘若我都沒有下任何 extra-vars 的話就會直接針對 inventory 內所有機器 all 做處理。</p>
-<p>這個寫法也可以結合 Ansible Tower 裡 Survey 功能進行 Self-service 應用。</p>
-<h2 id="Suggestion-5-Ansible-Workflow-實作提示"><a href="#Suggestion-5-Ansible-Workflow-實作提示" class="headerlink" title="Suggestion 5: Ansible Workflow 實作提示"></a>Suggestion 5: Ansible Workflow 實作提示</h2><p>其實這概念是從 Ansible Tower 延伸出來的，將 <code>將多個 Playbook 序列化執行</code>，這個是在你的業務目標是由多個業務目標所建立起來才會需要的一個作法，你可以把它想成 Agile 專案術語 Epic / Story / Task 對應到 Ansible Workflow / Playbook / Roles。</p>
-<p>Workflow 具體寫法是…</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">deploy_openshift_cluster.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">prerequisite_env.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">deploy_core_componets.yml</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">import_playbook:</span> <span class="string">check_componets.yml</span></span><br></pre></td></tr></table></figure>
-
-<p>倘若你想要的話，也可以 workflow in workflow 持續疊下去，除非你對抽象化程度非常有把握，不然頂多做一層 workflow 應可應付多數需求。</p>
-<p>此外這功能主要是為了 Ansible Tower 設計的，除了具備可視化 Workflow 以外，還有多加錯誤處理，當 playbook 跑道有問題的時候，可以跳到錯誤處理進行應對，譬如發信通知等等。</p>
-<h2 id="Suggestion-6-上版本控制系統-Version-Control-System"><a href="#Suggestion-6-上版本控制系統-Version-Control-System" class="headerlink" title="Suggestion 6: 上版本控制系統 Version Control System"></a>Suggestion 6: 上版本控制系統 Version Control System</h2><p>這邊的版控可以是任何一家的方案 git, svn, mercurial …etc，沒有最佳只有最適合自己的方案，我自己是一律推崇使用 <code>git</code>，無論你是用中央式或分散式的管理方式，都可以用 git 辦到，極度好用</p>
-<p>遵照 Infrastrcture as Code 的思想，盡量對所有 source code 的變動都要有所記錄。上版控有幾個好處，可以…</p>
-<ul>
-<li>允許使用者將檔案恢復到某個時間的狀態</li>
-<li>進行不同時間點的修改</li>
-<li>確認該時間點誰進行了變更導致問題產生</li>
-<li>容易進行備份管理</li>
-</ul>
-<p>Ansible Tower 的專案內容更新也是需要<code>基於版本控制</code>進行設定檔的變動，方便進行 playbook 的內容管理</p>
-<h2 id="Suggestion-7-一-host-搭配多-group-無妨"><a href="#Suggestion-7-一-host-搭配多-group-無妨" class="headerlink" title="Suggestion 7: 一 host 搭配多 group 無妨"></a>Suggestion 7: 一 host 搭配多 group 無妨</h2><p>host 是唯一值，而 group 可以將多個 host 定義再一起，還可以多重定義 host，換個角度說，你可以把 group 當作 tag 來用，對不同的角色、位置、任務來定義，這在下<code>--limit</code> 時會非常好用。</p>
-<p>具體 inventory 寫法如下</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">infra:children</span>]</span><br><span class="line"><span class="string">db</span></span><br><span class="line"><span class="string">www</span></span><br><span class="line"><span class="string">lb</span></span><br><span class="line"></span><br><span class="line">[<span class="string">db</span>]</span><br><span class="line"><span class="string">tw-db.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">www</span>]</span><br><span class="line"><span class="string">tw-www.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">lb</span>]</span><br><span class="line"><span class="string">tw-lb.pichuang.local</span></span><br><span class="line"></span><br><span class="line">[<span class="string">tw</span>]</span><br><span class="line"><span class="string">tw-db.pichuang.local</span></span><br><span class="line"><span class="string">tw-lb.pichuang.local</span></span><br><span class="line"><span class="string">tw-www.pichuang.local</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-8-少用-ansible-connection-local，改用-ansible-connection-ssh"><a href="#Suggestion-8-少用-ansible-connection-local，改用-ansible-connection-ssh" class="headerlink" title="Suggestion 8: 少用 ansible_connection=local，改用 ansible_connection=ssh"></a>Suggestion 8: 少用 <code>ansible_connection=local</code>，改用 <code>ansible_connection=ssh</code></h2><p>這邊不是要各位不能用 local，而是設計的時候請先以 ssh 連線為優先考量，有其他特殊需求再用 local，這主要會牽扯到 Ansible 連線行為，可以使用 -vvv 觀察；先前有遇過地雷是用 local 執行時，發現會有 permission 和環境變數的問題，經研究 issue 後，確定改成以 ssh 連線後就沒有此問題。此外 Ansible 預設 ansible_connection=ssh 在 inventory 不用特別明寫沒關係。</p>
-<p>具體寫法如下</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不建議</span></span><br><span class="line"><span class="string">localhost</span> <span class="string">ansible_connection=local</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建議</span></span><br><span class="line"><span class="string">localhost</span> <span class="string">ansible_connection=ssh</span> <span class="string">ansible_host=localhost</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-9-多利用-ping-模組"><a href="#Suggestion-9-多利用-ping-模組" class="headerlink" title="Suggestion 9: 多利用 ping 模組"></a>Suggestion 9: 多利用 <code>ping</code> 模組</h2><p>習慣會在跑任何 playbook 前，先針對我要執行的機器跑 ping 確保我的機器狀況連接是正常，有時候可以透過這個動作提早發生網路跟執行問題。多數時候我都是把這個工作寫成一份通用 playbook，搭配 workflow 來做檢查。此外 Ansible 的 ping 是一個 Ansible 模組，不是單純的 linux tools - ping。</p>
-<p>具體 ping playbook 寫法如下</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">pingall.yml</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; variable_host | default(&#x27;all&#x27;) &#125;&#125;</span>&quot;</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Test</span> <span class="string">connectivity</span></span><br><span class="line">      <span class="attr">ping:</span></span><br><span class="line">      <span class="attr">register:</span> <span class="string">result</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Print</span> <span class="string">result</span></span><br><span class="line">      <span class="attr">debug:</span></span><br><span class="line">        <span class="attr">msg:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; result &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-10-關閉-gather-facts-加速執行速度"><a href="#Suggestion-10-關閉-gather-facts-加速執行速度" class="headerlink" title="Suggestion 10: 關閉 gather_facts 加速執行速度"></a>Suggestion 10: 關閉 gather_facts 加速執行速度</h2><p>因為 Ansible 本身是 agentless，執行程式預設一開始會先去收集 host 上的環境資訊 (e.g. IP, hostnmae, OS version…)，但管理的機器太多的時候，發現到收集的時間過長，可以選擇把 gather_facts: false，節省收集資訊的時間。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">...</span></span><br><span class="line">      <span class="string">...</span></span><br><span class="line">      <span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-11-設定-fact-cache-用快取環境變數"><a href="#Suggestion-11-設定-fact-cache-用快取環境變數" class="headerlink" title="Suggestion 11: 設定 fact_cache 用快取環境變數"></a>Suggestion 11: 設定 fact_cache 用快取環境變數</h2><p>倘若你真的需要用到 gather_facts 環境資訊，但又不想要短時間內一直等候收集資訊的時間，可以在 ansible.cfg 使用 fact_caching 來當作快取</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">defaults</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="comment"># 除了支援JSON file 以外，還另外支援 redis、memcached，在管大量機器的時候才需要搭配這方面的方案</span></span><br><span class="line"><span class="string">fact_caching</span> <span class="string">=</span> <span class="string">jsonfile</span></span><br><span class="line"><span class="string">fact_caching_connection</span> <span class="string">=</span> <span class="string">/tmp/facts</span></span><br><span class="line"><span class="comment"># hardtimeout</span></span><br><span class="line"><span class="string">fact_caching_timeout</span> <span class="string">=</span> <span class="number">600</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-12-增加-ssh-參數來提升連線的效率"><a href="#Suggestion-12-增加-ssh-參數來提升連線的效率" class="headerlink" title="Suggestion 12: 增加 ssh 參數來提升連線的效率"></a>Suggestion 12: 增加 ssh 參數來提升連線的效率</h2><p>其實這個比較偏向是 ssh 的傳輸調教，最主要是 ControlPersist，可以讓 ssh 建立的連線一直保持著連線，建議開起來以減少重複連線的時間，而 Pipelining 則可以減少 ansible control node 到 host 之間的連線數量，也有助於執行效率</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">cat</span> <span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">ssh_connection</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">ssh_args</span> <span class="string">=</span> <span class="string">-o</span> <span class="string">ControlMaster=auto</span> <span class="string">-o</span> <span class="string">ControlPersist=300s</span></span><br><span class="line"><span class="string">control_path</span> <span class="string">=</span> <span class="string">%(directory)s/%%h-%%r</span></span><br><span class="line"><span class="string">pipelining</span> <span class="string">=</span> <span class="literal">True</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-13-收集-tasks-處理時間"><a href="#Suggestion-13-收集-tasks-處理時間" class="headerlink" title="Suggestion 13: 收集 tasks 處理時間"></a>Suggestion 13: 收集 tasks 處理時間</h2><p>如果每次執行都不知道到底哪個 task 跑得最久和卡在哪裡，可以多加一個 ansible plugin profile_tasks 來做統計處理時間。各位可以看看那精美的 Gathering Facts 所消耗的時間有多久…</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">/etc/ansible/ansible.cfg</span></span><br><span class="line"></span><br><span class="line">[<span class="string">defaults</span>]</span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">callback_whitelist</span> <span class="string">=</span> <span class="string">profile_tasks</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-14-盡可能對-Inventory-提供資訊"><a href="#Suggestion-14-盡可能對-Inventory-提供資訊" class="headerlink" title="Suggestion 14: 盡可能對 Inventory 提供資訊"></a>Suggestion 14: 盡可能對 Inventory 提供資訊</h2><p>盡可能在 Inventory 提供明喻資訊，而不採用隱喻資訊，尤其是 <code>ansible_host</code>，確保每個人看到這份 Inventory 的認知是一樣的</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不建議</span></span><br><span class="line">db1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建議</span></span><br><span class="line">db1 ansible_host=10.1.2.75</span><br></pre></td></tr></table></figure>
-
-<h2 id="Suggestion-15-對敏感工作不留-Log"><a href="#Suggestion-15-對敏感工作不留-Log" class="headerlink" title="Suggestion 15: 對敏感工作不留 Log"></a>Suggestion 15: 對敏感工作不留 Log</h2><p>若不想在 log 留下任何敏感性資料，可以在該 Task 多加一個 <code>no_log: True</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">- name: Secret Task</span><br><span class="line">  shell: /usr/bin/gg --value=&#123;&#123; secret_value &#125;&#125;</span><br><span class="line">  no_log: True</span><br></pre></td></tr></table></figure>
-
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
-<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#best-practices">Ansible - Best Practies</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#directory-layout">Best Pratices - Directory Layout</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>automation</tag>
-        <tag>ansible</tag>
-        <tag>iac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
-</blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
-</ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
-<ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
-</ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
       </tags>
   </entry>
   <entry>
@@ -1982,6 +1912,76 @@
         <tag>bonding</tag>
         <tag>teaming</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+</blockquote>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
+<ol>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
+</ol>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+</ol>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
       </tags>
   </entry>
   <entry>
@@ -2556,8 +2556,8 @@
         <category>ansible</category>
       </categories>
       <tags>
-        <tag>openapi</tag>
         <tag>ansible</tag>
+        <tag>openapi</tag>
         <tag>redhat</tag>
         <tag>restful</tag>
       </tags>
@@ -3809,76 +3809,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
-    <url>/20191114-homelcloud-high-level-design-1/</url>
-    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
-<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
-<a id="more"></a>
-
-<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
-<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
-<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
-<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
-<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
-<li>所有服務，能虛擬化的全部採用虛擬化</li>
-<li>因為沒錢，所以不考慮任何高可用性的問題</li>
-<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
-<li>建立 Chat Center，用 bot 跟自己聊天</li>
-</ol>
-<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
-<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
-<ol>
-<li>SSL VPN: Synology RT2600ac</li>
-<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
-<li>Storage: Synology DS916+</li>
-<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
-</ol>
-<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
-<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
-<p>Q: 為什麼會說改造呢?</p>
-<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
-<p><img src="/images/vpn-plus.png" alt=""></p>
-<p>Q: 那有沒有可以替代的方案呢?</p>
-<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
-<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
-<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
-<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
-<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
-<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
-<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
-<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
-<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
-<p>Q: 為什麼要點點點…</p>
-<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
-<p>Q: VM 主要跑什麼?</p>
-<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
-<p><img src="/images/homecloud-powerstate.png" alt=""></p>
-<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
-<p><img src="/images/ansible-tower-approval.png" alt=""></p>
-<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
-<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
-<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
-<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
-<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
-<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
-<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
-
-<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
-<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹</title>
     <url>/20191115-homelcloud-high-level-design-2/</url>
     <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1 - Phil Workspace</a> 所提到一些關於核心裝備的列舉和使用理由，本篇會比較著重在宅宅雲塔式 Server 的介紹</p>
@@ -4025,67 +3955,65 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
-    <url>/20191116-homelcloud-high-level-design-4/</url>
-    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
-<p><img src="/images/pfsense-logo.png" alt=""></p>
-<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
+    <title>2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</title>
+    <url>/20191114-homelcloud-high-level-design-1/</url>
+    <content><![CDATA[<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
+<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
 <a id="more"></a>
 
-<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
-<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
-<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
-<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
-<p><img src="/images/pfsense-9.png" alt=""></p>
-<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
-<p><img src="/images/pfsense-10.png" alt=""></p>
-<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
-<ol>
-<li>vmx0: WAN</li>
-<li>vmx1: LAN &lt;– 選他</li>
+<h2 id="宅宅雲總體戰略目標"><a href="#宅宅雲總體戰略目標" class="headerlink" title="宅宅雲總體戰略目標"></a>宅宅雲總體戰略目標</h2><ol>
+<li>從世界各地的某個角落，遠端啟動或關閉<strong>整座</strong>宅宅雲</li>
+<li>宅宅雲要支援多網段，方便將不同目的或專案在不同網段上切割實作</li>
+<li>所有機器需具備 FQDN，宅宅雲內部的所有機器都可正反解</li>
+<li>懶得每次都在那邊點例外處理的按鈕，所以自簽 SSL/TLS 而有用到的服務全都要上</li>
+<li>所有服務，能虛擬化的全部採用虛擬化</li>
+<li>因為沒錢，所以不考慮任何高可用性的問題</li>
+<li>無聊的設定工作，做超過三次，考慮或使用 Ansible 自動化流程</li>
+<li>建立 Chat Center，用 bot 跟自己聊天</li>
 </ol>
-<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
-<p>Q: 這樣就搞定了嗎!?</p>
-<p><img src="/images/pfsense-11.png" alt=""></p>
-<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
-<p><img src="/images/pfsense-12.png" alt=""></p>
-<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
-<p><img src="/images/pfsense-2.png" alt=""></p>
-<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
+<h2 id="HLD-架構圖"><a href="#HLD-架構圖" class="headerlink" title="HLD 架構圖"></a>HLD 架構圖</h2><p><img src="/images/homecloud-1.png" alt=""></p>
+<h2 id="核心硬體裝備"><a href="#核心硬體裝備" class="headerlink" title="核心硬體裝備"></a>核心硬體裝備</h2><p>打英雄聯盟的時候，每個角色都會有所謂的核心裝備，而相同的在做基礎架構，我個人推薦也真的有使用的核心裝備如下：</p>
 <ol>
-<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
-<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
-<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
+<li>SSL VPN: Synology RT2600ac</li>
+<li>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</li>
+<li>Storage: Synology DS916+</li>
+<li>宅宅雲: 自組塔式伺服器 (內建 IPMI)</li>
 </ol>
-<p><img src="/images/pfsense-14.png" alt=""></p>
-<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
-<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
-<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
-<p><img src="/images/pfsense-15.png" alt=""></p>
-<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
-<blockquote>
-<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
-</blockquote>
-<p><img src="/images/pfsense-16.png" alt=""></p>
-<p>所以你需要多一條 Rule</p>
-<ul>
-<li>Family: IPv4</li>
-<li>Protocol: any</li>
-<li>Source: any</li>
-<li>S Port: any</li>
-<li>Destination: any</li>
-<li>D Port: any</li>
-</ul>
-<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
-<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
-<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
-<ul>
-<li>Time Synchronization: ntp</li>
-<li>DNS: bind</li>
-<li>VPN: OpenVPN</li>
-</ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
-<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
+<p>在平時沒用宅宅雲的狀態下，1/2/3 項次會保持全年全天開機常駐的狀態，有需要做 Lab 的時候才會把 4 開起來，因為最吃電</p>
+<h3 id="SSL-VPN-Synology-RT2600ac"><a href="#SSL-VPN-Synology-RT2600ac" class="headerlink" title="SSL VPN: Synology RT2600ac"></a>SSL VPN: Synology RT2600ac</h3><p>有一天的晚上，發現 Synology RT2600ac 除了有一般 802.11ac / DHCP 等家用功能以外，還有 VPN Plus 的功能可以使用，所以就開啟了大改造宅宅雲之路。</p>
+<p>Q: 為什麼會說改造呢?</p>
+<p>因為一開始的時候 WAN 是走 4G USB Dongle 上網的，SSL VPN 不能用，後來退掉換成光世代，申請 1+7 固定 IP 方案，才能正常運作 SSL VPN。此外，Synology VPN Plus 預設只有授權一個人使用，要多人連線的話要另外採購授權，詳細請洽他們業務。</p>
+<p><img src="/images/vpn-plus.png" alt=""></p>
+<p>Q: 那有沒有可以替代的方案呢?</p>
+<p>答案是有的，只要有服務能支援 OpenVPN / IPSec (例: pfSense / OPNsense / …) 能上 Public Static IP 都可以當作 VPN Server 使用，我個人先前是比較傾向用 OpenVPN on VM 為主，架構可參考以前寫的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a>。家用因為還有其他設備需要無線上網 (手機 / 筆電 / Chromecast / PS4 / NS)，所以把主要網路核心放在 RT2600ac 身上。</p>
+<h3 id="Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition"><a href="#Bastion-Lenovo-T480s-Red-Hat-Employee-Special-Edition" class="headerlink" title="Bastion: Lenovo T480s (Red Hat Employee Special Edition)"></a>Bastion: Lenovo T480s (Red Hat Employee Special Edition)</h3><p>這台是入職 Red Hat 的時候配發的筆電，老闆說：<strong>身為一個 Red Hat Infra Solution Architect 就應該要灌 RHEL / Fedora…</strong>，恩…所以我把他當堡壘機用，沒事不關機。</p>
+<p>既然身為一台堡壘機，就是期望在什麼狀況下都要屹立不搖，包含停電和瞬斷，剛好這台是個筆電，內建有電池，平時又插著電源，故入職後到進行大改造宅宅雲之前，累積了 386 天的 Uptime，上次養這麼久的 Server 應該是研究所的時代了… (菸</p>
+<p><img src="/images/rhel7-poweron.jpg" alt=""></p>
+<p>Q: 他既然是個堡壘機，那幹嘛動它?</p>
+<p>理由是資源使用率太低了，先前只是寫寫一些怪東西，跑幾個 Ansible Playbook，絕大部分時間空有 8C / 24G 在那邊閒置，不如讓他做點有意義的事情，所以改造如下：</p>
+<h4 id="RHEL-7-7-重灌成-RHEL-8-1"><a href="#RHEL-7-7-重灌成-RHEL-8-1" class="headerlink" title="RHEL 7.7 重灌成 RHEL 8.1"></a>RHEL 7.7 重灌成 RHEL 8.1</h4><p><img src="/images/rhel8-1.jpg" alt=""></p>
+<p>剛好順便要開始熟悉 RHEL 8 系列了，所以趁機換裝練習看看，關於詳細的新功能條列可以參考 <a href="https://openingsource.org/6629/zh-tw/">Red Hat Enterprise Linux 8.0 正式發布 - 開源工場</a></p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-VM"><a href="#RHEL-8-1-裝備-Cockpit-管理-VM" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 VM"></a>RHEL 8.1 裝備 Cockpit 管理 VM</h4><p><img src="/images/rhel8-2.jpg" alt=""></p>
+<p>基礎就是使用 KVM libvirt，所以只要建好 Linux Bridage 對接 Physical NIC 即可好好使用………………………………….</p>
+<p>Q: 為什麼要點點點…</p>
+<p>因為 RHEL 8 開始要開始宣揚 NetworkManager 的美好 (?) 了，所以如果你習慣開場把 NM 關掉的小夥伴 (小弟我)，會發現到一些神祕的現象，所以眾多考量下，還是學一下 <code>nmcli</code>。關於 Linux Bridge with nmcli 詳細步驟請參閱 <a href="https://computingforgeeks.com/how-to-create-a-linux-network-bridge-on-rhel-centos-8/">Create a Linux Network Bridge on RHEL 8 / CentOS 8 with nmcli</a>，步驟寫的很乾淨的一篇。</p>
+<p>Q: VM 主要跑什麼?</p>
+<p>最主要是<code>Ansible 自動化</code>，過往我都是寫完 Ansible Playbook 就直接在堡壘機上執行，但我後來實在是寫到花掉，忘記怎麼下，所以就動用了紅帽員工的神力建了 Red Hat Ansible Tower 起來，後來我的所有操作都在 Ansible Tower 上面，包含用 IPMI 去開關機宅宅雲…</p>
+<p><img src="/images/homecloud-powerstate.png" alt=""></p>
+<p>[工商時間] 就在 2019/11/14 這天 Red Hat Ansible Tower 發佈了 3.6.1 版本，自帶 Approval 按紐啊啊啊啊啊啊!!!! </p>
+<p><img src="/images/ansible-tower-approval.png" alt=""></p>
+<p>關於我之前未改造前的 Ansible Tower 的定位，後面會找個一篇講下，這服務對我個人使用來說跟 SSL VPN 同等重要。</p>
+<h4 id="RHEL-8-1-裝備-Cockpit-管理-Container"><a href="#RHEL-8-1-裝備-Cockpit-管理-Container" class="headerlink" title="RHEL 8.1 裝備 Cockpit 管理 Container"></a>RHEL 8.1 裝備 Cockpit 管理 Container</h4><p><img src="/images/rhel8-3.jpg" alt=""></p>
+<p>這邊要特別講一下關於 Container 的事情，Red Hat 目前主要推行的容器專案是以 (下圖由左至右) Podman / Buildah / Skopeo 為主，不主推 Docker 為主的專案，但兩者都是支援 OCI (Open Container Initiative) Runtime 的標準規範，所以在使用上起來幾乎是大同小異，有興趣想要使用同一份 Dockerfile 自己用 podman 及 docker 編起來試試看的，可以參考 <a href="https://github.com/pichuang/debug-container">pichuang/debug-container</a> 內有 Makefile 方便理解；若想要理解關於 OCI 的兩三事，請參考 <a href="https://www.hwchiu.com/container-design-ii.html">[Day3] 淺談 Container 實現原理, 探討 OCI 實作 - hwchiu</a></p>
+<p><img src="/images/buildah-podman-skopeo.png" alt=""></p>
+<h3 id="Storage-Synology-DS916"><a href="#Storage-Synology-DS916" class="headerlink" title="Storage: Synology DS916+"></a>Storage: Synology DS916+</h3><p>NAS 理所當然地被我拿來當 NFS Server 裡面存一些特殊性資料</p>
+<p>除了 NFS 的服務以外，全站的 DNS Server 我也是放在上面，不得不說…這個 S 社 GUI 真的做得還可以啊…DNS Entry 點點敲敲就有了。</p>
+<p>回到架構面上，NAS 很少人在關機吧？個人判斷 NAS 被關機機會基本上還是會小於堡壘機 (斷電除外)，剛好宅宅雲的建置條件都有配置內部的 FQDN，我沒有習慣寫 <code>/etc/hosts</code>，基於 <code>/etc/nsswitch.conf</code> 內指示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;nsswitch.conf</span><br><span class="line">...omit...</span><br><span class="line">hosts:      files dns myhostname</span><br><span class="line">...omit...</span><br></pre></td></tr></table></figure>
+
+<p>所以 DNS 對宅宅雲來說跟 NFS 服務一樣角色吃重，所以選擇放在跟 NAS 一起的位置。</p>
+<h3 id="宅宅雲-自組塔式伺服器"><a href="#宅宅雲-自組塔式伺服器" class="headerlink" title="宅宅雲: 自組塔式伺服器"></a>宅宅雲: 自組塔式伺服器</h3><p>這台資訊太多之後下一篇講 XD<br>傳送門: <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2">2019 大改造宅宅雲架構系列文-2</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這篇主要是留個紀錄，基本架構都是基於先前在 Edgecore Network 工作時自建遠端環境的經驗 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure - Phil Huang</a> 轉換情境到家中這種小規模時的架構紀錄，沒有絕對對錯 (有一些物理上的考量)，僅供參考</p>
 ]]></content>
       <categories>
         <category>homecloud</category>
@@ -4179,6 +4107,78 @@
       </tags>
   </entry>
   <entry>
+    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
+    <url>/20191116-homelcloud-high-level-design-4/</url>
+    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img src="/images/pfsense-logo.png" alt=""></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
+<a id="more"></a>
+
+<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
+<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
+<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
+<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
+<p><img src="/images/pfsense-9.png" alt=""></p>
+<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
+<p><img src="/images/pfsense-10.png" alt=""></p>
+<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
+<ol>
+<li>vmx0: WAN</li>
+<li>vmx1: LAN &lt;– 選他</li>
+</ol>
+<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
+<p>Q: 這樣就搞定了嗎!?</p>
+<p><img src="/images/pfsense-11.png" alt=""></p>
+<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
+<p><img src="/images/pfsense-12.png" alt=""></p>
+<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
+<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
+<ol>
+<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
+<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
+<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
+</ol>
+<p><img src="/images/pfsense-14.png" alt=""></p>
+<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
+<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
+<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
+<p><img src="/images/pfsense-15.png" alt=""></p>
+<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
+<blockquote>
+<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
+</blockquote>
+<p><img src="/images/pfsense-16.png" alt=""></p>
+<p>所以你需要多一條 Rule</p>
+<ul>
+<li>Family: IPv4</li>
+<li>Protocol: any</li>
+<li>Source: any</li>
+<li>S Port: any</li>
+<li>Destination: any</li>
+<li>D Port: any</li>
+</ul>
+<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
+<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
+<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
+<ul>
+<li>Time Synchronization: ntp</li>
+<li>DNS: bind</li>
+<li>VPN: OpenVPN</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
+<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019 年度個人回顧</title>
     <url>/20191231-2019-personal-review/</url>
     <content><![CDATA[<p>完整的日曆年過了，來個年度回顧紀錄</p>
@@ -4215,6 +4215,47 @@
       <tags>
         <tag>misc</tag>
         <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
+    <url>/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</url>
+    <content><![CDATA[<p>當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? </p>
+<p>本文將使用 <a href="https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&tab=tags">Workshop Terminal</a> 來當作 shell 來做使用</p>
+<p><img src="/images/terminal-quay.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="部署環境"><a href="#部署環境" class="headerlink" title="部署環境"></a>部署環境</h2><ul>
+<li>Red Hat OpenShift 4.2.7</li>
+<li>openshifthomeroom/workshop-terminal 3.4.2</li>
+</ul>
+<h2 id="部署-workshop-terminal"><a href="#部署-workshop-terminal" class="headerlink" title="部署 workshop-terminal"></a>部署 workshop-terminal</h2><p>以專案 terminal-admin 為例，很簡單，三行搞定</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change project name terminal-admin if you want </span></span><br><span class="line">oc project terminal-admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deploy workshop-terminal Template</span></span><br><span class="line">oc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Obtain URL link</span></span><br><span class="line">oc get route terminal</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>View of Object Overview<br><img src="/images/terminal-overview.png" alt=""></p>
+</li>
+<li><p>View of Object Resouces<br><img src="/images/terminal-resources.png" alt=""></p>
+</li>
+</ul>
+<h2 id="移除-workshop-terminal"><a href="#移除-workshop-terminal" class="headerlink" title="移除 workshop-terminal"></a>移除 workshop-terminal</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc project terminal-admin</span><br><span class="line">oc delete all,serviceaccount,rolebinding,configmap -l app=terminal</span><br></pre></td></tr></table></figure>
+
+<h2 id="PS1-上色"><a href="#PS1-上色" class="headerlink" title="PS1 上色"></a>PS1 上色</h2><p>因為預設的 PS1 太難看了，上個色，好使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/terminal-environment.png" alt=""></p>
+<h2 id="設定密碼"><a href="#設定密碼" class="headerlink" title="設定密碼"></a>設定密碼</h2><p>上個 <code>HTTP Basic authentication</code> 用用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change the USERNAME and PASSWORD if you want</span></span><br><span class="line">oc <span class="built_in">set</span> env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat</span><br></pre></td></tr></table></figure>
+
+<h2 id="想要打包其他的程式進去"><a href="#想要打包其他的程式進去" class="headerlink" title="想要打包其他的程式進去?"></a>想要打包其他的程式進去?</h2><p>請參考 <a href="https://github.com/openshift-homeroom/workshop-terminal#creating-a-custom-image">Creating a custom image</a> 章節</p>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>web-console</tag>
       </tags>
   </entry>
   <entry>
@@ -4282,47 +4323,6 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>部署 Workshop Terminal 於 Red Hat OpenShift 4</title>
-    <url>/20200101-deploy-workhsop-terminal-on-redhat-openshift-4/</url>
-    <content><![CDATA[<p>當你出門在外，遇到要帶一群人進行 Workshop，但學員的電腦各種無法安裝 Putty、XShell，該怎麼辦? </p>
-<p>本文將使用 <a href="https://quay.io/repository/openshifthomeroom/workshop-terminal?tag=master&tab=tags">Workshop Terminal</a> 來當作 shell 來做使用</p>
-<p><img src="/images/terminal-quay.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="部署環境"><a href="#部署環境" class="headerlink" title="部署環境"></a>部署環境</h2><ul>
-<li>Red Hat OpenShift 4.2.7</li>
-<li>openshifthomeroom/workshop-terminal 3.4.2</li>
-</ul>
-<h2 id="部署-workshop-terminal"><a href="#部署-workshop-terminal" class="headerlink" title="部署 workshop-terminal"></a>部署 workshop-terminal</h2><p>以專案 terminal-admin 為例，很簡單，三行搞定</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change project name terminal-admin if you want </span></span><br><span class="line">oc project terminal-admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deploy workshop-terminal Template</span></span><br><span class="line">oc new-app https://raw.githubusercontent.com/openshift-homeroom/workshop-terminal/master/templates/production.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Obtain URL link</span></span><br><span class="line">oc get route terminal</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>View of Object Overview<br><img src="/images/terminal-overview.png" alt=""></p>
-</li>
-<li><p>View of Object Resouces<br><img src="/images/terminal-resources.png" alt=""></p>
-</li>
-</ul>
-<h2 id="移除-workshop-terminal"><a href="#移除-workshop-terminal" class="headerlink" title="移除 workshop-terminal"></a>移除 workshop-terminal</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc project terminal-admin</span><br><span class="line">oc delete all,serviceaccount,rolebinding,configmap -l app=terminal</span><br></pre></td></tr></table></figure>
-
-<h2 id="PS1-上色"><a href="#PS1-上色" class="headerlink" title="PS1 上色"></a>PS1 上色</h2><p>因為預設的 PS1 太難看了，上個色，好使用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\[\e[1;36m\]\t \[\e[01;31m\]\u\[\e[m\]@\h \n$ &quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/terminal-environment.png" alt=""></p>
-<h2 id="設定密碼"><a href="#設定密碼" class="headerlink" title="設定密碼"></a>設定密碼</h2><p>上個 <code>HTTP Basic authentication</code> 用用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change the USERNAME and PASSWORD if you want</span></span><br><span class="line">oc <span class="built_in">set</span> env dc/terminal AUTH_USERNAME=redhat AUTH_PASSWORD=redhat</span><br></pre></td></tr></table></figure>
-
-<h2 id="想要打包其他的程式進去"><a href="#想要打包其他的程式進去" class="headerlink" title="想要打包其他的程式進去?"></a>想要打包其他的程式進去?</h2><p>請參考 <a href="https://github.com/openshift-homeroom/workshop-terminal#creating-a-custom-image">Creating a custom image</a> 章節</p>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>web-console</tag>
       </tags>
   </entry>
   <entry>
@@ -6692,6 +6692,84 @@
       <tags>
         <tag>misc</tag>
         <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
+    <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
+    <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
+<p>有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/yGhcPmTtoPU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="正常的-Kubernetes-介紹"><a href="#正常的-Kubernetes-介紹" class="headerlink" title="正常的 Kubernetes 介紹"></a>正常的 Kubernetes 介紹</h2><p>我不太會講，貼別人的比較快</p>
+<ul>
+<li><a href="https://www.hwchiu.com/">Hwchiu Learning Note - Hwchiu</a></li>
+<li><a href="https://k2r2bai.com/2019/09/19/ironman2020/day04/">淺談 Kubernetes 高可靠架構 - Kyle</a></li>
+</ul>
+<h2 id="中翻中的-Kubernetes-組件介紹"><a href="#中翻中的-Kubernetes-組件介紹" class="headerlink" title="中翻中的 Kubernetes 組件介紹"></a>中翻中的 Kubernetes 組件介紹</h2><p><img src="/images/building.jpeg" alt=""></p>
+<blockquote>
+<p>我們就是在蓋一個中大型住戶社區</p>
+</blockquote>
+<p>請先想像建立 Kubernetes 完整的叢集服務，其實就像是要建立一個大型住戶社區，那所對應的幾個名詞解釋就會是下面的描述</p>
+<ul>
+<li>Kubernetes：建立一個住戶社區的標準藍圖</li>
+<li>虛擬機、實體機、公有雲：住戶社區內一棟一棟的大樓</li>
+<li>OS 作業系統：大樓骨幹跟地基</li>
+<li>Master Node：住戶社區管委會主要居住大樓，為保持高可用最少要 3 棟</li>
+<li>Etcd Cluster：三位管委，互相投票選出一位委員長</li>
+<li>Worker Node：住戶們主要居住大樓</li>
+<li>OCI (Open Container Initiative)：訂立大樓鋼筋水泥及行李箱標準的組織</li>
+<li>CRI (Container Runtime Interface)：大樓鋼筋水泥廠商</li>
+<li>CNI (Container Network Interface)：大樓水電力系統廠商</li>
+<li>CSI (Container Storage Interface)：大樓空間規劃廠商</li>
+<li>Pod：住戶，而一棟大樓裡面可以有很多的住戶</li>
+<li>Pod IP：每個住戶的門牌號碼</li>
+<li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個門入口管控</li>
+<li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個門出口管控</li>
+<li>Internal DNS：大樓住戶黃頁簿 (怕有人看不懂，這個技術上常見是 CoreDNS)</li>
+<li>External DNS：各大樓集中命名第 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
+<li>Service：家族，同一個家族包含多個住戶，聯繫的時候會透過 Pod IP 也就是住戶的門牌號碼聯繫 （求更好的譬喻）</li>
+<li>Service Mesh：（求更好的譬喻）</li>
+<li>Containers：被打開的且正在被使用的行李箱，在一個住戶裡面，可以放一個或者是多個以上</li>
+<li>Container Images：還沒被打開的行李箱</li>
+<li>Container Registry：行李箱集中存放中心</li>
+<li>Bastion：維護整座社區的工程車</li>
+</ul>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p><img src="/images/builder.jpeg" alt=""></p>
+<p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
+<blockquote>
+<p>你應該不會說每一個建商所蓋出的大樓品質都會是一樣的吧？有些只有蓋好大樓，內裝、外觀、拼裝、工法、維護都亂七八糟，這也是個大樓</p>
+</blockquote>
+<p>技術上來說，<a href="https://github.com/cncf/k8s-conformance">Certified Kubernetes</a> 裡面羅列了基於 Kubernetes 個別版號通過的平台版本，具備參考價值</p>
+<h3 id="Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼"><a href="#Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼" class="headerlink" title="Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?"></a>Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?</h3><p>就像社區大樓保全解決方案，有些弄監視器、有些是監控設備、有些是人員管控，要看各自專案或廠商想要解決的問題，據我個人理解有些廠商是專注在保護作業系統、有些是會對 Container 進行映像檔靜態、或者是 Runtime 狀態下的動態掃描等等各種類型</p>
+<p>技術上來說，Kubernetes 官方有提出 <a href="https://kubernetes.io/docs/concepts/security/overview/">Overview of Cloud Native Security</a> 觀念，針對 Cloud、Cluster、Container、Code 四個層面進行保護，當然還不單止這樣，對外及對內的網路管理也相當重要，所以實際上比較多人會討論的是 Ingress Controller 比較多，也就是住戶社區的社區大門人流控制跟安全性</p>
+<h3 id="Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢"><a href="#Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢" class="headerlink" title="Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?"></a>Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?</h3><p>你家管委會應該不會管住戶家裡的行李箱塞什麼吧</p>
+<h3 id="Q4-那麼-Docker-在裡面的角色是什麼"><a href="#Q4-那麼-Docker-在裡面的角色是什麼" class="headerlink" title="Q4: 那麼 Docker 在裡面的角色是什麼?"></a>Q4: 那麼 Docker 在裡面的角色是什麼?</h3><p>眾多 CRI (Container Runtime Interface) 選擇之一，也就是大樓鋼筋水泥廠商有很多間，只是有一間叫做 Docker 的特別有名，但 Docker 當初成立的時候，是早於 Kubernetes 的，所以導致為了要讓 Kubernetes 能支援 Docker，在功能上加了一些料進去並且維持了一段時間，故這個狀況在 Kubernetes 部落格 2020/12/02 發布的文章 <a href="https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/">Don’t Panic: Kubernetes and Docker</a> 被改變了，文末有提及說建議可以換成比較通用的 CRI-O 及 Containerd 其中之一為主</p>
+<p>若想要更深入了解此改動影響的話，相當建議收聽 Cloud Native Taiwan User Group 出品的 <a href="https://www.youtube.com/watch?v=nc3mBN3LzvM&t=2s">一言難盡的關係：Kubernetes 和 Docker 之線上討論分享會</a> 內有多個角色的分享，包含開發者、自建維運者、供應商的角度</p>
+<h3 id="Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商"><a href="#Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商" class="headerlink" title="Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?"></a>Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?</h3><p>Yes，所以你會看到各式各樣的廠商都開始支援 Kubernetes 是因為這個原因，因為<br>一般狀況下 Kubernetes 並沒有特別限定 <code>大樓鋼筋水泥廠商</code>、<code>大樓水電力系統廠商</code>、<code>大樓空間規劃廠商</code> 選型，只要有符合各自定義的標準即可，但要留意 Kubernetes 的版號會連帶影響這三個標準介面 CRI / CNI / CSI <em>能支援</em>的發行版本號，千千萬萬務必要留意相容性問題，強烈建議規劃時洽專業蓋住戶社區的廠商諮詢</p>
+<p>正常來說，最少 CRI 跟 CNI 這兩個的選擇，最好要聽蓋大樓的廠商建議，因為…沒測過和壓過到時候維護的時候會很可怕，而 CSI 選擇彈性就相當多樣了</p>
+<blockquote>
+<p>你應該不會希望隨便找一個沒驗過的水電廠商就來蓋大樓吧？漏水和漏電會很可怕的喔…</p>
+</blockquote>
+<h3 id="Q6-整個住戶社區最重要的角色是什麼"><a href="#Q6-整個住戶社區最重要的角色是什麼" class="headerlink" title="Q6: 整個住戶社區最重要的角色是什麼?"></a>Q6: 整個住戶社區最重要的角色是什麼?</h3><p>那三棟委員會大樓，和裡面的三位委員，三位掛掉一位還可以維持正常運作，掛掉兩位維持唯讀運作</p>
+<h3 id="Q7-Kubernetes、VM、Container-的差異性該如何理解"><a href="#Q7-Kubernetes、VM、Container-的差異性該如何理解" class="headerlink" title="Q7: Kubernetes、VM、Container 的差異性該如何理解?"></a>Q7: Kubernetes、VM、Container 的差異性該如何理解?</h3><p>你可以建立好一個大樓 (VM)，隨意放置一個或多個行李箱 (Containers)，你需要手動管理這些行李箱，如果資源不足或者是這個大樓倒了，是沒有辦法自動飄移這些行李箱所裝載的內容</p>
+<p>但如果你多具備有了 Kubernetes 能力，你可以建立多個大樓 (VM)，透過 Kubernetes 所規定的放置方式 (e.g. Deployment / DaemonSet / …)，可以統一調度這些 Pod，當某個大樓資源不夠的時候，可以根據 Kubernetes 的規則進行搬遷或擴充大樓等動作</p>
+<h3 id="Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講"><a href="#Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講" class="headerlink" title="Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?"></a>Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?</h3><p>因為絕大部分的狀況下，都是一個用戶 (Pod) 放一個行李箱 (Container)，所以導致有這種誤會。實際上，一個用戶 (Pod) 是可以放置一個或多個行李箱在裡面的</p>
+<h3 id="Q9-常聽到-Node-Scaling-是什麼意思"><a href="#Q9-常聽到-Node-Scaling-是什麼意思" class="headerlink" title="Q9: 常聽到 Node Scaling 是什麼意思?"></a>Q9: 常聽到 Node Scaling 是什麼意思?</h3><p>當住戶太多的時候，Kubernetes 可以自動或手動興建大樓，然後把多出來的住戶塞進去</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/MGm47ncUp6o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>kubernetes</tag>
       </tags>
   </entry>
   <entry>
