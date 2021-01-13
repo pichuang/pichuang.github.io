@@ -1293,39 +1293,6 @@
       </tags>
   </entry>
   <entry>
-    <title>How do I use docker and docker-compose</title>
-    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
-    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
-<a id="more"></a>
-
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Ubuntu 14.04.5 LTS Server</li>
-<li>docker-compose 1.11.2</li>
-<li>docker 17.03.0-ce</li>
-</ul>
-<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<!--more-->
-
-<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
-
-<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
-
-<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>docker</tag>
-        <tag>docker-compose</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Install i40e driver into VMWare ESXi</title>
     <url>/20170331-Install-i40e-driver-into-VMWare-ESXi/</url>
     <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
@@ -1369,6 +1336,39 @@
         <tag>vmware</tag>
         <tag>intel</tag>
         <tag>driver</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How do I use docker and docker-compose</title>
+    <url>/20170329-how-do-I-use-docker-and-docker-compose/</url>
+    <content><![CDATA[<h2 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h2><p>Build Bind service with Docker and auto startup it using docker-compose on Ubuntu</p>
+<a id="more"></a>
+
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Ubuntu 14.04.5 LTS Server</li>
+<li>docker-compose 1.11.2</li>
+<li>docker 17.03.0-ce</li>
+</ul>
+<h2 id="About-docker-compose"><a href="#About-docker-compose" class="headerlink" title="About docker-compose"></a>About <code>docker-compose</code></h2><h3 id="Create-docker-compose-yml"><a href="#Create-docker-compose-yml" class="headerlink" title="Create docker-compose.yml"></a>Create <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/<span class="built_in">bind</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; ~/<span class="built_in">bind</span>/docker-compose.yml &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">pichuang-dns:</span></span><br><span class="line"><span class="string">  image: sameersbn/bind:latest</span></span><br><span class="line"><span class="string">  dns: 127.0.0.1</span></span><br><span class="line"><span class="string">  environment:</span></span><br><span class="line"><span class="string">    - ROOT_PASSWORD=pichuang</span></span><br><span class="line"><span class="string">  ports:</span></span><br><span class="line"><span class="string">   - 10000:10000</span></span><br><span class="line"><span class="string">   - 53:53/udp</span></span><br><span class="line"><span class="string">  volumes:</span></span><br><span class="line"><span class="string">    - /srv/docker/dns:/data</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml up -d</span><br><span class="line">docker-compose -f ~/<span class="built_in">bind</span>/docker-compose.yml ps</span><br></pre></td></tr></table></figure>
+
+<h2 id="About-Startup-cript"><a href="#About-Startup-cript" class="headerlink" title="About Startup cript"></a>About Startup cript</h2><h3 id="Create-Daemon"><a href="#Create-Daemon" class="headerlink" title="Create Daemon"></a>Create Daemon</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/init.d/<span class="built_in">bind</span> &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### BEGIN INIT INFO</span></span><br><span class="line"><span class="string"># Provides:             bind</span></span><br><span class="line"><span class="string"># Required-Start:       $docker</span></span><br><span class="line"><span class="string"># Required-Stop:        $docker</span></span><br><span class="line"><span class="string"># Default-Start:        2 3 4 5</span></span><br><span class="line"><span class="string"># Default-Stop:         0 1 6</span></span><br><span class="line"><span class="string"># Short-Description:    Docker Services</span></span><br><span class="line"><span class="string">### END INIT INFO</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set -e</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PROJECT_NAME=bind</span></span><br><span class="line"><span class="string">YAMLFILE=/home/pichuang/docker-compose.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">DOCKER_COMPOSE_BIN=$(whereis docker-compose|awk &#x27;&#123;print $2&#125;&#x27;)</span></span><br><span class="line"><span class="string">OPTS=&quot;-f $YAMLFILE -p $PROJECT_NAME&quot;</span></span><br><span class="line"><span class="string">UPOPTS=&quot;-d&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">. /lib/lsb/init-functions</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">case &quot;$1&quot; in</span></span><br><span class="line"><span class="string">    start)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Starting Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    stop)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Stopping Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    reload)</span></span><br><span class="line"><span class="string">        log_daemon_msg &quot;Reloading Docker Compose&quot; &quot;bind&quot; || true</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    restart)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS stop</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS up $UPOPTS</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    status)</span></span><br><span class="line"><span class="string">        $DOCKER_COMPOSE_BIN $OPTS ps</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    *)</span></span><br><span class="line"><span class="string">        log_action_msg &quot;Usage: /etc/init.d/bind &#123;start|stop|restart|reload|status&#125;&quot; || true</span></span><br><span class="line"><span class="string">        exit 1</span></span><br><span class="line"><span class="string">        ;;</span></span><br><span class="line"><span class="string">esac</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">chmod +x /etc/init.d/<span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Update-rcx-d"><a href="#Update-rcx-d" class="headerlink" title="Update rcx.d"></a>Update rcx.d</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/init.d/</span><br><span class="line">update-rc.d -f <span class="built_in">bind</span> defaults 80 20</span><br></pre></td></tr></table></figure>
+
+<h3 id="Test-1"><a href="#Test-1" class="headerlink" title="Test"></a>Test</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">...</span><br><span class="line">service <span class="built_in">bind</span> status</span><br><span class="line">service <span class="built_in">bind</span> stop</span><br><span class="line">service <span class="built_in">bind</span> start</span><br><span class="line">service <span class="built_in">bind</span> reload</span><br><span class="line">service <span class="built_in">bind</span> restart</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>docker</tag>
+        <tag>docker-compose</tag>
       </tags>
   </entry>
   <entry>
@@ -2140,6 +2140,126 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
+    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
+    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
+<a id="more"></a>
+
+<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
+<ol>
+<li>Red Hat Ansible + HashiCorp Terraform</li>
+<li>HashiCorp Terraform + Red Hat Ansible </li>
+</ol>
+<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
+<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
+
+<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
+<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
+<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
+<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
+<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
+<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
+<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>redhat</tag>
+        <tag>terraform</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
+    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
+    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
+<ol>
+<li>Hosts subnet</li>
+<li>Service subnet</li>
+<li>Pod subnet</li>
+</ol>
+<a id="more"></a>
+
+<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
+<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
+<ol>
+<li>Pod mapping to host</li>
+<li>Service mapping to host</li>
+</ol>
+<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
+<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
+<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
+<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
+
+<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
+<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
+<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
+<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
+<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<p>可以做成下面的效果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
+<ol>
+<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
+<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
+<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
+<li>若需要提供對外服務，有下列三種做法:<ol>
+<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
+<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
+<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
+<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
+<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>openshift3</tag>
+        <tag>redhat</tag>
+        <tag>router</tag>
+        <tag>services</tag>
+        <tag>pods</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Red Hat OpenShift v3.11 儲存類型建議</title>
     <url>/20190325-redhat-openshift-v3.11-storage-recommendation/</url>
     <content><![CDATA[<p>在小弟先前的演講中 <a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao">20190218_OpenShift Storage 架構思考</a>，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：</p>
@@ -2285,126 +2405,6 @@
         <tag>openshift3</tag>
         <tag>redhat</tag>
         <tag>storage</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Red Hat Ansible 和 HashiCorp Terraform 結合作法</title>
-    <url>/20190320-redhat-ansible-and-hashicorp-terraform-position/</url>
-    <content><![CDATA[<p>雖然 Terraform 及 Ansible 都是非常知名的 IaC (Infrastructure as Code) 的工具，但經常會被拉出來討論說這兩者的差異，所以經歷了一陣奮鬥(?)，Red Hat 及 HashiCorp 發出聯合聲明 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></p>
-<a id="more"></a>
-
-<p>依據不同的角度，應該會有以下兩種不同的結合方式 (前者整後者)</p>
-<ol>
-<li>Red Hat Ansible + HashiCorp Terraform</li>
-<li>HashiCorp Terraform + Red Hat Ansible </li>
-</ol>
-<p>當然你也可以繼續堆疊下去，但至多三層就算多了，但本文不討論這個狀況</p>
-<h2 id="Terraform-Invoking-Ansible"><a href="#Terraform-Invoking-Ansible" class="headerlink" title="Terraform Invoking Ansible"></a>Terraform Invoking Ansible</h2><p>核心部分是以 <code>Terraform</code> 為主，搭配內建的兩個 Provisioner: <a href="https://www.terraform.io/docs/provisioners/remote-exec.html">remote-exec</a> 和 <a href="https://www.terraform.io/docs/provisioners/local-exec.html">local-exec</a> 來呼叫 ansible-playbook 指令進行設定檔配置，範例請參考以下作法</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">resource <span class="string">&quot;aws_instance&quot;</span> <span class="string">&quot;web&quot;</span> &#123;</span><br><span class="line">  provisioner <span class="string">&quot;local-exec&quot;</span> &#123;</span><br><span class="line">  <span class="built_in">command</span> = <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span></span><br><span class="line"> &#125;</span><br><span class="line">  provisioner <span class="string">&quot;remote-exec&quot;</span> &#123;</span><br><span class="line">    inline = [</span><br><span class="line">      <span class="string">&quot;ansible-playbook -u rhel -i hosts main.yml&quot;</span>,</span><br><span class="line">      <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Commands</span></span><br><span class="line">terraform plan</span><br><span class="line">terraform apply</span><br></pre></td></tr></table></figure>
-
-<p>至於各自執行時詳細的步驟，可參閱 <a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a> p4/p5</p>
-<h2 id="Ansible-Invoking-Terraform"><a href="#Ansible-Invoking-Terraform" class="headerlink" title="Ansible Invoking Terraform"></a>Ansible Invoking Terraform</h2><p>核心部分是以 <code>Ansible</code> 為主，採用 Ansible 所提供的 <a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">terraform</a> 模組，依據需求設計出 Plan / Apply / Destroy /… 等等的 Playbooks 供使用者使用</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ansible</span> <span class="string">Automation</span> <span class="string">Invoking</span> <span class="string">Terraform</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">plan</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">apply</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">destroy</span></span><br><span class="line">    <span class="attr">terraform:</span></span><br><span class="line">    <span class="string">&lt;...Ignore...&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="到底哪個方案比較好"><a href="#到底哪個方案比較好" class="headerlink" title="到底哪個方案比較好?"></a>到底哪個方案比較好?</h2><p>其實這個沒有一定的好壞，重點是你一定要能掌握端到端業務需求 (End-to-End) 的系統全域觀念</p>
-<p>就我個人認知上，Terraform 是比較<code>垂直深度</code>針對特定環境控制管理資源，尤其是 Public Cloud Resource，而 Ansible 比較是容易針對<code>水平橫跨</code>不同混合環境創造出工作流 (Workflow) 或者是做面向 OS 內部細微的 Configuration Management (CM)</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.redhat.com/en/resources/hashicorp-terraform-ansible-infrastructure-as-code-overview">HashiCorp Terraform and Red Hat Ansible Automation</a></li>
-<li><a href="https://www.ansible.com/">Automation for everyone</a></li>
-<li><a href="https://www.terraform.io/">Terraform by HashiCorp</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/remote-exec.html">Terraform remote-exec Provisioner</a></li>
-<li><a href="https://www.terraform.io/docs/provisioners/local-exec.html">Terraform local-exec Provisioner</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/terraform_module.html">Ansible Module - terraform</a></li>
-<li><a href="http://lab.howie.tw/2019/03/infrastructure-as-code-ansible-terraform.html">阿貝好威的實驗室 - infrastructure as code 的組合技 Ansible + Terraform</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>redhat</tag>
-        <tag>terraform</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
-    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
-    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
-<ol>
-<li>Hosts subnet</li>
-<li>Service subnet</li>
-<li>Pod subnet</li>
-</ol>
-<a id="more"></a>
-
-<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
-<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
-<ol>
-<li>Pod mapping to host</li>
-<li>Service mapping to host</li>
-</ol>
-<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
-<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
-<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
-<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
-
-<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
-<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
-<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
-<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
-<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<p>可以做成下面的效果</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
-
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
-<ol>
-<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
-<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
-<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
-<li>若需要提供對外服務，有下列三種做法:<ol>
-<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
-<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
-<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
-<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
-<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
-<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>openshift3</tag>
-        <tag>redhat</tag>
-        <tag>router</tag>
-        <tag>services</tag>
-        <tag>pods</tag>
       </tags>
   </entry>
   <entry>
@@ -3373,29 +3373,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Bandwidth &amp; Throughput</title>
-    <url>/20190527-bandwidth-and-throughput/</url>
-    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
-<ul>
-<li>頻寬 (Bandwidth)：水管的大小  </li>
-<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
-<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
-</ul>
-<a id="more"></a>
-
-<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
-
-<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
-]]></content>
-      <categories>
-        <category>telco</category>
-      </categories>
-      <tags>
-        <tag>networking</tag>
-        <tag>telco</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenShift Commons Gathering at Red Hat Summit Boston 2019 Recap </title>
     <url>/20190512-openshift-commons-gathering-at-redhat-summit-boston-2019-recap/</url>
     <content><![CDATA[<p><img src="/images/ocp.png" alt=""></p>
@@ -3433,6 +3410,29 @@
       </categories>
       <tags>
         <tag>openshift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bandwidth &amp; Throughput</title>
+    <url>/20190527-bandwidth-and-throughput/</url>
+    <content><![CDATA[<p><img src="/images/throughput-bandwidth.png" alt=""></p>
+<ul>
+<li>頻寬 (Bandwidth)：水管的大小  </li>
+<li>吞吐量 (Throughput)：從水管實際流出的水量  </li>
+<li>延遲 (Latency)：水從一端到另一端所花費的時間  </li>
+</ul>
+<a id="more"></a>
+
+<h2 id="理論值頻寬-Bandwidth-換算"><a href="#理論值頻寬-Bandwidth-換算" class="headerlink" title="理論值頻寬 (Bandwidth) 換算"></a>理論值頻寬 (Bandwidth) 換算</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1 Gbps &#x3D; 1024 Mbps &#x3D; 128 MBps &#x3D; 0.125 GBps</span><br><span class="line">7 Gbps &#x3D; 7168 Mbps &#x3D; 896 MBps &#x3D; 0.875 GBps</span><br><span class="line">10 Gbps &#x3D; 10240 Mbps &#x3D; 1280 MBps &#x3D; 1.25 GBps</span><br><span class="line">20 Gbps &#x3D; 20480 Mbps &#x3D; 2560 MBps &#x3D; 2.5 GBps</span><br><span class="line">25 Gbps &#x3D; 25600 Mbps &#x3D; 3200 MBps &#x3D; 3.125 GBps</span><br><span class="line">40 Gbps &#x3D; 40960 Mbps &#x3D; 5120 MBps &#x3D; 5 GBps</span><br><span class="line">50 Gbps &#x3D; 51200 Mbps &#x3D; 6400 MBps &#x3D; 6.25 GBps</span><br><span class="line">100 Gbps &#x3D; 102400 Mbps &#x3D; 12800 MBps &#x3D; 12.5 GBps</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料傳輸換算"><a href="#資料傳輸換算" class="headerlink" title="資料傳輸換算"></a>資料傳輸換算</h2><p>理論傳輸公式：Time (s) = File Size / Bandwidth<br>實際傳輸公式：Time (s) = File Size / Throughput</p>
+]]></content>
+      <categories>
+        <category>telco</category>
+      </categories>
+      <tags>
+        <tag>networking</tag>
+        <tag>telco</tag>
       </tags>
   </entry>
   <entry>
@@ -3934,97 +3934,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</title>
-    <url>/20191116-homelcloud-high-level-design-3/</url>
-    <content><![CDATA[<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
-<ol>
-<li><a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1</a>：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標</li>
-<li><a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2</a>：介紹宅宅雲塔式伺服器硬體裝備</li>
-</ol>
-<p>而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的</p>
-<p><img src="/images/homecloud-1.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="1-台-2-埠雙臂網路架構"><a href="#1-台-2-埠雙臂網路架構" class="headerlink" title="1 台 2 埠雙臂網路架構"></a>1 台 2 埠雙臂網路架構</h2><p>雙臂網路 (Two-Arm) 需使用 2 個網路介面，Inbound/Outbound 分別走不同介面；單臂網路則是 (One-Arm) 僅使用 1 個網路介面，Inbound/Outbound 都走同一個介面，裡面的網路隔離是採用 802.1Q VLAN Subinterface 進行劃分，所以後者相較前者，Overlay Switch (這邊指的就是 Synology RT2600ac ) 需要多支援 VLAN 能力才有辦法做，但可惜它沒有，就保持做 Two-Arm 網路。而我自己經驗基本都是做 Two-Arm，單純好理解</p>
-<h3 id="最小-Port-數"><a href="#最小-Port-數" class="headerlink" title="最小 Port 數?"></a>最小 Port 數?</h3><p>關於服務器硬體規格可以看 <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2: 硬體菜單</a>，主要核心硬體需求是</p>
-<blockquote>
-<p>1 ~ 2 Port</p>
-</blockquote>
-<p>對…只要兩個 Port 就什麼都可以做，無論速率、無論架構皆可，但最小 1 Port 也可以做，只是雙臂架構概念會有點不太一樣，看角度，下面會詳細畫圖講一下。</p>
-<p>基本相同概念適用於實體機直上、VMware vSphere、Linux KVM、Red Hat Virtualization、Proxmox、Red Hat OpenStack 等等虛擬化平台都可以做。</p>
-<p>Q: Hyper-V 呢?</p>
-<p>Sorry，這個我沒研究，無法評論</p>
-<h3 id="vFW-vRouter"><a href="#vFW-vRouter" class="headerlink" title="vFW? vRouter?"></a>vFW? vRouter?</h3><p>主要網路轉發核心功能需求是</p>
-<blockquote>
-<p>NAT + VLAN Subinterface</p>
-</blockquote>
-<p>這邊採用的 vFirewall 是 <a href="https://www.pfsense.org/">pfSense</a>，先前在 Edgecore Networks 機櫃環境是用 <a href="https://opnsense.org/">OPNsense</a>，而我個人是比較偏好 OPNsense。</p>
-<p><img src="/images/pfsense.png" alt=""></p>
-<p>Q: 說好的 vRouter 不能搞嗎?</p>
-<p>先前也有嘗試用 [VyOS][<a href="https://vyos.io/]">https://vyos.io/]</a> 當做虛擬路由器，但三年前測試的時候，它沒有支援 NAT 啊啊啊啊啊！就放棄回到 pfSense / OPNsesne 的懷抱中，不知道現在有沒有支援，徵求勇者試試</p>
-<p>Q: 疑? 這樣 iptables 土炮好像也很 ok 啊?</p>
-<p>無論是 Linux iptables / FreeBSD pf 系列的都可以做，技術上沒什麼問題，只是我懶得每次都在想 iptables 的 <code>masquerade</code> 跟 <code>Port Forwarding</code> 怎麼下</p>
-<h3 id="IP-Design"><a href="#IP-Design" class="headerlink" title="IP Design?"></a>IP Design?</h3><p>想當爾，要提供 WAN IP 給對應的網路介面，這邊假設以下：</p>
-<ol>
-<li>WAN IP: 192.168.99.250/24</li>
-<li>VLAN 100 Subnet: 10.100.0.0/24</li>
-<li>VLAN 200 Subnet: 10.200.0.0/24</li>
-<li>Rescue IP: 192.168.1.1/24</li>
-</ol>
-<p>目標上就是拿到 10.100.0.0/24 或 10.200.0.0/24 的 IP 都要能透過 WAN IP 走 SNAT 方式出去；反之，可以從 WAN IP 透過 DNAT 做 Port Forwarding 進 10.100.0.0/24 或 10.200.0.0/24  網段</p>
-<p>Q: Rescure IP?? 這幹嘛的</p>
-<p>關於 Rescue IP 的作用是救援用，假設我的 VLAN IP 或者是有什麼異常狀況不能透過正常設定好的網路進去修改，我會拔掉原先接在 LAN Port (eth1) 上的線，用自己筆電直連該 Port 進去修</p>
-<h3 id="1-vFW-雙臂直上實體機架構圖"><a href="#1-vFW-雙臂直上實體機架構圖" class="headerlink" title="1 . vFW 雙臂直上實體機架構圖"></a>1 . vFW 雙臂直上實體機架構圖</h3><blockquote>
-<p>一台 Server 直接裝 pfSense</p>
-</blockquote>
-<p><img src="/images/pfsense-1.png" alt=""></p>
-<p>這個架構缺點顯而易見，整台實體機資源都被 pfSense 咬走了，完全沒有用到任何虛擬化平台，但可以外接支援 VLAN Tagging/Untag 的交換器擴大可使用實體 Port 數</p>
-<p><img src="/images/pfsense-3.png" alt=""></p>
-<p>Q: 我家沒有具備 VLAN 功能的 Switch…</p>
-<p>如果家中有一台小小的電腦，剛好也有兩個 Port，就很適合做上圖， 而 eth1 不一定要用 VLAN Subinterface 處理，可以直接掛 IP 在上面使用，外面接 L2 Switch 起來用，擴大可使用實體 Port 數</p>
-<h3 id="2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><a href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖" class="headerlink" title="2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖"></a>2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</h3><blockquote>
-<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，不考慮外接其他設備</p>
-</blockquote>
-<p>下圖是以 VMware vSphere 作為範例</p>
-<p><img src="/images/pfsense-2.png" alt=""></p>
-<p>關於 Virtual Switch 的部分，無論是 vSS (virtual Standard Switch) /vDS (virtual Distributed Swtich) 皆可使用，詳細相關技術評估請洽友商 VMware。</p>
-<p>Q:  <code>vDS: WAN</code> 端的設定示意圖?</p>
-<p><img src="/images/vds-1.png" alt=""></p>
-<p>右邊那邊 Port Group 可以多加網卡做點事情，詳細功能請參考官方文件 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.networking.doc/GUID-B15C6A13-797E-4BCB-B9D9-5CBC5A60C3A6.html">vSphere Distributed Switch Architecture</a>，左邊留意 <code>VLAN 識別碼</code> 為 <code>--</code>，但我不確定是不是代表是 <code>VLAN 1</code> 的意思，哪天遇到問題再研究</p>
-<p>Q: <code>vDS: Trunk</code> 端的也來一下</p>
-<p><img src="/images/vds-2.png" alt=""></p>
-<p>右邊留意 Port Group 是完全沒有實體網卡在裡面的，左邊則是針對 VLAN ID 設定個別的 <code>VM Network</code> (注：我忘記正確描述是什麼了，有錯請敲我更正)</p>
-<p>Q: 多問一句…有魔鬼嗎?</p>
-<p><img src="/images/vds-3.png" alt=""></p>
-<p>Of course！這個設定應該是有做過類似事情的朋友都會遇到的最大遺漏，那個被設定為 Trunk 的 VM Network… 要把混合模式 (Promiscuous Mode)開啟來，避免來自於各式各樣的網路的封包在 ESXi 層就被丟掉，具體技術文件請參照 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.security.doc/GUID-92F3AB1F-B4C5-4F25-A010-8820D7250350.html">Promiscuous Mode Operation</a></p>
-<p>下圖是採用 libvirt 為主的技術架構</p>
-<p><img src="/images/pfsense-4.png" alt=""></p>
-<p>Q: 疑? 怎麼看起來都差不多?</p>
-<p>其實簡單來說就是透過 Bridge 技術搭橋把實體網卡和虛擬網卡塞在同一個 Linux Bridge ( or OVS Bridge) 裡面，就很像是多台虛擬 L2 交換機在虛擬化平台裡面，概念就是這麼簡單，因為 VMware vSS/vDS 設定方式比較特別，所以特別拉出來講</p>
-<h3 id="3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><a href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖" class="headerlink" title="3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖"></a>3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</h3><blockquote>
-<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，須考慮外接其他設備</p>
-</blockquote>
-<p><img src="/images/pfsense-5.png" alt=""></p>
-<p>這個就是先前在 Edgecore Networks Lab 最完整的架構，詳細投影片請參照 2017 年有一天不知道在哪裡講的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure</a> 投影片</p>
-<p>Q:  為什麼要特別做雙臂?</p>
-<p><img src="/images/rack.png" alt=""> </p>
-<p>因為完全是為了管理這整櫃機櫃裡面設備使用的，那時候有另外接兩台 Cumulus Linux + AS4610-54T 做 CLAG，讓底下設備只要可以咬 IP 的全部配發一個 IP，網段全部切開做 VLAN Routing 避免被廣播封包打爆</p>
-<p>Q: VLAN Routing !!! 是不是漏講了什麼? 那個 pfSense 裡面怎麼做的?</p>
-<p>第四篇，我覺得也蠻有趣的部份，傳送門 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/">2019 大改造宅宅雲架構系列文-4</a></p>
-<h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt=""></p>
-<p>這個很直覺，VLAN Routing + SNAT 搞定</p>
-<h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt=""></p>
-<p>這個也很直覺，DNAT 做 Port Forwarding，這邊提供一個小祕技，搭 <code>SSH ProxyCommand</code>蠻好用的，參照 <a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible?slide=12">20190720 Better Practice  Day 2 Operaition with Ansible</a></p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這年頭看到虛擬網路技術不用感到特別害怕，畫點圖，上個 IP，想像一下網路怎麼流，其實很多問題就能解決了，平時可以多多做點 Lab 培養觀落陰能力</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
     <url>/20191116-homelcloud-high-level-design-4/</url>
     <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
@@ -4215,6 +4124,97 @@
       <tags>
         <tag>misc</tag>
         <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</title>
+    <url>/20191116-homelcloud-high-level-design-3/</url>
+    <content><![CDATA[<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
+<ol>
+<li><a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1</a>：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標</li>
+<li><a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2</a>：介紹宅宅雲塔式伺服器硬體裝備</li>
+</ol>
+<p>而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的</p>
+<p><img src="/images/homecloud-1.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="1-台-2-埠雙臂網路架構"><a href="#1-台-2-埠雙臂網路架構" class="headerlink" title="1 台 2 埠雙臂網路架構"></a>1 台 2 埠雙臂網路架構</h2><p>雙臂網路 (Two-Arm) 需使用 2 個網路介面，Inbound/Outbound 分別走不同介面；單臂網路則是 (One-Arm) 僅使用 1 個網路介面，Inbound/Outbound 都走同一個介面，裡面的網路隔離是採用 802.1Q VLAN Subinterface 進行劃分，所以後者相較前者，Overlay Switch (這邊指的就是 Synology RT2600ac ) 需要多支援 VLAN 能力才有辦法做，但可惜它沒有，就保持做 Two-Arm 網路。而我自己經驗基本都是做 Two-Arm，單純好理解</p>
+<h3 id="最小-Port-數"><a href="#最小-Port-數" class="headerlink" title="最小 Port 數?"></a>最小 Port 數?</h3><p>關於服務器硬體規格可以看 <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2: 硬體菜單</a>，主要核心硬體需求是</p>
+<blockquote>
+<p>1 ~ 2 Port</p>
+</blockquote>
+<p>對…只要兩個 Port 就什麼都可以做，無論速率、無論架構皆可，但最小 1 Port 也可以做，只是雙臂架構概念會有點不太一樣，看角度，下面會詳細畫圖講一下。</p>
+<p>基本相同概念適用於實體機直上、VMware vSphere、Linux KVM、Red Hat Virtualization、Proxmox、Red Hat OpenStack 等等虛擬化平台都可以做。</p>
+<p>Q: Hyper-V 呢?</p>
+<p>Sorry，這個我沒研究，無法評論</p>
+<h3 id="vFW-vRouter"><a href="#vFW-vRouter" class="headerlink" title="vFW? vRouter?"></a>vFW? vRouter?</h3><p>主要網路轉發核心功能需求是</p>
+<blockquote>
+<p>NAT + VLAN Subinterface</p>
+</blockquote>
+<p>這邊採用的 vFirewall 是 <a href="https://www.pfsense.org/">pfSense</a>，先前在 Edgecore Networks 機櫃環境是用 <a href="https://opnsense.org/">OPNsense</a>，而我個人是比較偏好 OPNsense。</p>
+<p><img src="/images/pfsense.png" alt=""></p>
+<p>Q: 說好的 vRouter 不能搞嗎?</p>
+<p>先前也有嘗試用 [VyOS][<a href="https://vyos.io/]">https://vyos.io/]</a> 當做虛擬路由器，但三年前測試的時候，它沒有支援 NAT 啊啊啊啊啊！就放棄回到 pfSense / OPNsesne 的懷抱中，不知道現在有沒有支援，徵求勇者試試</p>
+<p>Q: 疑? 這樣 iptables 土炮好像也很 ok 啊?</p>
+<p>無論是 Linux iptables / FreeBSD pf 系列的都可以做，技術上沒什麼問題，只是我懶得每次都在想 iptables 的 <code>masquerade</code> 跟 <code>Port Forwarding</code> 怎麼下</p>
+<h3 id="IP-Design"><a href="#IP-Design" class="headerlink" title="IP Design?"></a>IP Design?</h3><p>想當爾，要提供 WAN IP 給對應的網路介面，這邊假設以下：</p>
+<ol>
+<li>WAN IP: 192.168.99.250/24</li>
+<li>VLAN 100 Subnet: 10.100.0.0/24</li>
+<li>VLAN 200 Subnet: 10.200.0.0/24</li>
+<li>Rescue IP: 192.168.1.1/24</li>
+</ol>
+<p>目標上就是拿到 10.100.0.0/24 或 10.200.0.0/24 的 IP 都要能透過 WAN IP 走 SNAT 方式出去；反之，可以從 WAN IP 透過 DNAT 做 Port Forwarding 進 10.100.0.0/24 或 10.200.0.0/24  網段</p>
+<p>Q: Rescure IP?? 這幹嘛的</p>
+<p>關於 Rescue IP 的作用是救援用，假設我的 VLAN IP 或者是有什麼異常狀況不能透過正常設定好的網路進去修改，我會拔掉原先接在 LAN Port (eth1) 上的線，用自己筆電直連該 Port 進去修</p>
+<h3 id="1-vFW-雙臂直上實體機架構圖"><a href="#1-vFW-雙臂直上實體機架構圖" class="headerlink" title="1 . vFW 雙臂直上實體機架構圖"></a>1 . vFW 雙臂直上實體機架構圖</h3><blockquote>
+<p>一台 Server 直接裝 pfSense</p>
+</blockquote>
+<p><img src="/images/pfsense-1.png" alt=""></p>
+<p>這個架構缺點顯而易見，整台實體機資源都被 pfSense 咬走了，完全沒有用到任何虛擬化平台，但可以外接支援 VLAN Tagging/Untag 的交換器擴大可使用實體 Port 數</p>
+<p><img src="/images/pfsense-3.png" alt=""></p>
+<p>Q: 我家沒有具備 VLAN 功能的 Switch…</p>
+<p>如果家中有一台小小的電腦，剛好也有兩個 Port，就很適合做上圖， 而 eth1 不一定要用 VLAN Subinterface 處理，可以直接掛 IP 在上面使用，外面接 L2 Switch 起來用，擴大可使用實體 Port 數</p>
+<h3 id="2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖"><a href="#2-vFW-雙臂-虛擬化平台-1-實體-Port-架構圖" class="headerlink" title="2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖"></a>2. vFW 雙臂 + 虛擬化平台 + 1 實體 Port 架構圖</h3><blockquote>
+<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，不考慮外接其他設備</p>
+</blockquote>
+<p>下圖是以 VMware vSphere 作為範例</p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
+<p>關於 Virtual Switch 的部分，無論是 vSS (virtual Standard Switch) /vDS (virtual Distributed Swtich) 皆可使用，詳細相關技術評估請洽友商 VMware。</p>
+<p>Q:  <code>vDS: WAN</code> 端的設定示意圖?</p>
+<p><img src="/images/vds-1.png" alt=""></p>
+<p>右邊那邊 Port Group 可以多加網卡做點事情，詳細功能請參考官方文件 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.networking.doc/GUID-B15C6A13-797E-4BCB-B9D9-5CBC5A60C3A6.html">vSphere Distributed Switch Architecture</a>，左邊留意 <code>VLAN 識別碼</code> 為 <code>--</code>，但我不確定是不是代表是 <code>VLAN 1</code> 的意思，哪天遇到問題再研究</p>
+<p>Q: <code>vDS: Trunk</code> 端的也來一下</p>
+<p><img src="/images/vds-2.png" alt=""></p>
+<p>右邊留意 Port Group 是完全沒有實體網卡在裡面的，左邊則是針對 VLAN ID 設定個別的 <code>VM Network</code> (注：我忘記正確描述是什麼了，有錯請敲我更正)</p>
+<p>Q: 多問一句…有魔鬼嗎?</p>
+<p><img src="/images/vds-3.png" alt=""></p>
+<p>Of course！這個設定應該是有做過類似事情的朋友都會遇到的最大遺漏，那個被設定為 Trunk 的 VM Network… 要把混合模式 (Promiscuous Mode)開啟來，避免來自於各式各樣的網路的封包在 ESXi 層就被丟掉，具體技術文件請參照 <a href="https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.security.doc/GUID-92F3AB1F-B4C5-4F25-A010-8820D7250350.html">Promiscuous Mode Operation</a></p>
+<p>下圖是採用 libvirt 為主的技術架構</p>
+<p><img src="/images/pfsense-4.png" alt=""></p>
+<p>Q: 疑? 怎麼看起來都差不多?</p>
+<p>其實簡單來說就是透過 Bridge 技術搭橋把實體網卡和虛擬網卡塞在同一個 Linux Bridge ( or OVS Bridge) 裡面，就很像是多台虛擬 L2 交換機在虛擬化平台裡面，概念就是這麼簡單，因為 VMware vSS/vDS 設定方式比較特別，所以特別拉出來講</p>
+<h3 id="3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖"><a href="#3-vFW-雙臂-虛擬化平台-2-實體-Port-架構圖" class="headerlink" title="3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖"></a>3. vFW 雙臂 + 虛擬化平台 + 2 實體 Port 架構圖</h3><blockquote>
+<p>一台 Server 裝虛擬化平台，起 VM 裝 pfSense，網段用 VLAN Subinterface 切割，須考慮外接其他設備</p>
+</blockquote>
+<p><img src="/images/pfsense-5.png" alt=""></p>
+<p>這個就是先前在 Edgecore Networks Lab 最完整的架構，詳細投影片請參照 2017 年有一天不知道在哪裡講的 <a href="https://speakerdeck.com/pichuang/build-testing-infrastructure?slide=17">Build Testing Infrastructure</a> 投影片</p>
+<p>Q:  為什麼要特別做雙臂?</p>
+<p><img src="/images/rack.png" alt=""> </p>
+<p>因為完全是為了管理這整櫃機櫃裡面設備使用的，那時候有另外接兩台 Cumulus Linux + AS4610-54T 做 CLAG，讓底下設備只要可以咬 IP 的全部配發一個 IP，網段全部切開做 VLAN Routing 避免被廣播封包打爆</p>
+<p>Q: VLAN Routing !!! 是不是漏講了什麼? 那個 pfSense 裡面怎麼做的?</p>
+<p>第四篇，我覺得也蠻有趣的部份，傳送門 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4/">2019 大改造宅宅雲架構系列文-4</a></p>
+<h2 id="Traffic-分解圖"><a href="#Traffic-分解圖" class="headerlink" title="Traffic 分解圖"></a>Traffic 分解圖</h2><h3 id="SNAT-Traffic"><a href="#SNAT-Traffic" class="headerlink" title="SNAT Traffic"></a>SNAT Traffic</h3><p><img src="/images/pfsense-6.png" alt=""></p>
+<p>這個很直覺，VLAN Routing + SNAT 搞定</p>
+<h3 id="DNAT-Traffic"><a href="#DNAT-Traffic" class="headerlink" title="DNAT Traffic"></a>DNAT Traffic</h3><p><img src="/images/pfsense-7.png" alt=""></p>
+<p>這個也很直覺，DNAT 做 Port Forwarding，這邊提供一個小祕技，搭 <code>SSH ProxyCommand</code>蠻好用的，參照 <a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible?slide=12">20190720 Better Practice  Day 2 Operaition with Ansible</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這年頭看到虛擬網路技術不用感到特別害怕，畫點圖，上個 IP，想像一下網路怎麼流，其實很多問題就能解決了，平時可以多多做點 Lab 培養觀落陰能力</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -6391,6 +6391,240 @@
       </tags>
   </entry>
   <entry>
+    <title>如何條列出單一 Namespace 內的 Kubernetes 計算資源?</title>
+    <url>/20200828-kubectl-view-allocations/</url>
+    <content><![CDATA[<p>最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要<code>逆向</code>研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，身為一位計算資源精算師，所以就有了下面這篇的紀錄</p>
+<p>本月無心力，無梗圖呈現</p>
+<a id="more"></a>
+
+<h2 id="為什麼要這樣做"><a href="#為什麼要這樣做" class="headerlink" title="為什麼要這樣做?"></a>為什麼要這樣做?</h2><p>這件事跟 Kubernetes 計算資源估算有關係，基於<a href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/#Kubernetes-%E8%B3%87%E6%BA%90%E4%BC%B0%E7%AE%97%E6%96%B9%E5%BC%8F">前一篇</a>所提到的 <code>Kubernetes 資源估算方式</code>，若把實機或虛機的完整可用資源當作一個玻璃杯來看，若有服務需要使用 Kubernetes 計算資源的話，則視為往玻璃杯倒水進去，當水位滿的時候，就代表該實機或虛機不能在擺放其他的服務了，當水位比較低的時候，則代表可以較有餘裕放置其他服務在裡面</p>
+<p><img src="/images/glass.png" alt=""></p>
+<h2 id="Kubectl-view-allocations"><a href="#Kubectl-view-allocations" class="headerlink" title="Kubectl-view-allocations"></a>Kubectl-view-allocations</h2><p>這邊要推薦 <a href="https://github.com/davidB/kubectl-view-allocations">davidB/kubectl-view-allocations</a> 這個專案，相當好用，之前還沒找到這個專案之前，我都是用 <code>jsonpath</code> 慢慢爬，但我覺得不僅指令相當長 (如下指令)，而且輸出結果<a href="https://gist.github.com/pichuang/59c42de25991c516909c4736caa7893d">不明確</a>，加上很難閱讀，所以才又另外找了一下這個專案來用用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc get pods -o=jsonpath=<span class="string">&quot;&#123;range .items[]&#125;&#123;range .spec.containers[]&#125; &#123;.name&#125; CPU_Requests:&#123;.resources.requests.cpu&#125; CPU_Limites:&#123;.resources.limits.cpu&#125; Memory_Requests:&#123;.resources.requests.memory&#125; Memory_Limites:&#123;.resources.limits.memory&#125; &#123;&#x27;\n&#x27;&#125;&#123;end&#125;&#123;&#x27;\n&#x27;&#125;&#123;end&#125;&quot;</span> | column -t</span><br></pre></td></tr></table></figure>
+
+<h3 id="超簡單安裝-Kubectl-view-allocations"><a href="#超簡單安裝-Kubectl-view-allocations" class="headerlink" title="超簡單安裝 Kubectl-view-allocations"></a>超簡單安裝 Kubectl-view-allocations</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/davidB/kubectl-view-allocations/master/scripts/getLatest.sh | bash</span><br><span class="line">sudo mv kubectl-view-allocations /usr/<span class="built_in">local</span>/bin</span><br><span class="line">kubectl-view-allocations -V</span><br></pre></td></tr></table></figure>
+
+<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><h3 id="條列-Namespace-內資源"><a href="#條列-Namespace-內資源" class="headerlink" title="條列 Namespace 內資源"></a>條列 Namespace 內資源</h3><p>譬如說我想要查 <code>openshift-etcd</code> 裡面的資源預設消耗如何，可以用下列指令辦到</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -n openshift-etcd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/show-openshift-etcd.png" alt=""></p>
+<h3 id="概觀了解各節點資源"><a href="#概觀了解各節點資源" class="headerlink" title="概觀了解各節點資源"></a>概觀了解各節點資源</h3><p>類同於 <code>oc adm top node</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -r cpu -g node</span><br><span class="line">kubectl-view-allocations -r memory -g node</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/show-node-cpu-mem.png" alt=""></p>
+<h3 id="詳細了解各節點資源"><a href="#詳細了解各節點資源" class="headerlink" title="詳細了解各節點資源"></a>詳細了解各節點資源</h3><p>當你想要了解你的 master node 上面到底都放了什麼碗糕的東西，這個還蠻好用的…</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -r cpu</span><br><span class="line">kubectl-view-allocations -r memory</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/show-node-memory-details.png" alt=""></p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="Environment-Information"><a href="#Environment-Information" class="headerlink" title="Environment Information"></a>Environment Information</h3><ul>
+<li>Red Hat OpenShift 4.4.0</li>
+<li>Kubernetes v1.18.3</li>
+</ul>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Red Hat OpenShift 4 DNS &amp; NTP &amp; PTP 網路套餐</title>
+    <url>/20200706-openshift-with-coreos-part-8/</url>
+    <content><![CDATA[<p>最近雖然受到 COVID-19 影響導致有些國外專案進度有點落後，但就 OpenShift 4 功能本身不知道為啥成長幅度變的蠻快的…有時候想跟也很難跟上，只能透過影片來了解，然後 Red Hat 本家不知道哪根筋不對了，跑去 Twitch (!!??) 開了一個頻道 <a href="https://www.twitch.tv/redhatopenshift">RedHatOpenShift Twitch</a>，三不五時就開直播上演下圖的狀況，相當有事</p>
+<p><img src="/images/3-bear.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="走馬看花第-8-天"><a href="#走馬看花第-8-天" class="headerlink" title="走馬看花第 8 天"></a>走馬看花第 8 天</h2><h3 id="CoreDNS-做-DNS-Forwarder"><a href="#CoreDNS-做-DNS-Forwarder" class="headerlink" title="CoreDNS 做 DNS Forwarder"></a>CoreDNS 做 DNS Forwarder</h3><blockquote>
+<p>CoreDNS: DNS and Service Discovery</p>
+</blockquote>
+<p>其實 OpenShift 內建有 DNS 服務，主要目的是要來解析 Service IP &lt;-&gt; DNS，所採用的技術是使用 <code>CoreDNS</code>。關於 <a href="https://coredns.io/">CoreDNS</a> ，主要是提供雲原生的 DNS 服務和服務發現的解決方案，有興趣想參考效能比較的話，可以看 <a href="https://github.com/coredns/deployment/blob/master/kubernetes/Scaling_CoreDNS.md">Scaling CoreDNS in Kubernetes Clusters</a>，目前已於 2019/01 時從 CNCF 專案海中<a href="https://www.cncf.io/announcement/2019/01/24/coredns-graduation/">畢業</a>。</p>
+<p>如果你仔細觀察 CoreDNS 在 OpenShift 上的運作狀況可以發現他是從 <code>openshift-dns-operator</code> 部署，並於每一個節點採用 <code>DaemonSet</code> 的形式運行 CoreDNS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Operator Information</span></span><br><span class="line">$ oc get deployment/dns-operator -n openshift-dns-operator</span><br><span class="line">NAME           READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">dns-operator   1/1     1            1           113m</span><br><span class="line"></span><br><span class="line">$ oc get clusteroperators/dns</span><br><span class="line">NAME   VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE</span><br><span class="line">dns    4.3.27    True        False         False      108m</span><br><span class="line"></span><br><span class="line"><span class="comment"># Project Information</span></span><br><span class="line">$ oc get all -n openshift-dns -o wide</span><br><span class="line">NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE                                              NOMINATED NODE   READINESS GATES</span><br><span class="line">pod/dns-default-9vq2j   2/2     Running   0          84m   10.129.0.10   ip-10-0-146-166.ap-southeast-1.compute.internal   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-g2bps   2/2     Running   0          84m   10.130.0.9    ip-10-0-167-32.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-mg7cx   2/2     Running   0          84m   10.128.0.13   ip-10-0-129-186.ap-southeast-1.compute.internal   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-sxzcn   2/2     Running   0          75m   10.128.2.3    ip-10-0-132-54.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-wj97g   2/2     Running   0          75m   10.131.0.3    ip-10-0-154-36.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">NAME                  TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE</span><br><span class="line">service/dns-default   ClusterIP   172.30.0.10   &lt;none&gt;        53/UDP,53/TCP,9153/TCP   83m</span><br><span class="line"></span><br><span class="line">NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">daemonset.apps/dns-default   5         5         5       5            5           kubernetes.io/os=linux   83m</span><br></pre></td></tr></table></figure>
+
+<p>倘若你想要透過 VPN 去連線至其他雲裡面的服務，那這樣會有需要特別多加幾條 DNS Forwarder 的能力在集群裡面，遵照 <a href="https://docs.openshift.com/container-platform/4.4/networking/dns-operator.html">DNS Operator in OpenShift Container Platform</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default Setting</span></span><br><span class="line">$ oc get configmap/dns-default -n openshift-dns -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    .:5353 &#123;</span><br><span class="line">        errors</span><br><span class="line">        health</span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">            pods insecure</span><br><span class="line">            upstream</span><br><span class="line">            fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153</span><br><span class="line">        forward . /etc/resolv.conf &#123;</span><br><span class="line">            policy sequential</span><br><span class="line">        &#125;</span><br><span class="line">        cache 30</span><br><span class="line">        reload</span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    dns.operator.openshift.io/owning-dns: default</span><br><span class="line">  name: dns-default</span><br><span class="line">  namespace: openshift-dns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增 DNS Forwarder</span></span><br><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt;&gt; apply-dns-forwarder.yaml</span></span><br><span class="line"><span class="string">apiVersion: operator.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: DNS</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  name: default</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  servers:</span></span><br><span class="line"><span class="string">  - name: pichuang-server-farm</span></span><br><span class="line"><span class="string">    zones:</span></span><br><span class="line"><span class="string">      - pichuang.internal</span></span><br><span class="line"><span class="string">    forwardPlugin:</span></span><br><span class="line"><span class="string">      upstreams:</span></span><br><span class="line"><span class="string">        - 192.168.77.100</span></span><br><span class="line"><span class="string">        - 192.168.77.99:5533</span></span><br><span class="line"><span class="string">  - name: redhat-server-farm</span></span><br><span class="line"><span class="string">    zones:</span></span><br><span class="line"><span class="string">      - rhtw.private</span></span><br><span class="line"><span class="string">      - rhglobal.public</span></span><br><span class="line"><span class="string">    forwardPlugin:</span></span><br><span class="line"><span class="string">      upstreams:</span></span><br><span class="line"><span class="string">        - 10.99.1.100</span></span><br><span class="line"><span class="string">        - 172.88.2.99:5533</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行變更</span></span><br><span class="line">$ oc apply -f apply-dns-forwarder.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 檢查 CoreDNS 設定</span></span><br><span class="line">$ oc get configmap/dns-default -n openshift-dns -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    <span class="comment"># pichuang-server-farm</span></span><br><span class="line">    pichuang.internal:5353 &#123;</span><br><span class="line">        forward . 192.168.77.100 192.168.77.99:5533</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># redhat-server-farm</span></span><br><span class="line">    rhtw.private:5353 rhglobal.public:5353 &#123;</span><br><span class="line">        forward . 10.99.1.100 172.88.2.99:5533</span><br><span class="line">    &#125;</span><br><span class="line">    .:5353 &#123;</span><br><span class="line">        errors</span><br><span class="line">        health</span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">            pods insecure</span><br><span class="line">            upstream</span><br><span class="line">            fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153</span><br><span class="line">        forward . /etc/resolv.conf &#123;</span><br><span class="line">            policy sequential</span><br><span class="line">        &#125;</span><br><span class="line">        cache 30</span><br><span class="line">        reload</span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    dns.operator.openshift.io/owning-dns: default</span><br><span class="line">  name: dns-default</span><br><span class="line">  namespace: openshift-dns</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="時間設定-Chrony"><a href="#時間設定-Chrony" class="headerlink" title="時間設定 Chrony"></a>時間設定 Chrony</h3><p>打從 RHEL 7 之後，Red Hat 官方因為安全及效能上的考量，建議從 <code>ntpd</code> 轉換成使用 <code>chronyd</code>，實際上也是蠻推薦多用 chronyd 當作主要的 NTP Server/Client，就連 OpenShift 預載的 CoreOS 內部也是以 Chronyd 為校時基準，參考 <a href="https://openshift.tips/machine-config/">NTP configuration - OpenShift Tips</a>，以下是校時的操作</p>
+<ol>
+<li>先檢查預設的狀態，隨便挑一台用 <code>oc debug node/&lt;node name&gt;</code> 進去觀察時間</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ oc debug node&#x2F;ip-10-0-129-186.ap-southeast-1.compute.internal</span><br><span class="line">Starting pod&#x2F;ip-10-0-129-186ap-southeast-1computeinternal-debug ...</span><br><span class="line">To use host binaries, run &#96;chroot &#x2F;host&#96;</span><br><span class="line">Pod IP: 10.0.129.186</span><br><span class="line">If you don&#39;t see a command prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.2# chroot &#x2F;host</span><br><span class="line">sh-4.4# cat &#x2F;etc&#x2F;chrony.conf</span><br><span class="line">sh-4.4#  chronyc tracking</span><br><span class="line">Reference ID    : DABA0324 (time1.maxonline.com.sg)</span><br><span class="line">Stratum         : 2</span><br><span class="line">Ref time (UTC)  : Tue Jul 07 08:12:11 2020</span><br><span class="line">System time     : 0.000018082 seconds fast of NTP time</span><br><span class="line">Last offset     : +0.000020540 seconds</span><br><span class="line">RMS offset      : 0.000040942 seconds</span><br><span class="line">Frequency       : 1.571 ppm slow</span><br><span class="line">Residual freq   : +0.007 ppm</span><br><span class="line">Skew            : 0.394 ppm</span><br><span class="line">Root delay      : 0.002178520 seconds</span><br><span class="line">Root dispersion : 0.000406400 seconds</span><br><span class="line">Update interval : 64.2 seconds</span><br><span class="line">Leap status     : Normal</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>準備 <code>chrony.conf</code>，然後進行 Base64 編碼</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt;&gt; chrony.conf</span></span><br><span class="line"><span class="string">pool 0.tw.pool.ntp.org iburst</span></span><br><span class="line"><span class="string">pool 3.tw.pool.ntp.org iburst</span></span><br><span class="line"><span class="string">driftfile /var/lib/chrony/drift</span></span><br><span class="line"><span class="string">makestep 1.0 3</span></span><br><span class="line"><span class="string">rtcsync</span></span><br><span class="line"><span class="string">keyfile /etc/chrony.keys</span></span><br><span class="line"><span class="string">leapsectz right/UTC</span></span><br><span class="line"><span class="string">logdir /var/log/chrony</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ cat chrony.conf | python3 -m base64 | xargs <span class="built_in">echo</span> -n</span><br><span class="line">cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>準備 2 個聲明檔，如果你在 <code>machine config pool</code> 還有多新增 infra 的話，也要特別寫一個，原則上就是一個角色要有一個檔案就是了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt; 98-worker-chrony.yaml</span></span><br><span class="line"><span class="string">apiVersion: machineconfiguration.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: MachineConfig</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  labels:</span></span><br><span class="line"><span class="string">    machineconfiguration.openshift.io/role: worker</span></span><br><span class="line"><span class="string">  name: 98-worker-chrony-configuration</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  config:</span></span><br><span class="line"><span class="string">    ignition:</span></span><br><span class="line"><span class="string">      version: 2.2.0</span></span><br><span class="line"><span class="string">    storage:</span></span><br><span class="line"><span class="string">      files:</span></span><br><span class="line"><span class="string">      - contents:</span></span><br><span class="line"><span class="string">          source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span></span><br><span class="line"><span class="string">        verification: &#123;&#125;</span></span><br><span class="line"><span class="string">        filesystem: root</span></span><br><span class="line"><span class="string">        mode: 420</span></span><br><span class="line"><span class="string">        path: /etc/chrony.conf</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt; 98-master-chrony.yaml</span></span><br><span class="line"><span class="string">apiVersion: machineconfiguration.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: MachineConfig</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  labels:</span></span><br><span class="line"><span class="string">    machineconfiguration.openshift.io/role: master</span></span><br><span class="line"><span class="string">  name: 98-master-chrony-configuration</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  config:</span></span><br><span class="line"><span class="string">    ignition:</span></span><br><span class="line"><span class="string">      version: 2.2.0</span></span><br><span class="line"><span class="string">    storage:</span></span><br><span class="line"><span class="string">      files:</span></span><br><span class="line"><span class="string">      - contents:</span></span><br><span class="line"><span class="string">          source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span></span><br><span class="line"><span class="string">        verification: &#123;&#125;</span></span><br><span class="line"><span class="string">        filesystem: root</span></span><br><span class="line"><span class="string">        mode: 420</span></span><br><span class="line"><span class="string">        path: /etc/chrony.conf</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ oc apply -f 98-master-chrony.yaml</span><br><span class="line">machineconfig.machineconfiguration.openshift.io/98-masters-chrony-configuration created</span><br><span class="line"></span><br><span class="line">$ oc apply -f 98-worker-chrony.yaml</span><br><span class="line">machineconfig.machineconfiguration.openshift.io/98-workers-chrony-configuration created</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="精確時間協定-PTP"><a href="#精確時間協定-PTP" class="headerlink" title="精確時間協定 PTP"></a>精確時間協定 PTP</h3><p>想不到吧! OpenShift 4 有內建支援 IEEE 1588 (Precision Time Protocol, PTP) 協定，來支援硬體級別的精確時間同步，當然要使用這個技術需要仰賴硬體設備上的支援，包含像是網卡以及交換機，OpenShift 4 是將 <a href="http://linuxptp.sourceforge.net/">Linux PTP</a> 透過 PTP Operator 安裝於所有節點之上，透過內建自動能力查詢機制來協助將具備 PTP 能力之網卡設定其相關參數。其實主要這個功能是為了 O-RAN W6 裡面有定義條目 <code>5.5.1 Cloud Platform Time Synchronization Architecture</code> 而做的，裡面描述如下</p>
+<blockquote>
+<p>The Time Sync deployment architecture which is described below relies on usage of Precision Time Protocol (PTP) IEEE 1588-2008 (a.k.a. IEEE 1588 Version 2) to synchronize clocks throughout the Edge Cloud site.</p>
+</blockquote>
+<p>其實安裝相當簡單，主要是透過 Operator Framework 從頭打到底，如果有興趣想看過程的可以參考該 <a href="https://github.com/pichuang/redhat-ptp-demo">GitHub - pichuang/redhat-ptp-demo</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get all</span><br><span class="line">NAME                                READY   STATUS    RESTARTS   AGE</span><br><span class="line">pod/linuxptp-daemon-2z2sx           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-nllxn           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-phkwp           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-v7w4s           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-xh5fp           1/1     Running   0          19m</span><br><span class="line">pod/ptp-operator-575797775d-7bcdf   1/1     Running   0          19m</span><br><span class="line"></span><br><span class="line">NAME                          TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">service/ptp-monitor-service   ClusterIP   None         &lt;none&gt;        9091/TCP   19m</span><br><span class="line"></span><br><span class="line">NAME                             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">daemonset.apps/linuxptp-daemon   5         5         5       5            5           kubernetes.io/os=linux   19m</span><br><span class="line"></span><br><span class="line">NAME                           READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">deployment.apps/ptp-operator   1/1     1            1           19m</span><br><span class="line"></span><br><span class="line">NAME                                      DESIRED   CURRENT   READY   AGE</span><br><span class="line">replicaset.apps/ptp-operator-575797775d   1         1         1       19m</span><br></pre></td></tr></table></figure>
+
+<p>哦對了，我身上沒有支援 PTP 的網卡，所以看不出來效果，帶有錢的大大找我去研究相關使用方式 XD</p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="Environment-Information"><a href="#Environment-Information" class="headerlink" title="Environment Information"></a>Environment Information</h3><ul>
+<li>OpenShift 4.3.27</li>
+<li>Kubernetes Version: v1.16.2+d6d3cff</li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes API 服務及跟各組件的交互關係</title>
+    <url>/20201009-kubernetes-api-communication%20copy/</url>
+    <content><![CDATA[<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
+<p>照例講個雜事，Red Hat OpenShift 4.6 (等同 Kubernetes 1.19) 要出啦！這是一個可以一路用到 <code>2022 年 3 月</code> 的版本，各位 Infra 不用在為了更新和升級落淚了 Q_Q，有興趣者可以參考 <a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What’s New in OpenShift Container Platform 4.6</a></p>
+<p><img src="/images/ocp4-6-eus.png" alt=""></p>
+<a id="more"></a>
+
+<p>按照我個人對於 Kubernetes 內部溝通理解，約略分為下列 11 個溝通步驟，當然我知道再更細分的話，還可以分更多步驟出來，但我這圖僅針對 Container 最終能運行為主截止</p>
+<p><img src="/images/kube-api.png" alt=""></p>
+<p>如果有時候遇到一些不可知的神祕現象，可以思考一下整個系統，是位在哪一層卡住</p>
+<h2 id="Kubernetes-Deployment-分解動作講解"><a href="#Kubernetes-Deployment-分解動作講解" class="headerlink" title="Kubernetes Deployment 分解動作講解"></a>Kubernetes Deployment 分解動作講解</h2><ol>
+<li>使用者自行撰寫好或透過別人弄好的 <a href="https://k8syaml.com/">Kubernetes YAML Generator</a> 產生 Kubernetes Deployment YAML 檔案，且<a href="https://k8smeetup.github.io/docs/tasks/administer-cluster/access-cluster-api/#%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE-rest-api">通过 Kubernetes API 访问集群</a>一文所列的方式：kubectl / RESTful API / <a href="https://github.com/kubernetes/client-go">client-go</a> / <a href="https://github.com/kubernetes-client/python">kubernetes-client/python</a> 等方式發送到 Kubernetes API Server 宣告進行部署應用程式。這個階段 Kubernetes API Server 會進行依序是 Authentication、Authorization、Admission Control 等驗證和檢查語法，詳細過程可參考 <a href="https://www.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch17.html">Chapter 17. Admission Control and Authorization</a>。如果都沒有問題的話，將會儲存 Deployment Object 至 etcd cluster</li>
+<li>目前為止，Pod 還沒被啟動起來，但 Controller Manager 已經收到來自 Kubernetes API Server 的要求</li>
+<li>Controller Manager 會去檢查是否有數量正確的副本 (Replicas) 且對應正確需求的 Pod 已經在運行</li>
+<li>如果沒有正確數量的副本正在運行，則會發送基於 Pod Spec 的要求到 Kubernetes API Server 請求建立對應數量的 Pod 起來</li>
+<li>Kubernetes API Server 寫入和讀取之前，會先經過兩關 Admission 和 Validation，前者 Admission 透過確認叢集全域設定來檢查是否可以新增或更新 Object，並可能依據叢集設定提供預設值，後者 Validation 則是在新增或更新過程中，來檢查傳入的 Object 是否合法，及是否僅包含有效參數，詳細可參考 <a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
+<li>Kubernetes API Server 持續會對 etcd 所存放的 Kuberentes Object 進行更新或移除，詳細可參考 <a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
+<li>雖然 etcd 內部已經存有 Pod 的資訊，但不過僅僅是一條紀錄而已，現實狀況是還沒有分配到 Worker Node 上。這時候 Kubernetes API Server 會通知 Kubernetes Scheduler：目前有新增 Pod 的需求，並且還沒有 Worker Node 可以運行它</li>
+<li>Kubernetes Scheduler 會通過程式檢查現行資源使用狀況以及現有的 Pod 的分配，然後去計算出最適合擺放每ㄧ個新 Pod 的 Worker Node 位置。當決定出來之後，Kubernetes Scheduler 將會設定每一個 Pod 裡面的 <code>spec.nodeName</code>，將其轉換成 Worker Node 名稱 ，並將最終決定通知至 Kubernetes API Server 進行更新請求</li>
+<li>直至本步驟為止，Pod 已經知道它應該要在哪一個 Worker Node 上面運行，但將通知位於需被分配的 Worker Node 上的 kubelet，並指示這些來自於 Kubernetes API Server 的新增 Pod 請求都應該要被 Kubelet 被遵照執行。然而，該 Worker Node 節點上的 Kubelet 將檢查自身是否已經將要運行的 Pod 運行起來。</li>
+<li>一但 Kubelet 確定 Pod 應該要運行於該節點上之後，就會呼叫 High-Level Contianer Runtime (如: Docker、Containerd、CRI-O 等) 已啟動容器 (Container)。當一切都準備好之後，kubelet 會將其狀態報告回傳至 Kubernetes API Server</li>
+<li>接下來就是依據 <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Pod Lifecycle - Kubernetes</a> 所述，建立 infra (pause) container 後，開始將Pod Spec 所要求的 Container 一個一個拉取並且啟動，並且與 Kube-proxy 協作將服務轉發出去</li>
+</ol>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="High-Level-Container-Runtime-跟-Low-Level-Container-Runtime-差異是啥"><a href="#High-Level-Container-Runtime-跟-Low-Level-Container-Runtime-差異是啥" class="headerlink" title="High-Level Container Runtime 跟 Low-Level Container Runtime 差異是啥?"></a>High-Level Container Runtime 跟 Low-Level Container Runtime 差異是啥?</h3><p>Low-Level Container Runtime 主要專職運行容器或其特定環境，實際專案如，常見於各大專案的 runc 或者是 crun、runv 等，詳細可參考 <a href="https://github.com/opencontainers/runtime-spec/blob/master/implementations.md">opencontainers / runtime-spec - implementations.md</a></p>
+<p>High-Level Container Runtime 主要負責管理各式容器映像檔以及負責跟 Low-Level Container Runtime 管理跟溝通，本身不處理實際運行容器的事情，一般都會有一個 Daemon 和 API 可以去監控底層狀態，譬如說 OpenShift 4 之後所使用的 CRI-O 或者是更多人比較知道 Dockerd 跟被拆分出來的 containerd 都同屬這類</p>
+<h2 id="文後感謝"><a href="#文後感謝" class="headerlink" title="文後感謝"></a>文後感謝</h2><p>感謝地瓜、Davy 兩位大大的半夜協助和毫不知情照片被我拿來用的 <a href="https://www.hwchiu.com/">hwchiu</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-1">Kubernetes deep dive: API Server - part 1</a></li>
+<li><a href="https://medium.com/@michalswi/introduction-to-kubernetes-api-the-way-to-understand-the-concept-of-kubernetes-operators-ed667385caf4">Introduction to Kubernetes API - the way to understand the concept of Kubernetes Operators.</a></li>
+<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
+<li><a href="https://k8syaml.com/">Kubernetes YAML Generator - Powered by Octopus.</a></li>
+<li><a href="https://k8smeetup.github.io/docs/tasks/administer-cluster/access-cluster-api/#%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE-rest-api">通过 Kubernetes API 访问集群</a></li>
+<li><a href="https://github.com/kubernetes/client-go">kubernetes/client-go</a></li>
+<li><a href="https://github.com/kubernetes-client/python">kubernetes-client/python</a></li>
+<li><a href="https://www.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch17.html">Chapter 17. Admission Control and Authorization</a></li>
+<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
+<li><a href="https://developers.redhat.com/blog/2019/01/15/podman-managing-containers-pods">Podman: Managing pods and containers in a local container runtime</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Pod Lifecycle - Kubernetes</a></li>
+<li><a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What’s New in OpenShift Container Platform 4.6</a></li>
+<li><a href="https://github.com/opencontainers/runtime-spec/blob/master/implementations.md">opencontainers / runtime-spec - implementations.md</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
+    <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
+    <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
+<p>有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/yGhcPmTtoPU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="正常的-Kubernetes-介紹"><a href="#正常的-Kubernetes-介紹" class="headerlink" title="正常的 Kubernetes 介紹"></a>正常的 Kubernetes 介紹</h2><p>我不太會講，貼別人的比較快</p>
+<ul>
+<li><a href="https://www.hwchiu.com/">Hwchiu Learning Note - Hwchiu</a></li>
+<li><a href="https://k2r2bai.com/2019/09/19/ironman2020/day04/">淺談 Kubernetes 高可靠架構 - Kyle</a></li>
+</ul>
+<h2 id="中翻中的-Kubernetes-組件介紹"><a href="#中翻中的-Kubernetes-組件介紹" class="headerlink" title="中翻中的 Kubernetes 組件介紹"></a>中翻中的 Kubernetes 組件介紹</h2><p><img src="/images/building.jpeg" alt=""></p>
+<blockquote>
+<p>我們就是在蓋一個中大型住戶社區，然後塞滿各式各樣的行李箱的平台</p>
+</blockquote>
+<p>請先想像建立 Kubernetes 完整的叢集服務，其實就像是要建立一個中大型住戶社區，那所對應的幾個名詞解釋就會是下面的描述</p>
+<ul>
+<li>Kubernetes：建立一個住戶社區的標準藍圖</li>
+<li>虛擬化平台、三大公有雲平台、實體機：地皮（怕有人看不懂，主要指 AWS/GCP/Azure/VMware vSphere/純實體機資源）</li>
+<li>虛擬機、實體機：住戶社區內一棟一棟的大樓坪數空間（怕有人看不懂，主要是指要 vCPU/vRAM還是用 pCPU/pRAM 計算）</li>
+<li>OS 作業系統：每棟大樓骨幹和地基</li>
+<li>Master Node：住戶社區管委會主要居住大樓，為保持高可用最少要 3 棟</li>
+<li>Etcd Cluster：管委們，為保持高可用，故建議最少三位管委，且互相投票選出一位委員長</li>
+<li>Worker Node：住戶們主要居住大樓</li>
+<li>OCI (Open Container Initiative)：訂立大樓鋼筋水泥及行李箱標準的組織</li>
+<li>CRI (Container Runtime Interface)：大樓鋼筋水泥廠商</li>
+<li>CNI (Container Network Interface)：大樓水電力系統廠商</li>
+<li>CSI (Container Storage Interface)：大樓空間規劃廠商</li>
+<li>Pod：住戶，而一棟大樓裡面可以有很多的住戶</li>
+<li>Pod IP：每個住戶的門牌號碼</li>
+<li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個或多個門入口管控</li>
+<li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個或多個門出口管控</li>
+<li>Internal DNS：大樓住戶黃頁簿 (怕有人看不懂，這個技術上常見是 CoreDNS)</li>
+<li>External DNS：指向各大樓的路標 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
+<li>Service：家族，同一個家族包含多個住戶，聯繫的時候會透過 Pod IP 也就是住戶的門牌號碼聯繫 （求更好的譬喻）</li>
+<li>Service Mesh：（求更好的譬喻）</li>
+<li>Containers：被打開的且正在被使用的行李箱，在一個住戶裡面，可以放一個或者是多個以上</li>
+<li>Container Images：還沒被打開的行李箱</li>
+<li>Container Registry：行李箱集中存放中心</li>
+<li>Bastion：維護整座社區的工程車</li>
+</ul>
+<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
+<blockquote>
+<p>你應該不會說每一個建商所蓋出的大樓品質都會是一樣的吧？有些只有蓋好大樓，內裝、外觀、拼裝、工法、維護都亂七八糟，這也是個能住的大樓嗎？</p>
+</blockquote>
+<p>技術上來說，<a href="https://github.com/cncf/k8s-conformance">Certified Kubernetes</a> 裡面羅列了基於 Kubernetes 個別版號通過的平台版本，具備參考價值</p>
+<h3 id="Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼"><a href="#Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼" class="headerlink" title="Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?"></a>Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?</h3><p>就像社區大樓保全解決方案，有些弄監視器、有些是監控設備、有些是人員管控，要看各自專案或廠商想要解決的問題，據我個人理解有些廠商是專注在保護作業系統、有些是會對 Container 進行映像檔靜態、或者是 Runtime 狀態下的動態掃描等等各種類型</p>
+<p>技術上來說，Kubernetes 官方有提出 <a href="https://kubernetes.io/docs/concepts/security/overview/">Overview of Cloud Native Security</a> 觀念，針對 Cloud、Cluster、Container、Code 四個層面進行保護，當然還不單止這樣，對外及對內的網路管理也相當重要，所以實際上比較多人會討論的是 Ingress Controller 比較多，也就是住戶社區的社區大門人流控制跟安全性</p>
+<h3 id="Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢"><a href="#Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢" class="headerlink" title="Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?"></a>Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?</h3><p>你家管委會應該不會管住戶家裡的行李箱塞什麼吧</p>
+<h3 id="Q4-那麼-Docker-在裡面的角色是什麼"><a href="#Q4-那麼-Docker-在裡面的角色是什麼" class="headerlink" title="Q4: 那麼 Docker 在裡面的角色是什麼?"></a>Q4: 那麼 Docker 在裡面的角色是什麼?</h3><p>眾多 CRI (Container Runtime Interface) 選擇之一，也就是大樓鋼筋水泥廠商有很多間，只是有一間叫做 Docker 的特別有名，但 Docker 當初成立的時候，是早於 Kubernetes 的，所以導致為了要讓 Kubernetes 能支援 Docker，在功能上加了一些料進去並且維持了一段時間，故這個狀況在 Kubernetes 部落格 2020/12/02 發布的文章 <a href="https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/">Don’t Panic: Kubernetes and Docker</a> 被改變了，文末有提及說建議可以換成比較通用的 CRI-O 及 Containerd 其中之一為主</p>
+<p>若想要更深入了解此改動影響的話，相當建議收聽 Cloud Native Taiwan User Group 出品的 <a href="https://www.youtube.com/watch?v=nc3mBN3LzvM&t=2s">一言難盡的關係：Kubernetes 和 Docker 之線上討論分享會</a> 內有多個角色的分享，包含開發者、自建維運者、供應商的角度</p>
+<h3 id="Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商"><a href="#Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商" class="headerlink" title="Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?"></a>Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?</h3><p>Yes，所以你會看到各式各樣的廠商都開始支援 Kubernetes 是因為這個原因，因為<br>一般狀況下 Kubernetes 並沒有特別限定 <code>大樓鋼筋水泥廠商</code>、<code>大樓水電力系統廠商</code>、<code>大樓空間規劃廠商</code> 選型，只要有符合各自定義的標準即可，但要留意 Kubernetes 的版號會連帶影響這三個標準介面 CRI / CNI / CSI <em>能支援</em>的發行版本號，千千萬萬務必要留意相容性問題，強烈建議規劃時洽專業蓋住戶社區的廠商諮詢</p>
+<p>正常來說，最少 CRI 跟 CNI 這兩個的選擇，最好要聽蓋大樓的廠商建議，因為…沒測過和壓過到時候維護的時候會很可怕，而 CSI 選擇彈性就相當多樣了</p>
+<blockquote>
+<p>你應該不會希望隨便找一個沒驗過的水電廠商就來蓋大樓吧？漏水和漏電會很可怕的喔…</p>
+</blockquote>
+<h3 id="Q6-整個住戶社區最重要的角色是什麼"><a href="#Q6-整個住戶社區最重要的角色是什麼" class="headerlink" title="Q6: 整個住戶社區最重要的角色是什麼?"></a>Q6: 整個住戶社區最重要的角色是什麼?</h3><p>那三棟委員會大樓，和裡面的三位委員，三位掛掉一位還可以維持正常運作，掛掉兩位維持唯讀運作</p>
+<h3 id="Q7-Kubernetes、VM、Container-的差異性該如何理解"><a href="#Q7-Kubernetes、VM、Container-的差異性該如何理解" class="headerlink" title="Q7: Kubernetes、VM、Container 的差異性該如何理解?"></a>Q7: Kubernetes、VM、Container 的差異性該如何理解?</h3><p>你可以建立好一個大樓 (VM)，隨意放置一個或多個行李箱 (Containers)，你需要手動管理這些行李箱，如果資源不足或者是這個大樓倒了，是沒有辦法自動飄移這些行李箱所裝載的內容</p>
+<p>但如果你多具備有了 Kubernetes 能力，你可以建立多個大樓 (VM)，透過 Kubernetes 所規定的放置計畫 (e.g. Deployment / DaemonSet / …)，可以統一調度這些 Pod，當某個大樓資源不夠的時候，可以根據 Kubernetes 的規則進行搬遷或擴充大樓等動作</p>
+<h3 id="Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講"><a href="#Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講" class="headerlink" title="Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?"></a>Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?</h3><p>因為絕大部分的狀況下，都是一個用戶 (Pod) 放一個行李箱 (Container)，所以導致有這種誤會。實際上，一個用戶 (Pod) 是可以放置一個或多個行李箱在裡面的</p>
+<h3 id="Q9-常聽到-Node-Scaling-是什麼意思"><a href="#Q9-常聽到-Node-Scaling-是什麼意思" class="headerlink" title="Q9: 常聽到 Node Scaling 是什麼意思?"></a>Q9: 常聽到 Node Scaling 是什麼意思?</h3><p>當住戶太多的時候，Kubernetes 可以自動或手動興建大樓，然後把多出來的住戶塞進去</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/MGm47ncUp6o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<h3 id="Q10-OS-作業系統在-Kubernetes-的領域中重不重要"><a href="#Q10-OS-作業系統在-Kubernetes-的領域中重不重要" class="headerlink" title="Q10: OS 作業系統在 Kubernetes 的領域中重不重要?"></a>Q10: OS 作業系統在 Kubernetes 的領域中重不重要?</h3><p>當有地震還是什麼災害來襲的時候，你會覺得地基跟骨幹很穩很重要…</p>
+<p>技術理由可以參考 <a href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/">Containers are Linux</a> 那一個章節內容</p>
+<h3 id="Q11-宣告式或聲明式管理是什麼意思"><a href="#Q11-宣告式或聲明式管理是什麼意思" class="headerlink" title="Q11: 宣告式或聲明式管理是什麼意思?"></a>Q11: 宣告式或聲明式管理是什麼意思?</h3><p>只要你有需要把行李箱放置到這個社區內，都需要提出部署計畫 (Deployment) 給委員會審核，只要通過委員會審核，他們就會照你<code>事先聲明的計畫</code>，盡<code>最大可能性</code>放置行李箱</p>
+<p>所以，如果你有什麼變更計畫，都需要遞交一份新的部署計畫書出來，讓委員會重新審核和接受</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><blockquote>
+<p>Red Hat 就是個家 IT 版本的住戶社區建設公司，已經蓋了第四代的 Kubernetes，也就是 OpenShift 4</p>
+</blockquote>
+<p><img src="/images/redhat-building.jpeg" alt=""></p>
+<p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kubernetes / OpenShift 發布歷史時間表</title>
     <url>/20200618-k8s-release-history/</url>
     <content><![CDATA[<p>打從 Kubernetes 1.15 之後，OpenShift 的版本迭代速度就是落差一版而已，在那之前基本上都是兩版的差距，這一切都是為了 <a href="https://kubernetes.io/docs/setup/release/version-skew-policy/">Kubernetes 的版本生命週期規定</a> 的教條而改變的…</p>
@@ -6496,154 +6730,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Red Hat OpenShift 4 DNS &amp; NTP &amp; PTP 網路套餐</title>
-    <url>/20200706-openshift-with-coreos-part-8/</url>
-    <content><![CDATA[<p>最近雖然受到 COVID-19 影響導致有些國外專案進度有點落後，但就 OpenShift 4 功能本身不知道為啥成長幅度變的蠻快的…有時候想跟也很難跟上，只能透過影片來了解，然後 Red Hat 本家不知道哪根筋不對了，跑去 Twitch (!!??) 開了一個頻道 <a href="https://www.twitch.tv/redhatopenshift">RedHatOpenShift Twitch</a>，三不五時就開直播上演下圖的狀況，相當有事</p>
-<p><img src="/images/3-bear.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="走馬看花第-8-天"><a href="#走馬看花第-8-天" class="headerlink" title="走馬看花第 8 天"></a>走馬看花第 8 天</h2><h3 id="CoreDNS-做-DNS-Forwarder"><a href="#CoreDNS-做-DNS-Forwarder" class="headerlink" title="CoreDNS 做 DNS Forwarder"></a>CoreDNS 做 DNS Forwarder</h3><blockquote>
-<p>CoreDNS: DNS and Service Discovery</p>
-</blockquote>
-<p>其實 OpenShift 內建有 DNS 服務，主要目的是要來解析 Service IP &lt;-&gt; DNS，所採用的技術是使用 <code>CoreDNS</code>。關於 <a href="https://coredns.io/">CoreDNS</a> ，主要是提供雲原生的 DNS 服務和服務發現的解決方案，有興趣想參考效能比較的話，可以看 <a href="https://github.com/coredns/deployment/blob/master/kubernetes/Scaling_CoreDNS.md">Scaling CoreDNS in Kubernetes Clusters</a>，目前已於 2019/01 時從 CNCF 專案海中<a href="https://www.cncf.io/announcement/2019/01/24/coredns-graduation/">畢業</a>。</p>
-<p>如果你仔細觀察 CoreDNS 在 OpenShift 上的運作狀況可以發現他是從 <code>openshift-dns-operator</code> 部署，並於每一個節點採用 <code>DaemonSet</code> 的形式運行 CoreDNS</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Operator Information</span></span><br><span class="line">$ oc get deployment/dns-operator -n openshift-dns-operator</span><br><span class="line">NAME           READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">dns-operator   1/1     1            1           113m</span><br><span class="line"></span><br><span class="line">$ oc get clusteroperators/dns</span><br><span class="line">NAME   VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE</span><br><span class="line">dns    4.3.27    True        False         False      108m</span><br><span class="line"></span><br><span class="line"><span class="comment"># Project Information</span></span><br><span class="line">$ oc get all -n openshift-dns -o wide</span><br><span class="line">NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE                                              NOMINATED NODE   READINESS GATES</span><br><span class="line">pod/dns-default-9vq2j   2/2     Running   0          84m   10.129.0.10   ip-10-0-146-166.ap-southeast-1.compute.internal   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-g2bps   2/2     Running   0          84m   10.130.0.9    ip-10-0-167-32.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-mg7cx   2/2     Running   0          84m   10.128.0.13   ip-10-0-129-186.ap-southeast-1.compute.internal   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-sxzcn   2/2     Running   0          75m   10.128.2.3    ip-10-0-132-54.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pod/dns-default-wj97g   2/2     Running   0          75m   10.131.0.3    ip-10-0-154-36.ap-southeast-1.compute.internal    &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">NAME                  TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE</span><br><span class="line">service/dns-default   ClusterIP   172.30.0.10   &lt;none&gt;        53/UDP,53/TCP,9153/TCP   83m</span><br><span class="line"></span><br><span class="line">NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">daemonset.apps/dns-default   5         5         5       5            5           kubernetes.io/os=linux   83m</span><br></pre></td></tr></table></figure>
-
-<p>倘若你想要透過 VPN 去連線至其他雲裡面的服務，那這樣會有需要特別多加幾條 DNS Forwarder 的能力在集群裡面，遵照 <a href="https://docs.openshift.com/container-platform/4.4/networking/dns-operator.html">DNS Operator in OpenShift Container Platform</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Default Setting</span></span><br><span class="line">$ oc get configmap/dns-default -n openshift-dns -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    .:5353 &#123;</span><br><span class="line">        errors</span><br><span class="line">        health</span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">            pods insecure</span><br><span class="line">            upstream</span><br><span class="line">            fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153</span><br><span class="line">        forward . /etc/resolv.conf &#123;</span><br><span class="line">            policy sequential</span><br><span class="line">        &#125;</span><br><span class="line">        cache 30</span><br><span class="line">        reload</span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    dns.operator.openshift.io/owning-dns: default</span><br><span class="line">  name: dns-default</span><br><span class="line">  namespace: openshift-dns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增 DNS Forwarder</span></span><br><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt;&gt; apply-dns-forwarder.yaml</span></span><br><span class="line"><span class="string">apiVersion: operator.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: DNS</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  name: default</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  servers:</span></span><br><span class="line"><span class="string">  - name: pichuang-server-farm</span></span><br><span class="line"><span class="string">    zones:</span></span><br><span class="line"><span class="string">      - pichuang.internal</span></span><br><span class="line"><span class="string">    forwardPlugin:</span></span><br><span class="line"><span class="string">      upstreams:</span></span><br><span class="line"><span class="string">        - 192.168.77.100</span></span><br><span class="line"><span class="string">        - 192.168.77.99:5533</span></span><br><span class="line"><span class="string">  - name: redhat-server-farm</span></span><br><span class="line"><span class="string">    zones:</span></span><br><span class="line"><span class="string">      - rhtw.private</span></span><br><span class="line"><span class="string">      - rhglobal.public</span></span><br><span class="line"><span class="string">    forwardPlugin:</span></span><br><span class="line"><span class="string">      upstreams:</span></span><br><span class="line"><span class="string">        - 10.99.1.100</span></span><br><span class="line"><span class="string">        - 172.88.2.99:5533</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行變更</span></span><br><span class="line">$ oc apply -f apply-dns-forwarder.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 檢查 CoreDNS 設定</span></span><br><span class="line">$ oc get configmap/dns-default -n openshift-dns -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    <span class="comment"># pichuang-server-farm</span></span><br><span class="line">    pichuang.internal:5353 &#123;</span><br><span class="line">        forward . 192.168.77.100 192.168.77.99:5533</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># redhat-server-farm</span></span><br><span class="line">    rhtw.private:5353 rhglobal.public:5353 &#123;</span><br><span class="line">        forward . 10.99.1.100 172.88.2.99:5533</span><br><span class="line">    &#125;</span><br><span class="line">    .:5353 &#123;</span><br><span class="line">        errors</span><br><span class="line">        health</span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">            pods insecure</span><br><span class="line">            upstream</span><br><span class="line">            fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153</span><br><span class="line">        forward . /etc/resolv.conf &#123;</span><br><span class="line">            policy sequential</span><br><span class="line">        &#125;</span><br><span class="line">        cache 30</span><br><span class="line">        reload</span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    dns.operator.openshift.io/owning-dns: default</span><br><span class="line">  name: dns-default</span><br><span class="line">  namespace: openshift-dns</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="時間設定-Chrony"><a href="#時間設定-Chrony" class="headerlink" title="時間設定 Chrony"></a>時間設定 Chrony</h3><p>打從 RHEL 7 之後，Red Hat 官方因為安全及效能上的考量，建議從 <code>ntpd</code> 轉換成使用 <code>chronyd</code>，實際上也是蠻推薦多用 chronyd 當作主要的 NTP Server/Client，就連 OpenShift 預載的 CoreOS 內部也是以 Chronyd 為校時基準，參考 <a href="https://openshift.tips/machine-config/">NTP configuration - OpenShift Tips</a>，以下是校時的操作</p>
-<ol>
-<li>先檢查預設的狀態，隨便挑一台用 <code>oc debug node/&lt;node name&gt;</code> 進去觀察時間</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ oc debug node&#x2F;ip-10-0-129-186.ap-southeast-1.compute.internal</span><br><span class="line">Starting pod&#x2F;ip-10-0-129-186ap-southeast-1computeinternal-debug ...</span><br><span class="line">To use host binaries, run &#96;chroot &#x2F;host&#96;</span><br><span class="line">Pod IP: 10.0.129.186</span><br><span class="line">If you don&#39;t see a command prompt, try pressing enter.</span><br><span class="line"></span><br><span class="line">sh-4.2# chroot &#x2F;host</span><br><span class="line">sh-4.4# cat &#x2F;etc&#x2F;chrony.conf</span><br><span class="line">sh-4.4#  chronyc tracking</span><br><span class="line">Reference ID    : DABA0324 (time1.maxonline.com.sg)</span><br><span class="line">Stratum         : 2</span><br><span class="line">Ref time (UTC)  : Tue Jul 07 08:12:11 2020</span><br><span class="line">System time     : 0.000018082 seconds fast of NTP time</span><br><span class="line">Last offset     : +0.000020540 seconds</span><br><span class="line">RMS offset      : 0.000040942 seconds</span><br><span class="line">Frequency       : 1.571 ppm slow</span><br><span class="line">Residual freq   : +0.007 ppm</span><br><span class="line">Skew            : 0.394 ppm</span><br><span class="line">Root delay      : 0.002178520 seconds</span><br><span class="line">Root dispersion : 0.000406400 seconds</span><br><span class="line">Update interval : 64.2 seconds</span><br><span class="line">Leap status     : Normal</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>準備 <code>chrony.conf</code>，然後進行 Base64 編碼</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt;&gt; chrony.conf</span></span><br><span class="line"><span class="string">pool 0.tw.pool.ntp.org iburst</span></span><br><span class="line"><span class="string">pool 3.tw.pool.ntp.org iburst</span></span><br><span class="line"><span class="string">driftfile /var/lib/chrony/drift</span></span><br><span class="line"><span class="string">makestep 1.0 3</span></span><br><span class="line"><span class="string">rtcsync</span></span><br><span class="line"><span class="string">keyfile /etc/chrony.keys</span></span><br><span class="line"><span class="string">leapsectz right/UTC</span></span><br><span class="line"><span class="string">logdir /var/log/chrony</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ cat chrony.conf | python3 -m base64 | xargs <span class="built_in">echo</span> -n</span><br><span class="line">cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>準備 2 個聲明檔，如果你在 <code>machine config pool</code> 還有多新增 infra 的話，也要特別寫一個，原則上就是一個角色要有一個檔案就是了</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt; 98-worker-chrony.yaml</span></span><br><span class="line"><span class="string">apiVersion: machineconfiguration.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: MachineConfig</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  labels:</span></span><br><span class="line"><span class="string">    machineconfiguration.openshift.io/role: worker</span></span><br><span class="line"><span class="string">  name: 98-worker-chrony-configuration</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  config:</span></span><br><span class="line"><span class="string">    ignition:</span></span><br><span class="line"><span class="string">      version: 2.2.0</span></span><br><span class="line"><span class="string">    storage:</span></span><br><span class="line"><span class="string">      files:</span></span><br><span class="line"><span class="string">      - contents:</span></span><br><span class="line"><span class="string">          source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span></span><br><span class="line"><span class="string">        verification: &#123;&#125;</span></span><br><span class="line"><span class="string">        filesystem: root</span></span><br><span class="line"><span class="string">        mode: 420</span></span><br><span class="line"><span class="string">        path: /etc/chrony.conf</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ cat &lt;&lt; <span class="string">EOF &gt; 98-master-chrony.yaml</span></span><br><span class="line"><span class="string">apiVersion: machineconfiguration.openshift.io/v1</span></span><br><span class="line"><span class="string">kind: MachineConfig</span></span><br><span class="line"><span class="string">metadata:</span></span><br><span class="line"><span class="string">  labels:</span></span><br><span class="line"><span class="string">    machineconfiguration.openshift.io/role: master</span></span><br><span class="line"><span class="string">  name: 98-master-chrony-configuration</span></span><br><span class="line"><span class="string">spec:</span></span><br><span class="line"><span class="string">  config:</span></span><br><span class="line"><span class="string">    ignition:</span></span><br><span class="line"><span class="string">      version: 2.2.0</span></span><br><span class="line"><span class="string">    storage:</span></span><br><span class="line"><span class="string">      files:</span></span><br><span class="line"><span class="string">      - contents:</span></span><br><span class="line"><span class="string">          source: data:text/plain;charset=utf-8;base64,cG9vbCAwLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKcG9vbCAzLnR3LnBvb2wubnRwLm9yZyBpYnVyc3QKZHJpZnRmaWxlIC92YXIvbGliL2Nocm9ueS9kcmlmdAptYWtlc3RlcCAxLjAgMwpydGNzeW5jCmtleWZpbGUgL2V0Yy9jaHJvbnkua2V5cwpsZWFwc2VjdHogcmlnaHQvVVRDCmxvZ2RpciAvdmFyL2xvZy9jaHJvbnkK</span></span><br><span class="line"><span class="string">        verification: &#123;&#125;</span></span><br><span class="line"><span class="string">        filesystem: root</span></span><br><span class="line"><span class="string">        mode: 420</span></span><br><span class="line"><span class="string">        path: /etc/chrony.conf</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">$ oc apply -f 98-master-chrony.yaml</span><br><span class="line">machineconfig.machineconfiguration.openshift.io/98-masters-chrony-configuration created</span><br><span class="line"></span><br><span class="line">$ oc apply -f 98-worker-chrony.yaml</span><br><span class="line">machineconfig.machineconfiguration.openshift.io/98-workers-chrony-configuration created</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="精確時間協定-PTP"><a href="#精確時間協定-PTP" class="headerlink" title="精確時間協定 PTP"></a>精確時間協定 PTP</h3><p>想不到吧! OpenShift 4 有內建支援 IEEE 1588 (Precision Time Protocol, PTP) 協定，來支援硬體級別的精確時間同步，當然要使用這個技術需要仰賴硬體設備上的支援，包含像是網卡以及交換機，OpenShift 4 是將 <a href="http://linuxptp.sourceforge.net/">Linux PTP</a> 透過 PTP Operator 安裝於所有節點之上，透過內建自動能力查詢機制來協助將具備 PTP 能力之網卡設定其相關參數。其實主要這個功能是為了 O-RAN W6 裡面有定義條目 <code>5.5.1 Cloud Platform Time Synchronization Architecture</code> 而做的，裡面描述如下</p>
-<blockquote>
-<p>The Time Sync deployment architecture which is described below relies on usage of Precision Time Protocol (PTP) IEEE 1588-2008 (a.k.a. IEEE 1588 Version 2) to synchronize clocks throughout the Edge Cloud site.</p>
-</blockquote>
-<p>其實安裝相當簡單，主要是透過 Operator Framework 從頭打到底，如果有興趣想看過程的可以參考該 <a href="https://github.com/pichuang/redhat-ptp-demo">GitHub - pichuang/redhat-ptp-demo</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get all</span><br><span class="line">NAME                                READY   STATUS    RESTARTS   AGE</span><br><span class="line">pod/linuxptp-daemon-2z2sx           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-nllxn           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-phkwp           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-v7w4s           1/1     Running   0          19m</span><br><span class="line">pod/linuxptp-daemon-xh5fp           1/1     Running   0          19m</span><br><span class="line">pod/ptp-operator-575797775d-7bcdf   1/1     Running   0          19m</span><br><span class="line"></span><br><span class="line">NAME                          TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">service/ptp-monitor-service   ClusterIP   None         &lt;none&gt;        9091/TCP   19m</span><br><span class="line"></span><br><span class="line">NAME                             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">daemonset.apps/linuxptp-daemon   5         5         5       5            5           kubernetes.io/os=linux   19m</span><br><span class="line"></span><br><span class="line">NAME                           READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">deployment.apps/ptp-operator   1/1     1            1           19m</span><br><span class="line"></span><br><span class="line">NAME                                      DESIRED   CURRENT   READY   AGE</span><br><span class="line">replicaset.apps/ptp-operator-575797775d   1         1         1       19m</span><br></pre></td></tr></table></figure>
-
-<p>哦對了，我身上沒有支援 PTP 的網卡，所以看不出來效果，帶有錢的大大找我去研究相關使用方式 XD</p>
-<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="Environment-Information"><a href="#Environment-Information" class="headerlink" title="Environment Information"></a>Environment Information</h3><ul>
-<li>OpenShift 4.3.27</li>
-<li>Kubernetes Version: v1.16.2+d6d3cff</li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何條列出單一 Namespace 內的 Kubernetes 計算資源?</title>
-    <url>/20200828-kubectl-view-allocations/</url>
-    <content><![CDATA[<p>最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要<code>逆向</code>研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，身為一位計算資源精算師，所以就有了下面這篇的紀錄</p>
-<p>本月無心力，無梗圖呈現</p>
-<a id="more"></a>
-
-<h2 id="為什麼要這樣做"><a href="#為什麼要這樣做" class="headerlink" title="為什麼要這樣做?"></a>為什麼要這樣做?</h2><p>這件事跟 Kubernetes 計算資源估算有關係，基於<a href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/#Kubernetes-%E8%B3%87%E6%BA%90%E4%BC%B0%E7%AE%97%E6%96%B9%E5%BC%8F">前一篇</a>所提到的 <code>Kubernetes 資源估算方式</code>，若把實機或虛機的完整可用資源當作一個玻璃杯來看，若有服務需要使用 Kubernetes 計算資源的話，則視為往玻璃杯倒水進去，當水位滿的時候，就代表該實機或虛機不能在擺放其他的服務了，當水位比較低的時候，則代表可以較有餘裕放置其他服務在裡面</p>
-<p><img src="/images/glass.png" alt=""></p>
-<h2 id="Kubectl-view-allocations"><a href="#Kubectl-view-allocations" class="headerlink" title="Kubectl-view-allocations"></a>Kubectl-view-allocations</h2><p>這邊要推薦 <a href="https://github.com/davidB/kubectl-view-allocations">davidB/kubectl-view-allocations</a> 這個專案，相當好用，之前還沒找到這個專案之前，我都是用 <code>jsonpath</code> 慢慢爬，但我覺得不僅指令相當長 (如下指令)，而且輸出結果<a href="https://gist.github.com/pichuang/59c42de25991c516909c4736caa7893d">不明確</a>，加上很難閱讀，所以才又另外找了一下這個專案來用用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">oc get pods -o=jsonpath=<span class="string">&quot;&#123;range .items[]&#125;&#123;range .spec.containers[]&#125; &#123;.name&#125; CPU_Requests:&#123;.resources.requests.cpu&#125; CPU_Limites:&#123;.resources.limits.cpu&#125; Memory_Requests:&#123;.resources.requests.memory&#125; Memory_Limites:&#123;.resources.limits.memory&#125; &#123;&#x27;\n&#x27;&#125;&#123;end&#125;&#123;&#x27;\n&#x27;&#125;&#123;end&#125;&quot;</span> | column -t</span><br></pre></td></tr></table></figure>
-
-<h3 id="超簡單安裝-Kubectl-view-allocations"><a href="#超簡單安裝-Kubectl-view-allocations" class="headerlink" title="超簡單安裝 Kubectl-view-allocations"></a>超簡單安裝 Kubectl-view-allocations</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/davidB/kubectl-view-allocations/master/scripts/getLatest.sh | bash</span><br><span class="line">sudo mv kubectl-view-allocations /usr/<span class="built_in">local</span>/bin</span><br><span class="line">kubectl-view-allocations -V</span><br></pre></td></tr></table></figure>
-
-<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><h3 id="條列-Namespace-內資源"><a href="#條列-Namespace-內資源" class="headerlink" title="條列 Namespace 內資源"></a>條列 Namespace 內資源</h3><p>譬如說我想要查 <code>openshift-etcd</code> 裡面的資源預設消耗如何，可以用下列指令辦到</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -n openshift-etcd</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/show-openshift-etcd.png" alt=""></p>
-<h3 id="概觀了解各節點資源"><a href="#概觀了解各節點資源" class="headerlink" title="概觀了解各節點資源"></a>概觀了解各節點資源</h3><p>類同於 <code>oc adm top node</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -r cpu -g node</span><br><span class="line">kubectl-view-allocations -r memory -g node</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/show-node-cpu-mem.png" alt=""></p>
-<h3 id="詳細了解各節點資源"><a href="#詳細了解各節點資源" class="headerlink" title="詳細了解各節點資源"></a>詳細了解各節點資源</h3><p>當你想要了解你的 master node 上面到底都放了什麼碗糕的東西，這個還蠻好用的…</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl-view-allocations -r cpu</span><br><span class="line">kubectl-view-allocations -r memory</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/show-node-memory-details.png" alt=""></p>
-<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="Environment-Information"><a href="#Environment-Information" class="headerlink" title="Environment Information"></a>Environment Information</h3><ul>
-<li>Red Hat OpenShift 4.4.0</li>
-<li>Kubernetes v1.18.3</li>
-</ul>
-]]></content>
-      <categories>
-        <category>kubernetes</category>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kubernetes API 服務及跟各組件的交互關係</title>
-    <url>/20201009-kubernetes-api-communication%20copy/</url>
-    <content><![CDATA[<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
-<p>照例講個雜事，Red Hat OpenShift 4.6 (等同 Kubernetes 1.19) 要出啦！這是一個可以一路用到 <code>2022 年 3 月</code> 的版本，各位 Infra 不用在為了更新和升級落淚了 Q_Q，有興趣者可以參考 <a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What’s New in OpenShift Container Platform 4.6</a></p>
-<p><img src="/images/ocp4-6-eus.png" alt=""></p>
-<a id="more"></a>
-
-<p>按照我個人對於 Kubernetes 內部溝通理解，約略分為下列 11 個溝通步驟，當然我知道再更細分的話，還可以分更多步驟出來，但我這圖僅針對 Container 最終能運行為主截止</p>
-<p><img src="/images/kube-api.png" alt=""></p>
-<p>如果有時候遇到一些不可知的神祕現象，可以思考一下整個系統，是位在哪一層卡住</p>
-<h2 id="Kubernetes-Deployment-分解動作講解"><a href="#Kubernetes-Deployment-分解動作講解" class="headerlink" title="Kubernetes Deployment 分解動作講解"></a>Kubernetes Deployment 分解動作講解</h2><ol>
-<li>使用者自行撰寫好或透過別人弄好的 <a href="https://k8syaml.com/">Kubernetes YAML Generator</a> 產生 Kubernetes Deployment YAML 檔案，且<a href="https://k8smeetup.github.io/docs/tasks/administer-cluster/access-cluster-api/#%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE-rest-api">通过 Kubernetes API 访问集群</a>一文所列的方式：kubectl / RESTful API / <a href="https://github.com/kubernetes/client-go">client-go</a> / <a href="https://github.com/kubernetes-client/python">kubernetes-client/python</a> 等方式發送到 Kubernetes API Server 宣告進行部署應用程式。這個階段 Kubernetes API Server 會進行依序是 Authentication、Authorization、Admission Control 等驗證和檢查語法，詳細過程可參考 <a href="https://www.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch17.html">Chapter 17. Admission Control and Authorization</a>。如果都沒有問題的話，將會儲存 Deployment Object 至 etcd cluster</li>
-<li>目前為止，Pod 還沒被啟動起來，但 Controller Manager 已經收到來自 Kubernetes API Server 的要求</li>
-<li>Controller Manager 會去檢查是否有數量正確的副本 (Replicas) 且對應正確需求的 Pod 已經在運行</li>
-<li>如果沒有正確數量的副本正在運行，則會發送基於 Pod Spec 的要求到 Kubernetes API Server 請求建立對應數量的 Pod 起來</li>
-<li>Kubernetes API Server 寫入和讀取之前，會先經過兩關 Admission 和 Validation，前者 Admission 透過確認叢集全域設定來檢查是否可以新增或更新 Object，並可能依據叢集設定提供預設值，後者 Validation 則是在新增或更新過程中，來檢查傳入的 Object 是否合法，及是否僅包含有效參數，詳細可參考 <a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
-<li>Kubernetes API Server 持續會對 etcd 所存放的 Kuberentes Object 進行更新或移除，詳細可參考 <a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
-<li>雖然 etcd 內部已經存有 Pod 的資訊，但不過僅僅是一條紀錄而已，現實狀況是還沒有分配到 Worker Node 上。這時候 Kubernetes API Server 會通知 Kubernetes Scheduler：目前有新增 Pod 的需求，並且還沒有 Worker Node 可以運行它</li>
-<li>Kubernetes Scheduler 會通過程式檢查現行資源使用狀況以及現有的 Pod 的分配，然後去計算出最適合擺放每ㄧ個新 Pod 的 Worker Node 位置。當決定出來之後，Kubernetes Scheduler 將會設定每一個 Pod 裡面的 <code>spec.nodeName</code>，將其轉換成 Worker Node 名稱 ，並將最終決定通知至 Kubernetes API Server 進行更新請求</li>
-<li>直至本步驟為止，Pod 已經知道它應該要在哪一個 Worker Node 上面運行，但將通知位於需被分配的 Worker Node 上的 kubelet，並指示這些來自於 Kubernetes API Server 的新增 Pod 請求都應該要被 Kubelet 被遵照執行。然而，該 Worker Node 節點上的 Kubelet 將檢查自身是否已經將要運行的 Pod 運行起來。</li>
-<li>一但 Kubelet 確定 Pod 應該要運行於該節點上之後，就會呼叫 High-Level Contianer Runtime (如: Docker、Containerd、CRI-O 等) 已啟動容器 (Container)。當一切都準備好之後，kubelet 會將其狀態報告回傳至 Kubernetes API Server</li>
-<li>接下來就是依據 <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Pod Lifecycle - Kubernetes</a> 所述，建立 infra (pause) container 後，開始將Pod Spec 所要求的 Container 一個一個拉取並且啟動，並且與 Kube-proxy 協作將服務轉發出去</li>
-</ol>
-<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="High-Level-Container-Runtime-跟-Low-Level-Container-Runtime-差異是啥"><a href="#High-Level-Container-Runtime-跟-Low-Level-Container-Runtime-差異是啥" class="headerlink" title="High-Level Container Runtime 跟 Low-Level Container Runtime 差異是啥?"></a>High-Level Container Runtime 跟 Low-Level Container Runtime 差異是啥?</h3><p>Low-Level Container Runtime 主要專職運行容器或其特定環境，實際專案如，常見於各大專案的 runc 或者是 crun、runv 等，詳細可參考 <a href="https://github.com/opencontainers/runtime-spec/blob/master/implementations.md">opencontainers / runtime-spec - implementations.md</a></p>
-<p>High-Level Container Runtime 主要負責管理各式容器映像檔以及負責跟 Low-Level Container Runtime 管理跟溝通，本身不處理實際運行容器的事情，一般都會有一個 Daemon 和 API 可以去監控底層狀態，譬如說 OpenShift 4 之後所使用的 CRI-O 或者是更多人比較知道 Dockerd 跟被拆分出來的 containerd 都同屬這類</p>
-<h2 id="文後感謝"><a href="#文後感謝" class="headerlink" title="文後感謝"></a>文後感謝</h2><p>感謝地瓜、Davy 兩位大大的半夜協助和毫不知情照片被我拿來用的 <a href="https://www.hwchiu.com/">hwchiu</a></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-1">Kubernetes deep dive: API Server - part 1</a></li>
-<li><a href="https://medium.com/@michalswi/introduction-to-kubernetes-api-the-way-to-understand-the-concept-of-kubernetes-operators-ed667385caf4">Introduction to Kubernetes API - the way to understand the concept of Kubernetes Operators.</a></li>
-<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
-<li><a href="https://k8syaml.com/">Kubernetes YAML Generator - Powered by Octopus.</a></li>
-<li><a href="https://k8smeetup.github.io/docs/tasks/administer-cluster/access-cluster-api/#%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE-rest-api">通过 Kubernetes API 访问集群</a></li>
-<li><a href="https://github.com/kubernetes/client-go">kubernetes/client-go</a></li>
-<li><a href="https://github.com/kubernetes-client/python">kubernetes-client/python</a></li>
-<li><a href="https://www.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch17.html">Chapter 17. Admission Control and Authorization</a></li>
-<li><a href="https://www.openshift.com/blog/kubernetes-deep-dive-api-server-part-2">Kubernetes Deep Dive: API Server – Part 2</a></li>
-<li><a href="https://developers.redhat.com/blog/2019/01/15/podman-managing-containers-pods">Podman: Managing pods and containers in a local container runtime</a></li>
-<li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Pod Lifecycle - Kubernetes</a></li>
-<li><a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What’s New in OpenShift Container Platform 4.6</a></li>
-<li><a href="https://github.com/opencontainers/runtime-spec/blob/master/implementations.md">opencontainers / runtime-spec - implementations.md</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>kubernetes</category>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2020 年度個人回顧</title>
     <url>/20201231-2020-personal-review/</url>
     <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
@@ -6692,86 +6778,6 @@
       <tags>
         <tag>misc</tag>
         <tag>annual</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
-    <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
-    <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
-<p>有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/yGhcPmTtoPU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="正常的-Kubernetes-介紹"><a href="#正常的-Kubernetes-介紹" class="headerlink" title="正常的 Kubernetes 介紹"></a>正常的 Kubernetes 介紹</h2><p>我不太會講，貼別人的比較快</p>
-<ul>
-<li><a href="https://www.hwchiu.com/">Hwchiu Learning Note - Hwchiu</a></li>
-<li><a href="https://k2r2bai.com/2019/09/19/ironman2020/day04/">淺談 Kubernetes 高可靠架構 - Kyle</a></li>
-</ul>
-<h2 id="中翻中的-Kubernetes-組件介紹"><a href="#中翻中的-Kubernetes-組件介紹" class="headerlink" title="中翻中的 Kubernetes 組件介紹"></a>中翻中的 Kubernetes 組件介紹</h2><p><img src="/images/building.jpeg" alt=""></p>
-<blockquote>
-<p>我們就是在蓋一個中大型住戶社區</p>
-</blockquote>
-<p>請先想像建立 Kubernetes 完整的叢集服務，其實就像是要建立一個大型住戶社區，那所對應的幾個名詞解釋就會是下面的描述</p>
-<ul>
-<li>Kubernetes：建立一個住戶社區的標準藍圖</li>
-<li>虛擬機、實體機：住戶社區內一棟一棟的大樓</li>
-<li>OS 作業系統：大樓骨幹跟地基</li>
-<li>Master Node：住戶社區管委會主要居住大樓，為保持高可用最少要 3 棟</li>
-<li>Etcd Cluster：為保持高可用，故建議最少三位管委，互相投票選出一位委員長</li>
-<li>Worker Node：住戶們主要居住大樓</li>
-<li>OCI (Open Container Initiative)：訂立大樓鋼筋水泥及行李箱標準的組織</li>
-<li>CRI (Container Runtime Interface)：大樓鋼筋水泥廠商</li>
-<li>CNI (Container Network Interface)：大樓水電力系統廠商</li>
-<li>CSI (Container Storage Interface)：大樓空間規劃廠商</li>
-<li>Pod：住戶，而一棟大樓裡面可以有很多的住戶</li>
-<li>Pod IP：每個住戶的門牌號碼</li>
-<li>Ingress Controller：住戶社區的社區大門，可以指定讓社區成員都固定走同一個或多個門入口管控</li>
-<li>Egress Controller：住戶社區的社區後門，可以指定讓社區成員都固定走同一個或多個門出口管控</li>
-<li>Internal DNS：大樓住戶黃頁簿 (怕有人看不懂，這個技術上常見是 CoreDNS)</li>
-<li>External DNS：指向各大樓的路標 (怕有人看不懂，這個技術上常見是 AD / bind9 / dnsmasq)</li>
-<li>Service：家族，同一個家族包含多個住戶，聯繫的時候會透過 Pod IP 也就是住戶的門牌號碼聯繫 （求更好的譬喻）</li>
-<li>Service Mesh：（求更好的譬喻）</li>
-<li>Containers：被打開的且正在被使用的行李箱，在一個住戶裡面，可以放一個或者是多個以上</li>
-<li>Container Images：還沒被打開的行李箱</li>
-<li>Container Registry：行李箱集中存放中心</li>
-<li>Bastion：維護整座社區的工程車</li>
-</ul>
-<h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
-<blockquote>
-<p>你應該不會說每一個建商所蓋出的大樓品質都會是一樣的吧？有些只有蓋好大樓，內裝、外觀、拼裝、工法、維護都亂七八糟，這也是個能住的大樓嗎？</p>
-</blockquote>
-<p>技術上來說，<a href="https://github.com/cncf/k8s-conformance">Certified Kubernetes</a> 裡面羅列了基於 Kubernetes 個別版號通過的平台版本，具備參考價值</p>
-<h3 id="Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼"><a href="#Q2-有些資安廠商說他們也可以支援-Kubernetes-Security，但具體是保護什麼" class="headerlink" title="Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?"></a>Q2: 有些資安廠商說他們也可以支援 Kubernetes Security，但具體是保護什麼?</h3><p>就像社區大樓保全解決方案，有些弄監視器、有些是監控設備、有些是人員管控，要看各自專案或廠商想要解決的問題，據我個人理解有些廠商是專注在保護作業系統、有些是會對 Container 進行映像檔靜態、或者是 Runtime 狀態下的動態掃描等等各種類型</p>
-<p>技術上來說，Kubernetes 官方有提出 <a href="https://kubernetes.io/docs/concepts/security/overview/">Overview of Cloud Native Security</a> 觀念，針對 Cloud、Cluster、Container、Code 四個層面進行保護，當然還不單止這樣，對外及對內的網路管理也相當重要，所以實際上比較多人會討論的是 Ingress Controller 比較多，也就是住戶社區的社區大門人流控制跟安全性</p>
-<h3 id="Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢"><a href="#Q3-我們常說-Kubernetes-的最小單位是-Pod-這個可以怎麼理解呢" class="headerlink" title="Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?"></a>Q3: 我們常說 Kubernetes 的最小單位是 Pod 這個可以怎麼理解呢?</h3><p>你家管委會應該不會管住戶家裡的行李箱塞什麼吧</p>
-<h3 id="Q4-那麼-Docker-在裡面的角色是什麼"><a href="#Q4-那麼-Docker-在裡面的角色是什麼" class="headerlink" title="Q4: 那麼 Docker 在裡面的角色是什麼?"></a>Q4: 那麼 Docker 在裡面的角色是什麼?</h3><p>眾多 CRI (Container Runtime Interface) 選擇之一，也就是大樓鋼筋水泥廠商有很多間，只是有一間叫做 Docker 的特別有名，但 Docker 當初成立的時候，是早於 Kubernetes 的，所以導致為了要讓 Kubernetes 能支援 Docker，在功能上加了一些料進去並且維持了一段時間，故這個狀況在 Kubernetes 部落格 2020/12/02 發布的文章 <a href="https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/">Don’t Panic: Kubernetes and Docker</a> 被改變了，文末有提及說建議可以換成比較通用的 CRI-O 及 Containerd 其中之一為主</p>
-<p>若想要更深入了解此改動影響的話，相當建議收聽 Cloud Native Taiwan User Group 出品的 <a href="https://www.youtube.com/watch?v=nc3mBN3LzvM&t=2s">一言難盡的關係：Kubernetes 和 Docker 之線上討論分享會</a> 內有多個角色的分享，包含開發者、自建維運者、供應商的角度</p>
-<h3 id="Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商"><a href="#Q5-這意味著-CRI-CNI-CSI-是不是可以被替換成其他的廠商" class="headerlink" title="Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?"></a>Q5: 這意味著 CRI / CNI / CSI 是不是可以被替換成其他的廠商?</h3><p>Yes，所以你會看到各式各樣的廠商都開始支援 Kubernetes 是因為這個原因，因為<br>一般狀況下 Kubernetes 並沒有特別限定 <code>大樓鋼筋水泥廠商</code>、<code>大樓水電力系統廠商</code>、<code>大樓空間規劃廠商</code> 選型，只要有符合各自定義的標準即可，但要留意 Kubernetes 的版號會連帶影響這三個標準介面 CRI / CNI / CSI <em>能支援</em>的發行版本號，千千萬萬務必要留意相容性問題，強烈建議規劃時洽專業蓋住戶社區的廠商諮詢</p>
-<p>正常來說，最少 CRI 跟 CNI 這兩個的選擇，最好要聽蓋大樓的廠商建議，因為…沒測過和壓過到時候維護的時候會很可怕，而 CSI 選擇彈性就相當多樣了</p>
-<blockquote>
-<p>你應該不會希望隨便找一個沒驗過的水電廠商就來蓋大樓吧？漏水和漏電會很可怕的喔…</p>
-</blockquote>
-<h3 id="Q6-整個住戶社區最重要的角色是什麼"><a href="#Q6-整個住戶社區最重要的角色是什麼" class="headerlink" title="Q6: 整個住戶社區最重要的角色是什麼?"></a>Q6: 整個住戶社區最重要的角色是什麼?</h3><p>那三棟委員會大樓，和裡面的三位委員，三位掛掉一位還可以維持正常運作，掛掉兩位維持唯讀運作</p>
-<h3 id="Q7-Kubernetes、VM、Container-的差異性該如何理解"><a href="#Q7-Kubernetes、VM、Container-的差異性該如何理解" class="headerlink" title="Q7: Kubernetes、VM、Container 的差異性該如何理解?"></a>Q7: Kubernetes、VM、Container 的差異性該如何理解?</h3><p>你可以建立好一個大樓 (VM)，隨意放置一個或多個行李箱 (Containers)，你需要手動管理這些行李箱，如果資源不足或者是這個大樓倒了，是沒有辦法自動飄移這些行李箱所裝載的內容</p>
-<p>但如果你多具備有了 Kubernetes 能力，你可以建立多個大樓 (VM)，透過 Kubernetes 所規定的放置方式 (e.g. Deployment / DaemonSet / …)，可以統一調度這些 Pod，當某個大樓資源不夠的時候，可以根據 Kubernetes 的規則進行搬遷或擴充大樓等動作</p>
-<h3 id="Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講"><a href="#Q8-為什麼常常有人會把-Container-跟-Pod-混在一起講" class="headerlink" title="Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?"></a>Q8: 為什麼常常有人會把 Container 跟 Pod 混在一起講?</h3><p>因為絕大部分的狀況下，都是一個用戶 (Pod) 放一個行李箱 (Container)，所以導致有這種誤會。實際上，一個用戶 (Pod) 是可以放置一個或多個行李箱在裡面的</p>
-<h3 id="Q9-常聽到-Node-Scaling-是什麼意思"><a href="#Q9-常聽到-Node-Scaling-是什麼意思" class="headerlink" title="Q9: 常聽到 Node Scaling 是什麼意思?"></a>Q9: 常聽到 Node Scaling 是什麼意思?</h3><p>當住戶太多的時候，Kubernetes 可以自動或手動興建大樓，然後把多出來的住戶塞進去</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/MGm47ncUp6o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<h3 id="Q10-OS-作業系統在-Kubernetes-的領域中重不重要"><a href="#Q10-OS-作業系統在-Kubernetes-的領域中重不重要" class="headerlink" title="Q10: OS 作業系統在 Kubernetes 的領域中重不重要?"></a>Q10: OS 作業系統在 Kubernetes 的領域中重不重要?</h3><p>當有地震還是什麼災害來襲的時候，你會覺得地基跟骨幹很穩很重要…</p>
-<p>技術理由可以參考 <a href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/">Containers are Linux</a> 那一個章節內容</p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p><img src="/images/redhat-building.jpeg" alt=""></p>
-<p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
-]]></content>
-      <categories>
-        <category>kubernetes</category>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>kubernetes</tag>
       </tags>
   </entry>
   <entry>
