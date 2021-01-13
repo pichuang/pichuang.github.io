@@ -369,6 +369,107 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenvSwitch ovs-ofctl and OF-DPA</title>
+    <url>/20170106-ovs-ofctl-and-ofdpa/</url>
+    <content><![CDATA[<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
+<a id="more"></a>
+
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Switch<ul>
+<li>IP: 192.168.13.14</li>
+<li>Hardware<ul>
+<li>Model<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=43&id=12">Edgecore AS6712-32X</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Software<ul>
+<li>ONL version<ul>
+<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
+</ul>
+</li>
+<li>OF-DPA version<ul>
+<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.4.0%2Baccton1.0~1-1_amd64.deb">ofdpa_3.0 EA4</a></li>
+</ul>
+</li>
+<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
+<li>Command<ul>
+<li><code>launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contorl VM<ul>
+<li>IP: 192.168.13.2</li>
+<li>OpenvSwitch<ul>
+<li>2.7.0</li>
+<li>In this case, we just use <code>ovs-ofctl</code>, and it’s also work if you want to use dpctl which CPqD provide</li>
+<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">How to Install OpenvSwitch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Basic-Command"><a href="#Basic-Command" class="headerlink" title="Basic Command"></a>Basic Command</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br></pre></td></tr></table></figure>
+
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h4 id="Show-port-information"><a href="#Show-port-information" class="headerlink" title="Show port information"></a>Show port information</h4><ul>
+<li><code>ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7a</span><br><span class="line">n_tables:23, n_buffers:0</span><br><span class="line">capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS</span><br><span class="line">OFPST_PORT_DESC reply (OF1.3) (xid=0x3):</span><br><span class="line"> 1(port1): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line"> 2(port2): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Show-tables-information"><a href="#Show-tables-information" class="headerlink" title="Show tables information"></a>Show tables information</h4><ul>
+<li><code>ovs-ofctl dump-tables</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_TABLE reply (OF1.3) (xid=0x2):</span><br><span class="line">  table 0:</span><br><span class="line">    active=0, lookup=0, matched=0</span><br><span class="line"></span><br><span class="line">  table 5: ditto</span><br><span class="line">  table 6: ditto</span><br><span class="line">  table 7: ditto</span><br><span class="line">  table 8: ditto</span><br><span class="line">  table 10: ditto</span><br><span class="line">  table 11: ditto</span><br><span class="line">  table 13: ditto</span><br><span class="line">  table 15: ditto</span><br><span class="line">  table 16: ditto</span><br><span class="line">  table 17: ditto</span><br><span class="line">  table 20: ditto</span><br><span class="line">  table 24: ditto</span><br><span class="line">  table 28: ditto</span><br><span class="line">  table 30: ditto</span><br><span class="line">  table 40: ditto</span><br><span class="line">  table 50: ditto</span><br><span class="line">  table 60: ditto</span><br><span class="line">  table 65: ditto</span><br><span class="line">  table 210: ditto</span><br><span class="line">  table 211: ditto</span><br><span class="line">  table 230: ditto</span><br><span class="line">  table 235: ditto</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Add-flow-entry"><a href="#Add-flow-entry" class="headerlink" title="Add flow entry"></a>Add flow entry</h4><ul>
+<li><code>ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller</code></li>
+</ul>
+<h4 id="Show-flow-entries"><a href="#Show-flow-entries" class="headerlink" title="Show flow entries"></a>Show flow entries</h4><ul>
+<li><code>ovs-ofctl dump-flows</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_FLOW reply (OF1.3) (xid=0x2):</span><br><span class="line"> cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Show-queue-stats"><a href="#Show-queue-stats" class="headerlink" title="Show queue stats"></a>Show queue stats</h4><ul>
+<li><code>ovs-ofctl queue-stats</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues</span><br><span class="line">  port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Show-group-information"><a href="#Show-group-information" class="headerlink" title="Show group information"></a>Show group information</h4><ul>
+<li><code>ovs-ofctl dump-groups</code></li>
+</ul>
+<h4 id="Show-ports-information"><a href="#Show-ports-information" class="headerlink" title="Show ports information"></a>Show ports information</h4><ul>
+<li><code>ovs-ofcll dump-ports</code></li>
+<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports</span><br><span class="line">  port  1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://openvswitch.org/support/dist-docs/ovs-ofctl.8.txt">ovs-ofctl</a></li>
+<li><a href="http://www.pica8.com/wp-content/uploads/2015/09/v2.8/html/ovs-configuration-guide/">Pica8 OVS Configuration Guide 2.8.0</a></li>
+<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">Compile OpenvSwitch - pichuang</a></li>
+<li><a href="https://gist.github.com/pichuang/a901ea8d9870728bf8eebaab548e037c">ovs-ofctl help</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>ovs</tag>
+        <tag>ofdpa</tag>
+        <tag>switch</tag>
+        <tag>ovs-ofctl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OF-DPA with ONL Cheat Sheet</title>
     <url>/20170104-ofdpa-with-onl-cheat-sheet/</url>
     <content><![CDATA[<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
@@ -717,110 +818,9 @@
       </categories>
       <tags>
         <tag>sdn</tag>
+        <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
-        <tag>ofdpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenvSwitch ovs-ofctl and OF-DPA</title>
-    <url>/20170106-ovs-ofctl-and-ofdpa/</url>
-    <content><![CDATA[<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
-<a id="more"></a>
-
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Switch<ul>
-<li>IP: 192.168.13.14</li>
-<li>Hardware<ul>
-<li>Model<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=7&cls3=43&id=12">Edgecore AS6712-32X</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Software<ul>
-<li>ONL version<ul>
-<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
-</ul>
-</li>
-<li>OF-DPA version<ul>
-<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.4.0%2Baccton1.0~1-1_amd64.deb">ofdpa_3.0 EA4</a></li>
-</ul>
-</li>
-<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
-<li>Command<ul>
-<li><code>launcher ofagentapp -a2 -d4 -c1 -c2 -c3 -c4 -c5 -l 0.0.0.0:6653</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Contorl VM<ul>
-<li>IP: 192.168.13.2</li>
-<li>OpenvSwitch<ul>
-<li>2.7.0</li>
-<li>In this case, we just use <code>ovs-ofctl</code>, and it’s also work if you want to use dpctl which CPqD provide</li>
-<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">How to Install OpenvSwitch</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Basic-Command"><a href="#Basic-Command" class="headerlink" title="Basic Command"></a>Basic Command</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br></pre></td></tr></table></figure>
-
-<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h4 id="Show-port-information"><a href="#Show-port-information" class="headerlink" title="Show port information"></a>Show port information</h4><ul>
-<li><code>ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl show -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:000000000000da7a</span><br><span class="line">n_tables:23, n_buffers:0</span><br><span class="line">capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS</span><br><span class="line">OFPST_PORT_DESC reply (OF1.3) (xid=0x3):</span><br><span class="line"> 1(port1): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line"> 2(port2): addr:cc:37:ab:d0:d6:30</span><br><span class="line">     config:     0</span><br><span class="line">     state:      LINK_DOWN</span><br><span class="line">     current:    40GB-FD FIBER</span><br><span class="line">     supported:  10MB-FD 100MB-FD 1GB-FD 10GB-FD 40GB-FD OTHER FIBER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM</span><br><span class="line">     speed: 40000 Mbps now, 40000 Mbps max</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="Show-tables-information"><a href="#Show-tables-information" class="headerlink" title="Show tables information"></a>Show tables information</h4><ul>
-<li><code>ovs-ofctl dump-tables</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-tables -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_TABLE reply (OF1.3) (xid=0x2):</span><br><span class="line">  table 0:</span><br><span class="line">    active=0, lookup=0, matched=0</span><br><span class="line"></span><br><span class="line">  table 5: ditto</span><br><span class="line">  table 6: ditto</span><br><span class="line">  table 7: ditto</span><br><span class="line">  table 8: ditto</span><br><span class="line">  table 10: ditto</span><br><span class="line">  table 11: ditto</span><br><span class="line">  table 13: ditto</span><br><span class="line">  table 15: ditto</span><br><span class="line">  table 16: ditto</span><br><span class="line">  table 17: ditto</span><br><span class="line">  table 20: ditto</span><br><span class="line">  table 24: ditto</span><br><span class="line">  table 28: ditto</span><br><span class="line">  table 30: ditto</span><br><span class="line">  table 40: ditto</span><br><span class="line">  table 50: ditto</span><br><span class="line">  table 60: ditto</span><br><span class="line">  table 65: ditto</span><br><span class="line">  table 210: ditto</span><br><span class="line">  table 211: ditto</span><br><span class="line">  table 230: ditto</span><br><span class="line">  table 235: ditto</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="Add-flow-entry"><a href="#Add-flow-entry" class="headerlink" title="Add flow entry"></a>Add flow entry</h4><ul>
-<li><code>ovs-ofctl add-flow -O OpenFlow13 tcp:192.168.13.14:6653 table=60,priority=40000,eth_type=0x0800,ip_dst=55.55.55.55,actions=controller</code></li>
-</ul>
-<h4 id="Show-flow-entries"><a href="#Show-flow-entries" class="headerlink" title="Show flow entries"></a>Show flow entries</h4><ul>
-<li><code>ovs-ofctl dump-flows</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_FLOW reply (OF1.3) (xid=0x2):</span><br><span class="line"> cookie=0x0, duration=46.570s, table=60, n_packets=0, n_bytes=0, priority=40000,ip,nw_dst=55.55.55.55 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="Show-queue-stats"><a href="#Show-queue-stats" class="headerlink" title="Show queue stats"></a>Show queue stats</h4><ul>
-<li><code>ovs-ofctl queue-stats</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl queue-stats -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_QUEUE reply (OF1.3) (xid=0x2): 256 queues</span><br><span class="line">  port 1 queue 0: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 1: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 2: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">  port 1 queue 3: bytes=0, pkts=0, errors=0, duration=597.4294513152s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="Show-group-information"><a href="#Show-group-information" class="headerlink" title="Show group information"></a>Show group information</h4><ul>
-<li><code>ovs-ofctl dump-groups</code></li>
-</ul>
-<h4 id="Show-ports-information"><a href="#Show-ports-information" class="headerlink" title="Show ports information"></a>Show ports information</h4><ul>
-<li><code>ovs-ofcll dump-ports</code></li>
-<li>Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports -O OpenFlow13 tcp:192.168.13.14:6653</span><br><span class="line">OFPST_PORT reply (OF1.3) (xid=0x2): 32 ports</span><br><span class="line">  port  1: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  2: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  3: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">  port  4: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=?, coll=0</span><br><span class="line">           duration=0s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://openvswitch.org/support/dist-docs/ovs-ofctl.8.txt">ovs-ofctl</a></li>
-<li><a href="http://www.pica8.com/wp-content/uploads/2015/09/v2.8/html/ovs-configuration-guide/">Pica8 OVS Configuration Guide 2.8.0</a></li>
-<li><a href="http://blog.pichuang.com.tw/compile-openvswitch/">Compile OpenvSwitch - pichuang</a></li>
-<li><a href="https://gist.github.com/pichuang/a901ea8d9870728bf8eebaab548e037c">ovs-ofctl help</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>ofdpa</tag>
-        <tag>ovs</tag>
-        <tag>switch</tag>
-        <tag>ovs-ofctl</tag>
       </tags>
   </entry>
   <entry>
@@ -1372,34 +1372,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Install CentOS 7 without VGA</title>
-    <url>/20170717-install-centos-7-without-VGA/</url>
-    <content><![CDATA[<h3 id="Change-timeout"><a href="#Change-timeout" class="headerlink" title="Change timeout"></a>Change timeout</h3><ul>
-<li>vim isolinux/isolinux.cfg<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default vesamenu.c32</span><br><span class="line">#timeout 600</span><br><span class="line">timeout 50</span><br><span class="line"></span><br><span class="line">display boot.msg</span><br></pre></td></tr></table></figure></li>
-<li>Prompt until booting automatically, in units of 1/10 s. In the case, we change the timeout value from 60 secs to 5 secs</li>
-</ul>
-<a id="more"></a>
-
-<h3 id="Change-default-booting-prompt"><a href="#Change-default-booting-prompt" class="headerlink" title="Change default booting prompt"></a>Change default booting prompt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install Red Hat Enterprise Linux 7.3</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd&#x3D;initrd.img inst.stage2&#x3D;hd:LABEL&#x3D;RHEL-7_3\x20SE text console&#x3D;tty0 console&#x3D;ttyS0,115200n8</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please notice <code>menu default</code></li>
-</ul>
-<h3 id="Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter"><a href="#Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter" class="headerlink" title="Remove quiet, append text console=tty0 console=ttyS0,115200n8 in kernel parameter"></a>Remove <code>quiet</code>, append <code>text console=tty0 console=ttyS0,115200n8</code> in kernel parameter</h3><ul>
-<li>vim isolinux/isolinux.cfg<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install CentOS Linux 7</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd=initrd.img inst.stage2=hd:LABEL=CENTOS\x207\x20X8 text console=tty0 console=ttyS0,115200n8</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>headless</tag>
-        <tag>serial</tag>
-        <tag>centos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to contribute on GitHub</title>
     <url>/20170413-how-to-contribute-on-github/</url>
     <content><![CDATA[<p>Fork from <a href="https://gist.github.com/timdream/5968469">Github 發 Pull Request &amp; 貢獻流程速查/timdream</a></p>
@@ -1450,6 +1422,34 @@
       <tags>
         <tag>misc</tag>
         <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Install CentOS 7 without VGA</title>
+    <url>/20170717-install-centos-7-without-VGA/</url>
+    <content><![CDATA[<h3 id="Change-timeout"><a href="#Change-timeout" class="headerlink" title="Change timeout"></a>Change timeout</h3><ul>
+<li>vim isolinux/isolinux.cfg<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default vesamenu.c32</span><br><span class="line">#timeout 600</span><br><span class="line">timeout 50</span><br><span class="line"></span><br><span class="line">display boot.msg</span><br></pre></td></tr></table></figure></li>
+<li>Prompt until booting automatically, in units of 1/10 s. In the case, we change the timeout value from 60 secs to 5 secs</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="Change-default-booting-prompt"><a href="#Change-default-booting-prompt" class="headerlink" title="Change default booting prompt"></a>Change default booting prompt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install Red Hat Enterprise Linux 7.3</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd&#x3D;initrd.img inst.stage2&#x3D;hd:LABEL&#x3D;RHEL-7_3\x20SE text console&#x3D;tty0 console&#x3D;ttyS0,115200n8</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please notice <code>menu default</code></li>
+</ul>
+<h3 id="Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter"><a href="#Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter" class="headerlink" title="Remove quiet, append text console=tty0 console=ttyS0,115200n8 in kernel parameter"></a>Remove <code>quiet</code>, append <code>text console=tty0 console=ttyS0,115200n8</code> in kernel parameter</h3><ul>
+<li>vim isolinux/isolinux.cfg<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install CentOS Linux 7</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd=initrd.img inst.stage2=hd:LABEL=CENTOS\x207\x20X8 text console=tty0 console=ttyS0,115200n8</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>headless</tag>
+        <tag>serial</tag>
+        <tag>centos</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,6 +1548,74 @@
       </tags>
   </entry>
   <entry>
+    <title>進擊的 OpenAPI!!!</title>
+    <url>/20180723-openapi-and-oas/</url>
+    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
+<a id="more"></a>
+
+<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
+<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
+<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
+<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
+<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
+<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
+<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
+<ol>
+<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
+</li>
+<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
+<blockquote>
+<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
+</blockquote>
+</li>
+<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
+<blockquote>
+<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
+</blockquote>
+</li>
+</ol>
+<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
+<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
+<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
+<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
+<p>使用方式很簡單，以 Swagger 為例</p>
+<ol>
+<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
+<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+</ol>
+<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
+<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
+<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
+<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
+<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
+<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
+<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
+<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
+<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
+<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
+<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
+<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>oas</tag>
+        <tag>openapi</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雲端大廠們的 VM 資源配置參考</title>
     <url>/20180815-cloud-resource-sizing-reference/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
@@ -1615,74 +1683,6 @@
         <tag>azure</tag>
         <tag>aws</tag>
         <tag>gcp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>進擊的 OpenAPI!!!</title>
-    <url>/20180723-openapi-and-oas/</url>
-    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
-<a id="more"></a>
-
-<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
-<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
-<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
-<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
-<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
-<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
-<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
-<ol>
-<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
-</li>
-<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
-<blockquote>
-<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
-</blockquote>
-</li>
-<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
-<blockquote>
-<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
-</blockquote>
-</li>
-</ol>
-<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
-<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
-<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
-<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
-<p>使用方式很簡單，以 Swagger 為例</p>
-<ol>
-<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
-<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
-</ol>
-<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
-<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
-<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
-<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
-<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
-<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
-<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
-<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
-<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
-<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
-<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
-<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>oas</tag>
-        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -1985,6 +1985,52 @@
       </tags>
   </entry>
   <entry>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新增 SSL/TLS 憑證和金鑰</title>
     <url>/20180920-add-ssl-tls-cert-and-key/</url>
     <content><![CDATA[<h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
@@ -2034,52 +2080,6 @@
         <tag>openssl</tag>
         <tag>rhel</tag>
         <tag>ssl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -2177,6 +2177,86 @@
         <tag>ansible</tag>
         <tag>redhat</tag>
         <tag>terraform</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
+    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
+    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
+<ol>
+<li>Hosts subnet</li>
+<li>Service subnet</li>
+<li>Pod subnet</li>
+</ol>
+<a id="more"></a>
+
+<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
+<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
+<ol>
+<li>Pod mapping to host</li>
+<li>Service mapping to host</li>
+</ol>
+<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
+<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
+<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
+<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
+
+<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
+<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
+<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
+<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
+<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<p>可以做成下面的效果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
+<ol>
+<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
+<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
+<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
+<li>若需要提供對外服務，有下列三種做法:<ol>
+<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
+<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
+<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
+<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
+<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>openshift3</tag>
+        <tag>redhat</tag>
+        <tag>router</tag>
+        <tag>services</tag>
+        <tag>pods</tag>
       </tags>
   </entry>
   <entry>
@@ -2325,86 +2405,6 @@
         <tag>openshift3</tag>
         <tag>redhat</tag>
         <tag>storage</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
-    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
-    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
-<ol>
-<li>Hosts subnet</li>
-<li>Service subnet</li>
-<li>Pod subnet</li>
-</ol>
-<a id="more"></a>
-
-<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
-<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
-<ol>
-<li>Pod mapping to host</li>
-<li>Service mapping to host</li>
-</ol>
-<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
-<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
-<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
-<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
-
-<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
-<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
-<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
-<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
-<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<p>可以做成下面的效果</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
-
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
-<ol>
-<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
-<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
-<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
-<li>若需要提供對外服務，有下列三種做法:<ol>
-<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
-<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
-<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
-<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
-<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
-<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>openshift3</tag>
-        <tag>redhat</tag>
-        <tag>router</tag>
-        <tag>services</tag>
-        <tag>pods</tag>
       </tags>
   </entry>
   <entry>
@@ -3934,78 +3934,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
-    <url>/20191116-homelcloud-high-level-design-4/</url>
-    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
-<p><img src="/images/pfsense-logo.png" alt=""></p>
-<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
-<a id="more"></a>
-
-<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
-<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
-<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
-<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
-<p><img src="/images/pfsense-9.png" alt=""></p>
-<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
-<p><img src="/images/pfsense-10.png" alt=""></p>
-<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
-<ol>
-<li>vmx0: WAN</li>
-<li>vmx1: LAN &lt;– 選他</li>
-</ol>
-<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
-<p>Q: 這樣就搞定了嗎!?</p>
-<p><img src="/images/pfsense-11.png" alt=""></p>
-<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
-<p><img src="/images/pfsense-12.png" alt=""></p>
-<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
-<p><img src="/images/pfsense-2.png" alt=""></p>
-<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
-<ol>
-<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
-<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
-<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
-</ol>
-<p><img src="/images/pfsense-14.png" alt=""></p>
-<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
-<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
-<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
-<p><img src="/images/pfsense-15.png" alt=""></p>
-<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
-<blockquote>
-<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
-</blockquote>
-<p><img src="/images/pfsense-16.png" alt=""></p>
-<p>所以你需要多一條 Rule</p>
-<ul>
-<li>Family: IPv4</li>
-<li>Protocol: any</li>
-<li>Source: any</li>
-<li>S Port: any</li>
-<li>Destination: any</li>
-<li>D Port: any</li>
-</ul>
-<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
-<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
-<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
-<ul>
-<li>Time Synchronization: ntp</li>
-<li>DNS: bind</li>
-<li>VPN: OpenVPN</li>
-</ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
-<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</title>
     <url>/20191116-homelcloud-high-level-design-3/</url>
     <content><![CDATA[<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
@@ -4094,6 +4022,78 @@
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
+    <url>/20191116-homelcloud-high-level-design-4/</url>
+    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img src="/images/pfsense-logo.png" alt=""></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
+<a id="more"></a>
+
+<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
+<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
+<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
+<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
+<p><img src="/images/pfsense-9.png" alt=""></p>
+<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
+<p><img src="/images/pfsense-10.png" alt=""></p>
+<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
+<ol>
+<li>vmx0: WAN</li>
+<li>vmx1: LAN &lt;– 選他</li>
+</ol>
+<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
+<p>Q: 這樣就搞定了嗎!?</p>
+<p><img src="/images/pfsense-11.png" alt=""></p>
+<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
+<p><img src="/images/pfsense-12.png" alt=""></p>
+<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
+<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
+<ol>
+<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
+<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
+<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
+</ol>
+<p><img src="/images/pfsense-14.png" alt=""></p>
+<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
+<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
+<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
+<p><img src="/images/pfsense-15.png" alt=""></p>
+<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
+<blockquote>
+<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
+</blockquote>
+<p><img src="/images/pfsense-16.png" alt=""></p>
+<p>所以你需要多一條 Rule</p>
+<ul>
+<li>Family: IPv4</li>
+<li>Protocol: any</li>
+<li>Source: any</li>
+<li>S Port: any</li>
+<li>Destination: any</li>
+<li>D Port: any</li>
+</ul>
+<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
+<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
+<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
+<ul>
+<li>Time Synchronization: ntp</li>
+<li>DNS: bind</li>
+<li>VPN: OpenVPN</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
+<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
       </tags>
   </entry>
   <entry>
@@ -5015,92 +5015,6 @@
       </tags>
   </entry>
   <entry>
-    <title>30 分鐘內從開始到入門的 Ansible</title>
-    <url>/20200309-ansible-30m/</url>
-    <content><![CDATA[<p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/ysqclCH9Vc0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="沒有-Ansible-的時候是怎麼管理伺服器的"><a href="#沒有-Ansible-的時候是怎麼管理伺服器的" class="headerlink" title="沒有 Ansible 的時候是怎麼管理伺服器的?"></a>沒有 Ansible 的時候是怎麼管理伺服器的?</h2><p>當遇到有一票機器需要同時間要進行操作的時候，以前我用過幾個招數，因為我是 Linux 長期使用者，故以 Linux 上能用為主</p>
-<ol>
-<li>一個一個登入操作: 最早期，最花時間，錯誤率超高</li>
-<li>寫 <code>Shell Script</code> + for 迴圈: 要會寫程式，Shell Script 真心不好多人維護</li>
-<li>寫 <code>Python</code>: 要會寫程式，只要會寫 Python 的才看得懂我在寫什麼</li>
-<li>tmux 搭配 <code>synchronize panes</code>: 懶得寫程式，直接一個畫面操作全部，但如果遇到機器的參數不一樣就要一個一個操作</li>
-</ol>
-<p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bastion) 上使用</p>
-<h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
-<ol>
-<li>對多個機器下相同的<code>指令</code>，包含重開服務 (systemctl restart ooxx)、看檔案 (cat ooxx)、例行更新 (yum update -y)、執行網路指令 (ip route) 等等</li>
-<li>將一個<code>檔案</code>或<code>資料夾</code>放到多個機器上面</li>
-<li>修改檔案內容</li>
-</ol>
-<p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
-<h2 id="30-分鐘學習開始"><a href="#30-分鐘學習開始" class="headerlink" title="30 分鐘學習開始"></a>30 分鐘學習開始</h2><p>建議要有一台機器當作跳板機，可以是你的 Mac / Linux (很抱歉 Windows 不行)，這邊的範例是透過 Ansible 下去管理三台機器</p>
-<h3 id="作業系統環境"><a href="#作業系統環境" class="headerlink" title="作業系統環境"></a>作業系統環境</h3><ul>
-<li>Bastion<ul>
-<li>Red Hat Enterprise Linux 7.x 10.0.96.9/24</li>
-<li>Ansible 2.x</li>
-</ul>
-</li>
-<li>被控端<ul>
-<li>ceph3-node01.ceph.internal 10.0.98.1/24</li>
-<li>ceph3-node02.ceph.internal 10.0.98.2/24</li>
-<li>ceph3-node03.ceph.internal 10.0.98.3/24</li>
-</ul>
-</li>
-</ul>
-<h3 id="安裝-Ansible"><a href="#安裝-Ansible" class="headerlink" title="安裝 Ansible"></a>安裝 Ansible</h3><ul>
-<li><p>MacOS</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install ansible</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Ubuntu Debian</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install ansible -y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>RHEL/CentOS</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y ansible</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="使用前準備"><a href="#使用前準備" class="headerlink" title="使用前準備"></a>使用前準備</h3><ol>
-<li>首先要先用 SSH 登入過所有受控機器，讓 host fingerprint 加入到 <code>known_hosts</code> 裡面，不然會噴下面的錯誤，當然最好的建議是走免密碼金鑰的方式 <code>ssh-copy-id</code>，但這邊不提，降低複雜性</li>
-</ol>
-<ul>
-<li>Error Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host&#x27;s fingerprint to your known_hosts file to manage this host.&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="2">
-<li>準備環境<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增資料夾</span></span><br><span class="line">mkdir ansible-workspace &amp;&amp; <span class="built_in">cd</span> ansible-workspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增受控端資訊</span></span><br><span class="line">cat &gt; inventory &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">ceph3-node01.ceph.internal ansible_host=10.0.98.1 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node02.ceph.internal ansible_host=10.0.98.2 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node03.ceph.internal ansible_host=10.0.98.3 ansible_user=root</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p><img src="/images/ansible-inventory.png" alt=""></p>
-<h3 id="任務-0-了解是否伺服器可以被-Ansible-管理"><a href="#任務-0-了解是否伺服器可以被-Ansible-管理" class="headerlink" title="任務 0: 了解是否伺服器可以被 Ansible 管理"></a>任務 0: 了解是否伺服器可以被 Ansible 管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m ping -k</span></span><br><span class="line">ansible -i inventory all -m ping -k</span><br></pre></td></tr></table></figure>
-<p>一定要是全部都是 <code>SUCCESS</code>，這樣後面的才能指令使用，有任何錯誤的話，一定要先搞好，不然後面也就不用看了</p>
-<p><img src="/images/ansible-ping.png" alt=""></p>
-<h3 id="任務-1-對多個伺服器下相同指令"><a href="#任務-1-對多個伺服器下相同指令" class="headerlink" title="任務 1: 對多個伺服器下相同指令"></a>任務 1: 對多個伺服器下相同指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m shell -k -a &lt;指令&gt;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;timedatectl&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;yum update -y&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;systemctl status tuned&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;cat /etc/os-release | grep PRETTY_NAME&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/ansible-shell.png" alt=""></p>
-<h3 id="任務-2-將一個檔案或資料夾傳送到多個伺服器上"><a href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上" class="headerlink" title="任務 2: 將一個檔案或資料夾傳送到多個伺服器上"></a>任務 2: 將一個檔案或資料夾傳送到多個伺服器上</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 檔案</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/motd dest=/etc/motd&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料夾</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/yum.repos.d/ dest=/etc/yum.repos.d/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/ansible-copy.png" alt=""></p>
-<h3 id="想要學更多"><a href="#想要學更多" class="headerlink" title="想要學更多?"></a>想要學更多?</h3><p>恭喜各位 30 分鐘內快速上手使用 Ansible，Ansible 入手門檻真的是非常低，不需要學特別的程式語言就可以直接拿來使用，你看看前面對於多機器的操作有寫到 for 迴圈嗎? 但他的使用不單單是這樣，還可以延伸更多，以下是兩個蠻適合入門的簡報</p>
-<ul>
-<li><a href="https://chusiang.gitbooks.io/automate-with-ansible/">現代 IT 人一定要知道的 Ansible 自動化組態技巧</a></li>
-<li><a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible">20190720_Better Practice_Day 2 Operaition with Ansible</a></li>
-</ul>
-<p>如果你想要參加相關社群的話，也歡迎加入 <a href="https://ansible.tw/#!index.md">Ansible 台灣使用者社群</a> 當中的 <a href="https://telegram.me/ansible_tw">Telegram Group</a> 跟我們一起討論</p>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>smart start</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</title>
     <url>/20200317-openshift-with-coreos-part-1/</url>
     <content><![CDATA[<p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
@@ -5203,6 +5117,92 @@
         <tag>openshift4</tag>
         <tag>container</tag>
         <tag>coreos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>30 分鐘內從開始到入門的 Ansible</title>
+    <url>/20200309-ansible-30m/</url>
+    <content><![CDATA[<p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/ysqclCH9Vc0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="沒有-Ansible-的時候是怎麼管理伺服器的"><a href="#沒有-Ansible-的時候是怎麼管理伺服器的" class="headerlink" title="沒有 Ansible 的時候是怎麼管理伺服器的?"></a>沒有 Ansible 的時候是怎麼管理伺服器的?</h2><p>當遇到有一票機器需要同時間要進行操作的時候，以前我用過幾個招數，因為我是 Linux 長期使用者，故以 Linux 上能用為主</p>
+<ol>
+<li>一個一個登入操作: 最早期，最花時間，錯誤率超高</li>
+<li>寫 <code>Shell Script</code> + for 迴圈: 要會寫程式，Shell Script 真心不好多人維護</li>
+<li>寫 <code>Python</code>: 要會寫程式，只要會寫 Python 的才看得懂我在寫什麼</li>
+<li>tmux 搭配 <code>synchronize panes</code>: 懶得寫程式，直接一個畫面操作全部，但如果遇到機器的參數不一樣就要一個一個操作</li>
+</ol>
+<p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bastion) 上使用</p>
+<h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
+<ol>
+<li>對多個機器下相同的<code>指令</code>，包含重開服務 (systemctl restart ooxx)、看檔案 (cat ooxx)、例行更新 (yum update -y)、執行網路指令 (ip route) 等等</li>
+<li>將一個<code>檔案</code>或<code>資料夾</code>放到多個機器上面</li>
+<li>修改檔案內容</li>
+</ol>
+<p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
+<h2 id="30-分鐘學習開始"><a href="#30-分鐘學習開始" class="headerlink" title="30 分鐘學習開始"></a>30 分鐘學習開始</h2><p>建議要有一台機器當作跳板機，可以是你的 Mac / Linux (很抱歉 Windows 不行)，這邊的範例是透過 Ansible 下去管理三台機器</p>
+<h3 id="作業系統環境"><a href="#作業系統環境" class="headerlink" title="作業系統環境"></a>作業系統環境</h3><ul>
+<li>Bastion<ul>
+<li>Red Hat Enterprise Linux 7.x 10.0.96.9/24</li>
+<li>Ansible 2.x</li>
+</ul>
+</li>
+<li>被控端<ul>
+<li>ceph3-node01.ceph.internal 10.0.98.1/24</li>
+<li>ceph3-node02.ceph.internal 10.0.98.2/24</li>
+<li>ceph3-node03.ceph.internal 10.0.98.3/24</li>
+</ul>
+</li>
+</ul>
+<h3 id="安裝-Ansible"><a href="#安裝-Ansible" class="headerlink" title="安裝 Ansible"></a>安裝 Ansible</h3><ul>
+<li><p>MacOS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install ansible</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ubuntu Debian</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install ansible -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RHEL/CentOS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y ansible</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="使用前準備"><a href="#使用前準備" class="headerlink" title="使用前準備"></a>使用前準備</h3><ol>
+<li>首先要先用 SSH 登入過所有受控機器，讓 host fingerprint 加入到 <code>known_hosts</code> 裡面，不然會噴下面的錯誤，當然最好的建議是走免密碼金鑰的方式 <code>ssh-copy-id</code>，但這邊不提，降低複雜性</li>
+</ol>
+<ul>
+<li>Error Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host&#x27;s fingerprint to your known_hosts file to manage this host.&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="2">
+<li>準備環境<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增資料夾</span></span><br><span class="line">mkdir ansible-workspace &amp;&amp; <span class="built_in">cd</span> ansible-workspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增受控端資訊</span></span><br><span class="line">cat &gt; inventory &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">ceph3-node01.ceph.internal ansible_host=10.0.98.1 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node02.ceph.internal ansible_host=10.0.98.2 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node03.ceph.internal ansible_host=10.0.98.3 ansible_user=root</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><img src="/images/ansible-inventory.png" alt=""></p>
+<h3 id="任務-0-了解是否伺服器可以被-Ansible-管理"><a href="#任務-0-了解是否伺服器可以被-Ansible-管理" class="headerlink" title="任務 0: 了解是否伺服器可以被 Ansible 管理"></a>任務 0: 了解是否伺服器可以被 Ansible 管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m ping -k</span></span><br><span class="line">ansible -i inventory all -m ping -k</span><br></pre></td></tr></table></figure>
+<p>一定要是全部都是 <code>SUCCESS</code>，這樣後面的才能指令使用，有任何錯誤的話，一定要先搞好，不然後面也就不用看了</p>
+<p><img src="/images/ansible-ping.png" alt=""></p>
+<h3 id="任務-1-對多個伺服器下相同指令"><a href="#任務-1-對多個伺服器下相同指令" class="headerlink" title="任務 1: 對多個伺服器下相同指令"></a>任務 1: 對多個伺服器下相同指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m shell -k -a &lt;指令&gt;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;timedatectl&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;yum update -y&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;systemctl status tuned&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;cat /etc/os-release | grep PRETTY_NAME&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-shell.png" alt=""></p>
+<h3 id="任務-2-將一個檔案或資料夾傳送到多個伺服器上"><a href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上" class="headerlink" title="任務 2: 將一個檔案或資料夾傳送到多個伺服器上"></a>任務 2: 將一個檔案或資料夾傳送到多個伺服器上</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 檔案</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/motd dest=/etc/motd&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料夾</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/yum.repos.d/ dest=/etc/yum.repos.d/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-copy.png" alt=""></p>
+<h3 id="想要學更多"><a href="#想要學更多" class="headerlink" title="想要學更多?"></a>想要學更多?</h3><p>恭喜各位 30 分鐘內快速上手使用 Ansible，Ansible 入手門檻真的是非常低，不需要學特別的程式語言就可以直接拿來使用，你看看前面對於多機器的操作有寫到 for 迴圈嗎? 但他的使用不單單是這樣，還可以延伸更多，以下是兩個蠻適合入門的簡報</p>
+<ul>
+<li><a href="https://chusiang.gitbooks.io/automate-with-ansible/">現代 IT 人一定要知道的 Ansible 自動化組態技巧</a></li>
+<li><a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible">20190720_Better Practice_Day 2 Operaition with Ansible</a></li>
+</ul>
+<p>如果你想要參加相關社群的話，也歡迎加入 <a href="https://ansible.tw/#!index.md">Ansible 台灣使用者社群</a> 當中的 <a href="https://telegram.me/ansible_tw">Telegram Group</a> 跟我們一起討論</p>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>smart start</tag>
       </tags>
   </entry>
   <entry>
@@ -5417,46 +5417,6 @@
       </tags>
   </entry>
   <entry>
-    <title>用 k9s 操作 OpenShift 4</title>
-    <url>/20200413-k9s-for-openshift/</url>
-    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
-<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
-<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
-</blockquote>
-<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
-<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
-<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
-<li>k9s v0.19.1</li>
-<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
-</ul>
-<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
-
-<p>沒了 = =</p>
-<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
-<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
-<p><img src="/images/k9s-node-1.png" alt=""></p>
-<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
-<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
-<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
-<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift4</tag>
-        <tag>k9s</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</title>
     <url>/20200412-openshift-with-coreos-part-3/</url>
     <content><![CDATA[<p>承襲愛的走馬看花系列的亂寫亂紀錄優良傳統，繼續記錄操作，有興趣想要看前面的文章可以參考這兩邊</p>
@@ -5544,6 +5504,46 @@
         <tag>openshift4</tag>
         <tag>container</tag>
         <tag>coreos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 k9s 操作 OpenShift 4</title>
+    <url>/20200413-k9s-for-openshift/</url>
+    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
+<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
+<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
+</blockquote>
+<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
+<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
+<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
+<li>k9s v0.19.1</li>
+<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
+</ul>
+<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
+
+<p>沒了 = =</p>
+<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
+<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
+<p><img src="/images/k9s-node-1.png" alt=""></p>
+<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
+<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
+<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
+<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift4</tag>
+        <tag>k9s</tag>
       </tags>
   </entry>
   <entry>
@@ -6737,6 +6737,10 @@
 <li>Container Images：還沒被打開的行李箱</li>
 <li>Container Registry：行李箱集中存放中心</li>
 <li>Bastion：維護整座社區的工程車</li>
+<li>Promethus：住戶社區整體監控中心（Meterics）</li>
+<li>Grafana：監控中心裡的超大型 LED 儀表板</li>
+<li>Elaticsearch：住戶社區整體情資中心（Logging）</li>
+<li>Kinbana：情資中心裡的超大型 LED 訊息版</li>
 </ul>
 <h2 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h2><h3 id="Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？"><a href="#Q1-每個人宣稱它是-Kubernetes-認證，那到底有什麼不一樣呢？" class="headerlink" title="Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？"></a>Q1: 每個人宣稱它是 Kubernetes 認證，那到底有什麼不一樣呢？</h3><p>拿到符合 Kubernetes 認證的標記，代表具備有建設社區大樓的能力，但並不代表每個人建設出來的社區大樓都是一模一樣的。隨著選商 (Vendor)、用料 (Source Code)、工法 (Complier) 等不同會有價格上的差異，或者是隨著維護 (Maintain)、升級 (Update/Upgrade)、安全管理 (Security) 等不同會有管理上的難易程度</p>
 <blockquote>
