@@ -318,57 +318,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Upgrade ONOS Cluster</title>
-    <url>/20160514-upgrade-onos-cluster/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
-<a id="more"></a>
-
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Build Machine<ul>
-<li>MAC OSX 10.11.3</li>
-<li>Java 1.8.0</li>
-<li>Apache Karaf 3.0.5</li>
-<li>Apache Maven 3.3.9</li>
-<li>Misc<ul>
-<li>IP: 10.211.55.2</li>
-<li>Cell name: pichuang</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ONOS1 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.10</li>
-</ul>
-</li>
-<li>ONOS2 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.11</li>
-</ul>
-</li>
-</ul>
-<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
-</ul>
-<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>onos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenvSwitch ovs-ofctl and OF-DPA</title>
     <url>/20170106-ovs-ofctl-and-ofdpa/</url>
     <content><![CDATA[<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Remote control and management OF-DPA via ovs-ofctl</p>
@@ -467,6 +416,256 @@
         <tag>ofdpa</tag>
         <tag>switch</tag>
         <tag>ovs-ofctl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade ONOS Cluster</title>
+    <url>/20160514-upgrade-onos-cluster/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
+<a id="more"></a>
+
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Build Machine<ul>
+<li>MAC OSX 10.11.3</li>
+<li>Java 1.8.0</li>
+<li>Apache Karaf 3.0.5</li>
+<li>Apache Maven 3.3.9</li>
+<li>Misc<ul>
+<li>IP: 10.211.55.2</li>
+<li>Cell name: pichuang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ONOS1 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.10</li>
+</ul>
+</li>
+<li>ONOS2 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.11</li>
+</ul>
+</li>
+</ul>
+<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
+</ul>
+<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>onos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl</title>
+    <url>/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</url>
+    <content><![CDATA[<p>(Working…)</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Switch<ul>
+<li>IP: 192.168.11.2</li>
+<li>Hardware<ul>
+<li>Model<ul>
+<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Edgecore AS5712-54X</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Software<ul>
+<li>ONL version<ul>
+<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
+</ul>
+</li>
+<li>OF-DPA version<ul>
+<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.3.1%2Baccton1.4~1-1_amd64.deb">ofdpa_3.0 EA3</a></li>
+</ul>
+</li>
+<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contorl VM<ul>
+<li>IP: 192.168.11.1</li>
+<li>OpenvSwitch<ul>
+<li>2.6.9</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Topology"><a href="#Topology" class="headerlink" title="Topology"></a>Topology</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+--------+   Port+-----------------------+Port   +--------+</span><br><span class="line">|        |      1|    AS5712-54X         |2      |        |</span><br><span class="line">| Host A +-------+    ONL: 2.0.0 Deb8    +-------+ Host B |</span><br><span class="line">|        |       |    OFDPA: 3.0.3 EA2   |       |        |</span><br><span class="line">+--------+       +-----------------------+       +--------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="L2-Switching"><a href="#L2-Switching" class="headerlink" title="L2 Switching"></a>L2 Switching</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ovs-ofctl</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flow-tables-ID"><a href="#Flow-tables-ID" class="headerlink" title="Flow tables ID"></a>Flow tables ID</h2><table>
+<thead>
+<tr>
+<th>Table Name</th>
+<th>Table ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ingress Port</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Port DSCP Trust</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Port PCP Trust</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Tunnel DSCP Trust</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Tunnel PCP Trust</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Injected OAM</td>
+<td>9</td>
+</tr>
+<tr>
+<td>VLAN</td>
+<td>10</td>
+</tr>
+<tr>
+<td>VLAN 1</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Ingress Maintenance Point</td>
+<td>12</td>
+</tr>
+<tr>
+<td>MPLS L2 Port</td>
+<td>13</td>
+</tr>
+<tr>
+<td>MPLS DSCP Trust</td>
+<td>15</td>
+</tr>
+<tr>
+<td>MPLS PCP Trust</td>
+<td>16</td>
+</tr>
+<tr>
+<td>L2 Policer</td>
+<td>18</td>
+</tr>
+<tr>
+<td>L2 Policer Actions</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Termination MAC</td>
+<td>20</td>
+</tr>
+<tr>
+<td>L3 Type</td>
+<td>21</td>
+</tr>
+<tr>
+<td>MPLS 0</td>
+<td>23</td>
+</tr>
+<tr>
+<td>MPLS 1</td>
+<td>24</td>
+</tr>
+<tr>
+<td>MPLS 2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>MPLS-TP Maintenance Point</td>
+<td>26</td>
+</tr>
+<tr>
+<td>MPLS L3 Type</td>
+<td>27</td>
+</tr>
+<tr>
+<td>MPLS Label Trust</td>
+<td>28</td>
+</tr>
+<tr>
+<td>MPLS Type</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Unicast Routing</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Multicast Routing</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Bridging</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Policy ACL</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Color Based Actions</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Egress VLAN</td>
+<td>210</td>
+</tr>
+<tr>
+<td>Egress VLAN 1</td>
+<td>211</td>
+</tr>
+<tr>
+<td>Egress Maintenance Point</td>
+<td>226</td>
+</tr>
+<tr>
+<td>Egress DSCP PCP Remark</td>
+<td>230</td>
+</tr>
+<tr>
+<td>Egress TPID</td>
+<td>235</td>
+</tr>
+</tbody></table>
+<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://github.com/open-switch/ops/blob/master/docs/ofdpa_hybrid_functionality_guide.md#overview">OF-DPA OpenFlow Hybrid Switch Functionality Guide</a></li>
+<li><a href="http://blog.pichuang.com.tw/ovs-ofctl-and-ofdpa">OpenvSwitch ovs-ofctl and OF-DPA</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>ofdpa</tag>
+        <tag>ovs-ofctl</tag>
+        <tag>queue</tag>
+        <tag>openflow</tag>
       </tags>
   </entry>
   <entry>
@@ -821,205 +1020,6 @@
         <tag>ofdpa</tag>
         <tag>cicada</tag>
         <tag>onl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SDN Lab 7$ L2 Switching and Queue using OFDPA Switch and ovs-ofctl</title>
-    <url>/20170109-sdn-lab-7-l2-switching-and-queue-using-ofdpa-switch-and-ovs-ofctl/</url>
-    <content><![CDATA[<p>(Working…)</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Switch<ul>
-<li>IP: 192.168.11.2</li>
-<li>Hardware<ul>
-<li>Model<ul>
-<li><a href="http://www.edge-core.com/productsInfo.php?cls=1&cls2=8&cls3=44&id=15">Edgecore AS5712-54X</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Software<ul>
-<li>ONL version<ul>
-<li><a href="http://opennetlinux.org/binaries/2016.12.22.18.28.604af0c9b3dc9504870c30273ab22f2fb62746c3/ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER">ONL-2.0.0-ONL-OS-DEB8-2016-12-22.1828-604af0c-AMD64-INSTALLED-INSTALLER</a></li>
-</ul>
-</li>
-<li>OF-DPA version<ul>
-<li><a href="https://github.com/onfsdn/atrium-docs/blob/master/16A/ONOS/builds/ofdpa_3.0.3.1%2Baccton1.4~1-1_amd64.deb">ofdpa_3.0 EA3</a></li>
-</ul>
-</li>
-<li><code>You need launch ofappagent first</code>. If you dont know how to start it. Please refer <a href="http://blog.pichuang.com.tw/ofdpa-with-onl-cheat-sheet">OF-DPA with ONL Cheat Sheet</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Contorl VM<ul>
-<li>IP: 192.168.11.1</li>
-<li>OpenvSwitch<ul>
-<li>2.6.9</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Topology"><a href="#Topology" class="headerlink" title="Topology"></a>Topology</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+--------+   Port+-----------------------+Port   +--------+</span><br><span class="line">|        |      1|    AS5712-54X         |2      |        |</span><br><span class="line">| Host A +-------+    ONL: 2.0.0 Deb8    +-------+ Host B |</span><br><span class="line">|        |       |    OFDPA: 3.0.3 EA2   |       |        |</span><br><span class="line">+--------+       +-----------------------+       +--------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="L2-Switching"><a href="#L2-Switching" class="headerlink" title="L2 Switching"></a>L2 Switching</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ovs-ofctl</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flow-tables-ID"><a href="#Flow-tables-ID" class="headerlink" title="Flow tables ID"></a>Flow tables ID</h2><table>
-<thead>
-<tr>
-<th>Table Name</th>
-<th>Table ID</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ingress Port</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Port DSCP Trust</td>
-<td>5</td>
-</tr>
-<tr>
-<td>Port PCP Trust</td>
-<td>6</td>
-</tr>
-<tr>
-<td>Tunnel DSCP Trust</td>
-<td>7</td>
-</tr>
-<tr>
-<td>Tunnel PCP Trust</td>
-<td>8</td>
-</tr>
-<tr>
-<td>Injected OAM</td>
-<td>9</td>
-</tr>
-<tr>
-<td>VLAN</td>
-<td>10</td>
-</tr>
-<tr>
-<td>VLAN 1</td>
-<td>11</td>
-</tr>
-<tr>
-<td>Ingress Maintenance Point</td>
-<td>12</td>
-</tr>
-<tr>
-<td>MPLS L2 Port</td>
-<td>13</td>
-</tr>
-<tr>
-<td>MPLS DSCP Trust</td>
-<td>15</td>
-</tr>
-<tr>
-<td>MPLS PCP Trust</td>
-<td>16</td>
-</tr>
-<tr>
-<td>L2 Policer</td>
-<td>18</td>
-</tr>
-<tr>
-<td>L2 Policer Actions</td>
-<td>19</td>
-</tr>
-<tr>
-<td>Termination MAC</td>
-<td>20</td>
-</tr>
-<tr>
-<td>L3 Type</td>
-<td>21</td>
-</tr>
-<tr>
-<td>MPLS 0</td>
-<td>23</td>
-</tr>
-<tr>
-<td>MPLS 1</td>
-<td>24</td>
-</tr>
-<tr>
-<td>MPLS 2</td>
-<td>25</td>
-</tr>
-<tr>
-<td>MPLS-TP Maintenance Point</td>
-<td>26</td>
-</tr>
-<tr>
-<td>MPLS L3 Type</td>
-<td>27</td>
-</tr>
-<tr>
-<td>MPLS Label Trust</td>
-<td>28</td>
-</tr>
-<tr>
-<td>MPLS Type</td>
-<td>29</td>
-</tr>
-<tr>
-<td>Unicast Routing</td>
-<td>30</td>
-</tr>
-<tr>
-<td>Multicast Routing</td>
-<td>40</td>
-</tr>
-<tr>
-<td>Bridging</td>
-<td>50</td>
-</tr>
-<tr>
-<td>Policy ACL</td>
-<td>60</td>
-</tr>
-<tr>
-<td>Color Based Actions</td>
-<td>65</td>
-</tr>
-<tr>
-<td>Egress VLAN</td>
-<td>210</td>
-</tr>
-<tr>
-<td>Egress VLAN 1</td>
-<td>211</td>
-</tr>
-<tr>
-<td>Egress Maintenance Point</td>
-<td>226</td>
-</tr>
-<tr>
-<td>Egress DSCP PCP Remark</td>
-<td>230</td>
-</tr>
-<tr>
-<td>Egress TPID</td>
-<td>235</td>
-</tr>
-</tbody></table>
-<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://github.com/open-switch/ops/blob/master/docs/ofdpa_hybrid_functionality_guide.md#overview">OF-DPA OpenFlow Hybrid Switch Functionality Guide</a></li>
-<li><a href="http://blog.pichuang.com.tw/ovs-ofctl-and-ofdpa">OpenvSwitch ovs-ofctl and OF-DPA</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>ofdpa</tag>
-        <tag>ovs-ofctl</tag>
-        <tag>queue</tag>
-        <tag>openflow</tag>
       </tags>
   </entry>
   <entry>
@@ -2180,86 +2180,6 @@
       </tags>
   </entry>
   <entry>
-    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
-    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
-    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
-<ol>
-<li>Hosts subnet</li>
-<li>Service subnet</li>
-<li>Pod subnet</li>
-</ol>
-<a id="more"></a>
-
-<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
-<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
-<ol>
-<li>Pod mapping to host</li>
-<li>Service mapping to host</li>
-</ol>
-<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
-<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
-<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
-<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
-<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
-
-<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
-<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
-<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
-<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
-<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
-<p>可以做成下面的效果</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
-
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
-<ol>
-<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
-<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
-<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
-<li>若需要提供對外服務，有下列三種做法:<ol>
-<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
-<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
-<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
-<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
-<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
-<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
-<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>openshift3</tag>
-        <tag>redhat</tag>
-        <tag>router</tag>
-        <tag>services</tag>
-        <tag>pods</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift v3.11 儲存類型建議</title>
     <url>/20190325-redhat-openshift-v3.11-storage-recommendation/</url>
     <content><![CDATA[<p>在小弟先前的演講中 <a href="https://speakerdeck.com/pichuang/20190218-openshift-storage-jia-gou-si-kao">20190218_OpenShift Storage 架構思考</a>，有提到針對每個容器在容器平台 (Kubernetes / OpenShift / …) 上，所儲存的資料會分為三大種架構類型：</p>
@@ -2405,6 +2325,86 @@
         <tag>openshift3</tag>
         <tag>redhat</tag>
         <tag>storage</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>從 Red Hat OpenShift 外部訪問 Services 或 Pods</title>
+    <url>/20190321-reach-out-services-and-pods-from-outside-into-openshift/</url>
+    <content><![CDATA[<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
+<ol>
+<li>Hosts subnet</li>
+<li>Service subnet</li>
+<li>Pod subnet</li>
+</ol>
+<a id="more"></a>
+
+<p>Host subnet 毫無懸念指的就是主機所使用的 IP，也就是對外可以接觸到主機的網路; 而 Service 和 Pods subnet 在 OpenShift 裡面是一個虛擬概念，正常狀況下外部網路無法透過 Pod IP/Port 和 Service IP/Port 接觸到服務</p>
+<p>那如果我想要讓 Pod 或 Service IP 可以被外面接觸到呢? 以下分為兩個層級來討論:</p>
+<ol>
+<li>Pod mapping to host</li>
+<li>Service mapping to host</li>
+</ol>
+<h2 id="Pod-port-Mapping-to-Host-port"><a href="#Pod-port-Mapping-to-Host-port" class="headerlink" title="Pod port Mapping to Host port"></a>Pod port Mapping to Host port</h2><h3 id="使用-hostNetwork-true"><a href="#使用-hostNetwork-true" class="headerlink" title="使用 hostNetwork=true"></a>使用 <code>hostNetwork=true</code></h3><p>若沒有特別指定的話，預設 <code>hostPort</code> 等於 <code>containerPort</code>，意思是說 Pod 裡面的容器開了什麼 Port 就會直接對應到 host 上面的 Port，而 Pod IP 則會理所當然地等於 Host IP</p>
+<p>外面訪問服務的 IP/Port，請求會直接轉到和 Pod 相同的 IP/Port ，途中不經過 iptables 及 service 處理</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務，網路轉發效率會比 nodePort 好<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span> <span class="string">&lt;----</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-hostPort"><a href="#使用-hostPort" class="headerlink" title="使用 hostPort"></a>使用 <code>hostPort</code></h3><p>概念跟前者很像，差異會在可以指定特定的 <code>hostPort</code> 對應到 <code>containerPort</code>，但並不需要全部的 Pod Port 都跟 Host 做對應，可以有限度的開放出去</p>
+<p>優點: 直接可以從外面直接接觸到 Pod 層級服務<br>缺點: 不能在同一台主機 (Host) 開啟第二個相同的 Pod，因為會有 Port 衝突的問題，也不能跨主機建立服務</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">        <span class="attr">hostPort:</span> <span class="number">8080</span> <span class="string">&lt;----</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Service-port-Mapping-to-Host-port"><a href="#Service-port-Mapping-to-Host-port" class="headerlink" title="Service port Mapping to Host port"></a>Service port Mapping to Host port</h2><h3 id="使用-nodePort"><a href="#使用-nodePort" class="headerlink" title="使用 nodePort"></a>使用 <code>nodePort</code></h3><p>廣泛應用的服務揭露方式，在預設情況下，每啟動一個 Service 都會搭配一個 <code>ClusterIP</code>，而這個 <code>ClusterIP</code> 僅能在同一個集群內部被訪問，外面不能接觸到，倘若想要讓他被接觸的話，就要指定 <code>nodePort</code> 對外揭露</p>
+<p>hostPort 跟 nodePort 的差異在，前者是針對單一主機裡的單一容器進行設定，後者則是以一個集群來看待，服務可以跨主機</p>
+<p>優點: 可跨主機，直接可以從外面直接接觸到 Service 層級服務，且能透過所產生的 ClusterIP 對後端的 Pod 做負載均衡<br>缺點: 所有集群的 Port 都會同時被開起來，讓外部做接觸</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">influxdb</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8086</span></span><br><span class="line">      <span class="attr">nodePort:</span> <span class="number">30000</span> <span class="string">&lt;---</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">influxdb</span></span><br></pre></td></tr></table></figure>
+
+<p>建議可以搭一個外部 Reverse Proxy 來做使用，譬如像是 F5 / A10 / HAProxy</p>
+<h3 id="使用-Ingress-Controller-OpenShift-Router"><a href="#使用-Ingress-Controller-OpenShift-Router" class="headerlink" title="使用 Ingress Controller: OpenShift Router"></a>使用 Ingress Controller: OpenShift Router</h3><p>綜合 Pod 跟 Service 的優點的改良作法，也是普遍建立對外服務時的最佳實踐。你不需要自己對所有的 Service 去新增 <code>nodePort</code>，而可以直接在 OpenShift 上建立一個 Reverse Proxy 的服務，直接進行對外服務揭露及對內服務負載平衡，依據不同的 Ingress Controller 實作，通常功能都會包含 HTTP 路徑揭露、Session Sticky、SSL Transparent/Re-encrypt/Terminated 等等負載平衡的功能</p>
+<p>OpenShift Router 是採用 <code>hostnetwork</code> 的方式建立，所以每一台主機至多只能安裝一個，同時 80 / 443 /1936 這三個 Port 會被預設佔走</p>
+<p>想了解於 OpenShift 對於 Ingress Controller 的實作 <code>Router</code> 可以參考 <a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></p>
+<h3 id="使用-Service-Type-LoadBalancer"><a href="#使用-Service-Type-LoadBalancer" class="headerlink" title="使用 Service Type: LoadBalancer"></a>使用 Service Type: <code>LoadBalancer</code></h3><p>正常使用下，這功能僅限於公有雲，但在 OpenShift 裡面有支援一個功能叫做 <code>ingress IP</code>，效果就是給 OpenShift 僅一個特定的網段 (Subnet) 之後，可以從中選取任一 IP，並使用 <code>type: LoadBalancer</code> 對外揭露服務，詳細可以參考 <a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<h3 id="使用-External-IngressIP"><a href="#使用-External-IngressIP" class="headerlink" title="使用 External IngressIP"></a>使用 External IngressIP</h3><p>倘若一定要走 non-HTTP/HTTPS 的服務，又想要有類似於使用 <code>Service Type: LoadBalancer</code>，那可以考慮使用 IngressIP 來做使用，<a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></p>
+<p>可以做成下面的效果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get svc -n openshift-ingress</span><br><span class="line">NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span><br><span class="line">router-default            LoadBalancer   172.30.16.119   52.230.228.163   80:30745/TCP,443:32561/TCP   2d6h</span><br></pre></td></tr></table></figure>
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>在 OpenShift 的環境之下</p>
+<ol>
+<li>對於 http/https 的服務，對外透過 Ingress Controller: OpenShift Router 揭露 FQDN 讓外面使用</li>
+<li>對於非 http/https 的服務，如 mysql，有下列兩種做法:<ol>
+<li>若不需要提供對外服務，僅使用 <code>ClusterIP</code> 在內部進行使用</li>
+<li>若需要提供對外服務，有下列三種做法:<ol>
+<li>Single Instance，不需要在多個 node 上面運行，使用 <code>hostnetwork</code> 或 <code>hostPort</code></li>
+<li>Multiple Instance，需要在多個 node 上面運行，做到 scale-out 的效果，則使用 <code>ingress IP</code> 為佳</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.csdn.net/huqigang/article/details/76428017">kubernetes学习记录（3）——集群外部访问Pod或Service</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetworkpart1/erhwenkuo/cncf-k8snetworkpart1">Kubernetes 網路是如何運作? Part 1- Erhwen Kuo</a></li>
+<li><a href="https://www.slideshare.net/erhwenkuo/cncf-k8snetwork02-137938815">Kubernetes 網路是如何運作? Part 2- Erhwen Kuo</a></li>
+<li><a href="https://jimmysong.io/kubernetes-handbook/guide/accessing-kubernetes-pods-from-outside-of-the-cluster.html">从外部访问Kubernetes中的Pod - JimmySong</a></li>
+<li><a href="http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/">Accessing Kubernetes Pods from Outside of the Cluster</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.11/install_config/router/index.html">Router Overview - OpenShift v3.11 Docs</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1101219">深度理解：Openshift端口方式全解析 - 大衛分享</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1375943">OpenShift 网络分析-(容器网络选型和方案建议) - 大衛分享</a></li>
+<li><a href="http://v1.uncontained.io/playbooks/operationalizing/ingress.html">Using Ingress to Expose Services</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>openshift3</tag>
+        <tag>redhat</tag>
+        <tag>router</tag>
+        <tag>services</tag>
+        <tag>pods</tag>
       </tags>
   </entry>
   <entry>
@@ -4128,57 +4128,6 @@
       </tags>
   </entry>
   <entry>
-    <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
-    <url>/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</url>
-    <content><![CDATA[<p>遇過非常多人使用 <code>docekr-distribution</code> 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 <a href="https://docs.docker.com/registry/insecure/"><code>insecure-registries</code></a> 來避掉，今天要來分享自簽憑證的作法</p>
-<a id="more"></a>
-
-<h2 id="系統規格"><a href="#系統規格" class="headerlink" title="系統規格"></a>系統規格</h2><ul>
-<li>Hostname: rhel7.misc.local</li>
-<li>IP: 10.0.100.7/24</li>
-<li>Necessary Software<ul>
-<li><a href="https://github.com/docker/distribution">docker-distribution</a> 2.6.2</li>
-<li>RHEL 7.7 </li>
-<li>skopeo 0.1.37</li>
-</ul>
-</li>
-</ul>
-<h2 id="安裝過程"><a href="#安裝過程" class="headerlink" title="安裝過程"></a>安裝過程</h2><h3 id="準備-OS"><a href="#準備-OS" class="headerlink" title="準備 OS"></a>準備 OS</h3><ul>
-<li><code>Firewalld</code>、<code>SELinux</code> 預設開啟</li>
-<li>以 RHEL7 為核心</li>
-</ul>
-<h3 id="Docker-Distribution"><a href="#Docker-Distribution" class="headerlink" title="Docker Distribution"></a>Docker Distribution</h3><h4 id="安裝-docker-distribution"><a href="#安裝-docker-distribution" class="headerlink" title="安裝 docker-distribution"></a>安裝 docker-distribution</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install docker-distribution -y</span><br></pre></td></tr></table></figure>
-
-<h4 id="設定-docker-distribution"><a href="#設定-docker-distribution" class="headerlink" title="設定 docker-distribution"></a>設定 docker-distribution</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">EOF &gt; /etc/docker-distribution/registry/config.yml</span></span><br><span class="line"><span class="string">---</span></span><br><span class="line"><span class="string">version: 0.1</span></span><br><span class="line"><span class="string">log:</span></span><br><span class="line"><span class="string">  fields:</span></span><br><span class="line"><span class="string">    service: registry</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">    cache:</span></span><br><span class="line"><span class="string">        layerinfo: inmemory</span></span><br><span class="line"><span class="string">    filesystem:</span></span><br><span class="line"><span class="string">        rootdirectory: /var/lib/registry</span></span><br><span class="line"><span class="string">http:</span></span><br><span class="line"><span class="string">    addr: 0.0.0.0:5000</span></span><br><span class="line"><span class="string">    host: https://rhel7.misc.local:5000</span></span><br><span class="line"><span class="string">    tls:</span></span><br><span class="line"><span class="string">      certificate: /etc/docker-distribution/my_self_signed_cert.crt</span></span><br><span class="line"><span class="string">      key: /etc/docker-distribution/my_self_signed.key</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<p>依據上述的設定檔，<code>/var/lib/registry</code> 是指定主要放置 Container Images 檔案的位置，如果嫌太小的話，可以掛 Shared Storage；<code>:5000</code> 開的 Port 預設是 5000，但可以依據需求修改；<code>certificate</code>、<code>key</code> 則是放置 SSL/TLS 的金鑰和憑證，後面會講怎麼快速自簽；若想要瞭解更多的設定檔，可以參考 <a href="https://docs.docker.com/registry/configuration/">Docker Official - Configuring a registry</a></p>
-<h3 id="自簽-OpenSSL"><a href="#自簽-OpenSSL" class="headerlink" title="自簽 OpenSSL"></a>自簽 OpenSSL</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Command for SSL Cert</span></span><br><span class="line">openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \</span><br><span class="line">-keyout /etc/docker-distribution/my_self_signed.key \</span><br><span class="line">-out /etc/docker-distribution/my_self_signed_cert.crt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sample Out</span></span><br><span class="line">Generating a 2048 bit RSA private key</span><br><span class="line">......+++</span><br><span class="line">.................+++</span><br><span class="line">writing new private key to <span class="string">&#x27;/etc/docker-distribution/my_self_signed.key&#x27;</span></span><br><span class="line">-----</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">&#x27;.&#x27;</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]: TW</span><br><span class="line">State or Province Name (full name) []: Taipei</span><br><span class="line">Locality Name (eg, city) [Default City]: Taipei City</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]: Red Hat</span><br><span class="line">Organizational Unit Name (eg, section) []: Solution Architect</span><br><span class="line">Common Name (eg, your name or your server\<span class="string">&#x27;s hostname) []: rhel7.misc.local</span></span><br><span class="line"><span class="string">Email Address []: root@rhel7.misc.local</span></span><br></pre></td></tr></table></figure>
-<p>注意 <code>Common Name (eg, your name or your server\&#39;s hostname)</code> 務必要填自己的 hostname</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Configure RHEL to trust the self-signed certificate</span></span><br><span class="line"><span class="comment"># You should put the pem into /etc/pki/ca-trust/source/anchors/</span></span><br><span class="line">openssl x509 \</span><br><span class="line">-<span class="keyword">in</span> /etc/docker-distribution/my_self_signed_cert.crt \</span><br><span class="line">-out /etc/pki/ca-trust/<span class="built_in">source</span>/anchors/workstation.pem \</span><br><span class="line">-outform PEM</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update the system&#x27;s trust store</span></span><br><span class="line">update-ca-trust</span><br></pre></td></tr></table></figure>
-
-<p>建議把 <code>/etc/docker-distribution/my_self_signed_cert.crt</code> 這檔案放到一個可以讓其他機器下載的地方，未來只要有需要用到該 Container registry 的服務，都要執行上面的動作匯入憑證</p>
-<h3 id="啟用-Firewall"><a href="#啟用-Firewall" class="headerlink" title="啟用 Firewall"></a>啟用 Firewall</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5000/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --zone=public --list-all</span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證-Container-Registry"><a href="#驗證-Container-Registry" class="headerlink" title="驗證 Container Registry"></a>驗證 Container Registry</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Install</span></span><br><span class="line">yum install -y skopeo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the image from DockerHub to on-premise container registry</span></span><br><span class="line">skopeo copy docker://docker.io/library/centos:7.7.1908 docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br><span class="line"></span><br><span class="line"><span class="comment"># Inspect the information of specific container </span></span><br><span class="line">skopeo inspect docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/container-registry.png" alt=""></p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整個過程其實蠻簡單的，大概不用半小時就可以建立完，但他能提供的功能，就是非常基本中的基本 - <code>放映像檔</code>，若要尋求多功能的 Container Registry，可以考慮使用紅帽宣布 <a href="https://www.redhat.com/en/blog/red-hat-introduces-open-source-project-quay-container-registry">Red Hat Introduces open source Project Quay container registry</a> 的 Project Quay，比較符合現實生活。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://docs.docker.com/registry/insecure/">Docker Official - insecure-registries</a></li>
-<li><a href="https://github.com/docker/distribution">GitHub - docker/distribution</a></li>
-<li><a href="https://docs.docker.com/registry/configuration/">Docker Official - Configuring a registry</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>registry</tag>
-        <tag>smart start</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 年度個人回顧</title>
     <url>/20191231-2019-personal-review/</url>
     <content><![CDATA[<p>完整的日曆年過了，來個年度回顧紀錄</p>
@@ -4256,6 +4205,57 @@
         <tag>openshift</tag>
         <tag>openshift4</tag>
         <tag>web-console</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 Docker Distribution 建立第一個 TLS 容器倉庫 </title>
+    <url>/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution/</url>
+    <content><![CDATA[<p>遇過非常多人使用 <code>docekr-distribution</code> 和 RHEL/CentOS 來建立人生第一個容器映像檔倉庫 (Container Registry) 時，都會遇到 SSL/TLS 相關的問題，大多都是用 <a href="https://docs.docker.com/registry/insecure/"><code>insecure-registries</code></a> 來避掉，今天要來分享自簽憑證的作法</p>
+<a id="more"></a>
+
+<h2 id="系統規格"><a href="#系統規格" class="headerlink" title="系統規格"></a>系統規格</h2><ul>
+<li>Hostname: rhel7.misc.local</li>
+<li>IP: 10.0.100.7/24</li>
+<li>Necessary Software<ul>
+<li><a href="https://github.com/docker/distribution">docker-distribution</a> 2.6.2</li>
+<li>RHEL 7.7 </li>
+<li>skopeo 0.1.37</li>
+</ul>
+</li>
+</ul>
+<h2 id="安裝過程"><a href="#安裝過程" class="headerlink" title="安裝過程"></a>安裝過程</h2><h3 id="準備-OS"><a href="#準備-OS" class="headerlink" title="準備 OS"></a>準備 OS</h3><ul>
+<li><code>Firewalld</code>、<code>SELinux</code> 預設開啟</li>
+<li>以 RHEL7 為核心</li>
+</ul>
+<h3 id="Docker-Distribution"><a href="#Docker-Distribution" class="headerlink" title="Docker Distribution"></a>Docker Distribution</h3><h4 id="安裝-docker-distribution"><a href="#安裝-docker-distribution" class="headerlink" title="安裝 docker-distribution"></a>安裝 docker-distribution</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install docker-distribution -y</span><br></pre></td></tr></table></figure>
+
+<h4 id="設定-docker-distribution"><a href="#設定-docker-distribution" class="headerlink" title="設定 docker-distribution"></a>設定 docker-distribution</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">EOF &gt; /etc/docker-distribution/registry/config.yml</span></span><br><span class="line"><span class="string">---</span></span><br><span class="line"><span class="string">version: 0.1</span></span><br><span class="line"><span class="string">log:</span></span><br><span class="line"><span class="string">  fields:</span></span><br><span class="line"><span class="string">    service: registry</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">    cache:</span></span><br><span class="line"><span class="string">        layerinfo: inmemory</span></span><br><span class="line"><span class="string">    filesystem:</span></span><br><span class="line"><span class="string">        rootdirectory: /var/lib/registry</span></span><br><span class="line"><span class="string">http:</span></span><br><span class="line"><span class="string">    addr: 0.0.0.0:5000</span></span><br><span class="line"><span class="string">    host: https://rhel7.misc.local:5000</span></span><br><span class="line"><span class="string">    tls:</span></span><br><span class="line"><span class="string">      certificate: /etc/docker-distribution/my_self_signed_cert.crt</span></span><br><span class="line"><span class="string">      key: /etc/docker-distribution/my_self_signed.key</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>依據上述的設定檔，<code>/var/lib/registry</code> 是指定主要放置 Container Images 檔案的位置，如果嫌太小的話，可以掛 Shared Storage；<code>:5000</code> 開的 Port 預設是 5000，但可以依據需求修改；<code>certificate</code>、<code>key</code> 則是放置 SSL/TLS 的金鑰和憑證，後面會講怎麼快速自簽；若想要瞭解更多的設定檔，可以參考 <a href="https://docs.docker.com/registry/configuration/">Docker Official - Configuring a registry</a></p>
+<h3 id="自簽-OpenSSL"><a href="#自簽-OpenSSL" class="headerlink" title="自簽 OpenSSL"></a>自簽 OpenSSL</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Command for SSL Cert</span></span><br><span class="line">openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \</span><br><span class="line">-keyout /etc/docker-distribution/my_self_signed.key \</span><br><span class="line">-out /etc/docker-distribution/my_self_signed_cert.crt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sample Out</span></span><br><span class="line">Generating a 2048 bit RSA private key</span><br><span class="line">......+++</span><br><span class="line">.................+++</span><br><span class="line">writing new private key to <span class="string">&#x27;/etc/docker-distribution/my_self_signed.key&#x27;</span></span><br><span class="line">-----</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">&#x27;.&#x27;</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]: TW</span><br><span class="line">State or Province Name (full name) []: Taipei</span><br><span class="line">Locality Name (eg, city) [Default City]: Taipei City</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]: Red Hat</span><br><span class="line">Organizational Unit Name (eg, section) []: Solution Architect</span><br><span class="line">Common Name (eg, your name or your server\<span class="string">&#x27;s hostname) []: rhel7.misc.local</span></span><br><span class="line"><span class="string">Email Address []: root@rhel7.misc.local</span></span><br></pre></td></tr></table></figure>
+<p>注意 <code>Common Name (eg, your name or your server\&#39;s hostname)</code> 務必要填自己的 hostname</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Configure RHEL to trust the self-signed certificate</span></span><br><span class="line"><span class="comment"># You should put the pem into /etc/pki/ca-trust/source/anchors/</span></span><br><span class="line">openssl x509 \</span><br><span class="line">-<span class="keyword">in</span> /etc/docker-distribution/my_self_signed_cert.crt \</span><br><span class="line">-out /etc/pki/ca-trust/<span class="built_in">source</span>/anchors/workstation.pem \</span><br><span class="line">-outform PEM</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update the system&#x27;s trust store</span></span><br><span class="line">update-ca-trust</span><br></pre></td></tr></table></figure>
+
+<p>建議把 <code>/etc/docker-distribution/my_self_signed_cert.crt</code> 這檔案放到一個可以讓其他機器下載的地方，未來只要有需要用到該 Container registry 的服務，都要執行上面的動作匯入憑證</p>
+<h3 id="啟用-Firewall"><a href="#啟用-Firewall" class="headerlink" title="啟用 Firewall"></a>啟用 Firewall</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5000/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --zone=public --list-all</span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證-Container-Registry"><a href="#驗證-Container-Registry" class="headerlink" title="驗證 Container Registry"></a>驗證 Container Registry</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Install</span></span><br><span class="line">yum install -y skopeo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the image from DockerHub to on-premise container registry</span></span><br><span class="line">skopeo copy docker://docker.io/library/centos:7.7.1908 docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br><span class="line"></span><br><span class="line"><span class="comment"># Inspect the information of specific container </span></span><br><span class="line">skopeo inspect docker://rhel7.misc.local:5000/library/centos:7.7.1908</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/container-registry.png" alt=""></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整個過程其實蠻簡單的，大概不用半小時就可以建立完，但他能提供的功能，就是非常基本中的基本 - <code>放映像檔</code>，若要尋求多功能的 Container Registry，可以考慮使用紅帽宣布 <a href="https://www.redhat.com/en/blog/red-hat-introduces-open-source-project-quay-container-registry">Red Hat Introduces open source Project Quay container registry</a> 的 Project Quay，比較符合現實生活。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://docs.docker.com/registry/insecure/">Docker Official - insecure-registries</a></li>
+<li><a href="https://github.com/docker/distribution">GitHub - docker/distribution</a></li>
+<li><a href="https://docs.docker.com/registry/configuration/">Docker Official - Configuring a registry</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>registry</tag>
+        <tag>smart start</tag>
       </tags>
   </entry>
   <entry>
@@ -5015,6 +5015,92 @@
       </tags>
   </entry>
   <entry>
+    <title>30 分鐘內從開始到入門的 Ansible</title>
+    <url>/20200309-ansible-30m/</url>
+    <content><![CDATA[<p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/ysqclCH9Vc0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<a id="more"></a>
+
+<h2 id="沒有-Ansible-的時候是怎麼管理伺服器的"><a href="#沒有-Ansible-的時候是怎麼管理伺服器的" class="headerlink" title="沒有 Ansible 的時候是怎麼管理伺服器的?"></a>沒有 Ansible 的時候是怎麼管理伺服器的?</h2><p>當遇到有一票機器需要同時間要進行操作的時候，以前我用過幾個招數，因為我是 Linux 長期使用者，故以 Linux 上能用為主</p>
+<ol>
+<li>一個一個登入操作: 最早期，最花時間，錯誤率超高</li>
+<li>寫 <code>Shell Script</code> + for 迴圈: 要會寫程式，Shell Script 真心不好多人維護</li>
+<li>寫 <code>Python</code>: 要會寫程式，只要會寫 Python 的才看得懂我在寫什麼</li>
+<li>tmux 搭配 <code>synchronize panes</code>: 懶得寫程式，直接一個畫面操作全部，但如果遇到機器的參數不一樣就要一個一個操作</li>
+</ol>
+<p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bastion) 上使用</p>
+<h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
+<ol>
+<li>對多個機器下相同的<code>指令</code>，包含重開服務 (systemctl restart ooxx)、看檔案 (cat ooxx)、例行更新 (yum update -y)、執行網路指令 (ip route) 等等</li>
+<li>將一個<code>檔案</code>或<code>資料夾</code>放到多個機器上面</li>
+<li>修改檔案內容</li>
+</ol>
+<p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
+<h2 id="30-分鐘學習開始"><a href="#30-分鐘學習開始" class="headerlink" title="30 分鐘學習開始"></a>30 分鐘學習開始</h2><p>建議要有一台機器當作跳板機，可以是你的 Mac / Linux (很抱歉 Windows 不行)，這邊的範例是透過 Ansible 下去管理三台機器</p>
+<h3 id="作業系統環境"><a href="#作業系統環境" class="headerlink" title="作業系統環境"></a>作業系統環境</h3><ul>
+<li>Bastion<ul>
+<li>Red Hat Enterprise Linux 7.x 10.0.96.9/24</li>
+<li>Ansible 2.x</li>
+</ul>
+</li>
+<li>被控端<ul>
+<li>ceph3-node01.ceph.internal 10.0.98.1/24</li>
+<li>ceph3-node02.ceph.internal 10.0.98.2/24</li>
+<li>ceph3-node03.ceph.internal 10.0.98.3/24</li>
+</ul>
+</li>
+</ul>
+<h3 id="安裝-Ansible"><a href="#安裝-Ansible" class="headerlink" title="安裝 Ansible"></a>安裝 Ansible</h3><ul>
+<li><p>MacOS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install ansible</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ubuntu Debian</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install ansible -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RHEL/CentOS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y ansible</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="使用前準備"><a href="#使用前準備" class="headerlink" title="使用前準備"></a>使用前準備</h3><ol>
+<li>首先要先用 SSH 登入過所有受控機器，讓 host fingerprint 加入到 <code>known_hosts</code> 裡面，不然會噴下面的錯誤，當然最好的建議是走免密碼金鑰的方式 <code>ssh-copy-id</code>，但這邊不提，降低複雜性</li>
+</ol>
+<ul>
+<li>Error Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host&#x27;s fingerprint to your known_hosts file to manage this host.&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="2">
+<li>準備環境<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增資料夾</span></span><br><span class="line">mkdir ansible-workspace &amp;&amp; <span class="built_in">cd</span> ansible-workspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增受控端資訊</span></span><br><span class="line">cat &gt; inventory &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">ceph3-node01.ceph.internal ansible_host=10.0.98.1 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node02.ceph.internal ansible_host=10.0.98.2 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node03.ceph.internal ansible_host=10.0.98.3 ansible_user=root</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><img src="/images/ansible-inventory.png" alt=""></p>
+<h3 id="任務-0-了解是否伺服器可以被-Ansible-管理"><a href="#任務-0-了解是否伺服器可以被-Ansible-管理" class="headerlink" title="任務 0: 了解是否伺服器可以被 Ansible 管理"></a>任務 0: 了解是否伺服器可以被 Ansible 管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m ping -k</span></span><br><span class="line">ansible -i inventory all -m ping -k</span><br></pre></td></tr></table></figure>
+<p>一定要是全部都是 <code>SUCCESS</code>，這樣後面的才能指令使用，有任何錯誤的話，一定要先搞好，不然後面也就不用看了</p>
+<p><img src="/images/ansible-ping.png" alt=""></p>
+<h3 id="任務-1-對多個伺服器下相同指令"><a href="#任務-1-對多個伺服器下相同指令" class="headerlink" title="任務 1: 對多個伺服器下相同指令"></a>任務 1: 對多個伺服器下相同指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m shell -k -a &lt;指令&gt;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;timedatectl&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;yum update -y&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;systemctl status tuned&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;cat /etc/os-release | grep PRETTY_NAME&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-shell.png" alt=""></p>
+<h3 id="任務-2-將一個檔案或資料夾傳送到多個伺服器上"><a href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上" class="headerlink" title="任務 2: 將一個檔案或資料夾傳送到多個伺服器上"></a>任務 2: 將一個檔案或資料夾傳送到多個伺服器上</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 檔案</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/motd dest=/etc/motd&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料夾</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/yum.repos.d/ dest=/etc/yum.repos.d/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/ansible-copy.png" alt=""></p>
+<h3 id="想要學更多"><a href="#想要學更多" class="headerlink" title="想要學更多?"></a>想要學更多?</h3><p>恭喜各位 30 分鐘內快速上手使用 Ansible，Ansible 入手門檻真的是非常低，不需要學特別的程式語言就可以直接拿來使用，你看看前面對於多機器的操作有寫到 for 迴圈嗎? 但他的使用不單單是這樣，還可以延伸更多，以下是兩個蠻適合入門的簡報</p>
+<ul>
+<li><a href="https://chusiang.gitbooks.io/automate-with-ansible/">現代 IT 人一定要知道的 Ansible 自動化組態技巧</a></li>
+<li><a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible">20190720_Better Practice_Day 2 Operaition with Ansible</a></li>
+</ul>
+<p>如果你想要參加相關社群的話，也歡迎加入 <a href="https://ansible.tw/#!index.md">Ansible 台灣使用者社群</a> 當中的 <a href="https://telegram.me/ansible_tw">Telegram Group</a> 跟我們一起討論</p>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>smart start</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</title>
     <url>/20200317-openshift-with-coreos-part-1/</url>
     <content><![CDATA[<p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
@@ -5117,92 +5203,6 @@
         <tag>openshift4</tag>
         <tag>container</tag>
         <tag>coreos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>30 分鐘內從開始到入門的 Ansible</title>
-    <url>/20200309-ansible-30m/</url>
-    <content><![CDATA[<p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/ysqclCH9Vc0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<a id="more"></a>
-
-<h2 id="沒有-Ansible-的時候是怎麼管理伺服器的"><a href="#沒有-Ansible-的時候是怎麼管理伺服器的" class="headerlink" title="沒有 Ansible 的時候是怎麼管理伺服器的?"></a>沒有 Ansible 的時候是怎麼管理伺服器的?</h2><p>當遇到有一票機器需要同時間要進行操作的時候，以前我用過幾個招數，因為我是 Linux 長期使用者，故以 Linux 上能用為主</p>
-<ol>
-<li>一個一個登入操作: 最早期，最花時間，錯誤率超高</li>
-<li>寫 <code>Shell Script</code> + for 迴圈: 要會寫程式，Shell Script 真心不好多人維護</li>
-<li>寫 <code>Python</code>: 要會寫程式，只要會寫 Python 的才看得懂我在寫什麼</li>
-<li>tmux 搭配 <code>synchronize panes</code>: 懶得寫程式，直接一個畫面操作全部，但如果遇到機器的參數不一樣就要一個一個操作</li>
-</ol>
-<p>題外話，<code>tmux</code> 真的是人人必用的好工具，搭配 <code>mosh</code> 簡直倚天屠龍劍的組合，非常適合裝在堡壘機 (Bastion) 上使用</p>
-<h2 id="常見-Linux-日常維運操作"><a href="#常見-Linux-日常維運操作" class="headerlink" title="常見 Linux 日常維運操作"></a>常見 Linux 日常維運操作</h2><p>基本上常做的不外乎以下事情：</p>
-<ol>
-<li>對多個機器下相同的<code>指令</code>，包含重開服務 (systemctl restart ooxx)、看檔案 (cat ooxx)、例行更新 (yum update -y)、執行網路指令 (ip route) 等等</li>
-<li>將一個<code>檔案</code>或<code>資料夾</code>放到多個機器上面</li>
-<li>修改檔案內容</li>
-</ol>
-<p>這篇會針對 1 和 2 的工作項目進行討論，保證很有用，3 要額外學 Jinja2 那個就算是比較深入的部份了</p>
-<h2 id="30-分鐘學習開始"><a href="#30-分鐘學習開始" class="headerlink" title="30 分鐘學習開始"></a>30 分鐘學習開始</h2><p>建議要有一台機器當作跳板機，可以是你的 Mac / Linux (很抱歉 Windows 不行)，這邊的範例是透過 Ansible 下去管理三台機器</p>
-<h3 id="作業系統環境"><a href="#作業系統環境" class="headerlink" title="作業系統環境"></a>作業系統環境</h3><ul>
-<li>Bastion<ul>
-<li>Red Hat Enterprise Linux 7.x 10.0.96.9/24</li>
-<li>Ansible 2.x</li>
-</ul>
-</li>
-<li>被控端<ul>
-<li>ceph3-node01.ceph.internal 10.0.98.1/24</li>
-<li>ceph3-node02.ceph.internal 10.0.98.2/24</li>
-<li>ceph3-node03.ceph.internal 10.0.98.3/24</li>
-</ul>
-</li>
-</ul>
-<h3 id="安裝-Ansible"><a href="#安裝-Ansible" class="headerlink" title="安裝 Ansible"></a>安裝 Ansible</h3><ul>
-<li><p>MacOS</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install ansible</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Ubuntu Debian</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install ansible -y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>RHEL/CentOS</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y ansible</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="使用前準備"><a href="#使用前準備" class="headerlink" title="使用前準備"></a>使用前準備</h3><ol>
-<li>首先要先用 SSH 登入過所有受控機器，讓 host fingerprint 加入到 <code>known_hosts</code> 裡面，不然會噴下面的錯誤，當然最好的建議是走免密碼金鑰的方式 <code>ssh-copy-id</code>，但這邊不提，降低複雜性</li>
-</ol>
-<ul>
-<li>Error Output<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host&#x27;s fingerprint to your known_hosts file to manage this host.&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="2">
-<li>準備環境<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增資料夾</span></span><br><span class="line">mkdir ansible-workspace &amp;&amp; <span class="built_in">cd</span> ansible-workspace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增受控端資訊</span></span><br><span class="line">cat &gt; inventory &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">ceph3-node01.ceph.internal ansible_host=10.0.98.1 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node02.ceph.internal ansible_host=10.0.98.2 ansible_user=root</span></span><br><span class="line"><span class="string">ceph3-node03.ceph.internal ansible_host=10.0.98.3 ansible_user=root</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p><img src="/images/ansible-inventory.png" alt=""></p>
-<h3 id="任務-0-了解是否伺服器可以被-Ansible-管理"><a href="#任務-0-了解是否伺服器可以被-Ansible-管理" class="headerlink" title="任務 0: 了解是否伺服器可以被 Ansible 管理"></a>任務 0: 了解是否伺服器可以被 Ansible 管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m ping -k</span></span><br><span class="line">ansible -i inventory all -m ping -k</span><br></pre></td></tr></table></figure>
-<p>一定要是全部都是 <code>SUCCESS</code>，這樣後面的才能指令使用，有任何錯誤的話，一定要先搞好，不然後面也就不用看了</p>
-<p><img src="/images/ansible-ping.png" alt=""></p>
-<h3 id="任務-1-對多個伺服器下相同指令"><a href="#任務-1-對多個伺服器下相同指令" class="headerlink" title="任務 1: 對多個伺服器下相同指令"></a>任務 1: 對多個伺服器下相同指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ansible -i &lt;INVENTORY FILE&gt; &lt;所有主機或特定主機&gt; -m shell -k -a &lt;指令&gt;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;timedatectl&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;yum update -y&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;systemctl status tuned&quot;</span></span><br><span class="line">ansible -i inventory all -m shell -k -a <span class="string">&quot;cat /etc/os-release | grep PRETTY_NAME&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/ansible-shell.png" alt=""></p>
-<h3 id="任務-2-將一個檔案或資料夾傳送到多個伺服器上"><a href="#任務-2-將一個檔案或資料夾傳送到多個伺服器上" class="headerlink" title="任務 2: 將一個檔案或資料夾傳送到多個伺服器上"></a>任務 2: 將一個檔案或資料夾傳送到多個伺服器上</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 檔案</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/motd dest=/etc/motd&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 資料夾</span></span><br><span class="line">ansible -i inventory all -m copy -k -a <span class="string">&quot;src=/etc/yum.repos.d/ dest=/etc/yum.repos.d/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/ansible-copy.png" alt=""></p>
-<h3 id="想要學更多"><a href="#想要學更多" class="headerlink" title="想要學更多?"></a>想要學更多?</h3><p>恭喜各位 30 分鐘內快速上手使用 Ansible，Ansible 入手門檻真的是非常低，不需要學特別的程式語言就可以直接拿來使用，你看看前面對於多機器的操作有寫到 for 迴圈嗎? 但他的使用不單單是這樣，還可以延伸更多，以下是兩個蠻適合入門的簡報</p>
-<ul>
-<li><a href="https://chusiang.gitbooks.io/automate-with-ansible/">現代 IT 人一定要知道的 Ansible 自動化組態技巧</a></li>
-<li><a href="https://speakerdeck.com/pichuang/20190720-better-practice-day-2-operaition-with-ansible">20190720_Better Practice_Day 2 Operaition with Ansible</a></li>
-</ul>
-<p>如果你想要參加相關社群的話，也歡迎加入 <a href="https://ansible.tw/#!index.md">Ansible 台灣使用者社群</a> 當中的 <a href="https://telegram.me/ansible_tw">Telegram Group</a> 跟我們一起討論</p>
-]]></content>
-      <categories>
-        <category>ansible</category>
-      </categories>
-      <tags>
-        <tag>ansible</tag>
-        <tag>smart start</tag>
       </tags>
   </entry>
   <entry>
@@ -5507,46 +5507,6 @@
       </tags>
   </entry>
   <entry>
-    <title>用 k9s 操作 OpenShift 4</title>
-    <url>/20200413-k9s-for-openshift/</url>
-    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
-<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
-<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
-</blockquote>
-<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
-<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
-<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
-<li>k9s v0.19.1</li>
-<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
-</ul>
-<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
-
-<p>沒了 = =</p>
-<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
-<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
-<p><img src="/images/k9s-node-1.png" alt=""></p>
-<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
-<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
-<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
-<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift4</tag>
-        <tag>k9s</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift v4 東西南北向網路流</title>
     <url>/20200413-openshift4-network-traffic-overview/</url>
     <content><![CDATA[<p>去年 2019/04 的時候有釋放出 <a href="https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview/">Red Hat OpenShift v3.11 東西南北向網路探討 - Phil Huang</a> 一文，過了一年後，Red Hat OpenShift 4 出了，那兩個不同大版本的網路設計有什麼樣子差異呢?</p>
@@ -5625,6 +5585,46 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 k9s 操作 OpenShift 4</title>
+    <url>/20200413-k9s-for-openshift/</url>
+    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
+<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
+<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
+</blockquote>
+<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
+<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
+<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
+<li>k9s v0.19.1</li>
+<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
+</ul>
+<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
+
+<p>沒了 = =</p>
+<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
+<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
+<p><img src="/images/k9s-node-1.png" alt=""></p>
+<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
+<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
+<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
+<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift4</tag>
+        <tag>k9s</tag>
       </tags>
   </entry>
   <entry>
@@ -6698,7 +6698,7 @@
     <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
     <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
     <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
-<p>有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考</p>
+<p>順帶一提，有鑒於太多人對於 OpenShift 4 有些小功能很好奇，我有機會會慢慢錄一些無聲小影片給各位參考</p>
 <div class="video-container"><iframe src="https://www.youtube.com/embed/yGhcPmTtoPU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
 <a id="more"></a>
