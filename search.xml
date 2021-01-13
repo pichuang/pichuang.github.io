@@ -260,57 +260,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Upgrade ONOS Cluster</title>
-    <url>/20160514-upgrade-onos-cluster/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
-<a id="more"></a>
-
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Build Machine<ul>
-<li>MAC OSX 10.11.3</li>
-<li>Java 1.8.0</li>
-<li>Apache Karaf 3.0.5</li>
-<li>Apache Maven 3.3.9</li>
-<li>Misc<ul>
-<li>IP: 10.211.55.2</li>
-<li>Cell name: pichuang</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ONOS1 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.10</li>
-</ul>
-</li>
-<li>ONOS2 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.11</li>
-</ul>
-</li>
-</ul>
-<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
-</ul>
-<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>onos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ONS 2016 之旅</title>
     <url>/20160423-open-networking-summit-2016/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 2016/2 - 2016/3 的時候，我接到了一個頗重的任務，目標是趕在 <a href="http://events.linuxfoundation.org/events/open-networking-summit">ONS 2016</a> 要把 <a href="http://onlab.us">ON.LAB</a> 所主導 SDN Controller 專案 <a href="http://onosproject.org">ONOS</a> 當中的一個 Use Case  <a href="https://wiki.onosproject.org/display/ONOS/SDN-IP">SDN-IP</a> 於台灣交通大學建立起來，並跟國際 REN (Research and Education Network) 連接在一起，專案執行時間不到一個月。</p>
@@ -366,6 +315,57 @@
       <tags>
         <tag>event</tag>
         <tag>ons</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade ONOS Cluster</title>
+    <url>/20160514-upgrade-onos-cluster/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
+<a id="more"></a>
+
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Build Machine<ul>
+<li>MAC OSX 10.11.3</li>
+<li>Java 1.8.0</li>
+<li>Apache Karaf 3.0.5</li>
+<li>Apache Maven 3.3.9</li>
+<li>Misc<ul>
+<li>IP: 10.211.55.2</li>
+<li>Cell name: pichuang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ONOS1 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.10</li>
+</ul>
+</li>
+<li>ONOS2 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.11</li>
+</ul>
+</li>
+</ul>
+<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
+</ul>
+<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>onos</tag>
       </tags>
   </entry>
   <entry>
@@ -1985,31 +1985,49 @@
       </tags>
   </entry>
   <entry>
-    <title>Red Hat OpenShift and VMWare NSX-T 架構點評</title>
-    <url>/20190317-openshift-and-nsx-t/</url>
-    <content><![CDATA[<p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
 <a id="more"></a>
 
-<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
-<p>因為小弟工作關係和經驗，我會從 OpenShift 的觀點看待這個組合</p>
-<h2 id="Red-Hat-OpenShift"><a href="#Red-Hat-OpenShift" class="headerlink" title="Red Hat OpenShift"></a>Red Hat OpenShift</h2><p>Red Hat OpenShift 是一個企業級容器化容器平台 (Container Platform)，3.11 已經是 OpenShift v3 的長期支援版本 (Long-Term Support, LTS)，所以現行架構上也已經是非常清晰，包含三大節點角色：master / infra / compute，有興趣的可以參考一下小弟前陣子演講的投影片 - <a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></p>
-<p>OpenShift 除了有內建三個不同的 CNI Plugins (ovs-subnet / ovs-multitenant / ovs-networkpolicy) 可供使用以外，其實還有跟各大知名網路廠商有做 CNI 整合驗證，VMWare NSX-T 就是其中一個可選的方案。</p>
-<h2 id="VMWare-NSX-T"><a href="#VMWare-NSX-T" class="headerlink" title="VMWare NSX-T"></a>VMWare NSX-T</h2><p>討論 OpenShift 基礎平台資源 (Infrastructure)時，不外乎就還是 Compute / Network / Storage 這三個領域分別討論。因這個架構底層是採用 VMWare 為基底的技術，所以底層虛擬化、VM 毫無懸念都是由 VMWare vSphere 提供計算資源給上層 OS 使用。(有一個例外狀況，就是不考慮使用 VM 而用 BM 的方式部署，這邊不討論)</p>
-<p>網路資源的部分， VMWare NSX-T 基本上是針對網路虛擬化 Network Virtualization 的技術，因需要充分納管所有 OpenShift 所需要的三大 IP 網段 (host IP / Service IPs / Pod IPs)，所以這當中會需要對 OpenShift 本體的網路做抽換 CNI Plugin 及 vSwitch 的操作。</p>
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">NSX-T Integration with Openshift</a></li>
-<li><a href="https://www.youtube.com/watch?v=uEQ5UAgh770">NSX-T Openshift 3.11 Installation/Integration demo</a></li>
-<li><a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></li>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>openshift</category>
+        <category>container</category>
       </categories>
       <tags>
-        <tag>vmware</tag>
-        <tag>openshift3</tag>
-        <tag>nsx-t</tag>
-        <tag>redhat</tag>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -2065,6 +2083,34 @@
       </tags>
   </entry>
   <entry>
+    <title>Red Hat OpenShift and VMWare NSX-T 架構點評</title>
+    <url>/20190317-openshift-and-nsx-t/</url>
+    <content><![CDATA[<p>最近 VMWare NSX-T 出了一篇跟 Red Hat OpenShift 3.11 的<a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">整合文章</a>及<a href="https://www.youtube.com/watch?v=uEQ5UAgh770">影片</a>，下圖的整體技術架構上是十分靠譜的，但有些點是可以另外加入考慮的，但本文不贅述，</p>
+<a id="more"></a>
+
+<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
+<p>因為小弟工作關係和經驗，我會從 OpenShift 的觀點看待這個組合</p>
+<h2 id="Red-Hat-OpenShift"><a href="#Red-Hat-OpenShift" class="headerlink" title="Red Hat OpenShift"></a>Red Hat OpenShift</h2><p>Red Hat OpenShift 是一個企業級容器化容器平台 (Container Platform)，3.11 已經是 OpenShift v3 的長期支援版本 (Long-Term Support, LTS)，所以現行架構上也已經是非常清晰，包含三大節點角色：master / infra / compute，有興趣的可以參考一下小弟前陣子演講的投影片 - <a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></p>
+<p>OpenShift 除了有內建三個不同的 CNI Plugins (ovs-subnet / ovs-multitenant / ovs-networkpolicy) 可供使用以外，其實還有跟各大知名網路廠商有做 CNI 整合驗證，VMWare NSX-T 就是其中一個可選的方案。</p>
+<h2 id="VMWare-NSX-T"><a href="#VMWare-NSX-T" class="headerlink" title="VMWare NSX-T"></a>VMWare NSX-T</h2><p>討論 OpenShift 基礎平台資源 (Infrastructure)時，不外乎就還是 Compute / Network / Storage 這三個領域分別討論。因這個架構底層是採用 VMWare 為基底的技術，所以底層虛擬化、VM 毫無懸念都是由 VMWare vSphere 提供計算資源給上層 OS 使用。(有一個例外狀況，就是不考慮使用 VM 而用 BM 的方式部署，這邊不討論)</p>
+<p>網路資源的部分， VMWare NSX-T 基本上是針對網路虛擬化 Network Virtualization 的技術，因需要充分納管所有 OpenShift 所需要的三大 IP 網段 (host IP / Service IPs / Pod IPs)，所以這當中會需要對 OpenShift 本體的網路做抽換 CNI Plugin 及 vSwitch 的操作。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blogs.vmware.com/networkvirtualization/2019/02/nsx-t-integration-with-openshift.html/">NSX-T Integration with Openshift</a></li>
+<li><a href="https://www.youtube.com/watch?v=uEQ5UAgh770">NSX-T Openshift 3.11 Installation/Integration demo</a></li>
+<li><a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122">那些年的 OpenShift 3.11 容器平台技術選型_20190122</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>vmware</tag>
+        <tag>openshift3</tag>
+        <tag>nsx-t</tag>
+        <tag>redhat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cloud Native Network Functions (CNF) Testbed 心得感想</title>
     <url>/20190319-cnf-testbed/</url>
     <content><![CDATA[<p>2019/2/24 CNCF <a href="https://www.cncf.io/announcement/2019/02/25/cncf-launches-cloud-native-network-functions-cnf-testbed/">宣布發展 CNF Testbed</a>，計畫主要針對在 ONAP (Open Network Automation Platform) 上的 VNF (Virtual Network Function) 及發展中的 CNF (Cloud native Network Function) 進行雙方的功能測試，相互比較優劣勢及性能彈性</p>
@@ -2091,52 +2137,6 @@
       <tags>
         <tag>container</tag>
         <tag>cnf</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -3600,81 +3600,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Troubleshooting from Container to Any</title>
-    <url>/20190715-troubleshooting-from-container-to-any/</url>
-    <content><![CDATA[<p>建立好一座 Kubernetes / OpenShift 集群後，大部分的疑難排解文章都是教你如何從 Kubernetes / OpenShift 的角度，透過 Kubernetes 的 <code>kubectl</code> 或 OpenShift 的 <code>oc</code> 指令來進行一系列的偵查，而這個查詢的結果都是基於 <code>kube-apiserver</code> 為核心的結果，中間已經抽象過很多層，距離底層資訊已有段距離。</p>
-<p>若今天想要特意建立一個 Container 出來，用來進行 OS 或 Kubernetes 層級的 Troubleshooting 該如何實作呢?</p>
-<a id="more"></a>
-
-<h2 id="這樣做的動機是"><a href="#這樣做的動機是" class="headerlink" title="這樣做的動機是?"></a>這樣做的動機是?</h2><p>普遍在離線環境下，很常在客戶端遇到以下幾種事情</p>
-<ol>
-<li>客戶家沒有套件，不能臨時下載套件</li>
-<li>不能亂安裝套件，合規性會有問題</li>
-<li>想要的版本跟能提供的版本不一樣</li>
-</ol>
-<p>當遇到系統問題的時候，但手頭受限於上述問題影響，導致做起事情綁手綁腳，故想要有一個完整可信任的除錯工具包 (容器) 來協助快速定位問題。同一時間這個工具也要能一體適用於 Kubernetes 平台上進行 Pod-Level 的除錯，尤其是針對 Networking 的部分。</p>
-<h2 id="當我有一個-OS…"><a href="#當我有一個-OS…" class="headerlink" title="當我有一個 OS…"></a>當我有一個 OS…</h2><p>在這個狀況下，會有兩個使用情境：</p>
-<ol>
-<li>容器位於 OS 之上 (Container on OS)</li>
-<li>容器位於 OS 之內 (Container within OS)</li>
-</ol>
-<p><img src="/images/container-on-os.png" alt=""></p>
-<p>第一個情境比較好理解，畢竟大多數的人用 Container 都是為了這個特性。技術上其實就是直接下載 Container Images 後執行該容器內部的工具，任何的操作都不會跟外部主機 (Host OS)有任何影響。但也因為這個特性，導致如果 Container 內部有一些好用的工具，其實是不能讓外部主機做應用，白話來說就是風馬牛完全不相干。參考指令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name debug-container quay.io&#x2F;pichuang&#x2F;debug-container</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/container-within-os.png" alt=""></p>
-<p>第二個情境，是利用 docker <code>volume</code> 的掛載特性，將外部主機的特定幾個路徑，如 <code>/dev</code>、<code>/proc</code> 等掛載到容器裡面，而容器因為需要讀取到系統資訊，所以皆需要 <code>--privileged</code> 權限。這類在容器的操作會影響到外部主機，所以要特別留意，如果有需要特別保護的話針對特定 volume 使用 <code>ro</code> 進行保護，避免人為誤操作。參考指令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name debug --privileged \</span><br><span class="line">       --ipc&#x3D;host --net&#x3D;host --pid&#x3D;host -e HOST&#x3D;&#x2F;host \</span><br><span class="line">       -e NAME&#x3D;debug-container -e IMAGE&#x3D;pichuang&#x2F;debug-container \</span><br><span class="line">       -v &#x2F;run:&#x2F;run -v &#x2F;var&#x2F;log:&#x2F;var&#x2F;log \</span><br><span class="line">       -v &#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime -v &#x2F;:&#x2F;host \</span><br><span class="line">       quay.io&#x2F;pichuang&#x2F;debug-container</span><br></pre></td></tr></table></figure>
-
-<p>另外如果想要自己實作屬於自己的 debug container 的話，要留意一下各家 OS 的路徑規則 (man hier) 不盡相同，建議是看外部主機是什麼 OS 就選哪一種 Base Image，譬如說我個人用的主機是 RHEL7，所以 debug container 的基礎映像檔就選 rhel7 或者是 centos7 為主的映像檔，避免路徑不一樣導致神秘的現象發生。</p>
-<h2 id="當我有一個容器平台…"><a href="#當我有一個容器平台…" class="headerlink" title="當我有一個容器平台…"></a>當我有一個容器平台…</h2><p><img src="/images/k8s-networking.png" alt=""></p>
-<p>基本 Kubernetes 的介紹就跳過了，針對網路的部分，Kubernetes 設計致力於解決以下五種網路溝通問題：</p>
-<ol>
-<li>Container to Container</li>
-<li>Pod to Pod in same node</li>
-<li>Pod to Pod in different nodes</li>
-<li>Pod to Service</li>
-<li>Kubernetes to Internet</li>
-</ol>
-<p>如果稍微認識到 Kubernetes 的看官，會了解到 Kubernetes 的最小計算單位是 <code>Pod</code>，而一個 Pod 可以<code>擁有一個或多個以上的 Container</code>，只是大多數狀況下都是一個 Pod 裡面塞一個 Container，所以很容易誤會這兩個是一樣的等級。</p>
-<p>針對 Container to Container，基本同一個 Pod 內的 Containers 是不會跨主機的，使用相同的 network namespace，所以視為標準 L2 Bridge 情境即可。而 Pod to Pod 及 Pod to Service 的情況，Kubernetes 都會以 Pod 為基礎，透過 CNI Plugin 指派唯一的 IP 供使用，相互之間是可以溝通的。</p>
-<p>有時候遇到一些網路問題，譬如像是不同 Node 之間網路不通或者是本身主機有異常狀況發生，其實透過 Kuebernetes 的角度是有點難以辨別到底發生什麼事情，所以類同於上面章節提到的作法，可以將特定的 Container 用 Pod 的形式運行在 namespace (or project) 裡面來協助除錯。OpenShift 參考指令如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image&#x3D;quay.io&#x2F;pichuang&#x2F;debug-container \</span><br><span class="line">   --restart&#x3D;Never --attach -i --tty --rm</span><br></pre></td></tr></table></figure>
-
-<p>倘若想要將 Pod 跑在指定的節點上，則要利用 <code>nodeSelector</code> 的概念指定在特定主機上面</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image&#x3D;quay.io&#x2F;pichuang&#x2F;debug-container \</span><br><span class="line">   --restart&#x3D;Never --attach -i --tty --rm \</span><br><span class="line">   --overrides&#x3D;&#39;&#123; &quot;apiVersion&quot;: &quot;v1&quot;, &quot;spec&quot;: &#123; &quot;nodeSelector&quot;:&#123;&quot;&lt;KEY&gt;&quot;:&quot;&lt;VALUE&gt;&quot;&#125;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
-
-<p>記得自己要把 KEY 和 VALUE 換成自己環境的設定，關於 Label 的資訊可以從 <code>oc get node --show-labels=true</code> 這邊找</p>
-<p><img src="/images/run-on-openshift.png" alt=""></p>
-<h2 id="所以我說那個原始碼和環境呢"><a href="#所以我說那個原始碼和環境呢" class="headerlink" title="所以我說那個原始碼和環境呢?"></a>所以我說那個原始碼和環境呢?</h2><p>以下是關於本文使用到的原始碼和 Image 位置: </p>
-<ol>
-<li>Container Image: <a href="https://quay.io/repository/pichuang/debug-container?tab=info">pichuang/debug-container - Quay</a></li>
-<li>Dockerfile: <a href="https://github.com/pichuang/debug-container">pichuang/debug-container - GitHub</a></li>
-</ol>
-<p>而測試環境為以下</p>
-<ol>
-<li>OS: RHEL7</li>
-<li>Container Runtime: Docker 1.13+</li>
-<li>Container Platform: Red Hat OpenShift Container Platform v3.11</li>
-</ol>
-<p>理論上來說，觀念上是適用於其他以 Docker 及 Kubernetes 為主的容器平台，所以可以自行在家試試看</p>
-<h2 id="同場加映-Part-1-sysdig"><a href="#同場加映-Part-1-sysdig" class="headerlink" title="同場加映 Part 1: sysdig"></a>同場加映 Part 1: sysdig</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name&#x3D;sysdig --privileged&#x3D;true \</span><br><span class="line">          --volume&#x3D;&#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;host&#x2F;var&#x2F;run&#x2F;docker.sock \</span><br><span class="line">          --volume&#x3D;&#x2F;dev:&#x2F;host&#x2F;dev \</span><br><span class="line">          --volume&#x3D;&#x2F;proc:&#x2F;host&#x2F;proc:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;boot:&#x2F;host&#x2F;boot:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;lib&#x2F;modules:&#x2F;host&#x2F;lib&#x2F;modules:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;usr:&#x2F;host&#x2F;usr:ro \</span><br><span class="line">          sysdig&#x2F;sysdig</span><br></pre></td></tr></table></figure>
-
-<h2 id="同場加映-Part-2-netshoot"><a href="#同場加映-Part-2-netshoot" class="headerlink" title="同場加映 Part 2: netshoot"></a>同場加映 Part 2: netshoot</h2><ul>
-<li><a href="https://github.com/nicolaka/netshoot">nicolaka/netshoot - GitHub</a><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Container&#39;s Network Namesapce</span><br><span class="line">docker run -it --net container:&lt;container_name&gt; nicolaka&#x2F;netshoot</span><br><span class="line"></span><br><span class="line"># Host&#39;s Network namesapce</span><br><span class="line">docker run -it --net host nicolaka&#x2F;netshoot</span><br><span class="line"></span><br><span class="line"># Networks&#39;s Network namespace</span><br><span class="line"># Use &#96;nsenter&#96;</span><br><span class="line"></span><br><span class="line"># K8s&#39;s network debugging</span><br><span class="line">kubectl run tmp-shell --rm -i --tty --image nicolaka&#x2F;netshoot -- &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift4</tag>
-        <tag>container</tag>
-        <tag>openshift3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>容器平台強固化保護思路</title>
     <url>/20190723-container-and-container-platform-hardening/</url>
     <content><![CDATA[<p>不知道各位看了這麼久的容器平台 (Container Platform) 技術，一聽到 Kubernetes 的反應，是如何在腦袋中反射出技術堆棧圖 (Technology Stack) 的呢？今天要來分享一下筆者針對於 Kubernetes 容器平台，如何看待加固 (Hardening) 及系統基礎保護的技術觀點，本篇因沒有涉及到資安弱掃，故以強固化 (Hardening) 作為出發點</p>
@@ -3876,6 +3801,81 @@
         <tag>infra</tag>
         <tag>linux</tag>
         <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Troubleshooting from Container to Any</title>
+    <url>/20190715-troubleshooting-from-container-to-any/</url>
+    <content><![CDATA[<p>建立好一座 Kubernetes / OpenShift 集群後，大部分的疑難排解文章都是教你如何從 Kubernetes / OpenShift 的角度，透過 Kubernetes 的 <code>kubectl</code> 或 OpenShift 的 <code>oc</code> 指令來進行一系列的偵查，而這個查詢的結果都是基於 <code>kube-apiserver</code> 為核心的結果，中間已經抽象過很多層，距離底層資訊已有段距離。</p>
+<p>若今天想要特意建立一個 Container 出來，用來進行 OS 或 Kubernetes 層級的 Troubleshooting 該如何實作呢?</p>
+<a id="more"></a>
+
+<h2 id="這樣做的動機是"><a href="#這樣做的動機是" class="headerlink" title="這樣做的動機是?"></a>這樣做的動機是?</h2><p>普遍在離線環境下，很常在客戶端遇到以下幾種事情</p>
+<ol>
+<li>客戶家沒有套件，不能臨時下載套件</li>
+<li>不能亂安裝套件，合規性會有問題</li>
+<li>想要的版本跟能提供的版本不一樣</li>
+</ol>
+<p>當遇到系統問題的時候，但手頭受限於上述問題影響，導致做起事情綁手綁腳，故想要有一個完整可信任的除錯工具包 (容器) 來協助快速定位問題。同一時間這個工具也要能一體適用於 Kubernetes 平台上進行 Pod-Level 的除錯，尤其是針對 Networking 的部分。</p>
+<h2 id="當我有一個-OS…"><a href="#當我有一個-OS…" class="headerlink" title="當我有一個 OS…"></a>當我有一個 OS…</h2><p>在這個狀況下，會有兩個使用情境：</p>
+<ol>
+<li>容器位於 OS 之上 (Container on OS)</li>
+<li>容器位於 OS 之內 (Container within OS)</li>
+</ol>
+<p><img src="/images/container-on-os.png" alt=""></p>
+<p>第一個情境比較好理解，畢竟大多數的人用 Container 都是為了這個特性。技術上其實就是直接下載 Container Images 後執行該容器內部的工具，任何的操作都不會跟外部主機 (Host OS)有任何影響。但也因為這個特性，導致如果 Container 內部有一些好用的工具，其實是不能讓外部主機做應用，白話來說就是風馬牛完全不相干。參考指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name debug-container quay.io&#x2F;pichuang&#x2F;debug-container</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/container-within-os.png" alt=""></p>
+<p>第二個情境，是利用 docker <code>volume</code> 的掛載特性，將外部主機的特定幾個路徑，如 <code>/dev</code>、<code>/proc</code> 等掛載到容器裡面，而容器因為需要讀取到系統資訊，所以皆需要 <code>--privileged</code> 權限。這類在容器的操作會影響到外部主機，所以要特別留意，如果有需要特別保護的話針對特定 volume 使用 <code>ro</code> 進行保護，避免人為誤操作。參考指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name debug --privileged \</span><br><span class="line">       --ipc&#x3D;host --net&#x3D;host --pid&#x3D;host -e HOST&#x3D;&#x2F;host \</span><br><span class="line">       -e NAME&#x3D;debug-container -e IMAGE&#x3D;pichuang&#x2F;debug-container \</span><br><span class="line">       -v &#x2F;run:&#x2F;run -v &#x2F;var&#x2F;log:&#x2F;var&#x2F;log \</span><br><span class="line">       -v &#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime -v &#x2F;:&#x2F;host \</span><br><span class="line">       quay.io&#x2F;pichuang&#x2F;debug-container</span><br></pre></td></tr></table></figure>
+
+<p>另外如果想要自己實作屬於自己的 debug container 的話，要留意一下各家 OS 的路徑規則 (man hier) 不盡相同，建議是看外部主機是什麼 OS 就選哪一種 Base Image，譬如說我個人用的主機是 RHEL7，所以 debug container 的基礎映像檔就選 rhel7 或者是 centos7 為主的映像檔，避免路徑不一樣導致神秘的現象發生。</p>
+<h2 id="當我有一個容器平台…"><a href="#當我有一個容器平台…" class="headerlink" title="當我有一個容器平台…"></a>當我有一個容器平台…</h2><p><img src="/images/k8s-networking.png" alt=""></p>
+<p>基本 Kubernetes 的介紹就跳過了，針對網路的部分，Kubernetes 設計致力於解決以下五種網路溝通問題：</p>
+<ol>
+<li>Container to Container</li>
+<li>Pod to Pod in same node</li>
+<li>Pod to Pod in different nodes</li>
+<li>Pod to Service</li>
+<li>Kubernetes to Internet</li>
+</ol>
+<p>如果稍微認識到 Kubernetes 的看官，會了解到 Kubernetes 的最小計算單位是 <code>Pod</code>，而一個 Pod 可以<code>擁有一個或多個以上的 Container</code>，只是大多數狀況下都是一個 Pod 裡面塞一個 Container，所以很容易誤會這兩個是一樣的等級。</p>
+<p>針對 Container to Container，基本同一個 Pod 內的 Containers 是不會跨主機的，使用相同的 network namespace，所以視為標準 L2 Bridge 情境即可。而 Pod to Pod 及 Pod to Service 的情況，Kubernetes 都會以 Pod 為基礎，透過 CNI Plugin 指派唯一的 IP 供使用，相互之間是可以溝通的。</p>
+<p>有時候遇到一些網路問題，譬如像是不同 Node 之間網路不通或者是本身主機有異常狀況發生，其實透過 Kuebernetes 的角度是有點難以辨別到底發生什麼事情，所以類同於上面章節提到的作法，可以將特定的 Container 用 Pod 的形式運行在 namespace (or project) 裡面來協助除錯。OpenShift 參考指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image&#x3D;quay.io&#x2F;pichuang&#x2F;debug-container \</span><br><span class="line">   --restart&#x3D;Never --attach -i --tty --rm</span><br></pre></td></tr></table></figure>
+
+<p>倘若想要將 Pod 跑在指定的節點上，則要利用 <code>nodeSelector</code> 的概念指定在特定主機上面</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">oc project &lt;PROJECT NAME&gt;</span><br><span class="line">oc run ocp-debug-container --image&#x3D;quay.io&#x2F;pichuang&#x2F;debug-container \</span><br><span class="line">   --restart&#x3D;Never --attach -i --tty --rm \</span><br><span class="line">   --overrides&#x3D;&#39;&#123; &quot;apiVersion&quot;: &quot;v1&quot;, &quot;spec&quot;: &#123; &quot;nodeSelector&quot;:&#123;&quot;&lt;KEY&gt;&quot;:&quot;&lt;VALUE&gt;&quot;&#125;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>記得自己要把 KEY 和 VALUE 換成自己環境的設定，關於 Label 的資訊可以從 <code>oc get node --show-labels=true</code> 這邊找</p>
+<p><img src="/images/run-on-openshift.png" alt=""></p>
+<h2 id="所以我說那個原始碼和環境呢"><a href="#所以我說那個原始碼和環境呢" class="headerlink" title="所以我說那個原始碼和環境呢?"></a>所以我說那個原始碼和環境呢?</h2><p>以下是關於本文使用到的原始碼和 Image 位置: </p>
+<ol>
+<li>Container Image: <a href="https://quay.io/repository/pichuang/debug-container?tab=info">pichuang/debug-container - Quay</a></li>
+<li>Dockerfile: <a href="https://github.com/pichuang/debug-container">pichuang/debug-container - GitHub</a></li>
+</ol>
+<p>而測試環境為以下</p>
+<ol>
+<li>OS: RHEL7</li>
+<li>Container Runtime: Docker 1.13+</li>
+<li>Container Platform: Red Hat OpenShift Container Platform v3.11</li>
+</ol>
+<p>理論上來說，觀念上是適用於其他以 Docker 及 Kubernetes 為主的容器平台，所以可以自行在家試試看</p>
+<h2 id="同場加映-Part-1-sysdig"><a href="#同場加映-Part-1-sysdig" class="headerlink" title="同場加映 Part 1: sysdig"></a>同場加映 Part 1: sysdig</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --name&#x3D;sysdig --privileged&#x3D;true \</span><br><span class="line">          --volume&#x3D;&#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;host&#x2F;var&#x2F;run&#x2F;docker.sock \</span><br><span class="line">          --volume&#x3D;&#x2F;dev:&#x2F;host&#x2F;dev \</span><br><span class="line">          --volume&#x3D;&#x2F;proc:&#x2F;host&#x2F;proc:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;boot:&#x2F;host&#x2F;boot:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;lib&#x2F;modules:&#x2F;host&#x2F;lib&#x2F;modules:ro \</span><br><span class="line">          --volume&#x3D;&#x2F;usr:&#x2F;host&#x2F;usr:ro \</span><br><span class="line">          sysdig&#x2F;sysdig</span><br></pre></td></tr></table></figure>
+
+<h2 id="同場加映-Part-2-netshoot"><a href="#同場加映-Part-2-netshoot" class="headerlink" title="同場加映 Part 2: netshoot"></a>同場加映 Part 2: netshoot</h2><ul>
+<li><a href="https://github.com/nicolaka/netshoot">nicolaka/netshoot - GitHub</a><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Container&#39;s Network Namesapce</span><br><span class="line">docker run -it --net container:&lt;container_name&gt; nicolaka&#x2F;netshoot</span><br><span class="line"></span><br><span class="line"># Host&#39;s Network namesapce</span><br><span class="line">docker run -it --net host nicolaka&#x2F;netshoot</span><br><span class="line"></span><br><span class="line"># Networks&#39;s Network namespace</span><br><span class="line"># Use &#96;nsenter&#96;</span><br><span class="line"></span><br><span class="line"># K8s&#39;s network debugging</span><br><span class="line">kubectl run tmp-shell --rm -i --tty --image nicolaka&#x2F;netshoot -- &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift4</tag>
+        <tag>container</tag>
+        <tag>openshift3</tag>
       </tags>
   </entry>
   <entry>
@@ -6316,6 +6316,81 @@
       </tags>
   </entry>
   <entry>
+    <title>通用抽象網路邏輯介紹</title>
+    <url>/20200602-network-logical-plane/</url>
+    <content><![CDATA[<blockquote>
+<p>這世界上沒有完美的架構，只有權衡後的辦法，但…</p>
+</blockquote>
+<p>來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考</p>
+<p><img src="/images/network-logical.png" alt=""></p>
+<p>但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係</p>
+<a id="more"></a>
+
+<h2 id="RHEL-網路流量抽象邏輯"><a href="#RHEL-網路流量抽象邏輯" class="headerlink" title="RHEL 網路流量抽象邏輯"></a>RHEL 網路流量抽象邏輯</h2><p>其實因為他本身就是一台 VM 你加多少網卡，決定該網卡要幹嘛，他就是什麼角色，就像上面那張圖一樣，這比較沒什麼特別的</p>
+<h2 id="OpenShift-網路流量抽象邏輯"><a href="#OpenShift-網路流量抽象邏輯" class="headerlink" title="OpenShift 網路流量抽象邏輯"></a>OpenShift 網路流量抽象邏輯</h2><p>以一個 <code>OpenShift 的 Networking</code> 為觀點出發的話，針對網路的流量分類，常見會分為下面 3 + 1 種但不限於之類型</p>
+<ol>
+<li>資料層 (Data Plane, DP)：有時候有會被叫做轉發層 (Forwarding Plane, FP) 或 User Plane (UP)，主要講的就是實際上資料封包傳輸所流經的路線</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/ovs -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">ovs    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br><span class="line"></span><br><span class="line">$ oc get daemonset.apps/sdn -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">sdn    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br></pre></td></tr></table></figure>
+
+<p>如果更詳細要講的話，其實就是透過基於 CNI 定義下實做出來的網路模組，如預設的 <code>ovs-networkpolicy</code>，裡面就是節點間建立歸屬能辦到 L2 over L3 的 VXLAN 進行 Pod to Pod 或 Pod to Services 等 Kubernetes 內建之機制溝通</p>
+<ol start="2">
+<li>控制層 (Control Plane, CP)：主要是針對 Data Plane 的資料流控制進行能管理和上一些規範，在 OpenShift 角度上來說就是</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/sdn-controller -n openshift-sdn</span><br><span class="line">NAME             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                     AGE</span><br><span class="line">sdn-controller   2         2         2       2            2           node-role.kubernetes.io/master=   77d</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>管理層 (Management Plane, MP)：能夠管理和監視 Control Plane 的路線，譬如透過 SSH / SNMP / Telnet 登入管理皆屬此類</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh core@control-plane-2 -i ~/.ssh/id_rsa_ocp4_vcenter.pub</span><br><span class="line">Red Hat Enterprise Linux CoreOS 44.81.202005062110-0</span><br><span class="line">  Part of OpenShift 4.4, RHCOS is a Kubernetes native operating system</span><br><span class="line">  managed by the Machine Config Operator (`clusteroperator/machine-config`).</span><br><span class="line"></span><br><span class="line">WARNING: Direct SSH access to machines is not recommended; instead,</span><br><span class="line">make configuration changes via `machineconfig` objects:</span><br><span class="line">  https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">Last login: Sat May 30 15:21:52 2020 from 10.0.97.100</span><br><span class="line">[core@control-plane-2 ~]$</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>儲存層 (Storage Plane, SP)：嚴格來說，這個不算在常見的網路架構中，連 OpenShift 網路都沒有特別定義，這是從 Data Plane 拆分一個角色出來，特別針對 OS 跟儲存設備中間拉一個專門的網路，譬如你的 nfs mount point <code>通常</code>都不會跟你的一般流量混在一起</li>
+</ol>
+<h3 id="所以"><a href="#所以" class="headerlink" title="所以?"></a>所以?</h3><p>正常 OpenShift 架構下，其實 CP/MP/DP 都是透過同一個 IP 出去溝通的，有特別要拆開的話就會跟其他家的 SDN 廠商合作了，譬如像</p>
+<ul>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco ACI</a></li>
+</ul>
+<p><img src="/images/cisco-aci.png" alt=""></p>
+<ul>
+<li><a href="https://www.juniper.net/documentation/en_US/contrail20/topics/task/configuration/install-openshift-using-anible-311.html">Juniper Contrail</a></li>
+</ul>
+<p><img src="/images/juniper-contrail.png" alt=""></p>
+<ul>
+<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">VMware NSX-T</a></li>
+</ul>
+<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
+<p>如果想要了解更多 CNI 的話，可以參考一下這份列表 <a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路</a></p>
+<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>最後啊…要比較留意就是</p>
+<blockquote>
+<p>不同的設備觀點，對於 CP / DP / MP 會有不一樣的解釋，所以要講架構前一定要很清楚知道是從哪個設備觀點出發</p>
+</blockquote>
+<p>譬如說以我比較熟的 SDN 架構來說，對照如下</p>
+<p><img src="http://thenewstack.io/wp-content/uploads/2014/11/img1.png" alt=""></p>
+<ul>
+<li>DP: SDN Switch，實際轉發跟處理封包的路線</li>
+<li>CP: SDN Controller，負責決定 SDN Switch 內部資料流量的走向</li>
+<li>MP: SDN Switch 內建的 SNMP / Telnet / SSH 等標準協定可供日常管理的路線</li>
+</ul>
+<p>當然啦，現在大多數的架構，都還是混合在一起的，總是有利有弊</p>
+<p>我開頭講了一段好像很有道理的話，但後面缺了一小段，有興趣知道的可以當面找我聊 XD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://networkengineering.stackexchange.com/questions/38573/difference-between-control-plane-data-plane-and-management-plane">Difference between control plane, data plane and management plane?</a></li>
+<li><a href="https://thenewstack.io/defining-software-defined-networking-part-1/">SDN Series Part One: Defining Software Defined Networking</a></li>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco - ACI Plugin for Red Hat OpenShift Container Architecture and Design Guide</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路 - Phil Huang</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>network</tag>
+        <tag>redhat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kubernetes / OpenShift 發布歷史時間表</title>
     <url>/20200618-k8s-release-history/</url>
     <content><![CDATA[<p>打從 Kubernetes 1.15 之後，OpenShift 的版本迭代速度就是落差一版而已，在那之前基本上都是兩版的差距，這一切都是為了 <a href="https://kubernetes.io/docs/setup/release/version-skew-policy/">Kubernetes 的版本生命週期規定</a> 的教條而改變的…</p>
@@ -6418,81 +6493,6 @@
       <tags>
         <tag>openshift</tag>
         <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通用抽象網路邏輯介紹</title>
-    <url>/20200602-network-logical-plane/</url>
-    <content><![CDATA[<blockquote>
-<p>這世界上沒有完美的架構，只有權衡後的辦法，但…</p>
-</blockquote>
-<p>來一個圖文不符的 RHEL 網路線路圖，架構圖百百種，每個角色跟角度看的樣子都會不太一樣，這張圖目的是要呈現 OS 上的網卡跟網段對應的關係，算是蠻常見的網路架構表示法，一般習慣上我都是畫成像是五線譜ㄧ樣，比較好清楚表示每個角色的相呼關係，大家可以參考參考</p>
-<p><img src="/images/network-logical.png" alt=""></p>
-<p>但今天要特別講一下關於 OpenShift 本身的角度，我是怎麼看待這些抽象網路邏輯的，這跟如果要整第三方 SDN 解決方案有直接的關係</p>
-<a id="more"></a>
-
-<h2 id="RHEL-網路流量抽象邏輯"><a href="#RHEL-網路流量抽象邏輯" class="headerlink" title="RHEL 網路流量抽象邏輯"></a>RHEL 網路流量抽象邏輯</h2><p>其實因為他本身就是一台 VM 你加多少網卡，決定該網卡要幹嘛，他就是什麼角色，就像上面那張圖一樣，這比較沒什麼特別的</p>
-<h2 id="OpenShift-網路流量抽象邏輯"><a href="#OpenShift-網路流量抽象邏輯" class="headerlink" title="OpenShift 網路流量抽象邏輯"></a>OpenShift 網路流量抽象邏輯</h2><p>以一個 <code>OpenShift 的 Networking</code> 為觀點出發的話，針對網路的流量分類，常見會分為下面 3 + 1 種但不限於之類型</p>
-<ol>
-<li>資料層 (Data Plane, DP)：有時候有會被叫做轉發層 (Forwarding Plane, FP) 或 User Plane (UP)，主要講的就是實際上資料封包傳輸所流經的路線</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/ovs -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">ovs    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br><span class="line"></span><br><span class="line">$ oc get daemonset.apps/sdn -n openshift-sdn</span><br><span class="line">NAME   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">sdn    5         5         5       5            5           kubernetes.io/os=linux   77d</span><br></pre></td></tr></table></figure>
-
-<p>如果更詳細要講的話，其實就是透過基於 CNI 定義下實做出來的網路模組，如預設的 <code>ovs-networkpolicy</code>，裡面就是節點間建立歸屬能辦到 L2 over L3 的 VXLAN 進行 Pod to Pod 或 Pod to Services 等 Kubernetes 內建之機制溝通</p>
-<ol start="2">
-<li>控制層 (Control Plane, CP)：主要是針對 Data Plane 的資料流控制進行能管理和上一些規範，在 OpenShift 角度上來說就是</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ oc get daemonset.apps/sdn-controller -n openshift-sdn</span><br><span class="line">NAME             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                     AGE</span><br><span class="line">sdn-controller   2         2         2       2            2           node-role.kubernetes.io/master=   77d</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>管理層 (Management Plane, MP)：能夠管理和監視 Control Plane 的路線，譬如透過 SSH / SNMP / Telnet 登入管理皆屬此類</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh core@control-plane-2 -i ~/.ssh/id_rsa_ocp4_vcenter.pub</span><br><span class="line">Red Hat Enterprise Linux CoreOS 44.81.202005062110-0</span><br><span class="line">  Part of OpenShift 4.4, RHCOS is a Kubernetes native operating system</span><br><span class="line">  managed by the Machine Config Operator (`clusteroperator/machine-config`).</span><br><span class="line"></span><br><span class="line">WARNING: Direct SSH access to machines is not recommended; instead,</span><br><span class="line">make configuration changes via `machineconfig` objects:</span><br><span class="line">  https://docs.openshift.com/container-platform/4.4/architecture/architecture-rhcos.html</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">Last login: Sat May 30 15:21:52 2020 from 10.0.97.100</span><br><span class="line">[core@control-plane-2 ~]$</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>儲存層 (Storage Plane, SP)：嚴格來說，這個不算在常見的網路架構中，連 OpenShift 網路都沒有特別定義，這是從 Data Plane 拆分一個角色出來，特別針對 OS 跟儲存設備中間拉一個專門的網路，譬如你的 nfs mount point <code>通常</code>都不會跟你的一般流量混在一起</li>
-</ol>
-<h3 id="所以"><a href="#所以" class="headerlink" title="所以?"></a>所以?</h3><p>正常 OpenShift 架構下，其實 CP/MP/DP 都是透過同一個 IP 出去溝通的，有特別要拆開的話就會跟其他家的 SDN 廠商合作了，譬如像</p>
-<ul>
-<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco ACI</a></li>
-</ul>
-<p><img src="/images/cisco-aci.png" alt=""></p>
-<ul>
-<li><a href="https://www.juniper.net/documentation/en_US/contrail20/topics/task/configuration/install-openshift-using-anible-311.html">Juniper Contrail</a></li>
-</ul>
-<p><img src="/images/juniper-contrail.png" alt=""></p>
-<ul>
-<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">VMware NSX-T</a></li>
-</ul>
-<p><img src="https://blogs.vmware.com/networkvirtualization/files/2019/02/Screen-Shot-2019-02-11-at-16.47.08-1024x553.png" alt=""></p>
-<p>如果想要了解更多 CNI 的話，可以參考一下這份列表 <a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路</a></p>
-<h2 id="後話"><a href="#後話" class="headerlink" title="後話"></a>後話</h2><p>最後啊…要比較留意就是</p>
-<blockquote>
-<p>不同的設備觀點，對於 CP / DP / MP 會有不一樣的解釋，所以要講架構前一定要很清楚知道是從哪個設備觀點出發</p>
-</blockquote>
-<p>譬如說以我比較熟的 SDN 架構來說，對照如下</p>
-<p><img src="http://thenewstack.io/wp-content/uploads/2014/11/img1.png" alt=""></p>
-<ul>
-<li>DP: SDN Switch，實際轉發跟處理封包的路線</li>
-<li>CP: SDN Controller，負責決定 SDN Switch 內部資料流量的走向</li>
-<li>MP: SDN Switch 內建的 SNMP / Telnet / SSH 等標準協定可供日常管理的路線</li>
-</ul>
-<p>當然啦，現在大多數的架構，都還是混合在一起的，總是有利有弊</p>
-<p>我開頭講了一段好像很有道理的話，但後面缺了一小段，有興趣知道的可以當面找我聊 XD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://networkengineering.stackexchange.com/questions/38573/difference-between-control-plane-data-plane-and-management-plane">Difference between control plane, data plane and management plane?</a></li>
-<li><a href="https://thenewstack.io/defining-software-defined-networking-part-1/">SDN Series Part One: Defining Software Defined Networking</a></li>
-<li><a href="https://www.cisco.com/c/en/us/td/docs/switches/datacenter/aci/apic/white_papers/Cisco-ACI-CNI-Plugin-for-OpenShift-Architecture-and-Design-Guide.html">Cisco - ACI Plugin for Red Hat OpenShift Container Architecture and Design Guide</a></li>
-<li><a href="https://blog.pichuang.com.tw/20190723-container-and-container-platform-hardening/">容器平台強固化保護思路 - Phil Huang</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>network</tag>
-        <tag>redhat</tag>
       </tags>
   </entry>
   <entry>
@@ -6644,6 +6644,57 @@
       </tags>
   </entry>
   <entry>
+    <title>2020 年度個人回顧</title>
+    <url>/20201231-2020-personal-review/</url>
+    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
+<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
+<a id="more"></a>
+
+<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
+<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
+<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
+<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
+<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
+<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
+<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
+<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
+<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
+<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
+<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
+<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
+<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
+<li>今年沒失戀 1 次，也失戀 1 次</li>
+<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
+<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
+<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
+<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
+<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
+<li>榮獲”找死王”稱號</li>
+<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
+<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
+<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
+</ol>
+<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
+<li>活下去!!! 無論是工作還是生命</li>
+<li>挑戰 1 場國外社群演講</li>
+<li>瘦這麼多，參加個健美比賽不為過吧</li>
+<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
+<li>希望房價能降下去讓我買個宅窩 QQ</li>
+<li>該寫 1 本書了</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
+<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
+<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>annual</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>給行銷跟業務的 Kubernetes 101 中翻中介紹</title>
     <url>/20210111-Kubernetes-for-sales-and-marketing/</url>
     <content><![CDATA[<p>擔任售前以來，常常遇到很多剛接觸 Kubernetes 的業務、行銷或者是非資訊領域的人，其實一直對 Kubernetes 到底在各個文案和標書可以扮演什麼角色一直不是很清楚。今天我嘗試用中翻中的角度，也就是用白話文來跟各位解釋 Kubernetes</p>
@@ -6721,7 +6772,7 @@
 <h3 id="Q13-承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎"><a href="#Q13-承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎" class="headerlink" title="Q13: 承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎"></a>Q13: 承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎</h3><p>實際上，依據不同廠商的設計，一棟大樓裡面最多可以塞的住戶 (Pod) 數量從 25 ~ 500 戶不等，而且這還牽扯到高可用性 (HA) 及水電資源 (Networking) 估算問題，因為也不是可以無限狂拉的好嗎…是有一個臨界值可以用計算機算出來的</p>
 <p>若你具備網路概論知識的話，知道 IP Subnet (或者知道如何用 IP 計算機)，可以參考 <a href="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/#%E4%BA%86%E8%A7%A3%E7%95%B6%E4%B8%8B%E7%B6%B2%E8%B7%AF%E8%B3%87%E8%A8%8A-Cluster-Network-Operator">了解當下網路資訊 - Cluster Network Operator</a> 部分，深入了解實際計算方式</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><blockquote>
-<p>Red Hat 就是個家 IT 版本的住戶社區建設公司，已經蓋了第四代的 Kubernetes，也就是 OpenShift 4</p>
+<p>Red Hat 就是家專做 IT 版本的住戶社區建設公司及室內空間規劃公司，已經蓋了第四代的 Kubernetes，也就是 OpenShift 4</p>
 </blockquote>
 <p><img src="/images/redhat-building.jpeg" alt=""></p>
 <p>希望這篇能幫助到廣大有看 Kubernetes 但沒有懂這是什麼東東的業務和行銷朋友們</p>
@@ -6734,57 +6785,6 @@
         <tag>openshift</tag>
         <tag>openshift4</tag>
         <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2020 年度個人回顧</title>
-    <url>/20201231-2020-personal-review/</url>
-    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
-<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
-<a id="more"></a>
-
-<p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
-<h2 id="2020-回顧"><a href="#2020-回顧" class="headerlink" title="2020 回顧"></a>2020 回顧</h2><ol start="0">
-<li>在本年度最後一天去土城當證婚人，我以為結婚要找證婚人是常識 = =</li>
-<li>正式工作總年資來到 4y 6m 了，但我覺得好像工作很久了…</li>
-<li>在<a href="https://www.linkedin.com/in/phil-huang-09b09895/">Red Hat 精神時光屋度過 2y 8m</a> 了</li>
-<li><a href="https://blog.pichuang.com.tw/record/">2020 年度演講 19 場</a>，完成年度兩岸三地演講全成就，包含 2 場香港及中國社群遠端演講，整體比 2019 年還增加 6 場</li>
-<li><a href="https://blog.pichuang.com.tw/archives/">2020 年度文章 35 篇</a>，比 2019 年還增加 6 篇，但涵蓋技術廣度明顯不足 QQ</li>
-<li><a href="https://speakerdeck.com/pichuang/gong-cheng-shi-de-ni-xi">扎扎實實地減肥 20 公斤</a>，比去年預設目標 1 公斤還多完成 19 公斤，光是這一條成就應該可以有效證明本人做事相當具備強大意志力和執行力 XD</li>
-<li>呈上，<a href="https://www.facebook.com/paulintoro/posts/4061098773905144">常言道 ：適度健身吸引異性，過度健身吸引同性</a>，本年度累積被 5 個不認識男性搭訕及 0 個不認識女性搭訕紀錄</li>
-<li>拿了一個 <a href="https://www.facebook.com/paulintoro/posts/4038305259517829">Red Hat APAC Office of Technology Team BU Advocates</a> 官方成就回來，雖然跟我目標還有段差距</li>
-<li>憑一嘴之力，一年內請了 1+N 個人進 Red Hat，因為我怕被其他廠商抓去圍毆，所以不講數字了</li>
-<li>因為疫情關係，創下連續 1 個月沒有進辦公室紀錄，但我居家設備 (雙螢幕、BenQ 檯燈、人體工學電腦椅、升降桌) 比較好，加上沒人吵我（或我沒人可以去吵），所以處理公事效率居然還比較高</li>
-<li>2020 下半年因為某些原因度過人生有記憶以來最混沌 3 個月，感謝這段時間陪我度過混沌不明狀態的朋友們和前輩，有你們真好 QQ</li>
-<li>今年沒失戀 1 次，也失戀 1 次</li>
-<li>拍了人生第 1 次的<a href="https://www.facebook.com/paulintoro/posts/4080957481919273">西裝沙龍照</a></li>
-<li>年度放大假去墾丁學了潛水，一次考到 3 張<a href="https://www.instagram.com/p/CHY64ORh-LI/?utm_source=ig_web_copy_link">潛水證照</a>，包含 PADI Open Water Driver、PADI Advanced Open Water Driver、PADI 高氧</li>
-<li>連續遠端上課 2 週，然後也在同時連續流感 2 次，差點以為中大標要進大醫院</li>
-<li>買了人生第 1 隻<a href="https://www.instagram.com/p/CIX__rFhcPj">機械錶 Hamilton Murph</a>，本人是諾蘭電影粉</li>
-<li>去知名的 Gallup 測評了一下個人特質，獲得個人前 5 大主要天賦：<a href="https://lynnihlin.com/portfolio-posts/strategic/">戰略</a>、<a href="https://lynnihlin.com/portfolio-posts/maximizer/">完美</a>、<a href="https://lynnihlin.com/portfolio-posts/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6%e4%b8%bb%e9%a1%8c%e8%a7%a3%e8%ae%801%ef%bc%9a%e6%88%90%e5%b0%b1achiever/">成就</a>、<a href="https://lynnihlin.com/portfolio-posts/intellection/">思維</a>、<a href="https://lynnihlin.com/portfolio-posts/positivity/">積極</a>，似乎人資界比較知道這個所代表的意義</li>
-<li>榮獲”找死王”稱號</li>
-<li>獲得 GitHub 給的 1 個小勛章 <a href="https://github.com/pichuang">Arctic Code Vault Contributor</a>，所以北極的某個土地有我的…遺跡？</li>
-<li>以 2020/12/31 當日紀錄為止，2020 年貢獻了 9 個 GitHub Repository</li>
-<li>第一次當審稿者，還是本長達 460 頁的英文書 <a href="https://www.facebook.com/paulintoro/posts/3849945331687157">Packt - The Kubernetes Workshop</a></li>
-</ol>
-<h2 id="2021-展望"><a href="#2021-展望" class="headerlink" title="2021 展望"></a>2021 展望</h2><ol>
-<li>活下去!!! 無論是工作還是生命</li>
-<li>挑戰 1 場國外社群演講</li>
-<li>瘦這麼多，參加個健美比賽不為過吧</li>
-<li>多增加廣度寫點技術文章，明年挑戰個 Windows 跟公有雲系列的好了</li>
-<li>希望房價能降下去讓我買個宅窩 QQ</li>
-<li>該寫 1 本書了</li>
-</ol>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
-<p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
-<p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>annual</tag>
       </tags>
   </entry>
   <entry>
