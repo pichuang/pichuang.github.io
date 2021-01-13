@@ -1372,6 +1372,34 @@
       </tags>
   </entry>
   <entry>
+    <title>Install CentOS 7 without VGA</title>
+    <url>/20170717-install-centos-7-without-VGA/</url>
+    <content><![CDATA[<h3 id="Change-timeout"><a href="#Change-timeout" class="headerlink" title="Change timeout"></a>Change timeout</h3><ul>
+<li>vim isolinux/isolinux.cfg<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default vesamenu.c32</span><br><span class="line">#timeout 600</span><br><span class="line">timeout 50</span><br><span class="line"></span><br><span class="line">display boot.msg</span><br></pre></td></tr></table></figure></li>
+<li>Prompt until booting automatically, in units of 1/10 s. In the case, we change the timeout value from 60 secs to 5 secs</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="Change-default-booting-prompt"><a href="#Change-default-booting-prompt" class="headerlink" title="Change default booting prompt"></a>Change default booting prompt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install Red Hat Enterprise Linux 7.3</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd&#x3D;initrd.img inst.stage2&#x3D;hd:LABEL&#x3D;RHEL-7_3\x20SE text console&#x3D;tty0 console&#x3D;ttyS0,115200n8</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Please notice <code>menu default</code></li>
+</ul>
+<h3 id="Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter"><a href="#Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter" class="headerlink" title="Remove quiet, append text console=tty0 console=ttyS0,115200n8 in kernel parameter"></a>Remove <code>quiet</code>, append <code>text console=tty0 console=ttyS0,115200n8</code> in kernel parameter</h3><ul>
+<li>vim isolinux/isolinux.cfg<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install CentOS Linux 7</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd=initrd.img inst.stage2=hd:LABEL=CENTOS\x207\x20X8 text console=tty0 console=ttyS0,115200n8</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>headless</tag>
+        <tag>serial</tag>
+        <tag>centos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>How to contribute on GitHub</title>
     <url>/20170413-how-to-contribute-on-github/</url>
     <content><![CDATA[<p>Fork from <a href="https://gist.github.com/timdream/5968469">Github 發 Pull Request &amp; 貢獻流程速查/timdream</a></p>
@@ -1422,34 +1450,6 @@
       <tags>
         <tag>misc</tag>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Install CentOS 7 without VGA</title>
-    <url>/20170717-install-centos-7-without-VGA/</url>
-    <content><![CDATA[<h3 id="Change-timeout"><a href="#Change-timeout" class="headerlink" title="Change timeout"></a>Change timeout</h3><ul>
-<li>vim isolinux/isolinux.cfg<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">default vesamenu.c32</span><br><span class="line">#timeout 600</span><br><span class="line">timeout 50</span><br><span class="line"></span><br><span class="line">display boot.msg</span><br></pre></td></tr></table></figure></li>
-<li>Prompt until booting automatically, in units of 1/10 s. In the case, we change the timeout value from 60 secs to 5 secs</li>
-</ul>
-<a id="more"></a>
-
-<h3 id="Change-default-booting-prompt"><a href="#Change-default-booting-prompt" class="headerlink" title="Change default booting prompt"></a>Change default booting prompt</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install Red Hat Enterprise Linux 7.3</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd&#x3D;initrd.img inst.stage2&#x3D;hd:LABEL&#x3D;RHEL-7_3\x20SE text console&#x3D;tty0 console&#x3D;ttyS0,115200n8</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Please notice <code>menu default</code></li>
-</ul>
-<h3 id="Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter"><a href="#Remove-quiet-append-text-console-tty0-console-ttyS0-115200n8-in-kernel-parameter" class="headerlink" title="Remove quiet, append text console=tty0 console=ttyS0,115200n8 in kernel parameter"></a>Remove <code>quiet</code>, append <code>text console=tty0 console=ttyS0,115200n8</code> in kernel parameter</h3><ul>
-<li>vim isolinux/isolinux.cfg<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">label linux</span><br><span class="line">  menu label ^Install CentOS Linux 7</span><br><span class="line">  menu default</span><br><span class="line">  kernel vmlinuz</span><br><span class="line">  append initrd=initrd.img inst.stage2=hd:LABEL=CENTOS\x207\x20X8 text console=tty0 console=ttyS0,115200n8</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>headless</tag>
-        <tag>serial</tag>
-        <tag>centos</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,74 +1548,6 @@
       </tags>
   </entry>
   <entry>
-    <title>進擊的 OpenAPI!!!</title>
-    <url>/20180723-openapi-and-oas/</url>
-    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
-<a id="more"></a>
-
-<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
-<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
-<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
-<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
-<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
-<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
-<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
-<ol>
-<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
-</li>
-<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
-<blockquote>
-<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
-</blockquote>
-</li>
-<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
-<blockquote>
-<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
-</blockquote>
-</li>
-</ol>
-<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
-<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
-<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
-<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
-<p>使用方式很簡單，以 Swagger 為例</p>
-<ol>
-<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
-<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
-</ol>
-<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
-<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
-<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
-<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
-<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
-<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
-<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
-<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
-<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
-<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
-<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
-<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
-<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>oas</tag>
-        <tag>openapi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>雲端大廠們的 VM 資源配置參考</title>
     <url>/20180815-cloud-resource-sizing-reference/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對於多數系統硬體資源配置多數就是一個公版 Instance Template 為基準，透過監控來進行效能調整或組件置換。本篇提供大家一個簡單的選擇方向，各大 CSP (Cloud Service Provider) 分別都有提供對應的 VM 實例資源配置參考，可先用<code>使用情境</code>進行初始評估，再依據經驗選擇不同大小的資源 (e.g. medium / large / xlarge / …)，後續如果真心不夠用可以再 resize 資源即可。</p>
@@ -1686,73 +1618,71 @@
       </tags>
   </entry>
   <entry>
-    <title>NetDevOps 風格之網路設備連接方式</title>
-    <url>/20180825-netdevops/</url>
-    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+    <title>進擊的 OpenAPI!!!</title>
+    <url>/20180723-openapi-and-oas/</url>
+    <content><![CDATA[<h2 id="OpenAPI-Specification-OAS"><a href="#OpenAPI-Specification-OAS" class="headerlink" title="OpenAPI Specification, OAS"></a>OpenAPI Specification, OAS</h2><p>隨著資訊服務的飛增及複雜，各家廠商所提供的底層服務封裝後提供出來的介面，我們稱做 API (Application Program Interface)，而 OpenAPI 則是將這些 API 依據某些規範公開出來給第三方使用，可包含免費使用、付費使用或限定使用等方式，有一個公開既定的規範可供參考。</p>
 <a id="more"></a>
 
+<h2 id="誰是-API-提供者"><a href="#誰是-API-提供者" class="headerlink" title="誰是 API 提供者?"></a>誰是 API 提供者?</h2><p>以目前看到的案例最大宗的就是 Cloud Service Provider (CSP) 包含像 Google、Amazon、Microsoft 等等，他們的具體做法是將產品功能盡可能的 API 化後提供給開發人員做二次開發，語法規範都個別由 CSP 提供，譬如大家都熟知的 Google Map API。</p>
+<p>而第二大類的就屬金融業，各家銀行本質提供的內容都一樣，但服務方式卻大不相同，現在科技進步到使用者習慣大為變化，從過去趕三點半到現在只要網路銀行線上點一點就好，誕生各家傳統銀行對於數位轉型和創新的需求，也就是 Fintech 金融科技或者是 Open Bank，利用數位化銀行業務提供個人或法人更細緻或更廣的需求，進而擴大需求及交易量。所以創新概念及服務推出速度是非常大的關鍵。透過統一語意化的 Open API 可以幫助內部服務相互堆疊組合而成一個創新服務，快速推出產品獲得市場回饋。</p>
+<p>最後就是政府相關單位，蠻多先進國家最一開始做的都是 Open Data，開放資料供給一般人做使用分析，但到下一個層次就要思考，要如何提供源源不斷且可以維護的資料來源，則就是 Open API 的事情了。各位可以參考最先起頭的美國的經驗 <a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a>。有趣的事情是，目前台灣在這方面的成績是非常顯著地，本文撰寫時間 2018/7 台灣在英國開放知識基金會（Open Knowledge Foundation）中的評比是<a href="https://index.okfn.org/place/#table">第一名</a>。</p>
+<p>大家都知道有數據者為大，但數據持有者也需要思考怎麼利用數據提供出創新服務給消費者，進而刺激買單，在市場回饋不明確的狀況下，利用 Agile 敏捷開發流程迭代出新服務測試市場反應是目前常見的模式。</p>
+<h2 id="台灣政府於-Open-API-上的努力"><a href="#台灣政府於-Open-API-上的努力" class="headerlink" title="台灣政府於 Open API 上的努力"></a>台灣政府於 Open API 上的努力</h2><p>近年政府為了擴大資訊服務的效益，經過資訊政委唐鳳幾次的公開討論 ( <a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2</a>, <a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">3</a> )，最終國家發展委員會參考 Linux Foundation 底下專案 Open API Initiative (OAI) 標準定義出 OpenAPI Specification (OAS) 並翻成中文文件，目標是希望統一政府機關的 API 能擁有一致性表述，讓人類和機器都能看得懂，詳細前因後果可以參考<a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a>。</p>
+<p>目前在國發會的策劃之下已經個地方政府已經實作了不少 Open API 放至<a href="https://data.gov.tw/">政府資料開放平臺</a> 上供社會大眾使用。而想要了解一些國外使用 API 的政府企業案例探討，可以參考前陣子舉辦的 <a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a> 的逐字稿內容，了解國外實際發生的狀況。</p>
+<p>對於公部門及廠商來說，有三份文件就變得很重要了</p>
+<ol>
+<li><p><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a>  </p>
+</li>
+<li><p><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">1060911 修正總說明及條文對照表 - 機關委託資訊服務廠商評選及計費辦法</a>  </p>
 <blockquote>
-<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+<p>第七條 第十二款 機關採購軟體開發服務，前項第二款所定廠商之專業技術能力，得包括在零成本或低成本之前提下，提供可自由存取、使用、修改及散布之共通性應用程式介面開發或整合能力。  </p>
 </blockquote>
-<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
-<ol>
-<li>Serial Console</li>
-<li>Telnet</li>
-<li>SSH</li>
+</li>
+<li><p>[1051206 資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表][9]</p>
+<blockquote>
+<p>第二條 履約標的 第四款 履約標的涉及應用程式介面開發或增修者，應依國家發展委員會訂頒之最新版「共通性應用程式介面開放規範」辦理，並運用國際通用驗證機制（如 Linux Foundation 之 OpenAPI 等），作為驗收之依據。</p>
+</blockquote>
+</li>
 </ol>
-<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
-<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
-<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
-<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
-<p>常見範例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-
-<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<p>透過從制度標準面上，直接調整法規，讓後續的政府資訊系統建置有所法源可以來建立 API 服務，以目前來看這是比較有效驅動政府進行數位轉型的有效方式之一。</p>
+<h2 id="Deep-Dive-to-OpenAPI"><a href="#Deep-Dive-to-OpenAPI" class="headerlink" title="Deep Dive to OpenAPI"></a>Deep Dive to OpenAPI</h2><h3 id="如何寫出符合-OAS-的文件"><a href="#如何寫出符合-OAS-的文件" class="headerlink" title="如何寫出符合 OAS 的文件?"></a>如何寫出符合 OAS 的文件?</h3><p>基本上都是遵照 OpenAPI Initiative 所釋出的格式所撰寫，可參考 <a href="https://github.com/OAI/OpenAPI-Specification">OAI/OpenAPI-Specification - GitHub</a>；若是針對台灣公部門所需的規範則可參考 <a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a> 所定義之內容為基準，大量使用案例也可參考 <a href="https://data.gov.tw/">政府資料開放平臺</a> 放在上面的內容，強烈建議要讀一下。</p>
+<h3 id="驗證-OAS-格式正確與否"><a href="#驗證-OAS-格式正確與否" class="headerlink" title="驗證 OAS 格式正確與否"></a>驗證 OAS 格式正確與否</h3><p>開發者寫出來的 OAS 勢必要經過驗證才知道能不能被正確讀取，<a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a> 專案就是提供驗證 OAS 2.0 及 3.0 的功能，目前大多數應該都還是在 2.0 的版本比較多，3.0 相信在未來的不久會成為主流。</p>
+<h3 id="Swagger-OpenAPI-文件產生服務"><a href="#Swagger-OpenAPI-文件產生服務" class="headerlink" title="Swagger - OpenAPI 文件產生服務"></a>Swagger - OpenAPI 文件產生服務</h3><p>目前常見就兩個 <a href="https://petstore.swagger.io/">Swagger</a> 及 <a href="https://rebilly.github.io/ReDoc/">ReDoc</a> 服務，如果想要找更多的工具或網站可以參考 <a href="http://openapi.tools/">OpenAPI Tools</a> 內有不少文章。個人使用後心得還是覺得 Swagger 比較通用，主因是網頁易讀及近期開始支援 OAS v3.0，各位可以看到下面有截圖，Swagger 文件有特別標記 <code>OAS3</code> 支援。</p>
+<p>使用方式很簡單，以 Swagger 為例</p>
 <ol>
-<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
-<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
-<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
-<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+<li>點開 <a href="https://petstore.swagger.io/">petstore.swagger.io</a>  </li>
+<li>將符合 OAS v3.0 規範的檔案放到空白欄位  </li>
 </ol>
-<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
-<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
-<p>範例:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Fork from https://github.com/OAI/OpenAPI-Specification/tree/master/examples/v3.0</span></span><br><span class="line"></span><br><span class="line">https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml</span><br></pre></td></tr></table></figure>
 
-<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
-<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
-<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
-<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
-<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
-<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-
+<ol start="3">
+<li>點選 <code>Explore</code> 即可獲得一份 OpenAPI 說明文件</li>
+</ol>
+<h3 id="如何管理這一堆-OpenAPI"><a href="#如何管理這一堆-OpenAPI" class="headerlink" title="如何管理這一堆 OpenAPI ?"></a>如何管理這一堆 OpenAPI ?</h3><p>到這邊為止，各位可以從 Swagger 文件內請求不同的資源獲得對應的資料。然而 OpenAPI 的設計多數直接揭露資料給外部進行存取，倘若系統一多，相互系統呼叫的次數越加頻繁，管理會變成很大的問題，故針對 Open API 的管理上，則會有一 <code>API Gateway</code> 的設計，來替內部 Open APIs 進行管理及保護，故會有對應的解決方案來負責提供這方面的保護，例如 Red Hat 3scale，關於基本的 OpenAPI Gateway 相關的設計及功能，之後會特別拉一篇來介紹。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
-<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
-<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
-<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
-<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
-<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
-<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
-<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
-<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+<li><a href="https://www.webguide.nat.gov.tw/News_Content.aspx?n=531&s=1762">Open API 應用簡介 - 國家發展委員會</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-03-22-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E9%96%8B%E6%94%BE%E8%A6%8F%E7%AF%84%E7%A0%94%E8%AD%B0">2017-03-22 共通性應用程式介面開放規範研議 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2017-06-23-%E5%85%B1%E9%80%9A%E6%80%A7%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E4%BB%8B%E9%9D%A2%E8%A6%8F%E7%AF%84%E8%AA%AA%E6%98%8E%E6%9C%83">2017-06-23 共通性應用程式介面規範 說明會 - Saylt</a></li>
+<li><a href="https://sayit.pdis.nat.gov.tw/2018-06-28-red-hat-%E6%95%B8%E4%BD%8D%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%BA%A7%E8%AB%87%E6%9C%83">2018-06-28 Red Hat 數位創新技術座談會 - Saylt</a></li>
+<li><a href="https://jk.pdis.nat.gov.tw/blog/%E5%B9%BE%E5%80%8B%E5%B0%8F%E6%A2%9D%E6%96%87-%E8%AE%93%E6%94%BF%E5%BA%9C%E6%8F%90%E4%BE%9B%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%95%B8%E4%BD%8D%E6%9C%8D%E5%8B%99/">幾個小條文，讓政府提供更好的數位服務</a></li>
+<li><a href="https://theme.ndc.gov.tw/lawout/LawContent.aspx?id=GL000270">共通性應用程式介面規範 - 國家發展委員會 主管法規查詢系統</a></li>
+<li><a href="https://medium.com/@honglong/raml-%E5%8A%A0%E5%85%A5-linux-foundation-%E7%9A%84-open-api-initiative-f65c5e698d1a">RAML 加入 Linux Foundation 的 Open API Initiative</a></li>
+<li><a href="https://www.openapis.org/">Open API Initiative - Linux Foundation</a></li>
+<li><a href="http://lawweb.pcc.gov.tw/LawContent.aspx?id=FL000677">機關委託資訊服務廠商評選及計費辦法</a></li>
+<li>資訊服務採購契約範本第 2 條及第 5 條修正草案條文對照表 105.12.6</li>
+<li><a href="https://data.gov.tw/">政府資料開放平臺</a></li>
+<li><a href="https://www.3scale.net/">3Scale by Red Hat</a></li>
+<li><a href="https://mermade.org.uk/openapi-converter">Mermade Swagger 2.0 to OpenAPI 3.0.0 converter</a></li>
+<li><a href="https://www.bost.ey.gov.tw/DL.ashx?u=/Upload/UserFiles/%E5%88%86%E4%BA%AB%E6%A1%88%EF%BC%9A2_0%E7%BE%8E%E5%9C%8B%E6%94%BF%E5%BA%9C%E9%96%8B%E6%94%BE%E8%B3%87%E6%96%99%E6%8E%A8%E5%8B%95%E7%8F%BE%E6%B3%81%E8%88%87%E5%9F%B7%E8%A1%8C%E7%B6%93%E9%A9%97_%E4%B8%AD%E6%96%87.pdf">2.0美國政府開放資料推動現況與執行經驗</a></li>
+<li><a href="https://index.okfn.org/place/#table">Open Knowledge Foundation</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>ansible</category>
+        <category>misc</category>
       </categories>
       <tags>
-        <tag>ansible</tag>
-        <tag>netdevops</tag>
+        <tag>oas</tag>
+        <tag>openapi</tag>
       </tags>
   </entry>
   <entry>
@@ -1900,6 +1830,76 @@
       </tags>
   </entry>
   <entry>
+    <title>NetDevOps 風格之網路設備連接方式</title>
+    <url>/20180825-netdevops/</url>
+    <content><![CDATA[<h2 id="NetDevOps-Networking-DevOps"><a href="#NetDevOps-Networking-DevOps" class="headerlink" title="NetDevOps = Networking + DevOps"></a>NetDevOps = Networking + DevOps</h2><p>近年來網路管理受到軟體定義網路 (SDN) 及 DevOps 的發展驅動了不小的變革，延伸至 - <a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a> 文中所帶出：快速服務是目的、自動化是手段、DevOps 則是思路或方法論，而 NetDevOps 這詞則是將既有 DevOps 的方法論套用在 Networking 領域中所產生的維運方法論。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>如何透過自動化的方式來管理更多的機器或網路設備到日常維運中?<br>如何借助 NetDevOps 方法論來降低人工出錯率，簡化流程，提升服務品質?<br>是不是一定會寫 Code 才能做到自動化?</p>
+</blockquote>
+<p>以上的問題筆者經常被問到，其實要看不同的需求來回答，建議都是先把 DevOps 的思路先了解一下，再選用<code>對自己來說</code>正確的工具，都可滿足大多數業務需求，以下介紹幾種目前常見的網路設備連接方式</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="手動命令列登入操作"><a href="#手動命令列登入操作" class="headerlink" title="手動命令列登入操作"></a>手動命令列登入操作</h3><p>身為一位網路工程師大多數登入設備內部的手段不外乎以下方式：</p>
+<ol>
+<li>Serial Console</li>
+<li>Telnet</li>
+<li>SSH</li>
+</ol>
+<p>這邊要特別提一下，於系統規劃中，Serial Console 的連線方式比較常見於 Day1 Configure 的階段，透過 Serial Console 連線進去後設定 IP 後改用 Telnet 或 SSH 的方式進行操作，當然因資安考量之下，多數都會優先選擇 SSH 為主的加密連線方式，而不採用明文傳輸的 Telnet。但在某些特殊情境架構下，Serial Console 是可以被視為 Day2 Operation 裡對設備長期控管的 Out-of-Band (OOB) 方案之一，可搭配 Serial Console Server 來進行管理。筆者以前有遇過除了主要管理網路設備透過 SSH 以外，有針對幾台 Core 設備另外佈 Console 專用網路，走另一條備援線路出來，避免網路炸掉時 SSH 登不進去。</p>
+<p>使用時優點當然是對於許多網路工程師來說非常地熟悉，這是一切的基礎，下指令後馬上就能獲得回饋，但就長期管理層面來說並不是好事，常見於除錯時，下了太多的指令，可能跑到後面都忘記下了些什麼指令或更動了哪些檔案，造成設定飄移 (Configuration Drift)，而要反覆地敲打重複的指令檢查狀態及備份當前狀態，若有權限管理的人數更多時候，經常設定會漂移的更嚴重。</p>
+<p>故 NetDevOps 概念有提倡一個概念：<code>管理設備時能盡可能做到 Zero Touch Provisioning</code>，也就是工程師<code>不直接</code>透過登入到設備做操作，而是透過某種已經寫好或訂好流程來進行管理，讓原先人工操作中間所有繁瑣的過程都盡可能地自動化，以確保操作一致性、可重複性和可預測性。</p>
+<h3 id="expect-自動化命令列操作"><a href="#expect-自動化命令列操作" class="headerlink" title="expect 自動化命令列操作"></a>expect 自動化命令列操作</h3><p>這方式需要工程師會使用 <code>expect</code> 來完成，剛剛上述手動命令列登入操作，大多數都能透過這兩者的搭配做到最基本的自動化，尤其是對命令列操作吃重的網路設備，expect 可以<code>模擬</code>命令列輸入字元，但壞處就是中間如果想多新增寫條件判斷就會有以下的兩個範例的差異了，語法太過複雜不易維護，若要整合其他應用或被其他程式使用，將會大幅提高複雜度。故以個人使用及易維護為前提，最基本的建議還是以 Bash 搭 Telnet 及 SSH 撰寫比較恰當。</p>
+<p>常見範例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line"><span class="built_in">set</span> timeout 5</span><br><span class="line">spawn minicom</span><br><span class="line">expect <span class="string">&quot;password for xxx:&quot;</span></span><br><span class="line">send <span class="string">&quot;password\r&quot;</span></span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+
+<p>多了條件判斷的<a href="https://stackoverflow.com/questions/1538444/using-conditional-statements-inside-expect?answertab=votes#tab-top">範例</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/expect</span></span><br><span class="line">proc login &#123;user pass&#125; &#123;</span><br><span class="line">    expect <span class="string">&quot;login:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$user</span>\r&quot;</span></span><br><span class="line">    expect <span class="string">&quot;password:&quot;</span></span><br><span class="line">    send <span class="string">&quot;<span class="variable">$pass</span>\r&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> username spongebob </span><br><span class="line"><span class="built_in">set</span> passwords &#123;squarepants rhombuspants&#125;</span><br><span class="line"><span class="built_in">set</span> index 0</span><br><span class="line"></span><br><span class="line">spawn telnet 192.168.40.100</span><br><span class="line">login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">expect &#123;</span><br><span class="line">    <span class="string">&quot;login incorrect&quot;</span> &#123;</span><br><span class="line">        send_user <span class="string">&quot;failed with <span class="variable">$username</span>:[lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]\n&quot;</span></span><br><span class="line">        incr index</span><br><span class="line">        <span class="keyword">if</span> &#123;<span class="variable">$index</span> == [llength <span class="variable">$passwords</span>]&#125; &#123;</span><br><span class="line">            error <span class="string">&quot;ran out of possible passwords&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        login <span class="variable">$username</span> [lindex <span class="variable">$passwords</span> <span class="variable">$index</span>]</span><br><span class="line">        exp_continue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;prompt&gt;&quot;</span> </span><br><span class="line">&#125;</span><br><span class="line">send_user <span class="string">&quot;success!\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具有-Python-魂的你"><a href="#具有-Python-魂的你" class="headerlink" title="具有 Python 魂的你"></a>具有 Python 魂的你</h3><p>如果你是具備寫 Python 程式底子的工程師，目標想要走向高度客製化，這邊有幾個模組可以推薦使用，分別對應</p>
+<ol>
+<li>Serial Console - <a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">pySerial</a></li>
+<li>Telnet - <a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib</a></li>
+<li>SSH - <a href="http://www.paramiko.org/">paramiko</a> 和基於 parmiko 開發的 <a href="https://github.com/ktbyers/netmiko">netmiko</a></li>
+<li>expect - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li>NETCONF - <a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li>RESTful - <a href="http://docs.python-requests.org/en/master/">requests</a></li>
+</ol>
+<p>日常管理中 SSH 會最常使用，所以建議要寫請先以 SSH 連線為主的 paramiko 做為模組基礎，往上開發自己專屬的管理程式，目前 paramiko 也被列為 <a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a> 之一。netmiko 則是基於 paramiko <code>針對網路設備操作</code>而生的專案，這專案有處理一些不同網路廠商所帶來的設備差異性，也可以列入參考選擇。</p>
+<p><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html"><code>pySerial</code></a> 模組可以讓你基於 Python 程式來操控 Serical Console 的行為，如果你是靠 Serial Console 維生的工程師或開發者，非常推薦使用。</p>
+<p>範例:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="comment"># 115200/8/N/1</span></span><br><span class="line">ser=serial.Serial(port=<span class="string">&#x27;/dev/tty.pichuang&#x27;</span>, baudrate=<span class="number">115200</span>, bytesize=<span class="number">8</span>, parity=<span class="string">&#x27;N&#x27;</span>, stopbits=<span class="number">1</span>, timeout=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是的，各位看倌 expect 也有出 Python 模組 - <a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a> 來幫助你用 Python 去模擬命令列交互操作，可自行 Google 參閱使用方式。</p>
+<p>雖然這些模組可以提供你高度客製化的能力，但理想很豐滿，現實很骨感，維運工程師價值是要<code>維護系統的穩定</code>，而不在開發新的工具來增加無謂的開發人力成本，這時候就是自動化工具的空間啦！</p>
+<h3 id="自動化配置管理工具-Ansible"><a href="#自動化配置管理工具-Ansible" class="headerlink" title="自動化配置管理工具 Ansible"></a>自動化配置管理工具 Ansible</h3><p>對於大多數沒有寫程式經驗的網路工程師來說，透過寫程式的方式來管理網路基本是無疑找碴，但介於在手動跟高度客製化程式之中，有否快速地開始實行 NetDevOps 的方式呢? 筆者是推薦使用 Ansible 作為主要的使用工具</p>
+<p>Ansible 目前是 Red Hat 底下的一個自動化維運工具平台，可以協助工程師對系統做配置管理 (Configuration Management)，配合版本控制 (推薦目前已成顯學的 Git)，以達到基礎設施即代碼 (Infrastructure as Code) 的目標。Ansible 語言基礎是使用 Python，但具體上不會寫相對複雜的 Python 也沒關係，因為主要是透過撰寫 YAML 文件來<code>描述</code> Ansible Playbook，搭配適當使用 Ansible Module 來快速做到自動化的工作。</p>
+<p>Ansible 目前除了支持的模組除了既有透過 SSH 和 WinRM 所延伸出的一大堆<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">模組</a>以外，再來就是憑著最大優勢 <code>Agnetless</code> 的特性，在網路設備管理領域大放異彩。通常網路設備都不會讓使用者任意的塞 Agent，但透過各廠商的支持下，基於 Ansible 誕生出不少的<a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">網路模組</a>供使用者做使用。然而大多數的網路設備都還是以 SSH 為主要通信手段，Ansible 主要的連線手段也是透過 SSH，基本上是非常容易兼容而不用更改現在對網路設備的管理方式，也可以配合基於 NETCONF 的協議來進行管理。</p>
+<p><a href="https://github.com/brona/ansible-cisco-ios-example">Cisco IOS 範例</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">ios_devices</span></span><br><span class="line">  <span class="attr">gather_facts:</span> <span class="literal">no</span></span><br><span class="line">  <span class="attr">connection:</span> <span class="string">local</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">vars_prompt:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_username&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Username&quot;</span></span><br><span class="line">    <span class="attr">private:</span> <span class="literal">no</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;mgmt_password&quot;</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">&quot;Password&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SYS</span> <span class="string">|</span> <span class="string">Define</span> <span class="string">provider</span></span><br><span class="line">    <span class="attr">set_fact:</span></span><br><span class="line">      <span class="attr">provider:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; inventory_hostname &#125;&#125;</span>&quot;</span> </span><br><span class="line">        <span class="attr">username:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_username &#125;&#125;</span>&quot;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; mgmt_password &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">IOS</span> <span class="string">|</span> <span class="string">Show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">ios_command:</span></span><br><span class="line">      <span class="attr">provider:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; provider &#125;&#125;</span>&quot;</span></span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">show</span> <span class="string">clock</span></span><br><span class="line">    <span class="attr">register:</span> <span class="string">clock</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">debug:</span> <span class="string">msg=&quot;&#123;&#123;</span> <span class="string">clock.stdout</span> <span class="string">&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://pynet.twb-tech.com/blog/automation/pyserial.html">Automating the Console using pySerial</a></li>
+<li><a href="https://docs.python.org/2/library/telnetlib.html#module-telnetlib">telnetlib - Telnet client</a></li>
+<li><a href="http://www.paramiko.org/">paramiko - A Python implementation of SSHv2.</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">Ansible Connection Plugin</a></li>
+<li><a href="https://github.com/ktbyers/netmiko">netmiko - Multi-vendor library to simplify Paramiko SSH connections to network devices</a></li>
+<li><a href="https://pexpect.readthedocs.io/en/stable/">pexpect</a></li>
+<li><a href="https://github.com/ncclient/ncclient">ncclient</a></li>
+<li><a href="http://docs.python-requests.org/en/master/">Requests: HTTP for Humans</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html">Ansible Modules</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/modules/list_of_network_modules.html#network-modules">Ansible Network modules</a></li>
+<li><a href="https://www.sdnlab.com/18581.html">JUNOS DEVOPS尤便捷 更精彩 - SDNLAB</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ansible</category>
+      </categories>
+      <tags>
+        <tag>ansible</tag>
+        <tag>netdevops</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -1985,52 +1985,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>新增 SSL/TLS 憑證和金鑰</title>
     <url>/20180920-add-ssl-tls-cert-and-key/</url>
     <content><![CDATA[<h2 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h2><p>大多數的時候服務都會架設在不用對開放到 Internet 上的地方去給外部使用者接觸，也就是所謂的 Intranet。那如果想要在 Intranet 建立自建簡單的 PKI (Public Key Infrastructure) 的話，該如何做呢?</p>
@@ -2080,6 +2034,52 @@
         <tag>openssl</tag>
         <tag>rhel</tag>
         <tag>ssl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -2563,6 +2563,95 @@
       </tags>
   </entry>
   <entry>
+    <title>Nvidia DGX 和 Red Hat OpenShift 會產生什麼火花?</title>
+    <url>/20190330-nvidia-dgx-and-redhat-openshift-integration/</url>
+    <content><![CDATA[<p>一日江湖行走，路上撿到一個問題：<code>Nvidia DGX 要怎麼跟透過容器化調度應用呀?</code> 然後我就開始了一連串的研究探索…</p>
+<p><img src="/images/ngc-openshift.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="先來個名詞解釋"><a href="#先來個名詞解釋" class="headerlink" title="先來個名詞解釋"></a>先來個名詞解釋</h2><ul>
+<li><p><a href="https://www.nvidia.com/zh-tw/data-center/tesla-v100/">NVIDIA Tesla V100 Tensor</a></p>
+<ul>
+<li>白話文: 一張超高階 GPU 卡<blockquote>
+<p>NVIDIA® Tesla® V100 是最先進的資料中心 GPU，專為加快人工智慧、HPC 和繪圖運算速度而設計。採用 NVIDIA Volta 架構，提供 16 GB 和 32 GB 設定，單一 GPU 即可展現媲美 100 個 CPU 的效能。資料科學家、研究人員和工程師可以省下配置記憶體使用最佳化的時間，投入更多精力設計下一個人工智慧的重大突破。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><a href="https://www.nvidia.com/zh-tw/data-center/dgx-1/">NVIDIA DGX-1</a></p>
+<ul>
+<li>白話文: 一台 x86 Server，內可包含至多 8 張超高階 GPU 卡， GPU Memory 可達 256G </li>
+</ul>
+</li>
+<li><p><a href="https://www.nvidia.com/zh-tw/gpu-cloud/deep-learning-containers/">NVIDIA GPU Cloud (NGC)</a></p>
+<ul>
+<li>白話文: 一堆各式各樣 Nvidia 出品的容器，請洽 <a href="https://ngc.nvidia.com/catalog/landing">https://ngc.nvidia.com/catalog/landing</a><blockquote>
+<p>NVIDIA GPU Cloud (NGC) 容器 registry 提供一系列完備的 GPU 加速人工智慧容器，這些容器經過最佳化、測試，並可立即透過本機和雲端上支援的 NVIDIA GPU 執行。TensorFlow、PyTorch、MXNet、NVIDIA TensorRT™ 等 NGC 人工智慧容器，透過 NVIDIA 人工智慧的強大功能，賦予你挑戰極困難專案所需的效能與彈性。這能幫助資料科學家和研究人員迅速建立、訓練和部署人工智慧模型，以滿足與時俱進的需求</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><a href="https://www.openshift.com/">Red Hat OpenShift Container Platform</a></p>
+<ul>
+<li>白話文: 一座容器平台</li>
+<li>紅帽企業級容器平台，可依據不同的環境需求，調整基礎架構，同時於平台之上也能搭載各式各樣的容器服務，如 NGC，目前長期支援版本為 v3.11</li>
+</ul>
+</li>
+</ul>
+<h2 id="所以雙方到底會是什麼火花？"><a href="#所以雙方到底會是什麼火花？" class="headerlink" title="所以雙方到底會是什麼火花？"></a>所以雙方到底會是什麼火花？</h2><p>這影片 <a href="https://www.youtube.com/watch?v=9iVYjA_WJgU">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a> 充分表達了<code>如何使用 OpenShift 部署 NGC 的容器服務，進而控制 DGX-1 的運算資源</code></p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/9iVYjA_WJgU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<ol>
+<li>OpenShift Service Catalog 選取已經定義好的 Container (TensorFlow, PyTorch, MXNet, TensorRT, …) 要多少 GPU 來做運算</li>
+<li>從 OpenShift 已經開起來的 Pod 中，來調度 DGX-1 裡面的資源利用</li>
+</ol>
+<h2 id="怎麼做到的"><a href="#怎麼做到的" class="headerlink" title="怎麼做到的?"></a>怎麼做到的?</h2><p>這份投影片 <a href="https://blog.openshift.com/wp-content/uploads/Nvidia-RedHat-Commons-Kubecon-2018.pdf">Deep Learning Inference on Openshift with GPUs</a> 其實介紹蠻詳細的，尤其是下圖</p>
+<p><img src="/images/ngc-openshift-1.png" alt=""></p>
+<ul>
+<li>Device Manager Support, Priority and Preemption<ul>
+<li>OpenShift 3.10 後就開始正式支援 GPUs with DevicePlugin，詳細可參考 <a href="https://blog.openshift.com/how-to-use-gpus-with-deviceplugin-in-openshift-3-10/">Blog: How to use GPUs with DevicePlugin in OpenShift 3.10</a></li>
+</ul>
+</li>
+<li>OpenShift/Red Hat Enterprise Linux on Nvidia DGX-1/Tesla - NVIDIA NGC on OpenShift<ul>
+<li>DGX-1 目前 N 家官方是支援 Red Hat Enterprise Linux 7.5+，詳細可以參考 <a href="https://blogs.nvidia.com/blog/2018/10/23/red-hat-enterprise-linux-dgx-1/">NVIDIA, Red Hat certify NVIDIA DGX-1 for Red Hat Enterprise Linux</a></li>
+</ul>
+</li>
+<li>Preview of TensorRT Inferencing on OpenShift<ul>
+<li>請自行觀看 <a href="https://github.com/NVIDIA/tensorrt-inference-server">GitHub - NVIDIA/tensorrt-inference-server</a></li>
+</ul>
+</li>
+<li>GPU Sharing, Heterogeneous Clusters, GPU Topology, Install experience with Operators<ul>
+<li>各位可以期待一下 <a href="https://github.com/NVIDIA/gpu-operator"><code>GPU-Operator</code></a>，你問什麼是 Operator？傳送門在這邊 <a href="https://operatorhub.io/what-is-an-operator">What is an Operator? - Operatorhub.io</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>那個影片後來發現其實在去年的 <a href="https://sc18.supercomputing.org">SuperComputing 2018 (SC18)</a> 的會議上，就有被拿出來 Demo 了，從那之後 Red Hat 跟 Nvidia 在 AI/HPC 上的合作就越來越多了，前者出基礎架構平台，後者出 GPU 跟運算框架，在不久的將來應該還可以看到越來越多 GPU + Container 的使用方式出來，關於更多 NVDIA 的資訊，可以參考 <a href="https://www.ithome.com.tw/review/128970">擴充應用程式映像，Nvidia簡化叢集環境與兩大產業容器部署 - iThome</a> 一文</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=9iVYjA_WJgU">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a></li>
+<li><a href="https://www.nvidia.com/zh-tw/data-center/tesla-v100/">NVIDIA Tesla V100 Tensor</a></li>
+<li><a href="https://www.nvidia.com/zh-tw/data-center/dgx-1/">NVIDIA DGX-1</a></li>
+<li><a href="https://www.nvidia.com/zh-tw/gpu-cloud/deep-learning-containers/">人工智慧 (AI) 容器</a></li>
+<li><a href="https://blog.openshift.com/wp-content/uploads/Nvidia-RedHat-Commons-Kubecon-2018.pdf">Deep Learning Inference on Openshift with GPUs</a></li>
+<li><a href="https://blog.openshift.com/how-to-use-gpus-with-deviceplugin-in-openshift-3-10/">Blog: How to use GPUs with DevicePlugin in OpenShift 3.10</a></li>
+<li><a href="https://blogs.nvidia.com/blog/2018/10/23/red-hat-enterprise-linux-dgx-1/">NVIDIA, Red Hat certify NVIDIA DGX-1 for Red Hat Enterprise Linux</a></li>
+<li><a href="https://www.ithome.com.tw/review/128970">擴充應用程式映像，Nvidia簡化叢集環境與兩大產業容器部署 - iThome</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift</tag>
+        <tag>openshift3</tag>
+        <tag>redhat</tag>
+        <tag>nvidia</tag>
+        <tag>dgx</tag>
+        <tag>tesla</tag>
+        <tag>gpu</tag>
+        <tag>ngc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Red Hat OpenShift v3.11 東西南北向網路探討</title>
     <url>/20190404-openshift-network-traffic-overview/</url>
     <content><![CDATA[<h2 id="資料中心東西南北向網路流"><a href="#資料中心東西南北向網路流" class="headerlink" title="資料中心東西南北向網路流"></a>資料中心東西南北向網路流</h2><p>一般討論的資料中心資料流量，主要分為兩大流向</p>
@@ -2729,95 +2818,6 @@
         <tag>redhat</tag>
         <tag>juniper</tag>
         <tag>contrail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nvidia DGX 和 Red Hat OpenShift 會產生什麼火花?</title>
-    <url>/20190330-nvidia-dgx-and-redhat-openshift-integration/</url>
-    <content><![CDATA[<p>一日江湖行走，路上撿到一個問題：<code>Nvidia DGX 要怎麼跟透過容器化調度應用呀?</code> 然後我就開始了一連串的研究探索…</p>
-<p><img src="/images/ngc-openshift.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="先來個名詞解釋"><a href="#先來個名詞解釋" class="headerlink" title="先來個名詞解釋"></a>先來個名詞解釋</h2><ul>
-<li><p><a href="https://www.nvidia.com/zh-tw/data-center/tesla-v100/">NVIDIA Tesla V100 Tensor</a></p>
-<ul>
-<li>白話文: 一張超高階 GPU 卡<blockquote>
-<p>NVIDIA® Tesla® V100 是最先進的資料中心 GPU，專為加快人工智慧、HPC 和繪圖運算速度而設計。採用 NVIDIA Volta 架構，提供 16 GB 和 32 GB 設定，單一 GPU 即可展現媲美 100 個 CPU 的效能。資料科學家、研究人員和工程師可以省下配置記憶體使用最佳化的時間，投入更多精力設計下一個人工智慧的重大突破。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><a href="https://www.nvidia.com/zh-tw/data-center/dgx-1/">NVIDIA DGX-1</a></p>
-<ul>
-<li>白話文: 一台 x86 Server，內可包含至多 8 張超高階 GPU 卡， GPU Memory 可達 256G </li>
-</ul>
-</li>
-<li><p><a href="https://www.nvidia.com/zh-tw/gpu-cloud/deep-learning-containers/">NVIDIA GPU Cloud (NGC)</a></p>
-<ul>
-<li>白話文: 一堆各式各樣 Nvidia 出品的容器，請洽 <a href="https://ngc.nvidia.com/catalog/landing">https://ngc.nvidia.com/catalog/landing</a><blockquote>
-<p>NVIDIA GPU Cloud (NGC) 容器 registry 提供一系列完備的 GPU 加速人工智慧容器，這些容器經過最佳化、測試，並可立即透過本機和雲端上支援的 NVIDIA GPU 執行。TensorFlow、PyTorch、MXNet、NVIDIA TensorRT™ 等 NGC 人工智慧容器，透過 NVIDIA 人工智慧的強大功能，賦予你挑戰極困難專案所需的效能與彈性。這能幫助資料科學家和研究人員迅速建立、訓練和部署人工智慧模型，以滿足與時俱進的需求</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><a href="https://www.openshift.com/">Red Hat OpenShift Container Platform</a></p>
-<ul>
-<li>白話文: 一座容器平台</li>
-<li>紅帽企業級容器平台，可依據不同的環境需求，調整基礎架構，同時於平台之上也能搭載各式各樣的容器服務，如 NGC，目前長期支援版本為 v3.11</li>
-</ul>
-</li>
-</ul>
-<h2 id="所以雙方到底會是什麼火花？"><a href="#所以雙方到底會是什麼火花？" class="headerlink" title="所以雙方到底會是什麼火花？"></a>所以雙方到底會是什麼火花？</h2><p>這影片 <a href="https://www.youtube.com/watch?v=9iVYjA_WJgU">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a> 充分表達了<code>如何使用 OpenShift 部署 NGC 的容器服務，進而控制 DGX-1 的運算資源</code></p>
-<div class="video-container"><iframe src="https://www.youtube.com/embed/9iVYjA_WJgU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<ol>
-<li>OpenShift Service Catalog 選取已經定義好的 Container (TensorFlow, PyTorch, MXNet, TensorRT, …) 要多少 GPU 來做運算</li>
-<li>從 OpenShift 已經開起來的 Pod 中，來調度 DGX-1 裡面的資源利用</li>
-</ol>
-<h2 id="怎麼做到的"><a href="#怎麼做到的" class="headerlink" title="怎麼做到的?"></a>怎麼做到的?</h2><p>這份投影片 <a href="https://blog.openshift.com/wp-content/uploads/Nvidia-RedHat-Commons-Kubecon-2018.pdf">Deep Learning Inference on Openshift with GPUs</a> 其實介紹蠻詳細的，尤其是下圖</p>
-<p><img src="/images/ngc-openshift-1.png" alt=""></p>
-<ul>
-<li>Device Manager Support, Priority and Preemption<ul>
-<li>OpenShift 3.10 後就開始正式支援 GPUs with DevicePlugin，詳細可參考 <a href="https://blog.openshift.com/how-to-use-gpus-with-deviceplugin-in-openshift-3-10/">Blog: How to use GPUs with DevicePlugin in OpenShift 3.10</a></li>
-</ul>
-</li>
-<li>OpenShift/Red Hat Enterprise Linux on Nvidia DGX-1/Tesla - NVIDIA NGC on OpenShift<ul>
-<li>DGX-1 目前 N 家官方是支援 Red Hat Enterprise Linux 7.5+，詳細可以參考 <a href="https://blogs.nvidia.com/blog/2018/10/23/red-hat-enterprise-linux-dgx-1/">NVIDIA, Red Hat certify NVIDIA DGX-1 for Red Hat Enterprise Linux</a></li>
-</ul>
-</li>
-<li>Preview of TensorRT Inferencing on OpenShift<ul>
-<li>請自行觀看 <a href="https://github.com/NVIDIA/tensorrt-inference-server">GitHub - NVIDIA/tensorrt-inference-server</a></li>
-</ul>
-</li>
-<li>GPU Sharing, Heterogeneous Clusters, GPU Topology, Install experience with Operators<ul>
-<li>各位可以期待一下 <a href="https://github.com/NVIDIA/gpu-operator"><code>GPU-Operator</code></a>，你問什麼是 Operator？傳送門在這邊 <a href="https://operatorhub.io/what-is-an-operator">What is an Operator? - Operatorhub.io</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>那個影片後來發現其實在去年的 <a href="https://sc18.supercomputing.org">SuperComputing 2018 (SC18)</a> 的會議上，就有被拿出來 Demo 了，從那之後 Red Hat 跟 Nvidia 在 AI/HPC 上的合作就越來越多了，前者出基礎架構平台，後者出 GPU 跟運算框架，在不久的將來應該還可以看到越來越多 GPU + Container 的使用方式出來，關於更多 NVDIA 的資訊，可以參考 <a href="https://www.ithome.com.tw/review/128970">擴充應用程式映像，Nvidia簡化叢集環境與兩大產業容器部署 - iThome</a> 一文</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=9iVYjA_WJgU">Red Hat OpenShift, NVIDIA DGX and NGC Container Integration - Youtube</a></li>
-<li><a href="https://www.nvidia.com/zh-tw/data-center/tesla-v100/">NVIDIA Tesla V100 Tensor</a></li>
-<li><a href="https://www.nvidia.com/zh-tw/data-center/dgx-1/">NVIDIA DGX-1</a></li>
-<li><a href="https://www.nvidia.com/zh-tw/gpu-cloud/deep-learning-containers/">人工智慧 (AI) 容器</a></li>
-<li><a href="https://blog.openshift.com/wp-content/uploads/Nvidia-RedHat-Commons-Kubecon-2018.pdf">Deep Learning Inference on Openshift with GPUs</a></li>
-<li><a href="https://blog.openshift.com/how-to-use-gpus-with-deviceplugin-in-openshift-3-10/">Blog: How to use GPUs with DevicePlugin in OpenShift 3.10</a></li>
-<li><a href="https://blogs.nvidia.com/blog/2018/10/23/red-hat-enterprise-linux-dgx-1/">NVIDIA, Red Hat certify NVIDIA DGX-1 for Red Hat Enterprise Linux</a></li>
-<li><a href="https://www.ithome.com.tw/review/128970">擴充應用程式映像，Nvidia簡化叢集環境與兩大產業容器部署 - iThome</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift</tag>
-        <tag>openshift3</tag>
-        <tag>redhat</tag>
-        <tag>nvidia</tag>
-        <tag>dgx</tag>
-        <tag>tesla</tag>
-        <tag>gpu</tag>
-        <tag>ngc</tag>
       </tags>
   </entry>
   <entry>
@@ -3184,6 +3184,83 @@
       </tags>
   </entry>
   <entry>
+    <title>導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi</title>
+    <url>/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</url>
+    <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/">導讀 Intel Select Solutions: Red Hat OpenShift Container Platform</a>，本篇同時收錄 Red Hat OpenStack 13 代號 Queens 的推薦硬體 BOM 表 <a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a>，然而想要了解其他 Intel Select Solutions for NFVi 的方案可以參考 <a href="https://builders.intel.com/intelselectsolutions/intelselectsolutionsfornfvi">Intel® Select Solutions for NFVI</a></p>
+<a id="more"></a>
+
+<h2 id="What-are-Intel-Select-Solutions"><a href="#What-are-Intel-Select-Solutions" class="headerlink" title="What are Intel Select Solutions?"></a>What are Intel Select Solutions?</h2><p><a href="https://www.intel.com.tw/content/www/tw/zh/architecture-and-technology/intel-select-solutions-overview.html">Intel® Select 解決方案 (Intel® Select Solutions)</a> 是經過驗證的硬件和軟件全套解決方案，針對計算 Compute，存儲 Storage 和網絡 Network 中的特定工作負載進行了優化。 </p>
+<p>除了與世界領先的數據中心和服務提供商的廣泛合作之外，這些解決方案還源自英特爾與行業解決方案提供商的深厚經驗。要獲得英特爾精選解決方案的資格，解決方案提供商必須：</p>
+<p>1.遵循 Red Hat 和 Intel 共同合作的軟體和硬體堆棧要求<br>2.複製或超過英特爾的參考基準性能基準<br>3.發布詳細的實施指南以促進客戶部署落地  </p>
+<h2 id="Red-Hat-OpenStack-Platform-13-Queens"><a href="#Red-Hat-OpenStack-Platform-13-Queens" class="headerlink" title="Red Hat OpenStack Platform 13 Queens"></a>Red Hat OpenStack Platform 13 Queens</h2><p>Red Hat OpenStack 13 Queens 是長期支援版本 (Long-Term Support, LTS)，生命週期最多可長達五年，同時也因基礎技術採用 Container 方式服務為主，故於這版支援 Fast Forward Upgrade (FFU)，可以從 13 直接跳往下一個 LTS 版本 16 進行 in-place 升級</p>
+<p><img src="/images/ffu.png" alt=""></p>
+<h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><h3 id="Reference-Architecture-RA"><a href="#Reference-Architecture-RA" class="headerlink" title="Reference Architecture (RA)"></a>Reference Architecture (RA)</h3><ul>
+<li><a href="https://lenovopress.com/lp0762.pdf">Lenovo RA: Red Hat OpenStack Platform 13</a></li>
+<li><a href="https://go.qct.io/wp-content/uploads/2018/08/QxStack-with-RedHat-OpenStack-Platform_RA_v1.1.pdf">QCT RA: QxStack with Red Hat OpenStack Platform</a></li>
+<li><a href="https://go.qct.io/wp-content/uploads/2019/04/QxStack-NFVI-on-Red-Hat-OpenStack-Platform-13_Reference-Architecture_v2.0.pdf">QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13</a></li>
+<li><a href="https://lenovopress.com/lp0913.pdf">Lenovo RA: OpenStack Reference Architecture for Service Providers</a></li>
+</ul>
+<h3 id="Hardware-Configuration"><a href="#Hardware-Configuration" class="headerlink" title="Hardware Configuration"></a>Hardware Configuration</h3><p>針對 OpenStack for NFVi 角色主要拆分兩個:</p>
+<ul>
+<li>Controller nodes</li>
+<li>Cloud (or Compute) nodes</li>
+</ul>
+<p>而其中 Cloud/Compute nodes 的角色，依據不同的硬體 BOM 表會有兩種: Base、Plus 的區別</p>
+<p>Intel + Red Hat 聯名文件主要推薦配置為以下 (以 Base 最小等級為例):</p>
+<ul>
+<li>Controller node<ul>
+<li>32c</li>
+<li>192GB RAM</li>
+<li>2 * XL710 Dual Port</li>
+<li>2 * LOM (Lan on Motherboard) Port</li>
+<li>2 * 480 GB for boot</li>
+<li>2 * 2TB for data</li>
+<li>QAT</li>
+</ul>
+</li>
+<li>Cloud (or Compute) node<ul>
+<li>40c</li>
+<li>384GB RAM</li>
+<li>2 * XL710 Dual Port</li>
+<li>2 * LOM (Lan on Motherboard) Port</li>
+<li>2 * 480 GB for boot</li>
+<li>2 * 2TB for data</li>
+<li>QAT</li>
+</ul>
+</li>
+</ul>
+<p>至於詳細的 BOM (Bill Of Material) 表跟硬體效能指標內容請參閱 <a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></p>
+<h3 id="Software-Configuration"><a href="#Software-Configuration" class="headerlink" title="Software Configuration"></a>Software Configuration</h3><p>毫無懸念地，你可以參考 <a href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/network_functions_virtualization_product_guide/index">Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide</a> 這裡面的文件來了解 NFVi 的架構是長得如何，下圖是基於標準 NFV ETSI 架構，以 Red Hat 現行產品進行對應的圖表</p>
+<p><img src="/images/osp-nfv.png" alt=""></p>
+<p>一般來說 IaaS 的部分是以 Red Hat OpenStack 為主這點是沒錯的，Storage 的技術選型現行是以 Ceph 為優先考量，同時也跟 OpenStack 不同類型的 storage backend project (swift/cinder/glance/…)整合性最好。當然也是可以替換成第三方廠商的方案，並沒有說一定要選擇某個技術才能運行。而網路的部分，因為牽扯到實體網路的整合及最大化利用網路頻寬議題，通常都會在搭配一家 SDN 廠商在內進行 Overlay + Underlay 網路整合，例如以下幾家都是不錯的組合</p>
+<ul>
+<li>Cisco ACI</li>
+<li>Juniper Contrail</li>
+<li>BigSwitch BCF</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/">導讀 Intel Select Solutions: Red Hat OpenShift Container Platform</a></li>
+<li><a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></li>
+<li><a href="https://builders.intel.com/intelselectsolutions/intelselectsolutionsfornfvi">Intel® Select Solutions for NFVI</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/network_functions_virtualization_product_guide/index">Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/data-center-blocks/cloud/redhat-cloud-blocks-reference-architecture.html">Red Hat OpenStack* Platform with Red Hat Ceph* Storage - Intel</a></li>
+<li><a href="https://lenovopress.com/lp0762.pdf">Lenovo RA: Red Hat OpenStack Platform 13</a></li>
+<li><a href="https://go.qct.io/wp-content/uploads/2018/08/QxStack-with-RedHat-OpenStack-Platform_RA_v1.1.pdf">QCT RA: QxStack with Red Hat OpenStack Platform</a></li>
+<li><a href="https://go.qct.io/wp-content/uploads/2019/04/QxStack-NFVI-on-Red-Hat-OpenStack-Platform-13_Reference-Architecture_v2.0.pdf">QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13</a></li>
+<li><a href="https://lenovopress.com/lp0913.pdf">Lenovo RA: OpenStack Reference Architecture for Service Providers</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>intel</tag>
+        <tag>redhat</tag>
+        <tag>nfv</tag>
+        <tag>openstack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>導讀 Reference Architecture: Red Hat Ceph Storage</title>
     <url>/20190427-reference-architecture-red-Hat-ceph-storage/</url>
     <content><![CDATA[<p>本文主要是以 Red Hat Ceph Storage (RHCS) 及依據兩份 <a href="https://www.redhat.com/en/resources/red-hat-ceph-storage-hardware-selection-guide">Brief: How to configure Red Hat Ceph Storage</a> 和 <a href="https://www.redhat.com/en/resources/how-configure-red-hat-ceph-storage">Reference Architecture: Red Hat Ceph Storage hardware selection guide</a> 文件為基礎撰寫，現行Red Hat 官方發布的版本號來到 <a href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/3.2/html-single/release_notes/index">v3.2</a></p>
@@ -3333,83 +3410,6 @@
       </categories>
       <tags>
         <tag>openshift</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>導讀 Intel Select Solutions: Red Hat OpenStack Platform 13 for NFVi</title>
-    <url>/20190421-intel-select-solutions-redhat-osp-13-for-nfvi/</url>
-    <content><![CDATA[<p>承上篇 <a href="https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/">導讀 Intel Select Solutions: Red Hat OpenShift Container Platform</a>，本篇同時收錄 Red Hat OpenStack 13 代號 Queens 的推薦硬體 BOM 表 <a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a>，然而想要了解其他 Intel Select Solutions for NFVi 的方案可以參考 <a href="https://builders.intel.com/intelselectsolutions/intelselectsolutionsfornfvi">Intel® Select Solutions for NFVI</a></p>
-<a id="more"></a>
-
-<h2 id="What-are-Intel-Select-Solutions"><a href="#What-are-Intel-Select-Solutions" class="headerlink" title="What are Intel Select Solutions?"></a>What are Intel Select Solutions?</h2><p><a href="https://www.intel.com.tw/content/www/tw/zh/architecture-and-technology/intel-select-solutions-overview.html">Intel® Select 解決方案 (Intel® Select Solutions)</a> 是經過驗證的硬件和軟件全套解決方案，針對計算 Compute，存儲 Storage 和網絡 Network 中的特定工作負載進行了優化。 </p>
-<p>除了與世界領先的數據中心和服務提供商的廣泛合作之外，這些解決方案還源自英特爾與行業解決方案提供商的深厚經驗。要獲得英特爾精選解決方案的資格，解決方案提供商必須：</p>
-<p>1.遵循 Red Hat 和 Intel 共同合作的軟體和硬體堆棧要求<br>2.複製或超過英特爾的參考基準性能基準<br>3.發布詳細的實施指南以促進客戶部署落地  </p>
-<h2 id="Red-Hat-OpenStack-Platform-13-Queens"><a href="#Red-Hat-OpenStack-Platform-13-Queens" class="headerlink" title="Red Hat OpenStack Platform 13 Queens"></a>Red Hat OpenStack Platform 13 Queens</h2><p>Red Hat OpenStack 13 Queens 是長期支援版本 (Long-Term Support, LTS)，生命週期最多可長達五年，同時也因基礎技術採用 Container 方式服務為主，故於這版支援 Fast Forward Upgrade (FFU)，可以從 13 直接跳往下一個 LTS 版本 16 進行 in-place 升級</p>
-<p><img src="/images/ffu.png" alt=""></p>
-<h2 id="Total-Solution"><a href="#Total-Solution" class="headerlink" title="Total Solution"></a>Total Solution</h2><h3 id="Reference-Architecture-RA"><a href="#Reference-Architecture-RA" class="headerlink" title="Reference Architecture (RA)"></a>Reference Architecture (RA)</h3><ul>
-<li><a href="https://lenovopress.com/lp0762.pdf">Lenovo RA: Red Hat OpenStack Platform 13</a></li>
-<li><a href="https://go.qct.io/wp-content/uploads/2018/08/QxStack-with-RedHat-OpenStack-Platform_RA_v1.1.pdf">QCT RA: QxStack with Red Hat OpenStack Platform</a></li>
-<li><a href="https://go.qct.io/wp-content/uploads/2019/04/QxStack-NFVI-on-Red-Hat-OpenStack-Platform-13_Reference-Architecture_v2.0.pdf">QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13</a></li>
-<li><a href="https://lenovopress.com/lp0913.pdf">Lenovo RA: OpenStack Reference Architecture for Service Providers</a></li>
-</ul>
-<h3 id="Hardware-Configuration"><a href="#Hardware-Configuration" class="headerlink" title="Hardware Configuration"></a>Hardware Configuration</h3><p>針對 OpenStack for NFVi 角色主要拆分兩個:</p>
-<ul>
-<li>Controller nodes</li>
-<li>Cloud (or Compute) nodes</li>
-</ul>
-<p>而其中 Cloud/Compute nodes 的角色，依據不同的硬體 BOM 表會有兩種: Base、Plus 的區別</p>
-<p>Intel + Red Hat 聯名文件主要推薦配置為以下 (以 Base 最小等級為例):</p>
-<ul>
-<li>Controller node<ul>
-<li>32c</li>
-<li>192GB RAM</li>
-<li>2 * XL710 Dual Port</li>
-<li>2 * LOM (Lan on Motherboard) Port</li>
-<li>2 * 480 GB for boot</li>
-<li>2 * 2TB for data</li>
-<li>QAT</li>
-</ul>
-</li>
-<li>Cloud (or Compute) node<ul>
-<li>40c</li>
-<li>384GB RAM</li>
-<li>2 * XL710 Dual Port</li>
-<li>2 * LOM (Lan on Motherboard) Port</li>
-<li>2 * 480 GB for boot</li>
-<li>2 * 2TB for data</li>
-<li>QAT</li>
-</ul>
-</li>
-</ul>
-<p>至於詳細的 BOM (Bill Of Material) 表跟硬體效能指標內容請參閱 <a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></p>
-<h3 id="Software-Configuration"><a href="#Software-Configuration" class="headerlink" title="Software Configuration"></a>Software Configuration</h3><p>毫無懸念地，你可以參考 <a href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/network_functions_virtualization_product_guide/index">Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide</a> 這裡面的文件來了解 NFVi 的架構是長得如何，下圖是基於標準 NFV ETSI 架構，以 Red Hat 現行產品進行對應的圖表</p>
-<p><img src="/images/osp-nfv.png" alt=""></p>
-<p>一般來說 IaaS 的部分是以 Red Hat OpenStack 為主這點是沒錯的，Storage 的技術選型現行是以 Ceph 為優先考量，同時也跟 OpenStack 不同類型的 storage backend project (swift/cinder/glance/…)整合性最好。當然也是可以替換成第三方廠商的方案，並沒有說一定要選擇某個技術才能運行。而網路的部分，因為牽扯到實體網路的整合及最大化利用網路頻寬議題，通常都會在搭配一家 SDN 廠商在內進行 Overlay + Underlay 網路整合，例如以下幾家都是不錯的組合</p>
-<ul>
-<li>Cisco ACI</li>
-<li>Juniper Contrail</li>
-<li>BigSwitch BCF</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://blog.pichuang.com.tw/20190421-intel-select-solutions-redhat-openshift-container-platform/">導讀 Intel Select Solutions: Red Hat OpenShift Container Platform</a></li>
-<li><a href="https://builders.intel.com/docs/networkbuilders/intel-select-solutions-for-nfvi-with-red-hat-enterprise-linux-and-red-hat-openstack.pdf">Intel® Select Solutions for NFVI v2 with Red Hat OpenStack® Platform (OSP) Release 13</a></li>
-<li><a href="https://builders.intel.com/intelselectsolutions/intelselectsolutionsfornfvi">Intel® Select Solutions for NFVI</a></li>
-<li><a href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/network_functions_virtualization_product_guide/index">Network Functions Virtualization Product Guide - Red Hat OSP 13 Guide</a></li>
-<li><a href="https://www.intel.com/content/www/us/en/data-center-blocks/cloud/redhat-cloud-blocks-reference-architecture.html">Red Hat OpenStack* Platform with Red Hat Ceph* Storage - Intel</a></li>
-<li><a href="https://lenovopress.com/lp0762.pdf">Lenovo RA: Red Hat OpenStack Platform 13</a></li>
-<li><a href="https://go.qct.io/wp-content/uploads/2018/08/QxStack-with-RedHat-OpenStack-Platform_RA_v1.1.pdf">QCT RA: QxStack with Red Hat OpenStack Platform</a></li>
-<li><a href="https://go.qct.io/wp-content/uploads/2019/04/QxStack-NFVI-on-Red-Hat-OpenStack-Platform-13_Reference-Architecture_v2.0.pdf">QCT RA: QxStack NFVI on Red Hat OpenStack Platform 13</a></li>
-<li><a href="https://lenovopress.com/lp0913.pdf">Lenovo RA: OpenStack Reference Architecture for Service Providers</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>intel</tag>
-        <tag>redhat</tag>
-        <tag>nfv</tag>
-        <tag>openstack</tag>
       </tags>
   </entry>
   <entry>
@@ -3934,6 +3934,78 @@
       </tags>
   </entry>
   <entry>
+    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
+    <url>/20191116-homelcloud-high-level-design-4/</url>
+    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img src="/images/pfsense-logo.png" alt=""></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
+<a id="more"></a>
+
+<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
+<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
+<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
+<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
+<p><img src="/images/pfsense-9.png" alt=""></p>
+<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
+<p><img src="/images/pfsense-10.png" alt=""></p>
+<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
+<ol>
+<li>vmx0: WAN</li>
+<li>vmx1: LAN &lt;– 選他</li>
+</ol>
+<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
+<p>Q: 這樣就搞定了嗎!?</p>
+<p><img src="/images/pfsense-11.png" alt=""></p>
+<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
+<p><img src="/images/pfsense-12.png" alt=""></p>
+<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
+<p><img src="/images/pfsense-2.png" alt=""></p>
+<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
+<ol>
+<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
+<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
+<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
+</ol>
+<p><img src="/images/pfsense-14.png" alt=""></p>
+<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
+<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
+<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
+<p><img src="/images/pfsense-15.png" alt=""></p>
+<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
+<blockquote>
+<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
+</blockquote>
+<p><img src="/images/pfsense-16.png" alt=""></p>
+<p>所以你需要多一條 Rule</p>
+<ul>
+<li>Family: IPv4</li>
+<li>Protocol: any</li>
+<li>Source: any</li>
+<li>S Port: any</li>
+<li>Destination: any</li>
+<li>D Port: any</li>
+</ul>
+<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
+<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
+<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
+<ul>
+<li>Time Synchronization: ntp</li>
+<li>DNS: bind</li>
+<li>VPN: OpenVPN</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
+<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
+]]></content>
+      <categories>
+        <category>homecloud</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>linux</tag>
+        <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</title>
     <url>/20191116-homelcloud-high-level-design-3/</url>
     <content><![CDATA[<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：</p>
@@ -4107,78 +4179,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
-    <url>/20191116-homelcloud-high-level-design-4/</url>
-    <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
-<p><img src="/images/pfsense-logo.png" alt=""></p>
-<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得? </p>
-<a id="more"></a>
-
-<h2 id="服務太多-切網卡-切網段"><a href="#服務太多-切網卡-切網段" class="headerlink" title="服務太多? 切網卡! 切網段!"></a>服務太多? 切網卡! 切網段!</h2><p><img src="/images/pfsense-8.png" alt=""> </p>
-<p>上篇有人如果眼睛很尖的話，應該會發現我紅框那邊有好幾個網路介面，個別 VLAN 都會定義一個服務群，把相同性質的服務全部塞在一起，避免互相干擾</p>
-<p>Q: 是不是一定要在 VM 外插多隻腳出來才能做?</p>
-<p>這個如同 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的網路架構一樣，實際上我只有插兩張網卡在裡面，其他多張虛擬網卡都用 802.1q VLAN Subinterface 切出來</p>
-<p><img src="/images/pfsense-9.png" alt=""></p>
-<p>上圖可以在 <code>Interfaces &gt; Interface Assignments &gt; VLANs</code> 裡面找到，所有透過 802.1q VLAN Subinterface 都會顯示在這邊</p>
-<p><img src="/images/pfsense-10.png" alt=""></p>
-<p>以下我新增一個 <code>VLAN 104</code> 當作範例，記得要選正確的 Interface，這邊有兩張介面</p>
-<ol>
-<li>vmx0: WAN</li>
-<li>vmx1: LAN &lt;– 選他</li>
-</ol>
-<p>因為在 pfSense 安裝時會需要定義 WAN / LAN，所以這個理論上要知道，記得不要選錯，不然切出來的網路介面不會動，有一次眼殘選錯，看了足足一天才發現</p>
-<p>Q: 這樣就搞定了嗎!?</p>
-<p><img src="/images/pfsense-11.png" alt=""></p>
-<p>還要回到 <code>Interfaces &gt; Interface Assignments</code> 正式把這張虛擬網路介面卡加進去才算數</p>
-<p><img src="/images/pfsense-12.png" alt=""></p>
-<p>把虛擬網路介面的設定填一填就搞定了第一階段，所以架構圖上就會像下圖一樣</p>
-<p><img src="/images/pfsense-2.png" alt=""></p>
-<h2 id="還有-NAT-呢…"><a href="#還有-NAT-呢…" class="headerlink" title="還有 NAT 呢…"></a>還有 NAT 呢…</h2><p>在 pfSense 裡面關於 NAT 的部分，其實有<a href="https://docs.netgate.com/pfsense/en/latest/nat/index.html">不少功能介紹</a>，這邊體恤小弟是個懶人，主要會用到</p>
-<ol>
-<li>SNAT 懶人功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/automatic-nat-rules-generation.html">Automatic NAT Rules Generation</a></li>
-<li>SNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/advanced-outbound-nat.html">Advanced Outbound NAT</a></li>
-<li>DNAT 正常功能: <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></li>
-</ol>
-<p><img src="/images/pfsense-14.png" alt=""></p>
-<p>相關設定都在 <code>Firewall &gt; NAT &gt; Outbound</code> 裡面找得到，關於 <code>Outbound NAT Mode</code> 毫無懸念地開 <code>Hybrid Outbound NAT rule generation</code>，主要是因為 <code>Automatic NAT Rules Generation</code> 真的是一個<code>好棒棒</code>的功能 (我被我老闆影響了…) ，當你把上一個章節的虛擬網路加進去後，他會自動加一條 SNAT Rules 進去，啥都不用設定</p>
-<p>關於 DNAT  Port Forward 的使用就是直接開 <code>Firewall &gt; NAT &gt; Port Forward</code> 裡面上 Rule 就完工了，詳細設定介紹 <a href="https://docs.netgate.com/pfsense/en/latest/nat/forwarding-ports-with-pfsense.html">Forwarding Ports with pfSense</a></p>
-<h2 id="我知道你忘記了-Firewall-這件事"><a href="#我知道你忘記了-Firewall-這件事" class="headerlink" title="我知道你忘記了 Firewall 這件事"></a>我知道你忘記了 Firewall 這件事</h2><p>Q: 為什麼照文章設定完之後，還是不會動!!!???</p>
-<p><img src="/images/pfsense-15.png" alt=""></p>
-<p>魔鬼就在這張圖裡面，可以在 <code>Firewall &gt; Rules &gt; &lt;指定的網路介面&gt;</code>找到她，關於這個問題搞了半天是防火牆預設 Firewall Deny All…意思上圖的 Rules 是表示全部不給過</p>
-<blockquote>
-<p>All incoming connections on this interface will be BLOCKED until PASS RULES are ADDED</p>
-</blockquote>
-<p><img src="/images/pfsense-16.png" alt=""></p>
-<p>所以你需要多一條 Rule</p>
-<ul>
-<li>Family: IPv4</li>
-<li>Protocol: any</li>
-<li>Source: any</li>
-<li>S Port: any</li>
-<li>Destination: any</li>
-<li>D Port: any</li>
-</ul>
-<p>基本上就會通了，其他 Rules 就是按照自己需求自己加就好</p>
-<h2 id="DHCP-相關"><a href="#DHCP-相關" class="headerlink" title="DHCP 相關"></a>DHCP 相關</h2><p>因為我個人 Lab 都不用 DHCP 都是手動配 IP，但最近 Red Hat OpenShift 4 安裝忽然要弄 DHCP，剛好 pfSense 也有支援 <a href="https://docs.netgate.com/pfsense/en/latest/dhcp/dhcp-server.html"><code>DHCP Static Mappings for this Interface</code></a>，所以做起來非常方便使用</p>
-<h2 id="還有更多嗎"><a href="#還有更多嗎" class="headerlink" title="還有更多嗎?"></a>還有更多嗎?</h2><p>除了以上基本的功能，如果是以 pfSense 為核心的架構，你也可以把以下服務放在上面都沒什麼問題</p>
-<ul>
-<li>Time Synchronization: ntp</li>
-<li>DNS: bind</li>
-<li>VPN: OpenVPN</li>
-</ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>雖然用 pfSense 自架自己用沒什麼太大問題，但如果是給小公司 (~10) 使用或者是 SMB，訂閱他們提供<a href="https://store.netgate.com/Global-Support-C320.aspx">軟體支援</a> 或產品會是一個比較完善的保護，倘若如果是大型企業的話，還是建議乖乖看商用方案比較好</p>
-<p>最後我想說，企業支持開源軟體的具體實踐，用原始碼或錢實際支持這些宅宅，幫助這些軟體永續經營，宅宅們也是需要吃飯喝水養家的</p>
-]]></content>
-      <categories>
-        <category>homecloud</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>linux</tag>
-        <tag>homecloud</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 年度個人回顧</title>
     <url>/20191231-2019-personal-review/</url>
     <content><![CDATA[<p>完整的日曆年過了，來個年度回顧紀錄</p>
@@ -4259,35 +4259,6 @@
       </tags>
   </entry>
   <entry>
-    <title>建立私有 Swagger UI 服務</title>
-    <url>/20200131-swagger-generator/</url>
-    <content><![CDATA[<p>想必常使用 RESTful API 開發的人對於好看好讀的 API Docs 有相當程度的需求，而眾多開源軟體中，最知名的框架就是 <code>Swagger</code> 這個框架，什麼？你說你不知道這是什麼，我相信你一定多多少少應該都有看過這個蠻經典的 <a href="http://petstore.swagger.io/">petstore.swagger.io</a> API 文件，本文就是要來梳理一下這 Swagger UI 要怎麼放到自家，用容器運行非常簡單</p>
-<p><img src="/images/swagger.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="Q-為什麼我需要在家裡建一個-Swagger-UI-Server"><a href="#Q-為什麼我需要在家裡建一個-Swagger-UI-Server" class="headerlink" title="Q: 為什麼我需要在家裡建一個 Swagger UI Server?"></a>Q: 為什麼我需要在家裡建一個 Swagger UI Server?</h2><p>petstore.swagger.io 是一個放在外網 Internet 上的服務供大家做<code>線上</code>使用，所以你只需要把你的 API Endpoints 指向到 Swagger 上，Swagger UI 會依據你提供的網址去拉取 OpenAPI Spec 回來做文件化顯示。</p>
-<p>但因為大多數企業端的服務都在內網 Intranet，所以放置在外網的 Swagger UI，是沒有辦法拉到相關的程式進行呈現，所以在內網內架設一個私有服務是有其必要性的</p>
-<h2 id="環境介紹"><a href="#環境介紹" class="headerlink" title="環境介紹"></a>環境介紹</h2><ul>
-<li>OS: Red Hat Enterprise Linux 7.7</li>
-<li>Container Runtime: podman 1.4.4</li>
-<li>Swagger Generator: 2.4.12</li>
-</ul>
-<h2 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h2><h3 id="Firewall-開通"><a href="#Firewall-開通" class="headerlink" title="Firewall 開通"></a>Firewall 開通</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
-
-<p>這邊是開啟 host 上的 80 port，如果要選擇其他的 port 也可以，請自行調整</p>
-<h3 id="確認版本及下載-Swagger-Generator"><a href="#確認版本及下載-Swagger-Generator" class="headerlink" title="確認版本及下載 Swagger-Generator"></a>確認版本及下載 Swagger-Generator</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 採用 Skopeo 來檢查現行有什麼標籤可以選，選擇當前最新的標籤 2.4.12</span></span><br><span class="line">yum install -y skopeo</span><br><span class="line">skopeo inspect docker://docker.io/swaggerapi/swagger-generator | jq <span class="string">&quot;.RepoTags&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下載 Container Image - swaggerapi/swagger-generator:2.4.12</span></span><br><span class="line">podman pull docker.io/swaggerapi/swagger-generator:2.4.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行</span></span><br><span class="line">podman run --rm -d \</span><br><span class="line">    -e GENERATOR_HOST=http://quay.misc.internal/api/v1/discovery \</span><br><span class="line">    -p 80:8080 \</span><br><span class="line">    docker.io/swaggerapi/swagger-generator:2.4.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打開你的瀏覽器 http://IP:80</span></span><br></pre></td></tr></table></figure>
-
-<p>如果各位比較習慣用 <code>docker</code> 的話，也可以自行將 <code>podman</code> 置換成 <code>docker</code> 指令，並沒有什麼問題；除此之外，因為現在執行的方式是關機後就消失，所以如果想要讓他開機啟動的話，可以參考這篇 <a href="https://gist.github.com/pichuang/7ce8be00c3de3f51e5c8db0689f1e08a">pichuang/etc_sysconfig_gitlab</a> 自行撰寫 Systemd Unit 來管理服務</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>openapi</tag>
-        <tag>swagger</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Red Hat OpenShift 4 特定節點 Label 更新</title>
     <url>/20200102-openshift-label-update/</url>
     <content><![CDATA[<p>以前的<a href="https://speakerdeck.com/pichuang/na-xie-nian-de-openshift-3-dot-11-rong-qi-ping-tai-ji-shu-xuan-xing-20190122?slide=11">演講 - 那些年的 OpenShift 3.11 容器平台技術選型_20190122
@@ -4352,6 +4323,35 @@
       <tags>
         <tag>openshift</tag>
         <tag>openshift4</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建立私有 Swagger UI 服務</title>
+    <url>/20200131-swagger-generator/</url>
+    <content><![CDATA[<p>想必常使用 RESTful API 開發的人對於好看好讀的 API Docs 有相當程度的需求，而眾多開源軟體中，最知名的框架就是 <code>Swagger</code> 這個框架，什麼？你說你不知道這是什麼，我相信你一定多多少少應該都有看過這個蠻經典的 <a href="http://petstore.swagger.io/">petstore.swagger.io</a> API 文件，本文就是要來梳理一下這 Swagger UI 要怎麼放到自家，用容器運行非常簡單</p>
+<p><img src="/images/swagger.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="Q-為什麼我需要在家裡建一個-Swagger-UI-Server"><a href="#Q-為什麼我需要在家裡建一個-Swagger-UI-Server" class="headerlink" title="Q: 為什麼我需要在家裡建一個 Swagger UI Server?"></a>Q: 為什麼我需要在家裡建一個 Swagger UI Server?</h2><p>petstore.swagger.io 是一個放在外網 Internet 上的服務供大家做<code>線上</code>使用，所以你只需要把你的 API Endpoints 指向到 Swagger 上，Swagger UI 會依據你提供的網址去拉取 OpenAPI Spec 回來做文件化顯示。</p>
+<p>但因為大多數企業端的服務都在內網 Intranet，所以放置在外網的 Swagger UI，是沒有辦法拉到相關的程式進行呈現，所以在內網內架設一個私有服務是有其必要性的</p>
+<h2 id="環境介紹"><a href="#環境介紹" class="headerlink" title="環境介紹"></a>環境介紹</h2><ul>
+<li>OS: Red Hat Enterprise Linux 7.7</li>
+<li>Container Runtime: podman 1.4.4</li>
+<li>Swagger Generator: 2.4.12</li>
+</ul>
+<h2 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h2><h3 id="Firewall-開通"><a href="#Firewall-開通" class="headerlink" title="Firewall 開通"></a>Firewall 開通</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
+
+<p>這邊是開啟 host 上的 80 port，如果要選擇其他的 port 也可以，請自行調整</p>
+<h3 id="確認版本及下載-Swagger-Generator"><a href="#確認版本及下載-Swagger-Generator" class="headerlink" title="確認版本及下載 Swagger-Generator"></a>確認版本及下載 Swagger-Generator</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 採用 Skopeo 來檢查現行有什麼標籤可以選，選擇當前最新的標籤 2.4.12</span></span><br><span class="line">yum install -y skopeo</span><br><span class="line">skopeo inspect docker://docker.io/swaggerapi/swagger-generator | jq <span class="string">&quot;.RepoTags&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下載 Container Image - swaggerapi/swagger-generator:2.4.12</span></span><br><span class="line">podman pull docker.io/swaggerapi/swagger-generator:2.4.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行</span></span><br><span class="line">podman run --rm -d \</span><br><span class="line">    -e GENERATOR_HOST=http://quay.misc.internal/api/v1/discovery \</span><br><span class="line">    -p 80:8080 \</span><br><span class="line">    docker.io/swaggerapi/swagger-generator:2.4.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打開你的瀏覽器 http://IP:80</span></span><br></pre></td></tr></table></figure>
+
+<p>如果各位比較習慣用 <code>docker</code> 的話，也可以自行將 <code>podman</code> 置換成 <code>docker</code> 指令，並沒有什麼問題；除此之外，因為現在執行的方式是關機後就消失，所以如果想要讓他開機啟動的話，可以參考這篇 <a href="https://gist.github.com/pichuang/7ce8be00c3de3f51e5c8db0689f1e08a">pichuang/etc_sysconfig_gitlab</a> 自行撰寫 Systemd Unit 來管理服務</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>openapi</tag>
+        <tag>swagger</tag>
       </tags>
   </entry>
   <entry>
@@ -5417,6 +5417,46 @@
       </tags>
   </entry>
   <entry>
+    <title>用 k9s 操作 OpenShift 4</title>
+    <url>/20200413-k9s-for-openshift/</url>
+    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
+<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
+<a id="more"></a>
+
+<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
+<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
+</blockquote>
+<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
+<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
+<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
+<li>k9s v0.19.1</li>
+<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
+</ul>
+<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
+
+<p>沒了 = =</p>
+<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
+<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
+<p><img src="/images/k9s-node-1.png" alt=""></p>
+<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
+<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
+<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
+<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>openshift</category>
+      </categories>
+      <tags>
+        <tag>openshift4</tag>
+        <tag>k9s</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</title>
     <url>/20200412-openshift-with-coreos-part-3/</url>
     <content><![CDATA[<p>承襲愛的走馬看花系列的亂寫亂紀錄優良傳統，繼續記錄操作，有興趣想要看前面的文章可以參考這兩邊</p>
@@ -5504,46 +5544,6 @@
         <tag>openshift4</tag>
         <tag>container</tag>
         <tag>coreos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用 k9s 操作 OpenShift 4</title>
-    <url>/20200413-k9s-for-openshift/</url>
-    <content><![CDATA[<p>OK…社群損友們跟我講了一個專案叫做 <code>k9s</code>，雖然不知道在幹嘛的，但秉持 OpenShift 完完全全就是個 Kuberentes 上游的精神直接裝裝看</p>
-<p><img src="https://k9scli.io/assets/k9s.png" alt=""></p>
-<a id="more"></a>
-
-<h2 id="k9s"><a href="#k9s" class="headerlink" title="k9s"></a>k9s</h2><blockquote>
-<p>Kubernetes CLI To Manage Your Clusters In Style!</p>
-</blockquote>
-<p>k9s 這個專案提供了一個 Terminal UI 來進行 Kubernetes 集群的管理。此專案目標主要是要簡化 Kubernetes 導航、觀察和管理放在上面的雲原生應用程式，並且持續監視 Kubernetes 的更改並提供一些指令可以讓你更方便管理集群</p>
-<h2 id="環境資訊"><a href="#環境資訊" class="headerlink" title="環境資訊"></a>環境資訊</h2><ul>
-<li>Red Hat OpenShift 4.3.9 (Kubernetes v1.16.2)</li>
-<li>k9s v0.19.1</li>
-<li>Red Hat Enterprise Linux 7.7 as bastion server</li>
-</ul>
-<h2 id="如何安裝"><a href="#如何安裝" class="headerlink" title="如何安裝?"></a>如何安裝?</h2><p>相當簡單，去 <code>https://github.com/derailed/k9s/releases</code> 選個版本，這邊選擇是 <code>v0.19.1</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/derailed/k9s/releases/download/v0.19.1/k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ tar zxvf k9s_Linux_x86_64.tar.gz</span><br><span class="line">$ mv k9s /usr/bin/</span><br><span class="line">$ k9s</span><br></pre></td></tr></table></figure>
-
-<p>沒了 = =</p>
-<h2 id="畫面截圖"><a href="#畫面截圖" class="headerlink" title="畫面截圖"></a>畫面截圖</h2><p>我只能說相當潮啊…</p>
-<h3 id="Node-截圖"><a href="#Node-截圖" class="headerlink" title="Node 截圖"></a>Node 截圖</h3><p><img src="/images/k9s-node.png" alt=""></p>
-<p><img src="/images/k9s-node-1.png" alt=""></p>
-<h3 id="Pods-截圖"><a href="#Pods-截圖" class="headerlink" title="Pods 截圖"></a>Pods 截圖</h3><p><img src="/images/k9s-pods.png" alt=""></p>
-<h3 id="Namespace-截圖"><a href="#Namespace-截圖" class="headerlink" title="Namespace 截圖"></a>Namespace 截圖</h3><p><img src="/images/k9s-namespace.png" alt=""></p>
-<h3 id="Pulses-截圖"><a href="#Pulses-截圖" class="headerlink" title="Pulses 截圖"></a>Pulses 截圖</h3><p><img src="/images/k9s-pulses.png" alt=""></p>
-<h3 id="Xray-截圖"><a href="#Xray-截圖" class="headerlink" title="Xray 截圖"></a>Xray 截圖</h3><p><img src="/images/k9s-xray.png" alt=""></p>
-<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>免責聲明一下，這個是 k9s 是社群專案，Red Hat 沒提供維護和技術支援，只是抓來試試而已</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="https://k9scli.io/">k9s - Kubernetes CLI To Manage Your Clusters In Style!</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>openshift</category>
-      </categories>
-      <tags>
-        <tag>openshift4</tag>
-        <tag>k9s</tag>
       </tags>
   </entry>
   <entry>
@@ -6764,6 +6764,9 @@
 <p>技術理由可以參考 <a href="https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration/">Containers are Linux</a> 那一個章節內容</p>
 <h3 id="Q11-宣告式或聲明式管理是什麼意思"><a href="#Q11-宣告式或聲明式管理是什麼意思" class="headerlink" title="Q11: 宣告式或聲明式管理是什麼意思?"></a>Q11: 宣告式或聲明式管理是什麼意思?</h3><p>只要你有需要把行李箱放置到這個社區內，都需要提出部署計畫 (Deployment) 給委員會審核，只要通過委員會審核，他們就會照你<code>事先聲明的計畫</code>，盡<code>最大可能性</code>放置行李箱</p>
 <p>所以，如果你有什麼變更計畫，都需要遞交一份新的部署計畫書出來，讓委員會重新審核和接受</p>
+<h3 id="Q12-規劃上，是不是都要每棟大樓的坪數-CPU-RAM-都要一樣-可以混用嗎"><a href="#Q12-規劃上，是不是都要每棟大樓的坪數-CPU-RAM-都要一樣-可以混用嗎" class="headerlink" title="Q12: 規劃上，是不是都要每棟大樓的坪數 (CPU/RAM) 都要一樣? 可以混用嗎?"></a>Q12: 規劃上，是不是都要每棟大樓的坪數 (CPU/RAM) 都要一樣? 可以混用嗎?</h3><p>可以混用，只是要注意每棟大樓本身還是有基本供給的水電費的部分需要維運，也就是作業系統啟動的基礎成本</p>
+<h3 id="Q13-承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎"><a href="#Q13-承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎" class="headerlink" title="Q13: 承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎"></a>Q13: 承上，那我不就建一個超大坪數的大樓就好了？還需要分大樓嗎</h3><p>實際上，依據不同廠商的設計，一棟大樓裡面最多可以塞的住戶 (Pod) 數量從 25 ~ 500 戶不等，而且這還牽扯到高可用性 (HA) 及水電資源 (Networking) 估算問題，因為也不是可以無限狂拉的好嗎…是有一個臨界值可以用計算機算出來的</p>
+<p>若你具備網路概論知識的話，知道 IP Subnet (或者知道如何用 IP 計算機)，可以參考 <a href="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/#%E4%BA%86%E8%A7%A3%E7%95%B6%E4%B8%8B%E7%B6%B2%E8%B7%AF%E8%B3%87%E8%A8%8A-Cluster-Network-Operator">了解當下網路資訊 - Cluster Network Operator</a> 部分，深入了解實際計算方式</p>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><blockquote>
 <p>Red Hat 就是個家 IT 版本的住戶社區建設公司，已經蓋了第四代的 Kubernetes，也就是 OpenShift 4</p>
 </blockquote>
