@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Windows 7 USB Download tool</title>
-    <url>/20140712-windows-7-usb-download-tool/</url>
-    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
-<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
-<a id="more"></a>
-
-<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
-<li><p>開啟 cmd</p>
-</li>
-<li><p>Format disk</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟 Windows 7 USB Download Tool 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>win7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TSCC 個人心得</title>
     <url>/20140416-tscc/</url>
     <content><![CDATA[<h2 id="TSCC-介紹"><a href="#TSCC-介紹" class="headerlink" title="TSCC 介紹"></a>TSCC 介紹</h2><p>很久以前參加過 TSCC(Taiwan Student Cluster Competiion) 比賽, 年代久遠, 趁有心情的時候來補一下兩年前的心得文. </p>
@@ -101,6 +76,31 @@
       <tags>
         <tag>event</tag>
         <tag>tscc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows 7 USB Download tool</title>
+    <url>/20140712-windows-7-usb-download-tool/</url>
+    <content><![CDATA[<p>現在製作 win7 USB 安裝碟變得十分容易, 只要下載 <a href="http://images2.store.microsoft.com/prod/clustera/framework/w7udt/1.0/en-us/Windows7-USB-DVD-tool.exe">Windows 7 USB Download Tool</a> 把 iso 放進去即可</p>
+<p>但很多時候會遇到一個問題 <code>We were unable to copy your files. Please check your USB device and the selected ISO file and try again.</code> 此時就需要對 USB 做 Format 的動作</p>
+<a id="more"></a>
+
+<h2 id="過程"><a href="#過程" class="headerlink" title="過程"></a>過程</h2><ol>
+<li><p>開啟 cmd</p>
+</li>
+<li><p>Format disk</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk //找尋你的 USB 位置, 假設disk 1為 USB  </span><br><span class="line">select disk 1  </span><br><span class="line">clean  </span><br><span class="line">create partition primary  </span><br><span class="line">active  </span><br><span class="line">format quick fs=fat32  </span><br><span class="line">assign  </span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟 Windows 7 USB Download Tool 即可</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>win7</tag>
       </tags>
   </entry>
   <entry>
@@ -260,57 +260,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Upgrade ONOS Cluster</title>
-    <url>/20160514-upgrade-onos-cluster/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
-<a id="more"></a>
-
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
-<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
-<li>Build Machine<ul>
-<li>MAC OSX 10.11.3</li>
-<li>Java 1.8.0</li>
-<li>Apache Karaf 3.0.5</li>
-<li>Apache Maven 3.3.9</li>
-<li>Misc<ul>
-<li>IP: 10.211.55.2</li>
-<li>Cell name: pichuang</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ONOS1 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.10</li>
-</ul>
-</li>
-<li>ONOS2 Machine<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 1.8.0</li>
-<li>User/Group: sdn/sdn</li>
-<li>IP: 10.211.55.11</li>
-</ul>
-</li>
-</ul>
-<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
-<ul>
-<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
-</ul>
-<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
-
-<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>sdn</tag>
-        <tag>onos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ONS 2016 之旅</title>
     <url>/20160423-open-networking-summit-2016/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 2016/2 - 2016/3 的時候，我接到了一個頗重的任務，目標是趕在 <a href="http://events.linuxfoundation.org/events/open-networking-summit">ONS 2016</a> 要把 <a href="http://onlab.us">ON.LAB</a> 所主導 SDN Controller 專案 <a href="http://onosproject.org">ONOS</a> 當中的一個 Use Case  <a href="https://wiki.onosproject.org/display/ONOS/SDN-IP">SDN-IP</a> 於台灣交通大學建立起來，並跟國際 REN (Research and Education Network) 連接在一起，專案執行時間不到一個月。</p>
@@ -366,6 +315,57 @@
       <tags>
         <tag>event</tag>
         <tag>ons</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Upgrade ONOS Cluster</title>
+    <url>/20160514-upgrade-onos-cluster/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接續上篇 <a href="http://blog.pichuang.com.tw/build-onos-cluster">Build ONOS Cluster</a>，部署運行後，總會需要打個 patch 升級一下，故本篇記錄該流程</p>
+<a id="more"></a>
+
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>接續上篇文章的環境，升級已經建好的 ONOS Cluster</p>
+<h2 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h2><ul>
+<li>Build Machine<ul>
+<li>MAC OSX 10.11.3</li>
+<li>Java 1.8.0</li>
+<li>Apache Karaf 3.0.5</li>
+<li>Apache Maven 3.3.9</li>
+<li>Misc<ul>
+<li>IP: 10.211.55.2</li>
+<li>Cell name: pichuang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ONOS1 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.10</li>
+</ul>
+</li>
+<li>ONOS2 Machine<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 1.8.0</li>
+<li>User/Group: sdn/sdn</li>
+<li>IP: 10.211.55.11</li>
+</ul>
+</li>
+</ul>
+<h3 id="Compile-ONOS-Source-Code-on-Build-Machine"><a href="#Compile-ONOS-Source-Code-on-Build-Machine" class="headerlink" title="Compile ONOS Source Code on Build Machine"></a>Compile ONOS Source Code on Build Machine</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;onos</span><br><span class="line">git pull # Pull latest source code</span><br><span class="line">git checkout onos-1.9 # Following 1.9 (Falcon) branch</span><br><span class="line">onos-buck build onos --show-output</span><br></pre></td></tr></table></figure>
+<ul>
+<li>For now, you can see the tarball in /tmp/onos-*.tar.gz</li>
+</ul>
+<h3 id="Deploy-ONOS-Package"><a href="#Deploy-ONOS-Package" class="headerlink" title="Deploy ONOS Package"></a>Deploy ONOS Package</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stc setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Check-ONOS-Latest-Version"><a href="#Check-ONOS-Latest-Version" class="headerlink" title="Check ONOS Latest Version"></a>Check ONOS Latest Version</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onos $OCI</span><br><span class="line">onos&gt; onos:summary</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>sdn</tag>
+        <tag>onos</tag>
       </tags>
   </entry>
   <entry>
@@ -1900,52 +1900,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
-    <url>/20180918-skopeo/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
-<p><img src="/images/skopeo.png" alt=""></p>
-<a id="more"></a>
-
-
-<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
-<p>現有的常見功能有:</p>
-<ul>
-<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
-</li>
-<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
-</li>
-<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
-</li>
-</ul>
-<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
-
-<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
-<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a href="http://cri-o.io/">CRI-O</a></li>
-<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
-<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>container</category>
-      </categories>
-      <tags>
-        <tag>container</tag>
-        <tag>skopeo</tag>
-        <tag>images</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 nmcli  設定 Bonding 或 Teaming</title>
     <url>/20180826-setup-bonding-and-teaming-using-nmcli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>過往我們多數會採用已不再維護的 net-tools 套件底下的 <code>ifconfig</code> 或具備比前者更豐富且有社群維護的 <code>ip</code> 來設定網路，但熟悉的管理者應該也會知道透過這些工具所執行的設定只是暫時性地，重開機就會不見了，那要如何在 Red Hat Enterprise Linux 7 (RHEL 7) 中設定永久地網路設定呢? 本文主要採用 <code>nmcli</code> 指令來設定 bonding 和 teaming</p>
@@ -2028,6 +1982,52 @@
         <tag>bonding</tag>
         <tag>teaming</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Skopeo: 管理 Container 映像檔及倉庫的方式</title>
+    <url>/20180918-skopeo/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>現行看倌們使用 Container Images 預設應該都是直接從 Docker Hub 直接拉下來做使用，那對於完全處於 Offline 環境的企業當中，勢必要建立一個 Container Images Repository Mirror (類似於 Yum/Apt repository mirror) 站供內部環境使用，而後則會延伸 Day 2 Operation 要如何管理這些 Images 或者是 Repository</p>
+<p><img src="/images/skopeo.png" alt=""></p>
+<a id="more"></a>
+
+
+<h2 id="簡介-Skopeo"><a href="#簡介-Skopeo" class="headerlink" title="簡介 Skopeo"></a>簡介 Skopeo</h2><p>Skopeo 就是一套 OpenSource 的工具可以協助管理跟操作 Container Images &amp; Repository，可與 Docker / <a href="http://cri-o.io/">CRI-O</a> 做協作，且<code>不需要任何 Daemon</code>即可管理或審視 Container Images 內部的資訊</p>
+<p>現有的常見功能有:</p>
+<ul>
+<li><p>Copy Images<br>常見情境就是我要如何將 Docker Hub 上的特定 Images 循正確的做法推送到自家的 Repository (e.g. <a href="https://blog.pichuang.com.tw/quay-enterprise-grade-images-registry/">Quay</a>)，Skopeo 就是專門在解決這件事</p>
+</li>
+<li><p>Inspecting a repository<br>Skopeo 可以遠端或本地抓某一個 Container Images 的 Metadata 回來看，效果類同於 <code>docker inspect</code>，好處是你不用真的把每一個 Images 都拉回來看內容</p>
+</li>
+<li><p>Delete Images<br>是的，可以遠端砍用不到的 Images，但我相信如果你有完整的 Repository 方案，這個功能應該比較少用就是了</p>
+</li>
+</ul>
+<h2 id="Day-2-Operation-探討"><a href="#Day-2-Operation-探討" class="headerlink" title="Day 2 Operation 探討"></a>Day 2 Operation 探討</h2><h3 id="1-如何從-Docker-Hub-複製-Images-到自家的倉庫去"><a href="#1-如何從-Docker-Hub-複製-Images-到自家的倉庫去" class="headerlink" title="1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?"></a>1. 如何從 Docker Hub 複製 Images 到自家的倉庫去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/library/nginx docker://quay.pichuang.local/pichuang/nginx --dest-creds pichuang:&lt;password or token&gt;</span><br><span class="line"></span><br><span class="line">Copying blob sha256:802b00ed6f79f48e6a5f44ecbcaf43563d6077aaecb565eee1dfc615c0b18c00</span><br><span class="line"> 21.44 MB / 21.44 MB [=====================================================] 20s</span><br><span class="line">Copying blob sha256:e9d0e0ea682bf3ccff3215d4fd1f577403b7d6ca05a9ea34a85fde6eda92e7b6</span><br><span class="line"> 21.16 MB / 21.16 MB [=====================================================] 14s</span><br><span class="line">Copying blob sha256:d8b7092b92215f6d5ed0a1c78928bb0b8e651948b15b30b71983bfb267725c72</span><br><span class="line"> 204 B / 204 B [============================================================] 5s</span><br><span class="line">Copying config sha256:06144b2878448774e55577ae7d66b5f43a87c2e44322b3884e4e6c70d070b262</span><br><span class="line"> 5.88 KB / 5.88 KB [========================================================] 5s</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Writing manifest to image destination</span><br><span class="line">Storing signatures</span><br></pre></td></tr></table></figure>
+
+<p>很簡單吧! 非常直觀地解釋，從 Docker Hub 複製 <code>library/nginx</code> 至需登入的私人倉庫 <code>quay.pichuang.local</code> 的 <code>pichuang/nginx</code> 裡面去</p>
+<h3 id="2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去"><a href="#2-如何從-Docker-Hub-複製-Private-Images-到自家的倉庫去" class="headerlink" title="2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?"></a>2. 如何從 Docker Hub 複製 Private Images 到自家的倉庫去?</h3><p>加個 <code>--src-creds</code> 就好</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker://docker.io/pichuang/secret docker://quay.pichuang.local/pichuang/secret --src-creds pichuang:&lt;password or token&gt; --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何從-Local-複製到某個-Repos-去"><a href="#3-如何從-Local-複製到某個-Repos-去" class="headerlink" title="3. 如何從 Local 複製到某個 Repos 去?"></a>3. 如何從 Local 複製到某個 Repos 去?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo copy docker-daemon:&lt;image name&gt;:&lt;tag&gt; docker://quay.pichuang.local/&lt;username&gt;/&lt;image name&gt;:latest --dest-creds pichuang:&lt;password or token&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-如何審視-Inspect-Image-Metadata"><a href="#4-如何審視-Inspect-Image-Metadata" class="headerlink" title="4. 如何審視 (Inspect) Image Metadata?"></a>4. 如何審視 (Inspect) Image Metadata?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">skopeo inspect docker://docker.io/library/nginx</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="string">&quot;docker.io/library/nginx&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RepoTags&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1-alpine-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1-perl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0-alpine&quot;</span>,</span><br><span class="line">        <span class="string">&quot;1.10.0&quot;</span>,</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-複製這件事沒有-Skopeo-之前是怎麼做的"><a href="#5-複製這件事沒有-Skopeo-之前是怎麼做的" class="headerlink" title="5. 複製這件事沒有 Skopeo 之前是怎麼做的?"></a>5. 複製這件事沒有 Skopeo 之前是怎麼做的?</h3><p>把 localhost 當作暫存點，上 tag 後轉送出去</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull docker.io/library/nginx</span><br><span class="line">docker tag docker.io/library/nginx quay.pichuang.local/pichuang/nginx</span><br><span class="line">docker push quay.pichuang.local/pichuang/nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://cri-o.io/">CRI-O</a></li>
+<li><a href="https://github.com/containers/skopeo">GitHub - Container/Skopeo</a></li>
+<li><a href="http://redhatgov.io/workshops/security_openshift/exercise1.4/">RedHat Gov - Exercise 1.4 - Skopeo</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>container</category>
+      </categories>
+      <tags>
+        <tag>container</tag>
+        <tag>skopeo</tag>
+        <tag>images</tag>
       </tags>
   </entry>
   <entry>
@@ -4025,37 +4025,6 @@
       </tags>
   </entry>
   <entry>
-    <title>自定義 QCOW2 映像檔</title>
-    <url>/20191118-self-defined-qcow2/</url>
-    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
-<a id="more"></a>
-
-<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
-
-<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>infra</category>
-      </categories>
-      <tags>
-        <tag>infra</tag>
-        <tag>qcow</tag>
-        <tag>kvm</tag>
-        <tag>libvirt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2019 大改造宅宅雲架構系列文-4 pfSense</title>
     <url>/20191116-homelcloud-high-level-design-4/</url>
     <content><![CDATA[<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
@@ -4125,6 +4094,37 @@
         <tag>infra</tag>
         <tag>linux</tag>
         <tag>homecloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定義 QCOW2 映像檔</title>
+    <url>/20191118-self-defined-qcow2/</url>
+    <content><![CDATA[<p>virt-customize 主要是協助自定義 QCOW2 (QEMU Copy On Write) 映像檔的工具，由 <code>libguestfs-tools</code> 提供檔案。該格式經常用於 KVM、OpenStack、oVirt 等以 KVM 為基礎的虛擬化平台，該修改方式也為 Red Hat 官方所正式支援的方式，本文將提供下列常用自定義 qcow2 映像檔之指令使用方式</p>
+<a id="more"></a>
+
+<h2 id="安裝-virt-customize"><a href="#安裝-virt-customize" class="headerlink" title="安裝 virt-customize"></a>安裝 virt-customize</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y libvirt libguestfs libguestfs-tools</span><br><span class="line">virt-customize -V </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-更新-root-密碼"><a href="#1-更新-root-密碼" class="headerlink" title="1. 更新 root 密碼"></a>1. 更新 root 密碼</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:&lt;YOUR PASSWORD&gt;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --root-password password:root</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-執行特定指令"><a href="#2-執行特定指令" class="headerlink" title="2. 執行特定指令"></a>2. 執行特定指令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command &#x27;&lt;COMMAND&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --run-command <span class="string">&#x27;subscription-manager repos --disabled=*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-安裝特定套件"><a href="#3-安裝特定套件" class="headerlink" title="3. 安裝特定套件"></a>3. 安裝特定套件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --install vim,git,wget,curl,htop</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-上傳檔案"><a href="#4-上傳檔案" class="headerlink" title="4. 上傳檔案"></a>4. 上傳檔案</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --upload redhat.repo:/etc/yum.repos.d/redhat.repo</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-設定時區"><a href="#5-設定時區" class="headerlink" title="5. 設定時區"></a>5. 設定時區</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">virt-customize -a .&#x2F;rhel-server-7.7-update-2-x86_64-kvm.qcow2  --timezone &quot;Asia&#x2F;Taipei&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-上傳-SSH-Public-Key"><a href="#6-上傳-SSH-Public-Key" class="headerlink" title="6. 上傳 SSH Public Key"></a>6. 上傳 SSH Public Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --ssh-inject root:file:./id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Relabel-SELinux"><a href="#7-Relabel-SELinux" class="headerlink" title="7. Relabel SELinux"></a>7. Relabel SELinux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virt-customize -a ./rhel-server-7.7-update-2-x86_64-kvm.qcow2 --selinux-relabel</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>infra</category>
+      </categories>
+      <tags>
+        <tag>infra</tag>
+        <tag>qcow</tag>
+        <tag>kvm</tag>
+        <tag>libvirt</tag>
       </tags>
   </entry>
   <entry>
@@ -6646,8 +6646,7 @@
   <entry>
     <title>2020 年度個人回顧</title>
     <url>/20201231-2020-personal-review/</url>
-    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄，下圖應該是本年度代表之作了</p>
-<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
+    <content><![CDATA[<p>又一個完整的日曆年過了，來個年度回顧紀錄</p>
 <a id="more"></a>
 
 <p>雖然 2020 年是深受疫情滋擾的一年，感覺應該啥事都沒做，但透過回顧，發現我還做了不少事情…</p>
@@ -6685,6 +6684,8 @@
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體時間分配上，今年整體感覺是覺得專業技術略微下降，但多出的時間讓身體變得超級健康，沒因為疫情的關係導致自己的生活裹足不前，勉強可以接受</p>
 <p>整體 $$ 分配上，因為疫情的關係導致一堆事情都在家裡做，也加強了一些個人能力 (英文、健身、飲食) 提升的教育訓練，比去年生活更花錢 = =</p>
 <p>整體運氣上，今年學到，往後有任何人生難題，都去台北行天宮收個驚，然後抽個籤，快速調整一下心態蠻有效果的，今年人生最混沌的狀態下，抽到了一個<a href="https://www.instagram.com/p/CF4BwsjBUwg/?utm_source=ig_web_copy_link">大吉</a>和<a href="https://www.instagram.com/p/CFHYiNlhYyQ/?utm_source=ig_web_copy_link">上吉</a>的籤，還蠻穩的</p>
+<p>下圖應該是本年度代表之作了</p>
+<p><img src="/images/2020-personal-review-2.jpg" alt=""></p>
 ]]></content>
       <categories>
         <category>misc</category>
