@@ -1,0 +1,2105 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open Knowledge, Open Source, Open Mind">
+      
+      
+        <meta name="author" content="Phil Huang">
+      
+      
+        <link rel="canonical" href="https://blog.pichuang.com.tw/wiki/istio-and-aks-unmanaged-path/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3+insiders-4.49.2">
+    
+    
+      
+        <title>Tips and Trick: Istio and Azure Kubernetes Service (Unmanaged Path) - Phil's Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.67c3bdf0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:300,300i,400,400i,700,700i%7COverpass+Mono+SemiBold:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans";--md-code-font:"Overpass Mono SemiBold"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-8MQRY98QB2"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-8MQRY98QB2",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-8MQRY98QB2",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tips-and-trick-istio-and-azure-kubernetes-service-unmanaged-path" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  <a href="https://www.youtube.com/@pichuang-tw" style="color:white;">
+    For updates follow <strong>@pichuang-tw</strong> on
+    <strong>YouTube Channel 🎥 </strong>
+  </a>
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Phil's Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tips and Trick: Istio and Azure Kubernetes Service (Unmanaged Path)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Wiki
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../azure-subnets/" class="md-tabs__link">
+          
+  
+    
+  
+  Azure Visual Subnet Calculator
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/" class="md-tabs__link">
+          
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    Phil's Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../archive/2019/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    azure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/container/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/homecloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    homecloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/misc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/networking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/o11y/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    o11y
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/openai/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openai
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/openshift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openshift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/personal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    personal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/sla/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../category/sustainability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sustainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Authors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../author/url/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Phil Huang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wiki
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure Visual Subnet Calculator
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Azure Visual Subnet Calculator
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../azure-subnets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Subnet Calculator (Azure Edition)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Who is Phil Huang?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recording/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Recording
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tips-and-trick-istio-and-azure-kubernetes-service-unmanaged-path">Tips and Trick: Istio and Azure Kubernetes Service (Unmanaged Path)</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Istio Compenets</th>
+<th style="text-align: center;">Managed by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">istiod</td>
+<td style="text-align: center;">Azure Managed</td>
+</tr>
+<tr>
+<td style="text-align: center;">istio-ingressgateway</td>
+<td style="text-align: center;">Azure Managed</td>
+</tr>
+<tr>
+<td style="text-align: center;">istio-egressgateway</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: center;">prometheus</td>
+<td style="text-align: center;">OSS</td>
+</tr>
+<tr>
+<td style="text-align: center;">grafana</td>
+<td style="text-align: center;">OSS</td>
+</tr>
+<tr>
+<td style="text-align: center;">jaeger</td>
+<td style="text-align: center;">OSS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enable-istio-ingress-gateway">Enable istio-ingress-gateway</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>az<span class="w"> </span>aks<span class="w"> </span>mesh<span class="w"> </span>enable-ingress-gateway<span class="w"> </span>--resource-group<span class="w"> </span>rg-poc-aks<span class="w"> </span>--name<span class="w"> </span>poc-aks<span class="w"> </span>--ingress-gateway-type<span class="w"> </span>external
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST_INTERNAL</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>aks-istio-ingress<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>aks-istio-ingressgateway-external<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[0].ip}&#39;</span><span class="k">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT_INTERNAL</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>aks-istio-ingress<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>aks-istio-ingressgateway-external<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.ports[?(@.name==&quot;http2&quot;)].port}&#39;</span><span class="k">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GATEWAY_URL_INTERNAL</span><span class="o">=</span><span class="nv">$INGRESS_HOST_INTERNAL</span>:<span class="nv">$INGRESS_PORT_INTERNAL</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$GATEWAY_URL_INTERNAL</span>
+</code></pre></div>
+<h2 id="dashboard">Dashboard</h2>
+<p><img alt="" src="/images/istio-controlz.png" /></p>
+<div class="highlight"><span class="filename">ControlZ</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>NAME<span class="w">                               </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>131m
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>istiod-asm-1-17-6889d9d6c5-vqrq8<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>132m
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>controlz<span class="w"> </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w"> </span>--browser<span class="w"> </span><span class="nb">false</span><span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>http://localhost:9876
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Failed<span class="w"> </span>to<span class="w"> </span>open<span class="w"> </span>browser<span class="p">;</span><span class="w"> </span>open<span class="w"> </span>http://localhost:9876<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>browser.
+</code></pre></div>
+<div class="highlight"><span class="filename">Envoy</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># istioctl dashboard envoy [&lt;type&gt;/]&lt;name&gt;[.&lt;namespace&gt;] [flags]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>envoy<span class="w"> </span>details-v1-7c7dbcb4b5-8v2dh.default
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>http://localhost:15000
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Failed<span class="w"> </span>to<span class="w"> </span>open<span class="w"> </span>browser<span class="p">;</span><span class="w"> </span>open<span class="w"> </span>http://localhost:15000<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>browser.
+</code></pre></div>
+<div class="highlight"><span class="filename">Prometheus</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>wget<span class="w"> </span>https://raw.githubusercontent.com/istio/istio/release-1.17/samples/addons/prometheus.yaml<span class="w"> </span>-O<span class="w"> </span>aks-prometheus.yaml
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/istio-system/aks-istio-system/g&#39;</span><span class="w"> </span>aks-prometheus.yaml
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>$<span class="w"> </span>grep<span class="w"> </span>istio-system<span class="w"> </span>aks-prometheus.yaml
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aks-prometheus.yaml
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>serviceaccount/prometheus<span class="w"> </span>created
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>configmap/prometheus<span class="w"> </span>created
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>clusterrole.rbac.authorization.k8s.io/prometheus<span class="w"> </span>unchanged
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>clusterrolebinding.rbac.authorization.k8s.io/prometheus<span class="w"> </span>configured
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>service/prometheus<span class="w"> </span>created
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>deployment.apps/prometheus<span class="w"> </span>created
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>NAME<span class="w">              </span>TYPE<span class="w">        </span>CLUSTER-IP<span class="w">    </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                                 </span>AGE
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>istiod-asm-1-17<span class="w">   </span>ClusterIP<span class="w">   </span><span class="m">10</span>.0.98.209<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">15010</span>/TCP,15012/TCP,443/TCP,15014/TCP<span class="w">   </span>10h
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>prometheus<span class="w">        </span>ClusterIP<span class="w">   </span><span class="m">10</span>.0.219.2<span class="w">    </span>&lt;none&gt;<span class="w">        </span><span class="m">9090</span>/TCP<span class="w">                                </span>43s
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>prometheus<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>http://localhost:9090
+</code></pre></div>
+<div class="highlight"><span class="filename">Grafana</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>wget<span class="w"> </span>https://raw.githubusercontent.com/istio/istio/release-1.17/samples/addons/grafana.yaml<span class="w"> </span>-O<span class="w"> </span>aks-grafana.yaml
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/istio-system/aks-istio-system/g&#39;</span><span class="w"> </span>aks-grafana.yaml
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aks-grafana.yaml
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>serviceaccount/grafana<span class="w"> </span>created
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>configmap/grafana<span class="w"> </span>created
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>service/grafana<span class="w"> </span>created
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>deployment.apps/grafana<span class="w"> </span>created
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>configmap/istio-grafana-dashboards<span class="w"> </span>created
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>configmap/istio-services-grafana-dashboards<span class="w"> </span>created
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>grafana<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>http://localhost:3000
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="sb">``````</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="sb">```</span>bash<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Jaeger&quot;</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>$<span class="w"> </span>wget<span class="w"> </span>https://raw.githubusercontent.com/istio/istio/release-1.17/samples/addons/jaeger.yaml<span class="w"> </span>-O<span class="w"> </span>aks-jaeger.yaml
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>$<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/istio-system/aks-istio-system/g&#39;</span><span class="w"> </span>aks-jaeger.yaml
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aks-jaeger.yaml
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>deployment.apps/jaeger<span class="w"> </span>created
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>service/tracing<span class="w"> </span>created
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>service/zipkin<span class="w"> </span>created
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>service/jaeger-collector<span class="w"> </span>created
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>jaeger<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>http://localhost:16686
+</code></pre></div>
+<div class="highlight"><span class="filename">Kiali</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>wget<span class="w"> </span>https://raw.githubusercontent.com/istio/istio/release-1.17/samples/addons/kiali.yaml<span class="w"> </span>-O<span class="w"> </span>aks-kiali.yaml
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/istio-system/aks-istio-system/g&#39;</span><span class="w"> </span>aks-kiali.yaml
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>$<span class="w"> </span>grep<span class="w"> </span>istio-system<span class="w"> </span>aks-kiali.yaml
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span>root_namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span>istio_namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">  </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># https://kiali.io/docs/configuration/kialis.kiali.io/</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">  </span>spec:
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span>external_services:
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">      </span>custom_dashboards:
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">        </span>enabled:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">      </span>istio:
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">        </span>root_namespace:<span class="w"> </span><span class="s2">&quot;aks-istio-system&quot;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">        </span>config_map_name:<span class="w"> </span><span class="s2">&quot;istio-asm-1-17&quot;</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">        </span>istio_api_enabled:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span>istiod_deployment_name:<span class="w"> </span><span class="s2">&quot;istiod-asm-1-17&quot;</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">        </span>istiod_pod_monitoring_port:<span class="w"> </span><span class="m">15014</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">        </span>component_status:
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">          </span>enabled:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">          </span>components:
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">          </span>-<span class="w"> </span>app_label:<span class="w"> </span><span class="s2">&quot;istiod&quot;</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">            </span>is_core:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">            </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">          </span>-<span class="w"> </span>app_label:<span class="w"> </span><span class="s2">&quot;aks-istio-ingressgateway-external&quot;</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">            </span>is_core:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">            </span>namespace:<span class="w"> </span>aks-istio-ingress
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">          </span>-<span class="w"> </span>app_label:<span class="w"> </span><span class="s2">&quot;istio-egressgateway&quot;</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="w">            </span>is_core:<span class="w"> </span><span class="nb">false</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="w">            </span>namespace:<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">      </span>prometheus:
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="w">        </span>health_check_url:<span class="w"> </span>http://prometheus.aks-istio-system:9090/-/healthy
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="w">        </span>url:<span class="w"> </span>http://prometheus.aks-istio-system:9090/
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="w">      </span>tracing:
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="w">        </span>enabled:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">        </span>health_check_url:<span class="w"> </span>http://tracing.aks-istio-system:14269/
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="w">        </span>in_cluster_url:<span class="w"> </span>http://tracing.aks-istio-system:16685/
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a><span class="w">        </span>url:<span class="w"> </span>http://tracing.aks-istio-system:16685/
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="w">      </span>grafana:
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a><span class="w">        </span>in_cluster_url:<span class="w"> </span>http://grafana.aks-istio-system:3000/
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">        </span>health_check_url:<span class="w"> </span>http://grafana.aks-istio-system:3000/api/health
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="w">        </span>url:<span class="w"> </span>http://grafana.aks-istio-system:3000/
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="w">        </span>enabled:<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="w">        </span>dashboards:
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Service Dashboard&quot;</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="w">          </span>variables:
+<a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="w">            </span>namespace:<span class="w"> </span><span class="s2">&quot;var-namespace&quot;</span>
+<a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="w">            </span>service:<span class="w"> </span><span class="s2">&quot;var-service&quot;</span>
+<a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Workload Dashboard&quot;</span>
+<a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="w">          </span>variables:
+<a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="w">            </span>namespace:<span class="w"> </span><span class="s2">&quot;var-namespace&quot;</span>
+<a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="w">            </span>workload:<span class="w"> </span><span class="s2">&quot;var-workload&quot;</span>
+<a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Mesh Dashboard&quot;</span>
+<a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Control Plane Dashboard&quot;</span>
+<a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Performance Dashboard&quot;</span>
+<a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span><span class="s2">&quot;Istio Wasm Extension Dashboard&quot;</span>
+<a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a>
+<a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aks-kiali.yaml
+<a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a>serviceaccount/kiali<span class="w"> </span>created
+<a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a>configmap/kiali<span class="w"> </span>created
+<a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a>clusterrole.rbac.authorization.k8s.io/kiali-viewer<span class="w"> </span>created
+<a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a>clusterrole.rbac.authorization.k8s.io/kiali<span class="w"> </span>created
+<a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a>clusterrolebinding.rbac.authorization.k8s.io/kiali<span class="w"> </span>created
+<a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a>role.rbac.authorization.k8s.io/kiali-controlplane<span class="w"> </span>created
+<a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a>rolebinding.rbac.authorization.k8s.io/kiali-controlplane<span class="w"> </span>created
+<a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a>service/kiali<span class="w"> </span>created
+<a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a>deployment.apps/kiali<span class="w"> </span>created
+<a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a>
+<a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a>$<span class="w"> </span>kubectl<span class="w"> </span>-n<span class="w"> </span>aks-istio-system<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment/kiali
+<a id="__codelineno-6-78" name="__codelineno-6-78" href="#__codelineno-6-78"></a>deployment.apps/kiali<span class="w"> </span>restarted
+<a id="__codelineno-6-79" name="__codelineno-6-79" href="#__codelineno-6-79"></a>
+<a id="__codelineno-6-80" name="__codelineno-6-80" href="#__codelineno-6-80"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>dashboard<span class="w"> </span>kiali<span class="w"> </span>-n<span class="w"> </span>aks-istio-system
+<a id="__codelineno-6-81" name="__codelineno-6-81" href="#__codelineno-6-81"></a>http://localhost:20001/kiali
+<a id="__codelineno-6-82" name="__codelineno-6-82" href="#__codelineno-6-82"></a>Failed<span class="w"> </span>to<span class="w"> </span>open<span class="w"> </span>browser<span class="p">;</span><span class="w"> </span>open<span class="w"> </span>http://localhost:20001/kiali<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>browser.
+</code></pre></div>
+<h2 id="overall-health-check">Overall Health Check</h2>
+<div class="highlight"><span class="filename">Istio Version</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>version
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>client<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.18.1
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>control<span class="w"> </span>plane<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.17-dev
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>data<span class="w"> </span>plane<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.17.2-distroless<span class="w"> </span><span class="o">(</span><span class="m">6</span><span class="w"> </span>proxies<span class="o">)</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Verifying connectivity to Istiod</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>wget<span class="w"> </span>https://raw.githubusercontent.com/istio/istio/master/samples/sleep/sleep.yaml
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>$<span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>foo
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>namespace/foo<span class="w"> </span>created
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>&lt;<span class="o">(</span>istioctl<span class="w"> </span>kube-inject<span class="w"> </span>-f<span class="w"> </span>./sleep.yaml<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>-r<span class="w"> </span>asm-1-17<span class="o">)</span><span class="w"> </span>-n<span class="w"> </span>foo
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>serviceaccount/sleep<span class="w"> </span>created
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>service/sleep<span class="w"> </span>created
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>deployment.apps/sleep<span class="w"> </span>created
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>sleep<span class="w"> </span>-n<span class="w"> </span>foo<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">={</span>.items..metadata.name<span class="o">}</span><span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>sleep<span class="w"> </span>-n<span class="w"> </span>foo<span class="w"> </span>--<span class="w"> </span>curl<span class="w"> </span>-sS<span class="w"> </span>istiod-asm-1-17.aks-istio-system:15014/version
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="m">1</span>.17-dev-3e857775086a061d12ee445f32a0b35ea17c8488-Clean
+</code></pre></div>
+<div class="highlight"><span class="filename">Get an overview of your mesh</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Usage: istioctl proxy-status [&lt;type&gt;/]&lt;name&gt;[.&lt;namespace&gt;] [flags]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-status
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>NAME<span class="w">                                       </span>CLUSTER<span class="w">        </span>CDS<span class="w">        </span>LDS<span class="w">        </span>EDS<span class="w">        </span>RDS<span class="w">        </span>ECDS<span class="w">         </span>ISTIOD<span class="w">                               </span>VERSION
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>details-v1-7c7dbcb4b5-8v2dh.default<span class="w">        </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">     </span><span class="m">1</span>.17.2-distroless
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>productpage-v1-6c5c9c9d9-plq9r.default<span class="w">     </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">     </span><span class="m">1</span>.17.2-distroless
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>ratings-v1-844796bf85-tbshm.default<span class="w">        </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-vqrq8<span class="w">     </span><span class="m">1</span>.17.2-distroless
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>reviews-v1-5cf854487-6qg5p.default<span class="w">         </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">     </span><span class="m">1</span>.17.2-distroless
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>reviews-v2-955b74755-gq8r5.default<span class="w">         </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">     </span><span class="m">1</span>.17.2-distroless
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>reviews-v3-797fc48bc9-svx59.default<span class="w">        </span>Kubernetes<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>SYNCED<span class="w">     </span>NOT<span class="w"> </span>SENT<span class="w">     </span>istiod-asm-1-17-6889d9d6c5-mkwsd<span class="w">     </span><span class="m">1</span>.17.2-distroless
+</code></pre></div>
+<div class="highlight"><span class="filename">analyze your current live Kubernetes cluster by running</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>analyze<span class="w"> </span>--revision<span class="w"> </span><span class="m">1</span>-17<span class="w"> </span>--namespace<span class="w"> </span>default
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>✔<span class="w"> </span>No<span class="w"> </span>validation<span class="w"> </span>issues<span class="w"> </span>found<span class="w"> </span>when<span class="w"> </span>analyzing<span class="w"> </span>namespace:<span class="w"> </span>default.
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>analyze<span class="w"> </span>--revision<span class="w"> </span><span class="m">1</span>-17<span class="w"> </span>--all-namespaces
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Info<span class="w"> </span><span class="o">[</span>IST0102<span class="o">]</span><span class="w"> </span><span class="o">(</span>Namespace<span class="w"> </span>aks-command<span class="o">)</span><span class="w"> </span>The<span class="w"> </span>namespace<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>enabled<span class="w"> </span><span class="k">for</span><span class="w"> </span>Istio<span class="w"> </span>injection.<span class="w"> </span>Run<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-command istio-injection=enabled&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-command istio-injection=disabled&#39;</span><span class="w"> </span>to<span class="w"> </span>explicitly<span class="w"> </span>mark<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>needing<span class="w"> </span>injection.
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>Info<span class="w"> </span><span class="o">[</span>IST0102<span class="o">]</span><span class="w"> </span><span class="o">(</span>Namespace<span class="w"> </span>aks-istio-ingress<span class="o">)</span><span class="w"> </span>The<span class="w"> </span>namespace<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>enabled<span class="w"> </span><span class="k">for</span><span class="w"> </span>Istio<span class="w"> </span>injection.<span class="w"> </span>Run<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-istio-ingress istio-injection=enabled&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-istio-ingress istio-injection=disabled&#39;</span><span class="w"> </span>to<span class="w"> </span>explicitly<span class="w"> </span>mark<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>needing<span class="w"> </span>injection.
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>Info<span class="w"> </span><span class="o">[</span>IST0102<span class="o">]</span><span class="w"> </span><span class="o">(</span>Namespace<span class="w"> </span>aks-istio-system<span class="o">)</span><span class="w"> </span>The<span class="w"> </span>namespace<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>enabled<span class="w"> </span><span class="k">for</span><span class="w"> </span>Istio<span class="w"> </span>injection.<span class="w"> </span>Run<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-istio-system istio-injection=enabled&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;kubectl label namespace aks-istio-system istio-injection=disabled&#39;</span><span class="w"> </span>to<span class="w"> </span>explicitly<span class="w"> </span>mark<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>needing<span class="w"> </span>injection.
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Info<span class="w"> </span><span class="o">[</span>IST0102<span class="o">]</span><span class="w"> </span><span class="o">(</span>Namespace<span class="w"> </span>foo<span class="o">)</span><span class="w"> </span>The<span class="w"> </span>namespace<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>enabled<span class="w"> </span><span class="k">for</span><span class="w"> </span>Istio<span class="w"> </span>injection.<span class="w"> </span>Run<span class="w"> </span><span class="s1">&#39;kubectl label namespace foo istio-injection=enabled&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>it,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;kubectl label namespace foo istio-injection=disabled&#39;</span><span class="w"> </span>to<span class="w"> </span>explicitly<span class="w"> </span>mark<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>needing<span class="w"> </span>injection.
+</code></pre></div>
+<div class="highlight"><span class="filename">Analyzing live clusters, local files, or both</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>$<span class="w"> </span>ls
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>app-v1.yaml<span class="w">  </span>app-v2.yaml<span class="w">  </span>gateway.yaml<span class="w">  </span>grafana-ab-testing.png<span class="w">  </span>README.md<span class="w">  </span>virtualservice-match.yaml<span class="w">  </span>virtualservice-weight.yaml<span class="w">  </span>virtualservice-wildcard.yaml
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>$<span class="w"> </span>istioctl<span class="w"> </span>analyze<span class="w"> </span>./*
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Skipping<span class="w"> </span>file<span class="w"> </span>./grafana-ab-testing.png,<span class="w"> </span>recognized<span class="w"> </span>file<span class="w"> </span>extensions<span class="w"> </span>are:<span class="w"> </span><span class="o">[</span>.json<span class="w"> </span>.yaml<span class="w"> </span>.yml<span class="o">]</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>Skipping<span class="w"> </span>file<span class="w"> </span>./README.md,<span class="w"> </span>recognized<span class="w"> </span>file<span class="w"> </span>extensions<span class="w"> </span>are:<span class="w"> </span><span class="o">[</span>.json<span class="w"> </span>.yaml<span class="w"> </span>.yml<span class="o">]</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>✔<span class="w"> </span>No<span class="w"> </span>validation<span class="w"> </span>issues<span class="w"> </span>found<span class="w"> </span>when<span class="w"> </span>analyzing<span class="w"> </span>./app-v1.yaml
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>./app-v2.yaml
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>./gateway.yaml
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>./virtualservice-match.yaml
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>./virtualservice-weight.yaml
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>./virtualservice-wildcard.yaml.
+</code></pre></div>
+<div class="highlight"><span class="filename">Verify sidecar injection</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Pod</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>experimental<span class="w"> </span>check-inject<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r.default
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>WEBHOOK<span class="w">                                           </span>REVISION<span class="w">  </span>INJECTED<span class="w">      </span>REASON
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>istio-sidecar-injector-asm-1-17-aks-istio-system<span class="w">  </span>asm-1-17<span class="w">  </span>✔<span class="w">             </span>Namespace<span class="w"> </span>label<span class="w"> </span>istio.io/rev<span class="o">=</span>asm-1-17<span class="w"> </span>matches
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Deployment</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>experimental<span class="w"> </span>check-inject<span class="w"> </span>deployment/productpage-v1.default
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>WEBHOOK<span class="w">                                           </span>REVISION<span class="w">  </span>INJECTED<span class="w">      </span>REASON
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>istio-sidecar-injector-asm-1-17-aks-istio-system<span class="w">  </span>asm-1-17<span class="w">  </span>✔<span class="w">             </span>Namespace<span class="w"> </span>label<span class="w"> </span>istio.io/rev<span class="o">=</span>asm-1-17<span class="w"> </span>matches
+</code></pre></div>
+<div class="highlight"><span class="filename">Understand your Mesh with Istioctl Describe</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>experimental<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r.default
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Pod:<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">   </span>Pod<span class="w"> </span>Revision:<span class="w"> </span>asm-1-17
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">   </span>Pod<span class="w"> </span>Ports:<span class="w"> </span><span class="m">9080</span><span class="w"> </span><span class="o">(</span>productpage<span class="o">)</span>,<span class="w"> </span><span class="m">15090</span><span class="w"> </span><span class="o">(</span>istio-proxy<span class="o">)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>--------------------
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Service:<span class="w"> </span>productpage
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">   </span>Port:<span class="w"> </span>http<span class="w"> </span><span class="m">9080</span>/HTTP<span class="w"> </span>targets<span class="w"> </span>pod<span class="w"> </span>port<span class="w"> </span><span class="m">9080</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>--------------------
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Effective<span class="w"> </span>PeerAuthentication:
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">   </span>Workload<span class="w"> </span>mTLS<span class="w"> </span>mode:<span class="w"> </span>PERMISSIVE
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>Skipping<span class="w"> </span>Gateway<span class="w"> </span>information<span class="w"> </span><span class="o">(</span>no<span class="w"> </span>ingress<span class="w"> </span>gateway<span class="w"> </span>pods<span class="o">)</span>
+</code></pre></div>
+<h2 id="deep-dive-into-envoy-configuration">Deep dive into Envoy configuration</h2>
+<div class="highlight"><span class="filename">What Envoy version is Istio using?</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r<span class="w"> </span>-c<span class="w"> </span>istio-proxy<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>--<span class="w"> </span>pilot-agent<span class="w"> </span>request<span class="w"> </span>GET<span class="w"> </span>server_info<span class="w"> </span>--log_as_json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="o">{</span>version<span class="o">}</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="o">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="s2">&quot;version&quot;</span>:<span class="w"> </span><span class="s2">&quot;d799381810ae54f1cccb2a9ae79d9c6191ca2c83/1.25.4-dev/Clean/RELEASE/BoringSSL&quot;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Retrieve summary about cluster configuration for a given pod from Envoy.</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># istioctl proxy-config clusters &lt;pod-name[.namespace]&gt;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-config<span class="w"> </span>cluster<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r.default
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>SERVICE<span class="w"> </span>FQDN<span class="w">                                                  </span>PORT<span class="w">      </span>SUBSET<span class="w">     </span>DIRECTION<span class="w">     </span>TYPE<span class="w">             </span>DESTINATION<span class="w"> </span>RULE
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">                                                              </span><span class="m">9080</span><span class="w">      </span>-<span class="w">          </span>inbound<span class="w">       </span>ORIGINAL_DST
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>BlackHoleCluster<span class="w">                                              </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STATIC
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>InboundPassthroughClusterIpv4<span class="w">                                 </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>ORIGINAL_DST
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>PassthroughCluster<span class="w">                                            </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>ORIGINAL_DST
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>agent<span class="w">                                                         </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STATIC
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>ama-metrics-ksm.kube-system.svc.cluster.local<span class="w">                 </span><span class="m">8080</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>details.default.svc.cluster.local<span class="w">                             </span><span class="m">9080</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>istiod-asm-1-17.aks-istio-system.svc.cluster.local<span class="w">            </span><span class="m">443</span><span class="w">       </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>istiod-asm-1-17.aks-istio-system.svc.cluster.local<span class="w">            </span><span class="m">15010</span><span class="w">     </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>istiod-asm-1-17.aks-istio-system.svc.cluster.local<span class="w">            </span><span class="m">15012</span><span class="w">     </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>istiod-asm-1-17.aks-istio-system.svc.cluster.local<span class="w">            </span><span class="m">15014</span><span class="w">     </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>kube-dns.kube-system.svc.cluster.local<span class="w">                        </span><span class="m">53</span><span class="w">        </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>kubernetes.default.svc.cluster.local<span class="w">                          </span><span class="m">443</span><span class="w">       </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>metrics-server.kube-system.svc.cluster.local<span class="w">                  </span><span class="m">443</span><span class="w">       </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>npm-metrics-cluster-service.kube-system.svc.cluster.local<span class="w">     </span><span class="m">9000</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>productpage.default.svc.cluster.local<span class="w">                         </span><span class="m">9080</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>prometheus_stats<span class="w">                                              </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STATIC
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>ratings.default.svc.cluster.local<span class="w">                             </span><span class="m">9080</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>reviews.default.svc.cluster.local<span class="w">                             </span><span class="m">9080</span><span class="w">      </span>-<span class="w">          </span>outbound<span class="w">      </span>EDS
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>sds-grpc<span class="w">                                                      </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STATIC
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>xds-grpc<span class="w">                                                      </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STATIC
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>zipkin<span class="w">                                                        </span>-<span class="w">         </span>-<span class="w">          </span>-<span class="w">             </span>STRICT_DNS
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="sb">``````</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="sb">```</span>bash<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Retrieve summary about route configuration for a given pod from Envoy&quot;</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="c1"># istioctl proxy-config routes &lt;pod-name[.namespace]&gt;</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-config<span class="w"> </span>route<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r.default
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>NAME<span class="w">                                                               </span>VHOST<span class="w"> </span>NAME<span class="w">                                                         </span>DOMAINS<span class="w">                                           </span>MATCH<span class="w">                  </span>VIRTUAL<span class="w"> </span>SERVICE
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a><span class="m">8080</span><span class="w">                                                               </span>ama-metrics-ksm.kube-system.svc.cluster.local:8080<span class="w">                 </span>ama-metrics-ksm.kube-system,<span class="w"> </span><span class="m">10</span>.0.21.168<span class="w">          </span>/*
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a><span class="m">9080</span><span class="w">                                                               </span>details.default.svc.cluster.local:9080<span class="w">                             </span>details,<span class="w"> </span>details.default<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="w"> </span>more...<span class="w">              </span>/*
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a><span class="m">9080</span><span class="w">                                                               </span>productpage.default.svc.cluster.local:9080<span class="w">                         </span>productpage,<span class="w"> </span>productpage.default<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="w"> </span>more...<span class="w">      </span>/*
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="m">9080</span><span class="w">                                                               </span>ratings.default.svc.cluster.local:9080<span class="w">                             </span>ratings,<span class="w"> </span>ratings.default<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="w"> </span>more...<span class="w">              </span>/*
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="m">9080</span><span class="w">                                                               </span>reviews.default.svc.cluster.local:9080<span class="w">                             </span>reviews,<span class="w"> </span>reviews.default<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="w"> </span>more...<span class="w">              </span>/*
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>metrics-server.kube-system.svc.cluster.local:443<span class="w">                   </span>metrics-server.kube-system.svc.cluster.local:443<span class="w">                   </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="m">15010</span><span class="w">                                                              </span>istiod-asm-1-17.aks-istio-system.svc.cluster.local:15010<span class="w">           </span>istiod-asm-1-17.aks-istio-system,<span class="w"> </span><span class="m">10</span>.0.98.209<span class="w">     </span>/*
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="m">15014</span><span class="w">                                                              </span>istiod-asm-1-17.aks-istio-system.svc.cluster.local:15014<span class="w">           </span>istiod-asm-1-17.aks-istio-system,<span class="w"> </span><span class="m">10</span>.0.98.209<span class="w">     </span>/*
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a>npm-metrics-cluster-service.kube-system.svc.cluster.local:9000<span class="w">     </span>npm-metrics-cluster-service.kube-system.svc.cluster.local:9000<span class="w">     </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a>InboundPassthroughClusterIpv4<span class="w">                                      </span>inbound<span class="p">|</span>http<span class="p">|</span><span class="m">0</span><span class="w">                                                     </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-42" name="__codelineno-15-42" href="#__codelineno-15-42"></a>InboundPassthroughClusterIpv4<span class="w">                                      </span>inbound<span class="p">|</span>http<span class="p">|</span><span class="m">0</span><span class="w">                                                     </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-43" name="__codelineno-15-43" href="#__codelineno-15-43"></a>inbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span><span class="w">                                                     </span>inbound<span class="p">|</span>http<span class="p">|</span><span class="m">9080</span><span class="w">                                                  </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-44" name="__codelineno-15-44" href="#__codelineno-15-44"></a><span class="w">                                                                   </span>backend<span class="w">                                                            </span>*<span class="w">                                                 </span>/healthz/ready*
+<a id="__codelineno-15-45" name="__codelineno-15-45" href="#__codelineno-15-45"></a>inbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span><span class="w">                                                     </span>inbound<span class="p">|</span>http<span class="p">|</span><span class="m">9080</span><span class="w">                                                  </span>*<span class="w">                                                 </span>/*
+<a id="__codelineno-15-46" name="__codelineno-15-46" href="#__codelineno-15-46"></a><span class="w">                                                                   </span>backend<span class="w">                                                            </span>*<span class="w">                                                 </span>/stats/prometheus*
+<a id="__codelineno-15-47" name="__codelineno-15-47" href="#__codelineno-15-47"></a><span class="sb">``````</span>
+<a id="__codelineno-15-48" name="__codelineno-15-48" href="#__codelineno-15-48"></a>
+<a id="__codelineno-15-49" name="__codelineno-15-49" href="#__codelineno-15-49"></a>
+<a id="__codelineno-15-50" name="__codelineno-15-50" href="#__codelineno-15-50"></a>
+<a id="__codelineno-15-51" name="__codelineno-15-51" href="#__codelineno-15-51"></a><span class="sb">```</span>bash<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Retrieve summary about listener configuration for a given pod from Envoy&quot;</span>
+<a id="__codelineno-15-52" name="__codelineno-15-52" href="#__codelineno-15-52"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-config<span class="w"> </span>listeners<span class="w"> </span>details-v1-7c7dbcb4b5-8v2dh.default
+<a id="__codelineno-15-53" name="__codelineno-15-53" href="#__codelineno-15-53"></a>ADDRESS<span class="w">     </span>PORT<span class="w">  </span>MATCH<span class="w">                                                                                           </span>DESTINATION
+<a id="__codelineno-15-54" name="__codelineno-15-54" href="#__codelineno-15-54"></a><span class="m">10</span>.0.0.10<span class="w">   </span><span class="m">53</span><span class="w">    </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">53</span><span class="o">||</span>kube-dns.kube-system.svc.cluster.local
+<a id="__codelineno-15-55" name="__codelineno-15-55" href="#__codelineno-15-55"></a><span class="m">10</span>.0.0.1<span class="w">    </span><span class="m">443</span><span class="w">   </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>kubernetes.default.svc.cluster.local
+<a id="__codelineno-15-56" name="__codelineno-15-56" href="#__codelineno-15-56"></a><span class="m">10</span>.0.154.2<span class="w">  </span><span class="m">443</span><span class="w">   </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span>metrics-server.kube-system.svc.cluster.local:443
+<a id="__codelineno-15-57" name="__codelineno-15-57" href="#__codelineno-15-57"></a><span class="m">10</span>.0.154.2<span class="w">  </span><span class="m">443</span><span class="w">   </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>metrics-server.kube-system.svc.cluster.local
+<a id="__codelineno-15-58" name="__codelineno-15-58" href="#__codelineno-15-58"></a><span class="m">10</span>.0.98.209<span class="w"> </span><span class="m">443</span><span class="w">   </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-15-59" name="__codelineno-15-59" href="#__codelineno-15-59"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">8080</span><span class="w">  </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span><span class="m">8080</span>
+<a id="__codelineno-15-60" name="__codelineno-15-60" href="#__codelineno-15-60"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">8080</span><span class="w">  </span>ALL<span class="w">                                                                                             </span>PassthroughCluster
+<a id="__codelineno-15-61" name="__codelineno-15-61" href="#__codelineno-15-61"></a><span class="m">10</span>.0.34.198<span class="w"> </span><span class="m">9000</span><span class="w">  </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span>npm-metrics-cluster-service.kube-system.svc.cluster.local:9000
+<a id="__codelineno-15-62" name="__codelineno-15-62" href="#__codelineno-15-62"></a><span class="m">10</span>.0.34.198<span class="w"> </span><span class="m">9000</span><span class="w">  </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">9000</span><span class="o">||</span>npm-metrics-cluster-service.kube-system.svc.cluster.local
+<a id="__codelineno-15-63" name="__codelineno-15-63" href="#__codelineno-15-63"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">9080</span><span class="w">  </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span><span class="m">9080</span>
+<a id="__codelineno-15-64" name="__codelineno-15-64" href="#__codelineno-15-64"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">9080</span><span class="w">  </span>ALL<span class="w">                                                                                             </span>PassthroughCluster
+<a id="__codelineno-15-65" name="__codelineno-15-65" href="#__codelineno-15-65"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15001</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>PassthroughCluster
+<a id="__codelineno-15-66" name="__codelineno-15-66" href="#__codelineno-15-66"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15001</span><span class="w"> </span>Addr:<span class="w"> </span>*:15001<span class="w">                                                                                   </span>Non-HTTP/Non-TCP
+<a id="__codelineno-15-67" name="__codelineno-15-67" href="#__codelineno-15-67"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Addr:<span class="w"> </span>*:15006<span class="w">                                                                                   </span>Non-HTTP/Non-TCP
+<a id="__codelineno-15-68" name="__codelineno-15-68" href="#__codelineno-15-68"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>tls<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>istio-http/1.0,istio-http/1.1,istio-h2<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">                        </span>InboundPassthroughClusterIpv4
+<a id="__codelineno-15-69" name="__codelineno-15-69" href="#__codelineno-15-69"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">                                           </span>InboundPassthroughClusterIpv4
+<a id="__codelineno-15-70" name="__codelineno-15-70" href="#__codelineno-15-70"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>tls<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>TCP<span class="w"> </span>TLS<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">                                                       </span>InboundPassthroughClusterIpv4
+<a id="__codelineno-15-71" name="__codelineno-15-71" href="#__codelineno-15-71"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">                                                              </span>InboundPassthroughClusterIpv4
+<a id="__codelineno-15-72" name="__codelineno-15-72" href="#__codelineno-15-72"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>tls<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">                                                                     </span>InboundPassthroughClusterIpv4
+<a id="__codelineno-15-73" name="__codelineno-15-73" href="#__codelineno-15-73"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>tls<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>istio,istio-peer-exchange,istio-http/1.0,istio-http/1.1,istio-h2<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span>*:9080<span class="w"> </span>Cluster:<span class="w"> </span>inbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>
+<a id="__codelineno-15-74" name="__codelineno-15-74" href="#__codelineno-15-74"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15006</span><span class="w"> </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>Addr:<span class="w"> </span>*:9080<span class="w">                                                                 </span>Cluster:<span class="w"> </span>inbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>
+<a id="__codelineno-15-75" name="__codelineno-15-75" href="#__codelineno-15-75"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15010</span><span class="w"> </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span><span class="m">15010</span>
+<a id="__codelineno-15-76" name="__codelineno-15-76" href="#__codelineno-15-76"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15010</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>PassthroughCluster
+<a id="__codelineno-15-77" name="__codelineno-15-77" href="#__codelineno-15-77"></a><span class="m">10</span>.0.98.209<span class="w"> </span><span class="m">15012</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>Cluster:<span class="w"> </span>outbound<span class="p">|</span><span class="m">15012</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-15-78" name="__codelineno-15-78" href="#__codelineno-15-78"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15014</span><span class="w"> </span>Trans:<span class="w"> </span>raw_buffer<span class="p">;</span><span class="w"> </span>App:<span class="w"> </span>http/1.1,h2c<span class="w">                                                            </span>Route:<span class="w"> </span><span class="m">15014</span>
+<a id="__codelineno-15-79" name="__codelineno-15-79" href="#__codelineno-15-79"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15014</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>PassthroughCluster
+<a id="__codelineno-15-80" name="__codelineno-15-80" href="#__codelineno-15-80"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15021</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>Inline<span class="w"> </span>Route:<span class="w"> </span>/healthz/ready*
+<a id="__codelineno-15-81" name="__codelineno-15-81" href="#__codelineno-15-81"></a><span class="m">0</span>.0.0.0<span class="w">     </span><span class="m">15090</span><span class="w"> </span>ALL<span class="w">                                                                                             </span>Inline<span class="w"> </span>Route:<span class="w"> </span>/stats/prometheus*
+</code></pre></div>
+<div class="highlight"><span class="filename">Check the listener configuration on a pod</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-config<span class="w"> </span>listeners<span class="w"> </span>details-v1-7c7dbcb4b5-8v2dh.default<span class="w"> </span>--port<span class="w"> </span><span class="m">15001</span><span class="w"> </span>-o<span class="w"> </span>json
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="o">[</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="o">{</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">        </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;virtualOutbound&quot;</span>,
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">        </span><span class="s2">&quot;address&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">            </span><span class="s2">&quot;socketAddress&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">                </span><span class="s2">&quot;address&quot;</span>:<span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span>,
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">                </span><span class="s2">&quot;portValue&quot;</span>:<span class="w"> </span><span class="m">15001</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">            </span><span class="o">}</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">        </span><span class="o">}</span>,
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">        </span><span class="s2">&quot;filterChains&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">            </span><span class="o">{</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">                </span><span class="s2">&quot;filterChainMatch&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">                    </span><span class="s2">&quot;destinationPort&quot;</span>:<span class="w"> </span><span class="m">15001</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">                </span><span class="o">}</span>,
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">                </span><span class="s2">&quot;filters&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">                    </span><span class="o">{</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">                        </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;istio.stats&quot;</span>,
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">                        </span><span class="s2">&quot;typedConfig&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">                            </span><span class="s2">&quot;@type&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/udpa.type.v1.TypedStruct&quot;</span>,
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">                            </span><span class="s2">&quot;typeUrl&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/stats.PluginConfig&quot;</span>,
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">                            </span><span class="s2">&quot;value&quot;</span>:<span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">                        </span><span class="o">}</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">                    </span><span class="o">}</span>,
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">                    </span><span class="o">{</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">                        </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;envoy.filters.network.tcp_proxy&quot;</span>,
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">                        </span><span class="s2">&quot;typedConfig&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">                            </span><span class="s2">&quot;@type&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy&quot;</span>,
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="w">                            </span><span class="s2">&quot;statPrefix&quot;</span>:<span class="w"> </span><span class="s2">&quot;BlackHoleCluster&quot;</span>,
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="w">                            </span><span class="s2">&quot;cluster&quot;</span>:<span class="w"> </span><span class="s2">&quot;BlackHoleCluster&quot;</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="w">                        </span><span class="o">}</span>
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="w">                    </span><span class="o">}</span>
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="w">                </span><span class="o">]</span>,
+<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="w">                </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;virtualOutbound-blackhole&quot;</span>
+<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="w">            </span><span class="o">}</span>,
+<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="w">            </span><span class="o">{</span>
+<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="w">                </span><span class="s2">&quot;filters&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="w">                    </span><span class="o">{</span>
+<a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="w">                        </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;istio.stats&quot;</span>,
+<a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="w">                        </span><span class="s2">&quot;typedConfig&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="w">                            </span><span class="s2">&quot;@type&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/udpa.type.v1.TypedStruct&quot;</span>,
+<a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="w">                            </span><span class="s2">&quot;typeUrl&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/stats.PluginConfig&quot;</span>,
+<a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="w">                            </span><span class="s2">&quot;value&quot;</span>:<span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="w">                        </span><span class="o">}</span>
+<a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="w">                    </span><span class="o">}</span>,
+<a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="w">                    </span><span class="o">{</span>
+<a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="w">                        </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;envoy.filters.network.tcp_proxy&quot;</span>,
+<a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a><span class="w">                        </span><span class="s2">&quot;typedConfig&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="w">                            </span><span class="s2">&quot;@type&quot;</span>:<span class="w"> </span><span class="s2">&quot;type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy&quot;</span>,
+<a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="w">                            </span><span class="s2">&quot;statPrefix&quot;</span>:<span class="w"> </span><span class="s2">&quot;PassthroughCluster&quot;</span>,
+<a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="w">                            </span><span class="s2">&quot;cluster&quot;</span>:<span class="w"> </span><span class="s2">&quot;PassthroughCluster&quot;</span>
+<a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a><span class="w">                        </span><span class="o">}</span>
+<a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="w">                    </span><span class="o">}</span>
+<a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="w">                </span><span class="o">]</span>,
+<a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="w">                </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;virtualOutbound-catchall-tcp&quot;</span>
+<a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a><span class="w">            </span><span class="o">}</span>
+<a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a><span class="w">        </span><span class="o">]</span>,
+<a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="w">        </span><span class="s2">&quot;useOriginalDst&quot;</span>:<span class="w"> </span>true,
+<a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="w">        </span><span class="s2">&quot;trafficDirection&quot;</span>:<span class="w"> </span><span class="s2">&quot;OUTBOUND&quot;</span>
+<a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a><span class="o">]</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">Retrieve full endpoint configuration for a given pod from Envoy</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>istioctl<span class="w"> </span>-i<span class="w"> </span>aks-istio-system<span class="w"> </span>proxy-config<span class="w"> </span>endpoint<span class="w"> </span>productpage-v1-6c5c9c9d9-plq9r.default
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ENDPOINT<span class="w">                                                </span>STATUS<span class="w">      </span>OUTLIER<span class="w"> </span>CHECK<span class="w">     </span>CLUSTER
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="m">10</span>.240.0.5:10091<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9000</span><span class="o">||</span>npm-metrics-cluster-service.kube-system.svc.cluster.local
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="m">10</span>.241.0.11:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>ratings.default.svc.cluster.local
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="m">10</span>.241.0.12:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>reviews.default.svc.cluster.local
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="m">10</span>.241.0.14:53<span class="w">                                          </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">53</span><span class="o">||</span>kube-dns.kube-system.svc.cluster.local
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="m">10</span>.241.0.15:8080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">8080</span><span class="o">||</span>ama-metrics-ksm.kube-system.svc.cluster.local
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="m">10</span>.241.0.19:4443<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>metrics-server.kube-system.svc.cluster.local
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="m">10</span>.241.0.20:53<span class="w">                                          </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">53</span><span class="o">||</span>kube-dns.kube-system.svc.cluster.local
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="m">10</span>.241.0.38:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>reviews.default.svc.cluster.local
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="m">10</span>.241.0.40:4443<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>metrics-server.kube-system.svc.cluster.local
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="m">10</span>.241.0.43:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>reviews.default.svc.cluster.local
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="m">10</span>.241.0.44:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>productpage.default.svc.cluster.local
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="m">10</span>.241.0.53:9080<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">9080</span><span class="o">||</span>details.default.svc.cluster.local
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="m">10</span>.241.0.8:15010<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15010</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="m">10</span>.241.0.8:15012<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15012</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="m">10</span>.241.0.8:15014<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15014</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="m">10</span>.241.0.8:15017<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="m">10</span>.241.0.9:15010<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15010</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="m">10</span>.241.0.9:15012<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15012</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="m">10</span>.241.0.9:15014<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">15014</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="m">10</span>.241.0.9:15017<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>istiod-asm-1-17.aks-istio-system.svc.cluster.local
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="m">127</span>.0.0.1:15000<span class="w">                                         </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>prometheus_stats
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="m">127</span>.0.0.1:15020<span class="w">                                         </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>agent
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="m">20</span>.62.140.71:443<span class="w">                                        </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>outbound<span class="p">|</span><span class="m">443</span><span class="o">||</span>kubernetes.default.svc.cluster.local
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>unix://./etc/istio/proxy/XDS<span class="w">                            </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>xds-grpc
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>unix://./var/run/secrets/workload-spiffe-uds/socket<span class="w">     </span>HEALTHY<span class="w">     </span>OK<span class="w">                </span>sds-grpc
+</code></pre></div>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://medium.com/microsoftazure/testing-the-istio-based-service-mesh-add-on-for-azure-kubernetes-service-47d9be3fec0f">Testing the Istio-based service mesh add-on for Azure Kubernetes Service</a></li>
+<li><a href="https://istio.io/latest/docs/reference/commands/istioctl/">istioctl</a></li>
+<li><a href="https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/">Debugging Envoy and Istiod</a></li>
+<li><a href="https://istio.io/latest/docs/ops/diagnostic-tools/istioctl-analyze/">Diagnose your Configuration with Istioctl Analyze</a></li>
+<li><a href="https://istio.io/latest/docs/ops/diagnostic-tools/istioctl-describe">Understand your Mesh with Istioctl Describe</a></li>
+<li><a href="https://istio-cheatsheet.tetratelabs.io/istioctl">istioctl cheatsheet</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pichuang" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/phil-huang-09b09895" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@pichuang-tw" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="http://speakerdeck.com/pichuang" target="_blank" rel="noopener" title="speakerdeck.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M213.86 296H100a100 100 0 0 1 0-200h132.84a40 40 0 0 1 0 80H98c-26.47 0-26.45 40 0 40h113.82a100 100 0 0 1 0 200H40a40 40 0 0 1 0-80h173.86c26.48 0 26.46-40 0-40zM298 416a120.21 120.21 0 0 0 51.11-80h64.55a19.83 19.83 0 0 0 19.66-20V196a19.83 19.83 0 0 0-19.66-20H296.42a60.77 60.77 0 0 0 0-80h136.93c43.44 0 78.65 35.82 78.65 80v160c0 44.18-35.21 80-78.65 80z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "../../assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.8e8db93a.min.js"></script>
+      
+    
+  </body>
+</html>
