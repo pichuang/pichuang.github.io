@@ -1,0 +1,2196 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open Knowledge, Open Source, Open Mind">
+      
+      
+        <meta name="author" content="Phil Huang">
+      
+      
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1.html">
+      
+      
+        <link rel="prev" href="20200309-ansible-30m.html">
+      
+      
+        <link rel="next" href="20200401-personal-agile.html">
+      
+      
+        
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
+      
+      <link rel="icon" href="favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3+insiders-4.49.2">
+    
+    
+      
+        <title>愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1 - Phil's Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.67c3bdf0.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:300,300i,400,400i,700,700i%7COverpass+Mono+SemiBold:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans";--md-code-font:"Overpass Mono SemiBold"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-8MQRY98QB2"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-8MQRY98QB2",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-8MQRY98QB2",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#red-hat-coreos-red-hat-openshift-part-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  <a href="https://www.youtube.com/@pichuang-tw" style="color:white;">
+    For updates follow <strong>@pichuang-tw</strong> on
+    <strong>YouTube Channel 🎥 </strong>
+  </a>
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Phil's Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="wiki/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Wiki
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="azure-subnets.html" class="md-tabs__link">
+          
+  
+    
+  
+  Azure Visual Subnet Calculator
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="about.html" class="md-tabs__link">
+          
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    Phil's Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2023.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2022.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2021.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2020.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2019.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="automation.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="azure.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    azure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="container.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="homecloud.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    homecloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="kubernetes.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="linux.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="misc.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="networking.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="o11y.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    o11y
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="openai.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openai
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="openshift.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openshift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="personal.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    personal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="sla.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="sustainability.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sustainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Authors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="author/url.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Phil Huang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="wiki/index.html" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wiki
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure Visual Subnet Calculator
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Azure Visual Subnet Calculator
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="azure-subnets.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Subnet Calculator (Azure Edition)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Who is Phil Huang?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recording.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Recording
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="index.html" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://blog.pichuang.com.tw">Phil Huang</a>
+                        
+                      </strong>
+                      <br>
+                      Microsoft Senior Cloud Solution Architect | CNCF Ambassador
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2020-03-17 00:00:00" class="md-ellipsis">20200317</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="kubernetes.html">kubernetes</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前提
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        走馬看花之旅: 第一天
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="走馬看花之旅: 第一天">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coreos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        登入 CoreOS 節點
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切換成 root
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cri-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRI-O 探索
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coreos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        運行一個容器於 CoreOS 上
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-journalctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見服務 systemd / journalctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-rhcos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 修改 RHCOS 設定檔
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        後記
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-id-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何使用任意 User ID 啟動 Container Image？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">openshift4</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">openshift</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">coreos</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">container</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="red-hat-coreos-red-hat-openshift-part-1">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</h1>
+<p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
+<ol>
+<li>容器運行時環境 (Container Runtime) 從 docker 換成了 <a href="https://cri-o.io/">CRI-O</a></li>
+<li>作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat CoreOS</li>
+</ol>
+<p>本文將記錄一下於 Red Hat CoreOS (RHCOS) 及 Red Hat OpenShift 偏作業系統層面的探索紀錄</p>
+<p><img alt="" src="/images/ocp4-coreos.png" /></p>
+<!--more-->
+
+<h2 id="_1">前提</h2>
+<p><img alt="" src="/images/ocp4.png" /></p>
+<p>因為小弟已經裝好了 Red Hat OpenShift 4 的環境，所以我已經有 3 master 及 2 compute 節點可以登進去使用，倘若你想要自己研究的話，可以下載 <a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/">Fedora CoreOS</a> 試試看</p>
+<h2 id="_2">走馬看花之旅: 第一天</h2>
+<h3 id="coreos">登入 CoreOS 節點</h3>
+<blockquote>
+<p>Red Hat CoreOS is a container OS</p>
+</blockquote>
+<p>有兩個方式:</p>
+<ol>
+<li>直接透過 SSH 登入</li>
+<li>如果是透過 OpenShift，可以透過 <code>oc debug</code> 進入</li>
+</ol>
+<p>先講第一種方式，這邊唯一的要留意的就是，預設登入的帳號是 <code>core</code>，而不是 root，而且僅能拿當初透過 ignition file 匯入至 CoreOS 的 SSH Private Key 登入</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>core@compute-0.ocp4.internal<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa_ocp4_vcenter
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Red<span class="w"> </span>Hat<span class="w"> </span>Enterprise<span class="w"> </span>Linux<span class="w"> </span>CoreOS<span class="w"> </span><span class="m">43</span>.81.202003052336.0
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>Part<span class="w"> </span>of<span class="w"> </span>OpenShift<span class="w"> </span><span class="m">4</span>.3,<span class="w"> </span>RHCOS<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>Kubernetes<span class="w"> </span>native<span class="w"> </span>operating<span class="w"> </span>system
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>managed<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>Machine<span class="w"> </span>Config<span class="w"> </span>Operator<span class="w"> </span><span class="o">(</span><span class="sb">`</span>clusteroperator/machine-config<span class="sb">`</span><span class="o">)</span>.
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>WARNING:<span class="w"> </span>Direct<span class="w"> </span>SSH<span class="w"> </span>access<span class="w"> </span>to<span class="w"> </span>machines<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>recommended<span class="p">;</span><span class="w"> </span>instead,
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>make<span class="w"> </span>configuration<span class="w"> </span>changes<span class="w"> </span>via<span class="w"> </span><span class="sb">`</span>machineconfig<span class="sb">`</span><span class="w"> </span>objects:
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>---
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>Last<span class="w"> </span>login:<span class="w"> </span>Tue<span class="w"> </span>Mar<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">03</span>:01:29<span class="w"> </span><span class="m">2020</span><span class="w"> </span>from<span class="w"> </span><span class="m">10</span>.0.97.100
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="o">[</span>core@compute-0<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cat<span class="w"> </span>/etc/os-release
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;Red Hat Enterprise Linux CoreOS&quot;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&quot;43.81.202003052336.0&quot;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&quot;4.3&quot;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nv">OPENSHIFT_VERSION</span><span class="o">=</span><span class="s2">&quot;4.3&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nv">RHEL_VERSION</span><span class="o">=</span><span class="m">8</span>.0
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&quot;Red Hat Enterprise Linux CoreOS 43.81.202003052336.0 (Ootpa)&quot;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nv">ID</span><span class="o">=</span><span class="s2">&quot;rhcos&quot;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nv">ID_LIKE</span><span class="o">=</span><span class="s2">&quot;rhel fedora&quot;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&quot;0;31&quot;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&quot;https://www.redhat.com/&quot;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&quot;https://bugzilla.redhat.com/&quot;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="nv">REDHAT_BUGZILLA_PRODUCT</span><span class="o">=</span><span class="s2">&quot;OpenShift Container Platform&quot;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="nv">REDHAT_BUGZILLA_PRODUCT_VERSION</span><span class="o">=</span><span class="s2">&quot;4.3&quot;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="nv">REDHAT_SUPPORT_PRODUCT</span><span class="o">=</span><span class="s2">&quot;OpenShift Container Platform&quot;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="nv">REDHAT_SUPPORT_PRODUCT_VERSION</span><span class="o">=</span><span class="s2">&quot;4.3&quot;</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="nv">OSTREE_VERSION</span><span class="o">=</span><span class="s1">&#39;43.81.202003052336.0&#39;</span>
+</code></pre></div>
+<p>第二種方式是透過 <code>oc debug</code> 運行一個 debug 用的 pod 後，再透過 <code>chroot</code> 切換到 / 目錄</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>oc<span class="w"> </span>debug<span class="w"> </span>node/compute-0
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Starting<span class="w"> </span>pod/compute-0-debug<span class="w"> </span>...
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>To<span class="w"> </span>use<span class="w"> </span>host<span class="w"> </span>binaries,<span class="w"> </span>run<span class="w"> </span><span class="sb">`</span>chroot<span class="w"> </span>/host<span class="sb">`</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Pod<span class="w"> </span>IP:<span class="w"> </span><span class="m">10</span>.0.97.4
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>If<span class="w"> </span>you<span class="w"> </span>don<span class="s1">&#39;t see a command prompt, try pressing enter.</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s1">sh-4.2# chroot /host</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s1">sh-4.4# cat /etc/os-release</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s1">NAME=&quot;Red Hat Enterprise Linux CoreOS&quot;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s1">VERSION=&quot;43.81.202003052336.0&quot;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s1">VERSION_ID=&quot;4.3&quot;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="s1">OPENSHIFT_VERSION=&quot;4.3&quot;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="s1">RHEL_VERSION=8.0</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="s1">PRETTY_NAME=&quot;Red Hat Enterprise Linux CoreOS 43.81.202003052336.0 (Ootpa)&quot;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="s1">ID=&quot;rhcos&quot;</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="s1">ID_LIKE=&quot;rhel fedora&quot;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="s1">ANSI_COLOR=&quot;0;31&quot;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="s1">HOME_URL=&quot;https://www.redhat.com/&quot;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="s1">BUG_REPORT_URL=&quot;https://bugzilla.redhat.com/&quot;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="s1">REDHAT_BUGZILLA_PRODUCT=&quot;OpenShift Container Platform&quot;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="s1">REDHAT_BUGZILLA_PRODUCT_VERSION=&quot;4.3&quot;</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="s1">REDHAT_SUPPORT_PRODUCT=&quot;OpenShift Container Platform&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="s1">REDHAT_SUPPORT_PRODUCT_VERSION=&quot;4.3&quot;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="s1">OSTREE_VERSION=&#39;</span><span class="m">43</span>.81.202003052336.0<span class="err">&#39;</span>
+</code></pre></div>
+<h3 id="root">切換成 root</h3>
+<p>預設在 RHCOS 裡面僅會有兩個帳號，分別是 <code>core</code> 及 <code>root</code>，而預設已經把 sudoers 寫好了，所以可以直接 sudo 切過去</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">[</span>core@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1"># cat /etc/passwd</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>root:x:0:0:root:/root:/bin/bash
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>core:x:1000:1000:CoreOS<span class="w"> </span>Admin:/var/home/core:/bin/bash
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="o">[</span>core@compute-0<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>su<span class="w"> </span>-
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Last<span class="w"> </span>login:<span class="w"> </span>Tue<span class="w"> </span>Mar<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">02</span>:41:02<span class="w"> </span>UTC<span class="w"> </span><span class="m">2020</span><span class="w"> </span>on<span class="w"> </span>pts/0
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="o">[</span>root@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1">#</span>
+</code></pre></div>
+<h3 id="cri-o">CRI-O 探索</h3>
+<blockquote>
+<p>CRI-O is a lightwieght container runtime for Kubernetes</p>
+</blockquote>
+<p>誠如開頭所說的，OpenShift 4 預設的 Container Runtime 是採用 <code>CRI-O</code>，所以若要在 CoreOS 上找尋類似於 <code>docker</code> 或 <code>podman</code> 的指令，則為 <code>crictl</code></p>
+<p>常用的指令組合不外乎為 crictl [images | ps | pods | stats]，詳細的操作指令輸出可以參考 <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/">Debugging Kubernetes nodes with crictl</a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="o">[</span>root@control-plane-1<span class="w"> </span>~<span class="o">]</span><span class="c1"># crictl images</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>IMAGE<span class="w">                                                                                 </span>TAG<span class="w">                 </span>IMAGE<span class="w"> </span>ID<span class="w">            </span>SIZE
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>&lt;none&gt;<span class="w">                                                                                </span>&lt;none&gt;<span class="w">              </span>493f2db8b5178<span class="w">       </span>728MB
+</code></pre></div>
+<p>但畢竟 CRI-O 主要設計上還是給 OpenShift / Kubernetes 這類容器平台使用，所以老實講，拿著 <code>crictl</code> 要在 CoreOS 上面要啟動一個服務，而它的最小單位是 Pod，所以你需要先準備好 <code>pod-config.json</code> 及 <code>container-config.json</code>，而執行的指令則是使用 <code>crictl runp</code> 及 <code>crictl create</code>，去跑一個完整的 Pod 起來才能單機使用，整體上是相當有複雜性的</p>
+<p>倘若是只是要在 CoreOS 上面跑一個容器試試的話，就像是常見如 docker 運行的方式的話，還是使用 <code>podman</code> 較為恰當，有興趣可以參考此投影片 <a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman">The First Journey from Docker to Podman - Phil Huang</a></p>
+<h3 id="coreos_1">運行一個容器於 CoreOS 上</h3>
+<blockquote>
+<p>It make sense to run any container on container OS</p>
+</blockquote>
+<p>假設我想要跑 <code>tcpdump</code> 在節點上，但原生 RHCOS 是沒有包含這個套件的，這時候就得要執行一個自帶 <code>tcpdump</code> 的容器運行在節點上，而先前有針對這議題寫過一篇文章 <a href="https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/">Troubleshooting from Container to Any - Phil Huang</a> 也是基於同樣的概念</p>
+<p>我這邊僅記錄 Red Hat CoreOS 的用法</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">[</span>root@bastion<span class="o">]</span><span class="c1"># ssh core@compute-0.ocp4.internal -i ~/.ssh/id_rsa_ocp4_vcenter</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">[</span>core@compute-0<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sudo<span class="w"> </span>su<span class="w"> </span>-
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="o">[</span>root@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1"># podman run \</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>--hostname<span class="w"> </span>debug-toolbox<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span>--name<span class="w"> </span>ocp-debug-container<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span>--security-opt<span class="w"> </span><span class="nv">label</span><span class="o">=</span>disable<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span>--tty<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span>--rm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span>--volume<span class="w"> </span>/:/host/:rslave<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span>quay.io/pichuang/debug-container
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="o">[</span>root@debug-toolbox<span class="w"> </span>/<span class="o">]</span><span class="c1"># tcpdump -i ens192 -w /host/home/core/tcpdump.pcap</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="o">[</span>root@debug-toolbox<span class="w"> </span>/<span class="o">]</span><span class="c1"># scp /host/home/core/tcpdump.pcap root@bastion.ocp4.internal:~/</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="o">[</span>root@debug-toolbox<span class="w"> </span>/<span class="o">]</span><span class="c1"># exit</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="o">[</span>root@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1"># podman ps</span>
+</code></pre></div>
+<h3 id="systemd-journalctl">常見服務 systemd / journalctl</h3>
+<p>在 RHCOS 中，你還是可以使用 <code>systemd</code> 或 <code>journalctl</code> 做觀察性質的操作</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">[</span>root@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl status crio</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>●<span class="w"> </span>crio.service<span class="w"> </span>-<span class="w"> </span>Open<span class="w"> </span>Container<span class="w"> </span>Initiative<span class="w"> </span>Daemon
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">   </span>Loaded:<span class="w"> </span>loaded<span class="w"> </span><span class="o">(</span>/usr/lib/systemd/system/crio.service<span class="p">;</span><span class="w"> </span>disabled<span class="p">;</span><span class="w"> </span>vendor<span class="w"> </span>preset:<span class="w"> </span>disa&gt;
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>Drop-In:<span class="w"> </span>/etc/systemd/system/crio.service.d
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">           </span>└─10-default-env.conf
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">   </span>Active:<span class="w"> </span>active<span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>since<span class="w"> </span>Tue<span class="w"> </span><span class="m">2020</span>-03-17<span class="w"> </span><span class="m">03</span>:17:12<span class="w"> </span>UTC<span class="p">;</span><span class="w"> </span>3h<span class="w"> </span>7min<span class="w"> </span>ago
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">     </span>Docs:<span class="w"> </span>https://github.com/cri-o/cri-o
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w"> </span>Main<span class="w"> </span>PID:<span class="w"> </span><span class="m">1588</span><span class="w"> </span><span class="o">(</span>crio<span class="o">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span>Tasks:<span class="w"> </span><span class="m">37</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">   </span>Memory:<span class="w"> </span><span class="m">638</span>.8M
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span>CPU:<span class="w"> </span>15min<span class="w"> </span><span class="m">23</span>.689s
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">   </span>CGroup:<span class="w"> </span>/system.slice/crio.service
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">           </span>├─<span class="w">  </span><span class="m">1588</span><span class="w"> </span>/usr/bin/crio<span class="w"> </span>--enable-metrics<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--metrics-port<span class="o">=</span><span class="m">9537</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">           </span>├─587682<span class="w"> </span>/usr/libexec/crio/conmon<span class="w"> </span>-c<span class="w"> </span>72482678b7cd9b0384fca2486d89e320c21cfe&gt;
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">           </span>├─587683<span class="w"> </span>/usr/bin/runc<span class="w"> </span>--root<span class="o">=</span>/run/runc<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--pid-file<span class="w"> </span>/tmp/pidfile4561585&gt;
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">           </span>└─587693<span class="w"> </span>/usr/bin/runc<span class="w"> </span>init
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="o">[</span>root@compute-0<span class="w"> </span>~<span class="o">]</span><span class="c1"># journalctl</span>
+</code></pre></div>
+<h3 id="6-rhcos">6. 修改 RHCOS 設定檔</h3>
+<blockquote>
+<p>WARNING: Direct SSH access to machines is not recommended; instead, make configuration changes via <code>machineconfig</code> objects</p>
+</blockquote>
+<p><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a> 指出 3 種修改方向</p>
+<ol>
+<li>透過 Kubernetes 內建的物件 (DaemonSet / Deployment) 等，這常見於你想要裝一些服務在 RHCOS 上面，譬如像是網路套件、自己寫的 Agent 等</li>
+<li>Day 2 Customization: 一般來說，<code>不建議透過 SSH 直接連線</code>至 RHCOS 上進行修改設定檔，現行建議透過控制集群等級 (Cluster-level) 的 <code>MachineConfigs</code> 或者是控制節點等級 (Node-level) 的 <code>Tuned</code> 等進行設定檔修改</li>
+<li>Day 1 Customization: 運行集群前的設定，大部分都是要改 ntp / dns 居多，這個得要靠修改 <code>ignition</code> 來辦到，但建議是不要修太多，大部分的設定等到安裝完之後再修就好</li>
+</ol>
+<p>這邊討論最直覺的 <code>2. Day 2 Customization</code> 中的 <code>MachineConfig</code></p>
+<p>假設我想要修改角色為 MachineConfigPools 當中 <code>worker</code> 的 <code>/etc/chrony.conf</code>，會有以下的事情要做</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 檢查運行中的 machineconfig</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>oc<span class="w"> </span>get<span class="w"> </span>mc
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>NAME<span class="w">                                                        </span>GENERATEDBYCONTROLLER<span class="w">                      </span>IGNITIONVERSION<span class="w">   </span>CREATED
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="m">00</span>-master<span class="w">                                                   </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="m">00</span>-worker<span class="w">                                                   </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="m">01</span>-master-container-runtime<span class="w">                                 </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="m">01</span>-master-kubelet<span class="w">                                           </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="m">01</span>-worker-container-runtime<span class="w">                                 </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="m">01</span>-worker-kubelet<span class="w">                                           </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="m">99</span>-master-6d33985b-9a3d-4934-94c5-60df362b79e6-registries<span class="w">   </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="m">99</span>-master-ssh<span class="w">                                                                                          </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="m">99</span>-worker-b3d2e28e-a1e9-44f6-80a5-2d74bca78e7f-registries<span class="w">   </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="m">99</span>-worker-ssh<span class="w">                                                                                          </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>rendered-master-069a77d9b6f06c7e88bc0bcf107388bc<span class="w">            </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>rendered-worker-5109aac45ee18a5b942c38a7bb060f95<span class="w">            </span>d5599de7a6b86ec385e0f9c849e93977fcb4eeb8<span class="w">   </span><span class="m">2</span>.2.0<span class="w">             </span>12h
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># 顯示 50-worker-chrony 的 YAML 檔案</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>$<span class="w"> </span>cat<span class="w"> </span><span class="m">50</span>-worker-chrony.yaml
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>apiVersion:<span class="w"> </span>machineconfiguration.openshift.io/v1
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>kind:<span class="w"> </span>MachineConfig
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>metadata:
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">  </span>labels:
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span>machineconfiguration.openshift.io/role:<span class="w"> </span>worker
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">  </span>name:<span class="w"> </span><span class="m">50</span>-worker-chrony
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>spec:
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">  </span>config:
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">    </span>ignition:
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">      </span>version:<span class="w"> </span><span class="m">2</span>.2.0
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">    </span>storage:
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">      </span>files:
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">      </span>-<span class="w"> </span>contents:
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">          </span>source:<span class="w"> </span>data:text/plain<span class="p">;</span><span class="nv">charset</span><span class="o">=</span>utf-8<span class="p">;</span>base64,c2VydmVyIHRpY2suc3RkdGltZS5nb3YudHcgbWF4ZGVsYXkgMC40IG9mZmxpbmUKc2VydmVyIHRpbWUuc3RkdGltZS5nb3YudHcgbWF4ZGVsYXkgMC40IG9mZmxpbmU<span class="o">=</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">        </span>filesystem:<span class="w"> </span>root
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">        </span>mode:<span class="w"> </span><span class="m">0644</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">        </span>path:<span class="w"> </span>/etc/chrony.conf
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>$<span class="w"> </span>oc<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span><span class="m">50</span>-worker-chrony.yaml
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="c1"># 針對 worker 角色依序重開</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a>$<span class="w"> </span>oc<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-w
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a>compute-0<span class="w">         </span>Ready<span class="w">                         </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a>compute-0<span class="w">         </span>Ready,SchedulingDisabled<span class="w">      </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a>compute-0<span class="w">         </span>NotReady,SchedulingDisabled<span class="w">   </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a>compute-0<span class="w">         </span>Ready,SchedulingDisabled<span class="w">      </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a>compute-0<span class="w">         </span>Ready<span class="w">                         </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a>compute-1<span class="w">         </span>Ready<span class="w">                         </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a>compute-1<span class="w">         </span>Ready,SchedulingDisabled<span class="w">      </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a>compute-1<span class="w">         </span>NotReady,SchedulingDisabled<span class="w">   </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a>compute-1<span class="w">         </span>Ready,SchedulingDisabled<span class="w">      </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a>compute-1<span class="w">         </span>Ready<span class="w">                         </span>worker<span class="w">   </span>13h<span class="w">   </span>v1.16.2
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="c1"># 檢查檔案</span>
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a>$<span class="w"> </span>ssh<span class="w"> </span>core@compute-0.ocp4.internal<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa_ocp4_vcenter
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="o">[</span>core@compute-0<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cat<span class="w"> </span>/etc/chrony.conf
+</code></pre></div>
+<p>沒錯，只要透過 <code>Machine Config</code> 有任何修改，預設都會依序重開節點，倘若真的不想要重開的話，可以透過修改 <code>Machine Config Pool</code> 的 <code>paused</code> 來暫時停止</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># 關閉自動重啟</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>oc<span class="w"> </span>patch<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;paused&quot;:true}}&#39;</span><span class="w"> </span>machineconfigpool/master
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>oc<span class="w"> </span>patch<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;paused&quot;:true}}&#39;</span><span class="w"> </span>machineconfigpool/worker
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># 打開自動重啟</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>oc<span class="w"> </span>patch<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;paused&quot;:false}}&#39;</span><span class="w"> </span>machineconfigpool/master
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>oc<span class="w"> </span>patch<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;paused&quot;:false}}&#39;</span><span class="w"> </span>machineconfigpool/worker
+</code></pre></div>
+<p><a href="https://openshift.tips/machine-config/">Openshift Tips - MachineConfig</a> 除了我上面提到的 chrony 的改變以外，裡面還有幾個範例：
+1. Apply sysctl tweaks to nodes
+2. Modify MTU in a second interface in workers</p>
+<h2 id="_3">後記</h2>
+<p>先記錄到這邊，之後陸續把一些維運上常見的問題慢慢地補充上來</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="user-id-container-image">如何使用任意 User ID 啟動 Container Image？</h3>
+<p>使用 <code>oc create serviceaccount</code> 新增一個可以跑 anyuid 的帳號</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 確認當前 service account</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>oc<span class="w"> </span>get<span class="w"> </span>serviceaccount
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># 新增 service account - runasanyuid</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>oc<span class="w"> </span>create<span class="w"> </span>serviceaccount<span class="w"> </span>runasanyuid
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># 確認新增後 service account</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>oc<span class="w"> </span>get<span class="w"> </span>serviceaccount
+</code></pre></div>
+<p>預設狀況下，容器會受限於 SCC <code>restricted</code> 下運行，Run As User 的 Must Run As Range 的 UID 範圍會受限於專案 (Porject) 設定</p>
+<p>倘若需要允許應用程式以任何使用者 ID (包含 root) 執行，則需要新增 SCC <code>anyuid</code> 給指定的 service account</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 以 administrator 權限，確認當前 SCC 清單</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>oc<span class="w"> </span>get<span class="w"> </span>scc<span class="w"> </span>--as<span class="w"> </span>system:admin
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># 確認 SCC - restricted</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>oc<span class="w"> </span>describe<span class="w"> </span>scc<span class="w"> </span>restricted
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># 新增 SCC - anyuid 能力給 service account - runasanyuid 於當前專案 project - debbuging</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-scc-to-user<span class="w"> </span>anyuid<span class="w"> </span>-z<span class="w"> </span>runasanyuid<span class="w"> </span>--as<span class="w"> </span>system:admin
+</code></pre></div>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman - Red Hat Blog</a></li>
+<li><a href="https://cri-o.io/">CRI-O - LIGHTWEIGHT CONTAINER RUNTIME FOR KUBERNETES</a></li>
+<li><a href="https://docs.fedoraproject.org/en-US/fedora-coreos/bare-metal/">Installing CoreOS on Bare Metal - Fedora CoreOS</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/">Debugging Kubernetes nodes with crictl - Kubernetes</a></li>
+<li><a href="https://blog.pichuang.com.tw/20190715-troubleshooting-from-container-to-any/">Troubleshooting from Container to Any - Phil Huang</a></li>
+<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-1-a1546b683d2f">How to TCPdump effectively in Kubernetes (part 1)</a></li>
+<li><a href="https://medium.com/@xxradar/how-to-tcpdump-effectively-in-kubernetes-part-2-7e4127b42dc7">How to TCPdump effectively in Kubernetes (part 2)</a></li>
+<li><a href="https://cookbook.openshift.org/users-and-role-based-access-control/how-can-i-enable-an-image-to-run-as-a-set-user-id.html">How can I enable an image to run as a set user ID?</a></li>
+<li><a href="https://cloud.ibm.com/docs/openshift?topic=openshift-openshift_scc&amp;locale=zh-tw">配置安全環境定義限制</a></li>
+<li><a href="https://speakerdeck.com/pichuang/the-first-journey-from-docker-to-podman">The First Journey from Docker to Podman - Phil Huang</a></li>
+<li><a href="https://docs.openshift.com/container-platform/4.3/architecture/architecture-rhcos.html#rhcos-configured_architecture-rhcos">Choosing how to configure RHCOS - Red Hat OpenShift 4.3</a></li>
+<li><a href="https://openshift.tips/machine-config/">Openshift Tips - MachineConfig</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pichuang" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/phil-huang-09b09895" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@pichuang-tw" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="http://speakerdeck.com/pichuang" target="_blank" rel="noopener" title="speakerdeck.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M213.86 296H100a100 100 0 0 1 0-200h132.84a40 40 0 0 1 0 80H98c-26.47 0-26.45 40 0 40h113.82a100 100 0 0 1 0 200H40a40 40 0 0 1 0-80h173.86c26.48 0 26.46-40 0-40zM298 416a120.21 120.21 0 0 0 51.11-80h64.55a19.83 19.83 0 0 0 19.66-20V196a19.83 19.83 0 0 0-19.66-20H296.42a60.77 60.77 0 0 0 0-80h136.93c43.44 0 78.65 35.82 78.65 80v160c0 44.18-35.21 80-78.65 80z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.8e8db93a.min.js"></script>
+      
+    
+  </body>
+</html>
