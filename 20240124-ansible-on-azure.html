@@ -30,7 +30,7 @@
     
     
       
-        <title>IaC 上班招數: [A]nsible 加上 [A]zure - Phil's Workspace</title>
+        <title>上班時間不夠用之 [A]nsible 加上 [A]zure - Phil's Workspace</title>
       
     
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#iac-ansible-azure" class="md-skip">
+        <a href="#ansible-azure" class="md-skip">
           Skip to content
         </a>
       
@@ -147,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IaC 上班招數: [A]nsible 加上 [A]zure
+              上班時間不夠用之 [A]nsible 加上 [A]zure
             
           </span>
         </div>
@@ -1679,7 +1679,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ansible-azure" class="md-nav__link">
+  <a href="#ansible-azure_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         為什麼要用 Ansible 管理 Azure?
@@ -1758,17 +1758,17 @@
   
 
 
-<h1 id="iac-ansible-azure">IaC 上班招數: [A]nsible 加上 [A]zure</h1>
+<h1 id="ansible-azure">上班時間不夠用之 [A]nsible 加上 [A]zure</h1>
 <p>因為之前電腦編譯 <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> 慢到我沒辦法接受，所以前陣子 Apple 出 MBPR M3 Pro 之後，剛好幾年前買的 MBPR Intel 也是虛累累，就心一橫衝了一發，用了之後只能說果然還是 UNIX-like 系統溫馨，香</p>
 <p>目前使用 M3 Pro 下來，除了 podman machine 有點技術問題以外和 Container 編譯要從 x86 換 arm 很煩以外，其他都還好，連 Microsoft Defender for Enpoint 都有支援 M3 的版本 (下圖有真相 XD)</p>
 <p><img alt="" src="/images/defender-for-cloud-on-m3.png" /></p>
 <!--more-->
 
-<h2 id="ansible-azure">為什麼要用 Ansible 管理 Azure?</h2>
+<h2 id="ansible-azure_1">為什麼要用 Ansible 管理 Azure?</h2>
 <p>因為我多數的架構設計工作都是一步一步進行設計，每個客戶長相和需求都有點不太一樣，所以我在多數狀況下會更傾向採用 Ansible 這種命令式 (Imperative) 的方式來 Step by Step 控管流程，預設狀況下，不是採用 Terraform 或 Bicep 聲明式 (Declarative) 的方式</p>
 <p>此外本家的 <a href="https://learn.microsoft.com/zh-tw/cli/azure/install-azure-cli">Azure CLI</a> 發展都會比其他 IaC SDK 來得快，譬如說像 preview 功能有時候就是得用到，像 AKS 體系的功能就一票放在 preview 那邊，你只能用下 azure-cli 的方式進行操作，久了就會習慣用 Azure CLI 為主來管理 Azure</p>
 <h2 id="ansible-playbook-azure">如何用 Ansible Playbook 管理 Azure?</h2>
-<p>我自己常寫的經驗就 3 個招數</p>
+<p>基於我自己常寫的經驗，主要就 3 個招數</p>
 <ol>
 <li>Option 1: 採用 <a href="https://docs.ansible.com/ansible/latest/scenario_guides/guide_azure.html">Ansible Colletion - azure.azcollection.*</a>，用封裝好的 Python Libray 去進行操作</li>
 <li>Option 2: 採用 <a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html">ansible.builtin.command</a> + <a href="https://learn.microsoft.com/zh-tw/cli/azure/install-azure-cli">azure-cli</a>，用 shell 指令呼叫 Azure CLI 去進行操作，無論是 Windows 才能使用的 win_command 還是 Linux 才能使用的 command 的場景都可以用</li>
@@ -1783,7 +1783,7 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">#</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="c1"># Options 1: Use azure.azcollection to create a resource group</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="c1"># Option 1: Use azure.azcollection to create a resource group</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="c1">#</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create resource group rg-demo in {{ location }}</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="nt">azure_rm_resourcegroup</span><span class="p">:</span>
@@ -1791,7 +1791,7 @@
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">location</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="c1">#</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="c1"># Options 2: Use ansible.builtin.command to get Azure Red Hat OpenShift versions</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="c1"># Option 2: Use ansible.builtin.command to get Azure Red Hat OpenShift versions</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="c1">#</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Query Azure Red Hat OpenShift</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="nt">ansible.builtin.command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -1800,7 +1800,7 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aro_versions</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
 <a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="c1">#</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="c1"># Options 3: Use ansible.builtin.shell to create Azure Container Registry</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="c1"># Option 3: Use ansible.builtin.shell to create Azure Container Registry</span>
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="c1">#</span>
 <a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create Azure Container Registry - {{ acr_name }}</span>
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -1822,7 +1822,7 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/actiavte
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>pip3<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Install azure.azcollection and kubernetes.core</span>
