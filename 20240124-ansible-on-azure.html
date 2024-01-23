@@ -1864,7 +1864,7 @@
 <a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create Azure Container Registry - {{ acr_name }}</span>
 <a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">        </span><span class="no">az acr create</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">          </span><span class="no">--location {{ location }}</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">          </span><span class="no">--location &quot;{{ location }}&quot;</span>
 <a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">          </span><span class="no">--resource-group &quot;{{ acr_resource_group }}&quot;</span>
 <a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">          </span><span class="no">--name &quot;{{ acr_name }}&quot;</span>
 <a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">          </span><span class="no">--sku Premium</span>
@@ -1874,13 +1874,13 @@
 <a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">          </span><span class="no">&gt; /dev/null</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="when-ansible-azure">When: 何時該用 Ansible 管理 Azure?</h2>
-<p>只要你判斷整個流程</p>
+<p>只要你的工作模式很強烈有流程控制的需求或者是對於既有 Shell Script 或 azure-cli 逐步操作有強烈需求的人，就別考慮了，直接用吧</p>
+<p>好處就下面 3 點:</p>
 <ol>
 <li>是需要可以被重複</li>
 <li>執行前需要預測結果</li>
 <li>需要做版本控制</li>
 </ol>
-<p>就別想了用吧</p>
 <h2 id="where-ansible-azure">Where: 在哪裡可以用 Ansible 管理 Azure?</h2>
 <ol>
 <li>Red Hat Ansible Automation Platform: 需要 RBAC 管控, audit log 紀錄, workflow, event driven 能力要選這個，詳細可找 Red Hat 業務聊聊</li>
