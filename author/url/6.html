@@ -18,7 +18,7 @@
         <link rel="prev" href="../../index.html">
       
       
-        <link rel="next" href="../../automation.html">
+        <link rel="next" href="../../ansible.html">
       
       
         
@@ -449,6 +449,8 @@
       
         
       
+        
+      
     
     
     
@@ -493,6 +495,35 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2024.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -684,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -728,6 +761,35 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ansible.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1266,6 +1328,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#azure-openai-serivce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        私有 Azure OpenAI Serivce 預想架構規劃
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#azure-expressroute" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1281,17 +1354,6 @@
     <span class="md-ellipsis">
       
         實現不停機的 Pod 更新方式
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#1-kubernetes-kubernetes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        我要 1 座 Kubernetes 還是要多座 Kubernetes? 還是都可以?
       
     </span>
   </a>
@@ -1630,6 +1692,51 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-02-03 00:00:00">20230203</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../azure.html" class="md-meta__link">azure</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="azure-openai-serivce"><a class="toclink" href="../../20230203-private-azure-openai-service-ra.html">私有 Azure OpenAI Serivce 預想架構規劃</a></h2>
+<details class="info" open="open">
+<summary>Info</summary>
+<p>此文是寫給廣大的 IT Infra 背景群眾看的，主要是提供落地架構設計參考，若你是想要知道 OpenAI 怎麼用的，此文並無涉及，可以參考官方文件 <a href="https://techcommunity.microsoft.com/t5/educator-developer-blog/azure-openai-is-now-generally-available/ba-p/3719177">Azure OpenAI is now generally available</a></p>
+</details>
+<p>2022/11 最驚嚇到我的事情就是 ChatGPT 這服務的誕生，簡直看到 <mark>科技奇異點</mark> ，然後沒想到這服務的母公司 OpenAI 居然是 Microsoft 投資的，我只能說真的是可喜可賀和感到哀傷。</p>
+<p>可喜可賀是我可以在很近的距離看到這技術將要創造的歷史，感到哀傷是 ChatGPT 樹立了一個相當驚人的技術屏障，都不知道以後新進或菜鳥工程師到底要怎麼跟這個競爭，但幸好若問他做特別需要專業性問答的事情，這服務目前有可能會回答錯誤或亂答，譬如說問它網路除錯或設計問題後，看起來我還不會失業 :&gt;</p>
+<p>下圖是標準工程師使用範例，本人對於 HTML 和 CSS 毫無理解，也不知道從何改，然後我就去問 ChatGPT 後，就改好了...</p>
+<p><img alt="" src="/images/chatgpt-demo.png" /></p>
+
+    <nav class="md-post__action">
+      <a href="../../20230203-private-azure-openai-service-ra.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-02-02 00:00:00">20230202</time></li>
         
           <li class="md-meta__item">
@@ -1695,46 +1802,6 @@ Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful 
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2022-02-16 00:00:00">20220216</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="1-kubernetes-kubernetes"><a class="toclink" href="../../20220216-kubernetes-isolation.html">我要 1 座 Kubernetes 還是要多座 Kubernetes? 還是都可以?</a></h2>
-<p>曾經於 <a href="https://www.youtube.com/watch?v=-y-aycTxKBA">SDN x Cloud Native Meetup #42 OPA + 單多叢集架構探討</a>、<a href="https://docs.google.com/presentation/d/1GBInjH45Vremz4_463T3Z5VK9CC_atpYSI-4yAY8QuE/edit#slide=id.p">簡報</a> 分享過 <code>Kubernetes 多叢集及單叢集架構選擇探討</code> 的題目，當中有多租戶議題還蠻受到關注的，剛好因為工作關係也有蠻多客戶在問相同的題目，這邊想用文字的方式紀錄一下，供大家參考</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-y-aycTxKBA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-    <nav class="md-post__action">
-      <a href="../../20220216-kubernetes-isolation.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1742,7 +1809,7 @@ Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful 
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="4.html">4</a> <a class="md-pagination__link" href="5.html">5</a> <span class="md-pagination__current">6</span> <a class="md-pagination__link" href="7.html">7</a> <a class="md-pagination__link" href="8.html">8</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="16.html">16</a>
+  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="4.html">4</a> <a class="md-pagination__link" href="5.html">5</a> <span class="md-pagination__current">6</span> <a class="md-pagination__link" href="7.html">7</a> <a class="md-pagination__link" href="8.html">8</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="17.html">17</a>
 </nav>
         
       

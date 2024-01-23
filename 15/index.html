@@ -442,6 +442,8 @@
       
         
       
+        
+      
     
     
     
@@ -486,6 +488,35 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -677,6 +708,8 @@
       
         
       
+        
+      
     
     
     
@@ -721,6 +754,35 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../ansible.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1544,6 +1606,46 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2019-11-16 00:00:00">20191116</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../homecloud.html" class="md-meta__link">homecloud</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="2019-4-pfsense"><a class="toclink" href="../20191116-homelcloud-high-level-design-4.html">2019 大改造宅宅雲架構系列文-4 pfSense</a></h2>
+<p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
+<p><img alt="" src="/images/pfsense-logo.png" /></p>
+<p>如 Logo 所示，本篇將會承襲上篇 <a href="https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3/">2019 大改造宅宅雲架構系列文-3</a> 的結尾，到底 pfSense 放到 VM 裡面後是如何搞得?</p>
+
+    <nav class="md-post__action">
+      <a href="../20191116-homelcloud-high-level-design-4.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2019-11-15 00:00:00">20191115</time></li>
         
           <li class="md-meta__item">
@@ -1607,46 +1709,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2019-06-18 00:00:00">20190618</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../automation.html" class="md-meta__link">automation</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="ansible"><a class="toclink" href="../20190618-ansible-troubleshooting.html">Ansible 如何除錯? 誰可以救救我?</a></h2>
-<p><img alt="" src="/images/ansible-logo.png" /></p>
-<p>可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 <a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Release Note</a></p>
-<p>就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作  <a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1</a> 、<a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2</a></p>
-
-    <nav class="md-post__action">
-      <a href="../20190618-ansible-troubleshooting.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1654,7 +1716,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../13/index.html">13</a> <a class="md-pagination__link" href="../14/index.html">14</a> <span class="md-pagination__current">15</span> <a class="md-pagination__link" href="../16/index.html">16</a>
+  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../13/index.html">13</a> <a class="md-pagination__link" href="../14/index.html">14</a> <span class="md-pagination__current">15</span> <a class="md-pagination__link" href="../16/index.html">16</a> <a class="md-pagination__link" href="../17/index.html">17</a>
 </nav>
         
       
