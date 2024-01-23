@@ -1679,10 +1679,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ansible-azure_1" class="md-nav__link">
+  <a href="#why-ansible-azure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        為什麼要用 Ansible 管理 Azure?
+        Why: 為什麼要用 Ansible 管理 Azure?
       
     </span>
   </a>
@@ -1690,10 +1690,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ansible-playbook-azure" class="md-nav__link">
+  <a href="#how-ansible-azure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        如何用 Ansible Playbook 管理 Azure?
+        How: 如何用 Ansible 管理 Azure?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-ansible-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When: 何時該用 Ansible 管理 Azure?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-ansible-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where: 在哪裡可以用 Ansible 管理 Azure?
       
     </span>
   </a>
@@ -1764,10 +1786,10 @@
 <p><img alt="" src="/images/defender-for-cloud-on-m3.png" /></p>
 <!--more-->
 
-<h2 id="ansible-azure_1">為什麼要用 Ansible 管理 Azure?</h2>
+<h2 id="why-ansible-azure">Why: 為什麼要用 Ansible 管理 Azure?</h2>
 <p>因為我多數的架構設計工作都是一步一步進行設計，每個客戶長相和需求都有點不太一樣，所以我在多數狀況下會更傾向採用 Ansible 這種命令式 (Imperative) 的方式來 Step by Step 控管流程，預設狀況下，不是採用 Terraform 或 Bicep 聲明式 (Declarative) 的方式</p>
 <p>此外本家的 <a href="https://learn.microsoft.com/zh-tw/cli/azure/install-azure-cli">Azure CLI</a> 發展都會比其他 IaC SDK 來得快，譬如說像 preview 功能有時候就是得用到，像 AKS 體系的功能就一票放在 preview 那邊，你只能用下 azure-cli 的方式進行操作，久了就會習慣用 Azure CLI 為主來管理 Azure</p>
-<h2 id="ansible-playbook-azure">如何用 Ansible Playbook 管理 Azure?</h2>
+<h2 id="how-ansible-azure">How: 如何用 Ansible 管理 Azure?</h2>
 <p>基於我自己常寫的經驗，主要就 3 個招數</p>
 <ol>
 <li>Option 1: 採用 <a href="https://docs.ansible.com/ansible/latest/scenario_guides/guide_azure.html">Ansible Colletion - azure.azcollection.*</a>，用封裝好的 Python Libray 去進行操作</li>
@@ -1814,6 +1836,20 @@
 <a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">          </span><span class="no">--zone-redundancy Enabled</span>
 <a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">          </span><span class="no">&gt; /dev/null</span>
 </code></pre></div>
+<h2 id="when-ansible-azure">When: 何時該用 Ansible 管理 Azure?</h2>
+<p>只要你判斷整個流程</p>
+<ol>
+<li>是需要可以被重複</li>
+<li>執行前需要預測結果</li>
+<li>需要做版本控制</li>
+</ol>
+<p>就別想了用吧</p>
+<h2 id="where-ansible-azure">Where: 在哪裡可以用 Ansible 管理 Azure?</h2>
+<ol>
+<li>Red Hat Ansible Automation Platform: 需要 RBAC 管控, audit log 紀錄, workflow, event driven 能力要選這個，詳細可找 Red Hat 業務聊聊</li>
+<li><a href="https://shell.azure.com">Azure Cloud Shell</a>: 預設有提供 Ansible core 2.15.8 可用</li>
+<li>Localhost: 跟 Azure Cloud Shell 邏輯差不多，只是要自己安裝 Ansible 和維護帳密</li>
+</ol>
 <h2 id="azureazcollection">正確地安裝 azure.azcollection</h2>
 <p>我習慣會固定版本安裝，因為之前有遇過不寫的時候，會採最新版本，上週用 1.9.1 的版本，然後要準備交差的時候忽然變成 2.0.0 的版本，然後整個 Ansible Playbook 就爆炸了</p>
 <p>下面提供一個我最近常用的安裝方式，如果是在 <a href="https://shell.azure.com/">Azure Cloud Shell</a> 內執行的時候，通常都需要執行下列內容才會正常</p>
