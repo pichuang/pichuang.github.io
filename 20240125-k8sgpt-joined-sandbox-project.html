@@ -1846,7 +1846,7 @@
 <p><img alt="" src="/images/k8sgpt-output.png" /></p>
 <p>除了幫你爬 Error 以外，還可以給一點 Solution 讓你有一個方向可以解決問題</p>
 <h2 id="_1">提升查詢速度和資料隱蔽性</h2>
-<p>基於 [Azure OpenAI - Use Private Endpoints]，可以將傳輸速度和隱蔽性透過 Private Endpoint 的路線來大幅提升</p>
+<p>基於 <a href="https://learn.microsoft.com/en-us/azure/ai-services/cognitive-services-virtual-networks?context=%2Fazure%2Fai-services%2Fopenai%2Fcontext%2Fcontext&amp;tabs=portal#connect-to-private-endpoints">Azure OpenAI - Use Private Endpoints</a>，可以將傳輸速度和隱蔽性透過 Private Endpoint 的路線來大幅提升</p>
 <p>下面的 VM 和 Azure OpenAI 及其 Private Endpoint 都在 East US 2，光在同區測試這樣就有差 0.5 ~ 1 個 ms 了</p>
 <div class="highlight"><span class="filename">private-versus-public-routing</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># via Public Internet (Microsoft Routing)</span>
