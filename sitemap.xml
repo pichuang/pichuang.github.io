@@ -2,782 +2,782 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://blog.pichuang.com.tw/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/about.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/azure-subnets.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/recording.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/speaker.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/tags.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20190321-reach-out-services-and-pods-from-outside-into-openshift.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20190404-openshift-network-traffic-overview.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20190527-bandwidth-and-throughput.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20190618-ansible-troubleshooting.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20191116-homelcloud-high-level-design-4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20191123-how-to-build-up-a-secure-container-registry-using-docker-distribution.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200308-technical-writer.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200309-ansible-30m.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200401-personal-agile.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200413-openshift4-network-traffic-overview.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200423-deadman.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200426-openshift-with-coreos-part-4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200427-openshift-with-coreos-part-5.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200502-openshift-with-coreos-part-6.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200521-openshift-with-coreos-part-7.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200529-openshift-etcd-operator-2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200713-bm-and-vm-container-deployment-consideration.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20200828-kubectl-view-allocations.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20201009-kubernetes-api-communication.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20201231-2020-personal-review.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20211112-how-to-sizing-kubernetes-resource-and-infra-resource.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20211129-kubernetes-service-troubleshoot.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20211231-2021-personal-review.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20220216-kubernetes-isolation.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20221005-k8s-gracefulrestart-pod.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230202-azure-expressroute-cross-region.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230203-private-azure-openai-service-ra.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230209-azure-vm-outbound-methods.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230214-openai-scaling-kubernetes-to-7500-nodes.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230301-iac-personal-experiences.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230306-tdd-for-network-connectivity.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230316-openai-api-development-exp.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230411-slo-latency.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230417-composite-sla.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230515-deepdive-sig-scalability.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230529-kubernetes-probe.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230629-debian-or-ubuntu.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20230713-distroless-container-debug.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20231012-sustainability-remote-capture-packets.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20231013-remote-capture-packets-from-aks.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20231027-aks-node-c1000k.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/20240124-ansible-on-azure.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/azure-life-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/azure-networking-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/azure-subnet-cidr-pratices.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/azure-usecase-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/cloud-native-security.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/istio-and-aks-managed-path.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/istio-and-aks-unmanaged-path.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/kubernetes-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/linux-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/observability-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/ocpp-survey.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/openai-onestop.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/vector-db-options-available-in-azure.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/vmware-vsphere-troubleshooting.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/wireshark.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-azure-routing-preferences.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-deployment-azure-redhat-openshift.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-establish-and-test-port-scanning.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-find-azure-marketplace-image-information.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-find-the-installed-packages-within-container-images.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-personal-wsl2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-public-ip-address-verification.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-setup-resolve-within-aks.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/howto/howto-traffic-load-balancing.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/wiki/openai/openai-location.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2024.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2022.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2021.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2019.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/ansible.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/sustainability.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/container.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/sla.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/o11y.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/openai.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/networking.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/linux.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/azure.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/misc.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/openshift.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/personal.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/homecloud.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/automation.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/3/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/4/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/5/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/6/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/7/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/8/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/9/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/10/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/11/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/12/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/13/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/14/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/15/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/16/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/17/index.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023/3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023/4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023/5.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2023/6.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020/3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020/4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020/5.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2020/6.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2019/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2019/3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/homecloud/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/5.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/6.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/kubernetes/7.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/linux/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/openshift/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/2.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/3.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/4.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/5.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/6.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/7.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/8.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/9.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/10.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/11.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/12.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/13.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/14.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/15.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/16.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/author/url/17.html</loc>
-         <lastmod>2024-01-23</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
