@@ -12,13 +12,11 @@
         <meta name="author" content="Phil Huang">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/linux.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240125-k8sgpt-joined-sandbox-project.html">
       
       
-        <link rel="prev" href="kubernetes.html">
+        <link rel="prev" href="20240124-ansible-on-azure.html">
       
-      
-        <link rel="next" href="misc.html">
       
       
         
@@ -32,7 +30,7 @@
     
     
       
-        <title>linux - Phil's Workspace</title>
+        <title>k8sgpt 加入 CNCF Sandbox Project! - Phil's Workspace</title>
       
     
     
@@ -93,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#linux" class="md-skip">
+        <a href="#k8sgpt-cncf-sandbox-project" class="md-skip">
           Skip to content
         </a>
       
@@ -149,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              linux
+              k8sgpt 加入 CNCF Sandbox Project!
             
           </span>
         </div>
@@ -320,7 +318,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -682,10 +682,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -728,12 +726,14 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
         
           
           <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
@@ -753,7 +753,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -971,40 +971,12 @@
                 
   
   
-    
-  
   
     
-      
-    
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    
-  
-    linux
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="linux.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="linux.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1019,59 +991,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#iac" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        選擇 IaC 工具是多選題，而不是單選題
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deadman" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        系統工程師必備監控小工具 deadman
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#30-ansible" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        30 分鐘內從開始到入門的 Ansible
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1705,143 +1624,343 @@
             
           
           
-  <div class="md-content" data-md-component="content">
-    <div class="md-content__inner">
-      <header class="md-typeset">
-        <h1 id="linux">linux</h1>
-      </header>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-03-01 00:00:00">20230301</time></li>
-        
-          <li class="md-meta__item">
-            in
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="index.html" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
             
-              <a href="linux.html" class="md-meta__link">linux</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="iac"><a class="toclink" href="20230301-iac-personal-experiences.html">選擇 IaC 工具是多選題，而不是單選題</a></h2>
-<p><img alt="" src="/images/meme-iac.png" /></p>
-<h3 id="_1"><a class="toclink" href="20230301-iac-personal-experiences.html#_1">前言</a></h3>
-<p>很多朋友講到 Infrastructure as Code (IaC) 的時候多半都會直接落在單一工具選擇的討論，想要窮舉出最終選擇，但隨著時間久了我覺得這個議題應該要以共生共榮的角度看待比較好</p>
-<p>早期的時候都是 Shell Script 當道居多，直至 2012 年左右 Ansible (2015 年被 Red Hat 收購)、Puppet (2022 年被 Perforce 收購)、Chef (2020 年被 Progress 收購)、Saltstack (2020 年被 VMware 收購) 等 4 大多數以作業系統管理為主的組態管理 (Configuration Management) 興盛，到各大雲廠商迅速崛起出現 Hashicorp Terraform (2021 年 IPO) 這類以雲平台 (Cloud Provider) 為 IaC 核心的工具，具體來講，被管理的平台不同，選擇的方向會有點不一樣，下面會有一些我個人的經驗分享</p>
-
-    <nav class="md-post__action">
-      <a href="20230301-iac-personal-experiences.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-04-22 00:00:00">20200422</time></li>
-        
-          <li class="md-meta__item">
-            in
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://blog.pichuang.com.tw">Phil Huang</a>
+                        
+                      </strong>
+                      <br>
+                      Microsoft Senior Cloud Solution Architect | CNCF Ambassador
+                    </span>
+                  </div>
+                
+              </div>
             
-              <a href="linux.html" class="md-meta__link">linux</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="deadman"><a class="toclink" href="20200423-deadman.html">系統工程師必備監控小工具 deadman</a></h2>
-<p>今天要來分享一個長期以來藏在我心中的小工具，以前搞網路出國做軟體定義網路 (Software Defined Networking, SDN) 相關的 PoC，因為時間非常短，僅僅只有一週，所以出門前要測試、準備工具需要相當齊備，而且現場狀況神多，尤其是虛擬網路及實體網路之延伸綜合性問題，遇到問題時會不知道要相信哪個點，需要反覆一直確認。而我鍵盤上的 <code>p</code>、<code>i</code>、<code>n</code>、<code>g</code> 加數字鍵已經被我打爛了，為了各位的鍵盤和手指著想，今天要來介紹一個由日本 Interop Tokyo 發展出來的一個超好用小工具 <code>deadman</code></p>
-<p><img alt="" src="/images/shownet.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="20200423-deadman.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-03-09 00:00:00">20200309</time></li>
-        
-          <li class="md-meta__item">
-            in
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2024-01-25 00:00:00" class="md-ellipsis">20240125</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="cncf.html">cncf</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
             
-              <a href="linux.html" class="md-meta__link">linux</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="30-ansible"><a class="toclink" href="20200309-ansible-30m.html">30 分鐘內從開始到入門的 Ansible</a></h2>
-<p>Ansible 真的是一個蠻好用的工具，不用預先塞代理程式 (Agentless) 這點真的是蠻容易上手的，這邊分享一下如果你是第一次接觸到 Ansible 的系統工程師，想要使用看看的話，但又不想要學太多相關知識的話，這篇非常適合各位</p>
-<p>{% youtube ysqclCH9Vc0 %}</p>
-
-    <nav class="md-post__action">
-      <a href="20200309-ansible-30m.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-      
-        
+          </nav>
           
+            
 
-
-
-<nav class="md-pagination">
-  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="linux/2.html">2</a>
-</nav>
-        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#k8sgpt-azure-openai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        k8sgpt 現行支援 Azure OpenAI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提升查詢速度和資料隱蔽性
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文後廢言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
     </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">kubernetes</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">azureopenai</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="k8sgpt-cncf-sandbox-project">k8sgpt 加入 CNCF Sandbox Project!</h1>
+<p>去年開始 Cloud Native Computing Foundation 針對 AI 領域有開始著墨，在 2023/12/19 <code>k8sgpt</code> 正式被放入到 <a href="https://landscape.cncf.io/?item=observability-and-analysis--monitoring--k8sgpt">Sandbox Project</a> 內，這專案目的是協助你一行 <code>k8sgpt analyze --explain --anonymize</code> 分析你現在登入的 Kubernetes 狀況，讓你擺脫觀落陰的輪迴中</p>
+<p>有趣的事情是，他是被分類到 <code>TAG Observability</code> 範疇內...</p>
+<p><img alt="" src="/images/k8sgpt-banner.png" /></p>
+<!--more-->
+
+<h2 id="k8sgpt-azure-openai">k8sgpt 現行支援 Azure OpenAI</h2>
+<p>依據 <a href="https://github.com/k8sgpt-ai/k8sgpt?tab=readme-ov-file#llm-ai-backends">LLM AI Backends</a> 清單，除了 OpenAI 以外，也有支援 <a href="https://docs.k8sgpt.ai/reference/providers/backend/#azure-openai">Azure OpenAI</a></p>
+<div class="highlight"><span class="filename">k8sgpt-azureopenai-install.sh</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Prerequisites</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">AOAI_ENDPOINT</span><span class="o">=</span><span class="s2">&quot;https://pichuang.openai.azure.com/&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">DEPLOYMNET_NAME</span><span class="o">=</span><span class="s2">&quot;deployment-gpt35-turbo-16k&quot;</span><span class="w"> </span><span class="c1"># It&#39;s a deployment name, not a model name</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">MODEL_NAME</span><span class="o">=</span><span class="s2">&quot;gpt-35-turbo-16k&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">AOAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;75d1a2c5fb0245c1ab60c1dd53152c88&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Add Azure OpenAI backend</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">#</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>add<span class="w"> </span>--backend<span class="w"> </span>azureopenai<span class="w"> </span>--baseurl<span class="w"> </span><span class="nv">$AOAI_ENDPOINT</span><span class="w"> </span>--engine<span class="w"> </span><span class="nv">$DEPLOYMNET_NAME</span><span class="w"> </span>--model<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>--password<span class="w"> </span><span class="nv">$AOAI_API_KEY</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>azureopenai<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>AI<span class="w"> </span>backend<span class="w"> </span>provider<span class="w"> </span>list
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Set Azure OpenAI backend as default</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>default<span class="w"> </span>-p<span class="w"> </span>azureopenai
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>Default<span class="w"> </span>provider<span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>azureopenai
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># List all backends</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>list
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>Default:
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>&gt;<span class="w"> </span>azureopenai
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>Active:
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>&gt;<span class="w"> </span>azureopenai
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1"># Check you can reach Kubernetes cluster, and here I use OpenShift Local v4.14.7</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>$<span class="w"> </span>oc<span class="w"> </span>version
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>Client<span class="w"> </span>Version:<span class="w"> </span><span class="m">4</span>.14.7
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>Kustomize<span class="w"> </span>Version:<span class="w"> </span>v5.0.1
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>Server<span class="w"> </span>Version:<span class="w"> </span><span class="m">4</span>.14.7
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>Kubernetes<span class="w"> </span>Version:<span class="w"> </span>v1.27.8+4fab27b
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>$<span class="w"> </span>kubectl<span class="w"> </span>version
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>Client<span class="w"> </span>Version:<span class="w"> </span>v1.29.1
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>Kustomize<span class="w"> </span>Version:<span class="w"> </span>v5.0.4-0.20230601165947-6ce0bf390ce3
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>Server<span class="w"> </span>Version:<span class="w"> </span>v1.27.8+4fab27b
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>$<span class="w"> </span>kubectl<span class="w"> </span>cluster-info
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>Kubernetes<span class="w"> </span>control<span class="w"> </span>plane<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://api.crc.testing:6443
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="c1"># Test k8sgpt with Azure OpenAI backend</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>analyze<span class="w"> </span>--explain<span class="w"> </span>--anonymize
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="p">|</span>███████████████████████████████████████████████████████████████████████████████████████████<span class="p">|</span><span class="w"> </span><span class="o">(</span><span class="m">3</span>/3,<span class="w"> </span><span class="m">31</span><span class="w"> </span>it/min<span class="o">)</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>AI<span class="w"> </span>Provider:<span class="w"> </span>azureopenai
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>...omit...
+</code></pre></div>
+<p><img alt="" src="/images/k8sgpt-output.png" /></p>
+<p>除了幫你爬 Error 以外，還可以給一點 Solution 讓你有一個方向可以解決問題</p>
+<h2 id="_1">提升查詢速度和資料隱蔽性</h2>
+<p>因為 Azure OpenAI 是已 https 為主的服務，所以要正確使用，不跳過 TLS 驗證的話，需要將 Azure Private Link 和 Azure Private DNS 相關的架構弄好，才能正確運行</p>
+<div class="highlight"><span class="filename">privatelink-resolve</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># Inside VM with Azure Private Link</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$<span class="w"> </span>cat<span class="w"> </span>/etc/resolv.conf
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Generated by NetworkManager</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>search<span class="w"> </span>salqh4dnbine5ngi3moox0djkd.cx.internal.cloudapp.net<span class="w"> </span>divecode.intranet
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>nameserver<span class="w"> </span><span class="m">168</span>.63.129.16
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">#</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Verify Azure Private Link is working</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">#</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>$<span class="w"> </span>dig<span class="w"> </span>pichuang.openai.azure.com
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">;</span><span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>DiG<span class="w"> </span><span class="m">9</span>.16.23-RH<span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>pichuang.openai.azure.com
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="p">;;</span><span class="w"> </span>global<span class="w"> </span>options:<span class="w"> </span>+cmd
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">;;</span><span class="w"> </span>Got<span class="w"> </span>answer:
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">;;</span><span class="w"> </span>-&gt;&gt;HEADER<span class="s">&lt;&lt;- opcode: QUERY, status: NOERROR, id: 20469</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="s">;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="s">;; OPT PSEUDOSECTION:</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="s">; EDNS: version: 0, flags:; udp: 1224</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="s">;; QUESTION SECTION:</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="s">;pichuang.op</span>enai.azure.com.<span class="w">      </span>IN<span class="w">      </span>A
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>pichuang.openai.azure.com.<span class="w"> </span><span class="m">900</span><span class="w">   </span>IN<span class="w">      </span>CNAME<span class="w">   </span>pichuang.privatelink.openai.azure.com.
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>pichuang.privatelink.openai.azure.com.<span class="w"> </span><span class="m">10</span><span class="w"> </span>IN<span class="w"> </span>A<span class="w">   </span><span class="m">10</span>.0.0.9
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="p">;;</span><span class="w"> </span>Query<span class="w"> </span>time:<span class="w"> </span><span class="m">3</span><span class="w"> </span>msec
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="p">;;</span><span class="w"> </span>SERVER:<span class="w"> </span><span class="m">168</span>.63.129.16#53<span class="o">(</span><span class="m">168</span>.63.129.16<span class="o">)</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="p">;;</span><span class="w"> </span>WHEN:<span class="w"> </span>Wed<span class="w"> </span>Jan<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="m">21</span>:37:47<span class="w"> </span>CST<span class="w"> </span><span class="m">2024</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="p">;;</span><span class="w"> </span>MSG<span class="w"> </span>SIZE<span class="w">  </span>rcvd:<span class="w"> </span><span class="m">103</span>
+</code></pre></div>
+<h2 id="_2">文後廢言</h2>
+<p>看看未來 CNCF 還有多少有趣的 AI 相關專案會跑出來，拭目以待</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://k8sgpt.ai/">k8sgpt.ai</a></li>
+<li><a href="https://landscape.cncf.io/?item=observability-and-analysis--monitoring--k8sgpt">Cloud Native Landscape - k8sgpt</a></li>
+<li><a href="https://learn.microsoft.com/zh-tw/azure/private-link/private-endpoint-dns#commercial">Azure 私人端點私人 DNS 區域值</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+    <script src="https://giscus.app/client.js"
+    data-repo="pichuang/pichuang.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnk3NzkzNTgwNw=="
+    data-category="General"
+    data-category-id="DIC_kwDOBKU0v84CT0Z2"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-TW"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
   </div>
 
           

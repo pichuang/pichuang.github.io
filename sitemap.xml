@@ -276,6 +276,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://blog.pichuang.com.tw/20240125-k8sgpt-joined-sandbox-project.html</loc>
+         <lastmod>2024-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://blog.pichuang.com.tw/wiki/index.html</loc>
          <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
@@ -432,6 +437,11 @@
     </url>
     <url>
          <loc>https://blog.pichuang.com.tw/2019.html</loc>
+         <lastmod>2024-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.pichuang.com.tw/cncf.html</loc>
          <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>

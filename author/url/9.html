@@ -717,6 +717,8 @@
       
         
       
+        
+      
     
     
     
@@ -836,6 +838,35 @@
     
   
     azure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    cncf
   
 
     
@@ -1328,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#kubernetes-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes API 服務及跟各組件的交互關係
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#namespace-kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1343,17 +1385,6 @@
     <span class="md-ellipsis">
       
         Kubernetes 部署在虛機好還是裸機好?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift-4-etcd" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二
       
     </span>
   </a>
@@ -1692,6 +1723,46 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-10-09 00:00:00">20201009</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="kubernetes-api"><a class="toclink" href="../../20201009-kubernetes-api-communication.html">Kubernetes API 服務及跟各組件的交互關係</a></h2>
+<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
+<p>照例講個雜事，Red Hat OpenShift 4.6 (等同 Kubernetes 1.19) 要出啦！這是一個可以一路用到 <code>2022 年 3 月</code> 的版本，各位 Infra 不用在為了更新和升級落淚了 Q_Q，有興趣者可以參考 <a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What's New in OpenShift Container Platform 4.6</a></p>
+<p><img alt="" src="/images/ocp4-6-eus.png" /></p>
+
+    <nav class="md-post__action">
+      <a href="../../20201009-kubernetes-api-communication.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-08-28 00:00:00">20200828</time></li>
         
           <li class="md-meta__item">
@@ -1755,46 +1826,6 @@
 
     <nav class="md-post__action">
       <a href="../../20200713-bm-and-vm-container-deployment-consideration.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-29 00:00:00">20200529</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../../20200529-openshift-etcd-operator-2.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</a></h2>
-<p>承襲上文 <a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a>，繼續針對硬碟的部分進行調整，畢竟 etcd 對<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">硬碟</a> IOPS 相當要求，建議用 SSD 比較好</p>
-<p>沒意外的，開場分享個 <a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a>，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說</p>
-<p>{% youtube PdyNQXpYknI %}</p>
-
-    <nav class="md-post__action">
-      <a href="../../20200529-openshift-etcd-operator-2.html">
         Continue reading
       </a>
     </nav>
