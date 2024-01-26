@@ -1637,6 +1637,54 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-04-12 00:00:00">20200412</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="red-hat-coreos-red-hat-openshift-part-3"><a class="toclink" href="../20200412-openshift-with-coreos-part-3.html">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</a></h2>
+<p>承襲愛的走馬看花系列的亂寫亂紀錄優良傳統，繼續記錄操作，有興趣想要看前面的文章可以參考這兩邊</p>
+<ul>
+<li><a href="https://blog.pichuang.com.tw/20200317-openshift-with-coreos-part-1/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1 - Phil Huang</a></li>
+<li><a href="https://blog.pichuang.com.tw/20200403-openshift-with-coreos-part-2/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 2 - Phil Huang</a></li>
+</ul>
+<p>第三天要來操作的是
+1. 實裝 Kubernetes NFS-Client Provisioner
+2. 升級 OpenShift 4.y.z
+3. 正確匯出 YAML 方式</p>
+<p>另外我依然沒梗圖，所以開場 Po 個影片 <code>Installing OpenShift to Red Hat Virtualization using full-stack automation</code>，現在 <code>libvirt</code> 體系平台也可以使用 <code>node scaling</code> 的能力了，影片三分鐘，OpenShift 4.4 之後就會開始支援了</p>
+<p>{% youtube uFypQRWEKqo %}</p>
+
+    <nav class="md-post__action">
+      <a href="../20200412-openshift-with-coreos-part-3.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-04-03 00:00:00">20200403</time></li>
         
           <li class="md-meta__item">
@@ -1698,50 +1746,6 @@
 
     <nav class="md-post__action">
       <a href="../20200401-personal-agile.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-03-17 00:00:00">20200317</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-coreos-red-hat-openshift-part-1"><a class="toclink" href="../20200317-openshift-with-coreos-part-1.html">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 1</a></h2>
-<p>誠如大家所知，因爲種種技術及非技術因素上 - <a href="https://www.redhat.com/en/blog/why-red-hat-investing-cri-o-and-podman">Why Red Hat is investing in CRI-O and Podman</a>，OpenShift 4 底層有兩個蠻大的更新</p>
-<ol>
-<li>容器運行時環境 (Container Runtime) 從 docker 換成了 <a href="https://cri-o.io/">CRI-O</a></li>
-<li>作業系統從通用型 Red Hat Enterprise Linux 換成了專為容器特化的容器作業系統 Red Hat CoreOS</li>
-</ol>
-<p>本文將記錄一下於 Red Hat CoreOS (RHCOS) 及 Red Hat OpenShift 偏作業系統層面的探索紀錄</p>
-<p><img alt="" src="/images/ocp4-coreos.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="../20200317-openshift-with-coreos-part-1.html">
         Continue reading
       </a>
     </nav>

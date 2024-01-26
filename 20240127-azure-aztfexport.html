@@ -12,13 +12,11 @@
         <meta name="author" content="Phil Huang">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/20240125-k8sgpt-joined-sandbox-project.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240127-azure-aztfexport.html">
       
       
-        <link rel="prev" href="20240124-ansible-on-azure.html">
+        <link rel="prev" href="20240125-k8sgpt-joined-sandbox-project.html">
       
-      
-        <link rel="next" href="20240127-azure-aztfexport.html">
       
       
         
@@ -32,7 +30,7 @@
     
     
       
-        <title>k8sGPT 加入 CNCF Sandbox Project! - Phil's Workspace</title>
+        <title>aztfexport - 從既有環境導出 Azure 資源狀態 - Phil's Workspace</title>
       
     
     
@@ -93,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#k8sgpt-cncf-sandbox-project" class="md-skip">
+        <a href="#aztfexport-azure" class="md-skip">
           Skip to content
         </a>
       
@@ -149,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              k8sGPT 加入 CNCF Sandbox Project!
+              aztfexport - 從既有環境導出 Azure 資源狀態
             
           </span>
         </div>
@@ -1673,7 +1671,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
-                        <time datetime="2024-01-25 00:00:00" class="md-ellipsis">20240125</time>
+                        <time datetime="2024-01-27 00:00:00" class="md-ellipsis">20240127</time>
                       </div>
                     </li>
                     
@@ -1684,7 +1682,7 @@
                           <span class="md-ellipsis">
                             in
                             
-                              <a href="cncf.html">cncf</a></span>
+                              <a href="azure.html">azure</a></span>
                         </div>
                       </li>
                     
@@ -1712,10 +1710,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#k8sgpt-azure-openai" class="md-nav__link">
+  <a href="#azure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        k8sgpt 現行支援 Azure OpenAI
+        獲得當前 Azure 資源狀態
       
     </span>
   </a>
@@ -1723,13 +1721,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#k8sgpt" class="md-nav__link">
+  <a href="#azure-openai" class="md-nav__link">
     <span class="md-ellipsis">
       
-        [無關 k8sgpt] 提升查詢速度和資料隱蔽性
+        檢視特定資源狀態，以 Azure OpenAI 為例
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#azure_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        回復特定 Azure 資源狀態
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q&amp;A
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q&A">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: 使用經驗如何?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-tfstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: 我可以拿來當 tfstate 檔案的常規備份用嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1774,14 +1822,14 @@
       
       
       
-        <span class="md-tag">kubernetes</span>
+        <span class="md-tag">terraform</span>
       
     
       
       
       
       
-        <span class="md-tag">azureopenai</span>
+        <span class="md-tag">kubernetes</span>
       
     
   </nav>
@@ -1791,164 +1839,267 @@
   
 
 
-<h1 id="k8sgpt-cncf-sandbox-project">k8sGPT 加入 CNCF Sandbox Project!</h1>
-<p>去年開始 Cloud Native Computing Foundation 針對 AI 領域有開始著墨，在 2023/12/19 <code>k8sGPT</code> 正式被放入到 <a href="https://landscape.cncf.io/?item=observability-and-analysis--monitoring--k8sgpt">Sandbox Project</a> 內，這專案目的是協助你一行 <code>k8sgpt analyze --explain --anonymize</code> 分析你現在登入的 Kubernetes 狀況，讓你擺脫觀落陰的輪迴中</p>
-<p>有趣的事情是，他是被分類到 <code>TAG Observability</code> 範疇內...</p>
-<p><img alt="" src="/images/k8sgpt-banner.png" /></p>
+<h1 id="aztfexport-azure">aztfexport - 從既有環境導出 Azure 資源狀態</h1>
+<blockquote>
+<p>A tool to bring existing Azure resources under Terraform's management</p>
+</blockquote>
+<p>因為這個 <a href="https://azure.github.io/aztfexport/#1">Microsoft Azure Export for Terraform</a> 小工具是以 <code>Resource Group</code> 為最大範圍而 <code>Resource</code> 為最小範圍 Export，而不是以 <code>Subscription</code>，所以在用的時候要先切換到對應的 <code>Subscription</code></p>
+<p>微軟官網文件有專門的頁面在介紹怎麼用 <a href="https://learn.microsoft.com/zh-tw/azure/developer/terraform/azure-export-for-terraform/export-terraform-overview">Microsoft Learn - 適用於 Terraform 的 Azure 導出概觀</a></p>
+<p><img alt="" src="./images/aztfexport-screenshot.png" /></p>
 <!--more-->
 
-<h2 id="k8sgpt-azure-openai">k8sgpt 現行支援 Azure OpenAI</h2>
-<p>依據 <a href="https://github.com/k8sgpt-ai/k8sgpt?tab=readme-ov-file#llm-ai-backends">LLM AI Backends</a> 清單，除了 OpenAI 以外，也有支援 <a href="https://docs.k8sgpt.ai/reference/providers/backend/#azure-openai">Azure OpenAI</a></p>
-<div class="highlight"><span class="filename">k8sgpt-azureopenai-install.sh</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Prerequisites</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">AOAI_ENDPOINT</span><span class="o">=</span><span class="s2">&quot;https://pichuang.openai.azure.com/&quot;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">DEPLOYMNET_NAME</span><span class="o">=</span><span class="s2">&quot;deployment-gpt35-turbo-16k&quot;</span><span class="w"> </span><span class="c1"># It&#39;s a deployment name, not a model name</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">MODEL_NAME</span><span class="o">=</span><span class="s2">&quot;gpt-35-turbo-16k&quot;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">AOAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;pichuangishandsome&quot;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Add Azure OpenAI backend</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">#</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>add<span class="w"> </span>--backend<span class="w"> </span>azureopenai<span class="w"> </span>--baseurl<span class="w"> </span><span class="nv">$AOAI_ENDPOINT</span><span class="w"> </span>--engine<span class="w"> </span><span class="nv">$DEPLOYMNET_NAME</span><span class="w"> </span>--model<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>--password<span class="w"> </span><span class="nv">$AOAI_API_KEY</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>azureopenai<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>AI<span class="w"> </span>backend<span class="w"> </span>provider<span class="w"> </span>list
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Set Azure OpenAI backend as default</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>default<span class="w"> </span>-p<span class="w"> </span>azureopenai
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>Default<span class="w"> </span>provider<span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>azureopenai
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># List all backends</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>auth<span class="w"> </span>list
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>Default:
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>&gt;<span class="w"> </span>azureopenai
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>Active:
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>&gt;<span class="w"> </span>azureopenai
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1"># Check you can reach Kubernetes cluster, and here I use OpenShift Local v4.14.7</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>$<span class="w"> </span>oc<span class="w"> </span>version
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>Client<span class="w"> </span>Version:<span class="w"> </span><span class="m">4</span>.14.7
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>Kustomize<span class="w"> </span>Version:<span class="w"> </span>v5.0.1
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>Server<span class="w"> </span>Version:<span class="w"> </span><span class="m">4</span>.14.7
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>Kubernetes<span class="w"> </span>Version:<span class="w"> </span>v1.27.8+4fab27b
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>$<span class="w"> </span>kubectl<span class="w"> </span>version
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>Client<span class="w"> </span>Version:<span class="w"> </span>v1.29.1
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>Kustomize<span class="w"> </span>Version:<span class="w"> </span>v5.0.4-0.20230601165947-6ce0bf390ce3
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>Server<span class="w"> </span>Version:<span class="w"> </span>v1.27.8+4fab27b
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>$<span class="w"> </span>kubectl<span class="w"> </span>cluster-info
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>Kubernetes<span class="w"> </span>control<span class="w"> </span>plane<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://api.crc.testing:6443
-<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
-<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="c1"># Test k8sgpt with Azure OpenAI backend</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>$<span class="w"> </span>k8sgpt<span class="w"> </span>analyze<span class="w"> </span>--explain<span class="w"> </span>--anonymize
-<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="p">|</span>███████████████████████████████████████████████████████████████████████████████████████████<span class="p">|</span><span class="w"> </span><span class="o">(</span><span class="m">3</span>/3,<span class="w"> </span><span class="m">31</span><span class="w"> </span>it/min<span class="o">)</span>
-<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>AI<span class="w"> </span>Provider:<span class="w"> </span>azureopenai
-<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>...omit...
+<h2 id="azure">獲得當前 Azure 資源狀態</h2>
+<p>當初看到這個工具的時候，我一開始覺得他適合拿來當作每週基礎狀態備份之用，但後來抓了好幾個資源後，覺得反而比較適合下列 2 個情境</p>
+<ol>
+<li>轉換部署模式: 當你想要將資源部署模式轉成以 Terraform 為主的 IaC 的模式`，這個我猜應該是比較少見...</li>
+<li>研究當前狀態: 對於一個剛接觸到的環境，完全不知道在幹嘛的時候，可以先透過這程式抓當前資源狀態研究，廠商做案子的時候可以考慮出首先使用，不用慢慢點滑鼠</li>
+</ol>
+<div class="highlight"><span class="filename">get-azure-tfstate.sh</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">SUBSCRIPTION_ID</span><span class="o">=</span><span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">RG_NAME</span><span class="o">=</span><span class="s2">&quot;rg-azure-openai&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">TF_DIRNAME</span><span class="o">=</span><span class="s2">&quot;tfstate-</span><span class="si">${</span><span class="nv">RG_NAME</span><span class="si">}</span><span class="s2">-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>mkdir<span class="w"> </span><span class="nv">$TF_DIRNAME</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>az<span class="w"> </span>account<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--subscription<span class="w"> </span>subscription-project-openai
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>aztfexport<span class="w"> </span>resource-group<span class="w"> </span>--non-interactive<span class="w"> </span>--continue<span class="w"> </span>--subscription-id<span class="w"> </span><span class="si">${</span><span class="nv">SUBSCRIPTION_ID</span><span class="si">}</span><span class="w"> </span>--provider-version<span class="w"> </span><span class="m">3</span>.89.0<span class="w"> </span>--plain-ui<span class="w"> </span>--output-dir<span class="w"> </span><span class="si">${</span><span class="nv">TF_DIRNAME</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">RG_NAME</span><span class="si">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>tar<span class="w"> </span>-zcvf<span class="w"> </span><span class="si">${</span><span class="nv">TF_DIRNAME</span><span class="si">}</span>.tar.gz<span class="w"> </span><span class="si">${</span><span class="nv">TF_DIRNAME</span><span class="si">}</span>
 </code></pre></div>
-<p><img alt="" src="/images/k8sgpt-output.png" /></p>
-<p>這邊我就拿我電腦上面有的 Red Hat OpenShift Local 來進行使用，當然你如果是用 Azure Kubernetes Service / Tanzu Kubernetes Grid 的也適用這個作法，k8sgpt 基本上就從 API 那邊撈東西回來後，幫你爬 Log 以外，還可以針對錯誤給一點 Solution 讓你有一個方向可以解決問題</p>
-<h2 id="k8sgpt">[無關 k8sgpt] 提升查詢速度和資料隱蔽性</h2>
-<p>基於 <a href="https://learn.microsoft.com/en-us/azure/ai-services/cognitive-services-virtual-networks?context=%2Fazure%2Fai-services%2Fopenai%2Fcontext%2Fcontext&amp;tabs=portal#connect-to-private-endpoints">Azure OpenAI - Use Private Endpoints</a>，可以將傳輸速度和隱蔽性透過 Private Endpoint 的路線來大幅提升</p>
-<p>下面的 VM 和 Azure OpenAI 及其 Private Endpoint 都在 East US 2，光在同區測試這樣就有差 0.5 ~ 1 個 ms 了</p>
-<div class="highlight"><span class="filename">private-versus-public-routing</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># via Public Internet (Microsoft Routing)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$<span class="w"> </span>sudo<span class="w"> </span>hping3<span class="w"> </span>-S<span class="w"> </span>pichuang.openai.azure.com<span class="w"> </span>-p<span class="w"> </span><span class="m">443</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>HPING<span class="w"> </span>pichuang.openai.azure.com<span class="w"> </span><span class="o">(</span>eth0<span class="w"> </span><span class="m">20</span>.119.156.137<span class="o">)</span>:<span class="w"> </span>S<span class="w"> </span>set,<span class="w"> </span><span class="m">40</span><span class="w"> </span>headers<span class="w"> </span>+<span class="w"> </span><span class="m">0</span><span class="w"> </span>data<span class="w"> </span>bytes
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">20</span>.119.156.137<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">58</span><span class="w"> </span>DF<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64240</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">3</span>.7<span class="w"> </span>ms
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">20</span>.119.156.137<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">56</span><span class="w"> </span>DF<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64240</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">3</span>.6<span class="w"> </span>ms
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">20</span>.119.156.137<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">58</span><span class="w"> </span>DF<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64240</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">3</span>.5<span class="w"> </span>ms
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">20</span>.119.156.137<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">58</span><span class="w"> </span>DF<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64240</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">3</span>.4<span class="w"> </span>ms
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">20</span>.119.156.137<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">56</span><span class="w"> </span>DF<span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64240</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">3</span>.3<span class="w"> </span>ms
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>---<span class="w"> </span>pichuang.openai.azure.com<span class="w"> </span>hping<span class="w"> </span>statistic<span class="w"> </span>---
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="m">5</span><span class="w"> </span>packets<span class="w"> </span>transmitted,<span class="w"> </span><span class="m">5</span><span class="w"> </span>packets<span class="w"> </span>received,<span class="w"> </span><span class="m">0</span>%<span class="w"> </span>packet<span class="w"> </span>loss
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>round-trip<span class="w"> </span>min/avg/max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span>.3/3.5/3.7<span class="w"> </span>ms
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">#</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># via Private Endpoint</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">#</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>$<span class="w"> </span>sudo<span class="w"> </span>hping3<span class="w"> </span>-S<span class="w"> </span><span class="m">10</span>.0.0.9<span class="w"> </span>-p<span class="w"> </span><span class="m">443</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>HPING<span class="w"> </span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="o">(</span>eth0<span class="w"> </span><span class="m">10</span>.0.0.9<span class="o">)</span>:<span class="w"> </span>S<span class="w"> </span>set,<span class="w"> </span><span class="m">40</span><span class="w"> </span>headers<span class="w"> </span>+<span class="w"> </span><span class="m">0</span><span class="w"> </span>data<span class="w"> </span>bytes
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">391</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64800</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">2</span>.7<span class="w"> </span>ms
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">392</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64800</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">2</span>.6<span class="w"> </span>ms
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">393</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64800</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">2</span>.5<span class="w"> </span>ms
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">394</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64800</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">2</span>.4<span class="w"> </span>ms
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="nv">len</span><span class="o">=</span><span class="m">44</span><span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="m">10</span>.0.0.9<span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="m">395</span><span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">443</span><span class="w"> </span><span class="nv">flags</span><span class="o">=</span>SA<span class="w"> </span><span class="nv">seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">win</span><span class="o">=</span><span class="m">64800</span><span class="w"> </span><span class="nv">rtt</span><span class="o">=</span><span class="m">2</span>.3<span class="w"> </span>ms
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>---<span class="w"> </span><span class="m">10</span>.0.0.9<span class="w"> </span>hping<span class="w"> </span>statistic<span class="w"> </span>---
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="m">5</span><span class="w"> </span>packets<span class="w"> </span>transmitted,<span class="w"> </span><span class="m">5</span><span class="w"> </span>packets<span class="w"> </span>received,<span class="w"> </span><span class="m">0</span>%<span class="w"> </span>packet<span class="w"> </span>loss
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>round-trip<span class="w"> </span>min/avg/max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span>.3/2.5/2.7<span class="w"> </span>ms
-</code></pre></div>
-<p>因為 Azure OpenAI 是已 https 為主的服務，所以要正確使用，不跳過 TLS 驗證的話，建議要將 <a href="https://learn.microsoft.com/en-us/azure/dns/private-resolver-architecture#distributed-dns-architecture">Azure Private DNS Resolver</a> 和 <a href="https://learn.microsoft.com/zh-tw/azure/private-link/private-endpoint-dns#commercial">Azure Private DNS</a> 相關的架構弄好，才能正確運行</p>
-<div class="highlight"><span class="filename">without-private-dns</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Inside VM with Azure Private Link</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">#</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$<span class="w"> </span>cat<span class="w"> </span>/etc/resolv.conf
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Generated by NetworkManager</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>search<span class="w"> </span>salqh4dnbine5ngi3moox0djkd.cx.internal.cloudapp.net<span class="w"> </span>divecode.intranet
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>nameserver<span class="w"> </span><span class="m">168</span>.63.129.16
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># Without Azure Private DNS</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Verify Azure Private DNS is working</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1">#</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>$<span class="w"> </span>dig<span class="w"> </span>pichuang.openai.azure.com
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="p">;</span><span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>DiG<span class="w"> </span><span class="m">9</span>.16.23-RH<span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>pichuang.openai.azure.com
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">;;</span><span class="w"> </span>global<span class="w"> </span>options:<span class="w"> </span>+cmd
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="p">;;</span><span class="w"> </span>Got<span class="w"> </span>answer:
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">;;</span><span class="w"> </span>-&gt;&gt;HEADER<span class="s">&lt;&lt;- opcode: QUERY, status: NOERROR, id: 11405</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="s">;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="s">;; OPT PSEUDOSECTION:</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="s">; EDNS: version: 0, flags:; udp: 1224</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="s">;; QUESTION SECTION:</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="s">;pichuang.op</span>enai.azure.com.<span class="w">      </span>IN<span class="w">      </span>A
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>pichuang.openai.azure.com.<span class="w"> </span><span class="m">900</span><span class="w">   </span>IN<span class="w">      </span>CNAME<span class="w">   </span>pichuang.privatelink.openai.azure.com.
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>pichuang.privatelink.openai.azure.com.<span class="w"> </span><span class="m">900</span><span class="w"> </span>IN<span class="w"> </span>CNAME<span class="w"> </span>eastus2.prod.vnet.cog.trafficmanager.net.
-<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>eastus2.prod.vnet.cog.trafficmanager.net.<span class="w"> </span><span class="m">60</span><span class="w"> </span>IN<span class="w"> </span>CNAME<span class="w"> </span>vnetproxyv3-use2-prod.eastus2.cloudapp.azure.com.
-<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>vnetproxyv3-use2-prod.eastus2.cloudapp.azure.com.<span class="w"> </span><span class="m">10</span><span class="w"> </span>IN<span class="w"> </span>A<span class="w"> </span><span class="m">20</span>.119.156.137
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
-<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="p">;;</span><span class="w"> </span>Query<span class="w"> </span>time:<span class="w"> </span><span class="m">5</span><span class="w"> </span>msec
-<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="p">;;</span><span class="w"> </span>SERVER:<span class="w"> </span><span class="m">168</span>.63.129.16#53<span class="o">(</span><span class="m">168</span>.63.129.16<span class="o">)</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="p">;;</span><span class="w"> </span>WHEN:<span class="w"> </span>Wed<span class="w"> </span>Jan<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="m">23</span>:06:46<span class="w"> </span>CST<span class="w"> </span><span class="m">2024</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="p">;;</span><span class="w"> </span>MSG<span class="w"> </span>SIZE<span class="w">  </span>rcvd:<span class="w"> </span><span class="m">210</span>
-</code></pre></div>
-<div class="highlight"><span class="filename">with-private-dns</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># After setting up Azure Private DNS and Private Link</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Verify Azure Private DNS is working</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">#</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>$<span class="w"> </span>dig<span class="w"> </span>pichuang.openai.azure.com
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">;</span><span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>DiG<span class="w"> </span><span class="m">9</span>.16.23-RH<span class="w"> </span>&lt;&lt;&gt;&gt;<span class="w"> </span>pichuang.openai.azure.com
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">;;</span><span class="w"> </span>global<span class="w"> </span>options:<span class="w"> </span>+cmd
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">;;</span><span class="w"> </span>Got<span class="w"> </span>answer:
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">;;</span><span class="w"> </span>-&gt;&gt;HEADER<span class="s">&lt;&lt;- opcode: QUERY, status: NOERROR, id: 20469</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="s">;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="s">;; OPT PSEUDOSECTION:</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="s">; EDNS: version: 0, flags:; udp: 1224</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="s">;; QUESTION SECTION:</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="s">;pichuang.op</span>enai.azure.com.<span class="w">      </span>IN<span class="w">      </span>A
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>pichuang.openai.azure.com.<span class="w"> </span><span class="m">900</span><span class="w">   </span>IN<span class="w">      </span>CNAME<span class="w">   </span>pichuang.privatelink.openai.azure.com.
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>pichuang.privatelink.openai.azure.com.<span class="w"> </span><span class="m">10</span><span class="w"> </span>IN<span class="w"> </span>A<span class="w">   </span><span class="m">10</span>.0.0.9
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="p">;;</span><span class="w"> </span>Query<span class="w"> </span>time:<span class="w"> </span><span class="m">3</span><span class="w"> </span>msec
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="p">;;</span><span class="w"> </span>SERVER:<span class="w"> </span><span class="m">168</span>.63.129.16#53<span class="o">(</span><span class="m">168</span>.63.129.16<span class="o">)</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="p">;;</span><span class="w"> </span>WHEN:<span class="w"> </span>Wed<span class="w"> </span>Jan<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="m">21</span>:37:47<span class="w"> </span>CST<span class="w"> </span><span class="m">2024</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="p">;;</span><span class="w"> </span>MSG<span class="w"> </span>SIZE<span class="w">  </span>rcvd:<span class="w"> </span><span class="m">103</span>
-</code></pre></div>
+<h2 id="azure-openai">檢視特定資源狀態，以 Azure OpenAI 為例</h2>
+<p>下面是用 terraform 來檢視特定資源狀態，但實際上你可以直接開 vim 或 vscode 來檢視，也是很方便</p>
+<p>順便一提，其實 Azure OpenAI 這個服務是算在 <code>Microsoft.CognitiveServices/accounts</code> 資源範圍內，如果要分辨是不是 OpenAI 的資源，可以看 <code>kind</code> 的欄位</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>tfstate-rg-azure-openai-20240126
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>$<span class="w"> </span>terraform<span class="w"> </span>init
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>$<span class="w"> </span>terraform<span class="w"> </span>state<span class="w"> </span>list
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>azurerm_cognitive_account.res-1
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>azurerm_cognitive_account.res-6
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>azurerm_cognitive_deployment.res-2
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>azurerm_cognitive_deployment.res-3
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>azurerm_resource_group.res-0
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>azurerm_search_service.res-7
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="c1">#</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1"># Display the current state of Azure OpenAI resource</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="c1">#</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>$<span class="w"> </span>terraform<span class="w"> </span>state<span class="w"> </span>show<span class="w"> </span>azurerm_cognitive_account.res-1
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="c1"># azurerm_cognitive_account.res-1:</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>resource<span class="w"> </span><span class="s2">&quot;azurerm_cognitive_account&quot;</span><span class="w"> </span><span class="s2">&quot;res-1&quot;</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nv">custom_subdomain_name</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;pichuang&quot;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nv">dynamic_throttling_enabled</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="nv">endpoint</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://pichuang.openai.azure.com/&quot;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">    </span><span class="nv">fqdns</span><span class="w">                              </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="nv">id</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-azure-openai/providers/Microsoft.CognitiveServices/accounts/pichuang&quot;</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">    </span><span class="nv">kind</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;OpenAI&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="nv">local_auth_enabled</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="nv">location</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;eastus2&quot;</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="nv">name</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;pichuang&quot;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nv">outbound_network_access_restricted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">    </span><span class="nv">primary_access_key</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">    </span><span class="nv">public_network_access_enabled</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="nv">resource_group_name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-azure-openai&quot;</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">    </span><span class="nv">secondary_access_key</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">    </span><span class="nv">sku_name</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;S0&quot;</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">    </span><span class="nv">tags</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">        </span><span class="s2">&quot;Environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;production&quot;</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">    </span>network_acls<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">        </span><span class="nv">default_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">        </span><span class="nv">ip_rules</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="azure_1">回復特定 Azure 資源狀態</h2>
+<p>有時候需要把資源狀態以特定時機點蓋回去，這時候你就要透過 <code>terraform plan</code> 來檢視差異，然後再透過 <code>terraform apply</code> 來回復狀態</p>
+<p>基於 <a href="https://learn.microsoft.com/en-us/azure/developer/terraform/azure-export-for-terraform/export-terraform-concepts#limitations">How Azure Export for Terraform Works - Limitations</a> 所述，這工具對於 <code>Write-only</code> 屬性的參數都不會被匯出或者是被顯示，譬如像是密碼不會被匯出，你得要自己紀錄．此外如果有服務剛好不在 <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Terraform Azure Provider</a> 所定義的範圍內，那麼這個服務也不會被匯出．因為有可能剛好該服務還沒有實踐到 Terraform Azure Provider 上</p>
+<p>結論來說，要緊急恢復資源狀態，平時要排除對於 <code>terraform plan</code> 已知資源的差異，要能快速辨識議題和手動修復，不然遇到會很麻煩</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span>
+<span class="normal"><a href="#__codelineno-2-48">48</a></span>
+<span class="normal"><a href="#__codelineno-2-49">49</a></span>
+<span class="normal"><a href="#__codelineno-2-50">50</a></span>
+<span class="normal"><a href="#__codelineno-2-51">51</a></span>
+<span class="normal"><a href="#__codelineno-2-52">52</a></span>
+<span class="normal"><a href="#__codelineno-2-53">53</a></span>
+<span class="normal"><a href="#__codelineno-2-54">54</a></span>
+<span class="normal"><a href="#__codelineno-2-55">55</a></span>
+<span class="normal"><a href="#__codelineno-2-56">56</a></span>
+<span class="normal"><a href="#__codelineno-2-57">57</a></span>
+<span class="normal"><a href="#__codelineno-2-58">58</a></span>
+<span class="normal"><a href="#__codelineno-2-59">59</a></span>
+<span class="normal"><a href="#__codelineno-2-60">60</a></span>
+<span class="normal"><a href="#__codelineno-2-61">61</a></span>
+<span class="normal"><a href="#__codelineno-2-62">62</a></span>
+<span class="normal"><a href="#__codelineno-2-63">63</a></span>
+<span class="normal"><a href="#__codelineno-2-64">64</a></span>
+<span class="normal"><a href="#__codelineno-2-65">65</a></span>
+<span class="normal"><a href="#__codelineno-2-66">66</a></span>
+<span class="normal"><a href="#__codelineno-2-67">67</a></span>
+<span class="normal"><a href="#__codelineno-2-68">68</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1">#</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1"># Found Error</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1">#</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>$<span class="w"> </span>terraform<span class="w"> </span>plan
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>╷
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>│<span class="w"> </span>Error:<span class="w"> </span>Missing<span class="w"> </span>required<span class="w"> </span>argument
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>│
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>│<span class="w">   </span>with<span class="w"> </span>azurerm_cognitive_account.res-6,
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>│<span class="w">   </span>on<span class="w"> </span>main.tf<span class="w"> </span>line<span class="w"> </span><span class="m">56</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_cognitive_account&quot;</span><span class="w"> </span><span class="s2">&quot;res-6&quot;</span>:
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>│<span class="w">   </span><span class="m">56</span>:<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_cognitive_account&quot;</span><span class="w"> </span><span class="s2">&quot;res-6&quot;</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>│
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>│<span class="w"> </span><span class="s2">&quot;network_acls&quot;</span>:<span class="w"> </span>all<span class="w"> </span>of<span class="w"> </span><span class="sb">`</span>custom_subdomain_name,network_acls<span class="sb">`</span><span class="w"> </span>must<span class="w"> </span>be<span class="w"> </span>specified
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="c1">#</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="c1"># Before</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="c1">#</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>tfstate-rg-azure-openai-20240124
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>$<span class="w"> </span>terraform<span class="w"> </span>state<span class="w"> </span>show<span class="w"> </span>azurerm_cognitive_account.res-6
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="c1"># azurerm_cognitive_account.res-6:</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>resource<span class="w"> </span><span class="s2">&quot;azurerm_cognitive_account&quot;</span><span class="w"> </span><span class="s2">&quot;res-6&quot;</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="nv">dynamic_throttling_enabled</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">    </span><span class="nv">endpoint</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://japaneast.api.cognitive.microsoft.com/&quot;</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="nv">fqdns</span><span class="w">                              </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="nv">id</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-azure-openai/providers/Microsoft.CognitiveServices/accounts/stt-pichuang&quot;</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="nv">kind</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SpeechServices&quot;</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">    </span><span class="nv">local_auth_enabled</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">    </span><span class="nv">location</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;japaneast&quot;</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">    </span><span class="nv">name</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;stt-pichuang&quot;</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">    </span><span class="nv">outbound_network_access_restricted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">    </span><span class="nv">primary_access_key</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">    </span><span class="nv">public_network_access_enabled</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">    </span><span class="nv">resource_group_name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rg-azure-openai&quot;</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">    </span><span class="nv">secondary_access_key</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>sensitive<span class="w"> </span>value<span class="o">)</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="w">    </span><span class="nv">sku_name</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;F0&quot;</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">    </span><span class="nv">tags</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="w">        </span><span class="s2">&quot;Environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;production&quot;</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="w">    </span>network_acls<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a><span class="w">        </span><span class="nv">default_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a><span class="w">        </span><span class="nv">ip_rules</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a><span class="o">}</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="c1">#</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a><span class="c1"># After</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="c1">#</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="c1"># Fix the error from above and re-run `terraform plan`</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="c1"># https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_account</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="c1">#</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a>$<span class="w"> </span>terraform<span class="w"> </span>plan
+<a id="__codelineno-2-52" name="__codelineno-2-52"></a>Terraform<span class="w"> </span>will<span class="w"> </span>perform<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>actions:
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="w">  </span><span class="c1"># azurerm_cognitive_account.res-6 will be updated in-place</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="w">  </span>~<span class="w"> </span>resource<span class="w"> </span><span class="s2">&quot;azurerm_cognitive_account&quot;</span><span class="w"> </span><span class="s2">&quot;res-6&quot;</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55"></a><span class="w">        </span><span class="nv">id</span><span class="w">                                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/rg-azure-openai/providers/Microsoft.CognitiveServices/accounts/stt-pichuang&quot;</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56"></a><span class="w">        </span><span class="nv">name</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;stt-pichuang&quot;</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57"></a><span class="w">        </span><span class="nv">tags</span><span class="w">                               </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="w">            </span><span class="s2">&quot;Environment&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;production&quot;</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59"></a><span class="w">        </span><span class="o">}</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="w">        </span><span class="c1"># (12 unchanged attributes hidden)</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61"></a>
+<a id="__codelineno-2-62" name="__codelineno-2-62"></a><span class="w">      </span>-<span class="w"> </span>network_acls<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63"></a><span class="w">          </span>-<span class="w"> </span><span class="nv">default_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="w"> </span>-&gt;<span class="w"> </span>null
+<a id="__codelineno-2-64" name="__codelineno-2-64"></a><span class="w">          </span>-<span class="w"> </span><span class="nv">ip_rules</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span>-&gt;<span class="w"> </span>null
+<a id="__codelineno-2-65" name="__codelineno-2-65"></a><span class="w">        </span><span class="o">}</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67"></a>
+<a id="__codelineno-2-68" name="__codelineno-2-68"></a>Plan:<span class="w"> </span><span class="m">0</span><span class="w"> </span>to<span class="w"> </span>add,<span class="w"> </span><span class="m">1</span><span class="w"> </span>to<span class="w"> </span>change,<span class="w"> </span><span class="m">0</span><span class="w"> </span>to<span class="w"> </span>destroy.
+</code></pre></div></td></tr></table></div>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="q1">Q1: 使用經驗如何?</h3>
+<p>不是每一個 Resource 都倒的出來，匯出來後，要真的要 Import 還是要一個一個修補缺少的內容，凡舉不知道為什麼缺欄位、密碼、或者是不在 <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Terraform Azure Provider</a> 所定義的範圍內的服務，都需要被處理</p>
+<h3 id="q2-tfstate">Q2: 我可以拿來當 tfstate 檔案的常規備份用嗎?</h3>
+<p>傾向不要，當然如果你的資源不具備 Nested Resource Group 之類的特性，可以考慮試試看，但如果像 Azure Kubernetes Service 或者是 Azure Red Hat OpenShift 建立服務的時候都會額外再建立一個 Resource Group 放置一堆資源的話，那可能在 aztfexport 的時候會有問題，估計要手動一個一個下 terraform import 修補</p>
 <h2 id="_1">文後廢言</h2>
-<p>今天幫客戶弄 Microsoft Server 喬 DNS Forwarder，結果被看出來不是很熟 Windows Server 操作，被問怎麼進微軟的 (煙)，來微軟上班一年半，終於認真寫到一次 Powershell，只能慶幸不愧是微軟本家，Poweshell SDK 提供的算完整，搭個 GitHub Copilot 就被我糊裡糊塗地寫完了</p>
+<p>這幾天天氣太冷了，已經冷到點香氛蠟燭取暖上班了</p>
+<p><img alt="" src="./images/toocoldcannotwork.jpeg" /></p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://k8sgpt.ai/">k8sgpt.ai</a></li>
-<li><a href="https://landscape.cncf.io/?item=observability-and-analysis--monitoring--k8sgpt">Cloud Native Landscape - k8sgpt</a></li>
-<li><a href="https://learn.microsoft.com/zh-tw/azure/private-link/private-endpoint-dns#commercial">Azure 私人端點私人 DNS 區域值</a></li>
+<li><a href="https://azure.github.io/aztfexport/#1">Microsoft Azure Export for Terraform</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/developer/terraform/azure-export-for-terraform/export-terraform-concepts#limitations">How Azure Export for Terraform Works - Limitations</a></li>
+<li><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Terraform Azure Provider</a></li>
 </ul>
 
 

@@ -891,6 +891,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aztfexport-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aztfexport - 從既有環境導出 Azure 資源狀態
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#azure-vm" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -906,17 +917,6 @@
     <span class="md-ellipsis">
       
         私有 Azure OpenAI Serivce 預想架構規劃
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#azure-expressroute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構
       
     </span>
   </a>
@@ -1725,6 +1725,49 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2024-01-27 00:00:00">20240127</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="azure.html" class="md-meta__link">azure</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="aztfexport-azure"><a class="toclink" href="20240127-azure-aztfexport.html">aztfexport - 從既有環境導出 Azure 資源狀態</a></h2>
+<blockquote>
+<p>A tool to bring existing Azure resources under Terraform's management</p>
+</blockquote>
+<p>因為這個 <a href="https://azure.github.io/aztfexport/#1">Microsoft Azure Export for Terraform</a> 小工具是以 <code>Resource Group</code> 為最大範圍而 <code>Resource</code> 為最小範圍 Export，而不是以 <code>Subscription</code>，所以在用的時候要先切換到對應的 <code>Subscription</code></p>
+<p>微軟官網文件有專門的頁面在介紹怎麼用 <a href="https://learn.microsoft.com/zh-tw/azure/developer/terraform/azure-export-for-terraform/export-terraform-overview">Microsoft Learn - 適用於 Terraform 的 Azure 導出概觀</a></p>
+<p><img alt="" src="./images/aztfexport-screenshot.png" /></p>
+
+    <nav class="md-post__action">
+      <a href="20240127-azure-aztfexport.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-02-10 00:00:00">20230210</time></li>
         
           <li class="md-meta__item">
@@ -1796,46 +1839,6 @@
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-02 00:00:00">20230202</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="azure.html" class="md-meta__link">azure</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-expressroute"><a class="toclink" href="20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></h2>
-<p>最近打工打到雲端來了，目前順利活過了 6 個月，我只能說根本天天看網路架構議題，如果你是純雲端直接使用的，完全不需要跟地端網路接再一起的，你是不會有我這種煩惱，但如果你跟我一樣看混合網路架構 (備註:是地端+雲端，不是雲端+雲端) 的話，估計你應該跟我一樣都在滑鼠點點，開服務，對流量</p>
-<p>分享一下當初開始看 Azure Networking 的第一篇文章就是出至於 <a href="https://purple.telstra.com.au/blog/hub-and-spoke-network-topology-in-azure">Telstra Purple - Hub and Spoke network topology in Azure</a>，到現在為止，若是要用 Azure 做跨國網路架構參考性還是非常高的</p>
-<p><img alt="" src="https://blog.kloud.com.au/wp-content/uploads/2020/03/0103.hub_.and_.spoke_.lucian.example.v1.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="20230202-azure-expressroute-cross-region.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
       
         
           
@@ -1843,7 +1846,7 @@
 
 
 <nav class="md-pagination">
-  
+  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="azure/2.html">2</a>
 </nav>
         
       
