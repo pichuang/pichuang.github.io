@@ -12,32 +12,32 @@
         <meta name="author" content="Phil Huang">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/7/index.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240130-ssh-tunneling.html">
       
       
+        <link rel="prev" href="20240127-azure-aztfexport.html">
       
-        <link rel="next" href="../author/url.html">
       
       
         
       
       
-        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
-        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
       
-      <link rel="icon" href="../favicon.ico">
+      <link rel="icon" href="favicon.ico">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5+insiders-4.51.0">
     
     
       
-        <title>Index - Phil's Workspace</title>
+        <title>上班基本功: SSH + Azure Firewall 混搭使用 - Phil's Workspace</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.69e4e4ae.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.69e4e4ae.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -58,7 +58,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -89,6 +89,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#ssh-azure-firewall" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -122,7 +127,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+    <a href="." title="Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
@@ -142,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              上班基本功: SSH + Azure Firewall 混搭使用
             
           </span>
         </div>
@@ -223,7 +228,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../index.html" class="md-tabs__link">
+        <a href="index.html" class="md-tabs__link">
           
   
     
@@ -243,7 +248,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../wiki/index.html" class="md-tabs__link">
+        <a href="wiki/index.html" class="md-tabs__link">
           
   
     
@@ -263,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../azure-subnets.html" class="md-tabs__link">
+        <a href="azure-subnets.html" class="md-tabs__link">
           
   
     
@@ -283,7 +288,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../about.html" class="md-tabs__link">
+        <a href="about.html" class="md-tabs__link">
           
   
     
@@ -313,7 +318,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -326,7 +333,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
+    <a href="." title="Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="Phil's Workspace" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
@@ -387,7 +394,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../index.html" class="md-nav__link ">
+            <a href="index.html" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -498,7 +505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2024.html" class="md-nav__link">
+      <a href="2024.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -527,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2023.html" class="md-nav__link">
+      <a href="2023.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -556,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2022.html" class="md-nav__link">
+      <a href="2022.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -585,7 +592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2021.html" class="md-nav__link">
+      <a href="2021.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -614,7 +621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2020.html" class="md-nav__link">
+      <a href="2020.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -643,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2019.html" class="md-nav__link">
+      <a href="2019.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -766,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ansible.html" class="md-nav__link">
+      <a href="ansible.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -795,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../automation.html" class="md-nav__link">
+      <a href="automation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -824,7 +831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../azure.html" class="md-nav__link">
+      <a href="azure.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -853,7 +860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cncf.html" class="md-nav__link">
+      <a href="cncf.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -882,7 +889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../container.html" class="md-nav__link">
+      <a href="container.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -911,7 +918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homecloud.html" class="md-nav__link">
+      <a href="homecloud.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -940,7 +947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes.html" class="md-nav__link">
+      <a href="kubernetes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -969,7 +976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../linux.html" class="md-nav__link">
+      <a href="linux.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -998,7 +1005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc.html" class="md-nav__link">
+      <a href="misc.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1027,7 +1034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking.html" class="md-nav__link">
+      <a href="networking.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1056,7 +1063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../o11y.html" class="md-nav__link">
+      <a href="o11y.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1085,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openai.html" class="md-nav__link">
+      <a href="openai.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1114,7 +1121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openshift.html" class="md-nav__link">
+      <a href="openshift.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1143,7 +1150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../personal.html" class="md-nav__link">
+      <a href="personal.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1172,7 +1179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sla.html" class="md-nav__link">
+      <a href="sla.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1201,7 +1208,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sustainability.html" class="md-nav__link">
+      <a href="sustainability.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1294,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../author/url.html" class="md-nav__link">
+      <a href="author/url.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1361,7 +1368,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../wiki/index.html" class="md-nav__link ">
+            <a href="wiki/index.html" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1462,7 +1469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../azure-subnets.html" class="md-nav__link">
+      <a href="azure-subnets.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1554,7 +1561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about.html" class="md-nav__link">
+      <a href="about.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1581,7 +1588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recording.html" class="md-nav__link">
+      <a href="recording.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1617,148 +1624,432 @@
             
           
           
-  <div class="md-content" data-md-component="content">
-    <div class="md-content__inner">
-      <header class="md-typeset">
-        
-      </header>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-03 00:00:00">20230203</time></li>
-        
-          <li class="md-meta__item">
-            in
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="index.html" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
             
-              <a href="../azure.html" class="md-meta__link">azure</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-openai-serivce"><a class="toclink" href="../20230203-private-azure-openai-service-ra.html">私有 Azure OpenAI Serivce 預想架構規劃</a></h2>
-<details class="info" open="open">
-<summary>Info</summary>
-<p>此文是寫給廣大的 IT Infra 背景群眾看的，主要是提供落地架構設計參考，若你是想要知道 OpenAI 怎麼用的，此文並無涉及，可以參考官方文件 <a href="https://techcommunity.microsoft.com/t5/educator-developer-blog/azure-openai-is-now-generally-available/ba-p/3719177">Azure OpenAI is now generally available</a></p>
-</details>
-<p>2022/11 最驚嚇到我的事情就是 ChatGPT 這服務的誕生，簡直看到 <mark>科技奇異點</mark> ，然後沒想到這服務的母公司 OpenAI 居然是 Microsoft 投資的，我只能說真的是可喜可賀和感到哀傷。</p>
-<p>可喜可賀是我可以在很近的距離看到這技術將要創造的歷史，感到哀傷是 ChatGPT 樹立了一個相當驚人的技術屏障，都不知道以後新進或菜鳥工程師到底要怎麼跟這個競爭，但幸好若問他做特別需要專業性問答的事情，這服務目前有可能會回答錯誤或亂答，譬如說問它網路除錯或設計問題後，看起來我還不會失業 :&gt;</p>
-<p>下圖是標準工程師使用範例，本人對於 HTML 和 CSS 毫無理解，也不知道從何改，然後我就去問 ChatGPT 後，就改好了...</p>
-<p><img alt="" src="/images/chatgpt-demo.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="../20230203-private-azure-openai-service-ra.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-02 00:00:00">20230202</time></li>
-        
-          <li class="md-meta__item">
-            in
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://blog.pichuang.com.tw">Phil Huang</a>
+                        
+                      </strong>
+                      <br>
+                      Microsoft Senior Cloud Solution Architect | CNCF Ambassador
+                    </span>
+                  </div>
+                
+              </div>
             
-              <a href="../azure.html" class="md-meta__link">azure</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-expressroute"><a class="toclink" href="../20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></h2>
-<p>最近打工打到雲端來了，目前順利活過了 6 個月，我只能說根本天天看網路架構議題，如果你是純雲端直接使用的，完全不需要跟地端網路接再一起的，你是不會有我這種煩惱，但如果你跟我一樣看混合網路架構 (備註:是地端+雲端，不是雲端+雲端) 的話，估計你應該跟我一樣都在滑鼠點點，開服務，對流量</p>
-<p>分享一下當初開始看 Azure Networking 的第一篇文章就是出至於 <a href="https://purple.telstra.com.au/blog/hub-and-spoke-network-topology-in-azure">Telstra Purple - Hub and Spoke network topology in Azure</a>，到現在為止，若是要用 Azure 做跨國網路架構參考性還是非常高的</p>
-<p><img alt="" src="https://blog.kloud.com.au/wp-content/uploads/2020/03/0103.hub_.and_.spoke_.lucian.example.v1.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="../20230202-azure-expressroute-cross-region.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2022-10-05 00:00:00">20221005</time></li>
-        
-          <li class="md-meta__item">
-            in
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2024-01-30 00:00:00" class="md-ellipsis">20240130</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="networking.html">networking</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
             
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="pod"><a class="toclink" href="../20221005-k8s-gracefulrestart-pod.html">實現不停機的 Pod 更新方式</a></h2>
-<p><img alt="" src="https://learnk8s.io/a/55d21503055aaf9ef8a04d5e595ed505.png" />
-Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful shutdown and zero downtime deployments in Kubernetes</a></p>
-
-    <nav class="md-post__action">
-      <a href="../20221005-k8s-gracefulrestart-pod.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-      
-        
+          </nav>
           
+            
 
-
-
-<nav class="md-pagination">
-  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../5/index.html">5</a> <a class="md-pagination__link" href="../6/index.html">6</a> <span class="md-pagination__current">7</span> <a class="md-pagination__link" href="../8/index.html">8</a> <a class="md-pagination__link" href="../9/index.html">9</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../18/index.html">18</a>
-</nav>
-        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        人在江湖，想連回 Azure，有何選擇?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見架構
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-1-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1: 從外面安全地透過 SSH 跳進去內網主機
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-2-web-httpswebpichuanginfra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 2: 我想要看到 Web 頁面 https://web.pichuang.infra，但我內網機器都沒有瀏覽器，該怎麼辦?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-3-azure-firewall-public-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 3: 我想要透過 Azure Firewall 的 Public IP 來連線到外面
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-4-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 4: SSH 多段跳躍
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文後廢言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
     </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">ssh</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">networking</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">azure</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="ssh-azure-firewall">上班基本功: SSH + Azure Firewall 混搭使用</h1>
+<p>分我個人上班常用 SSH 搭 Azure Firewall 服用的跳板基本功</p>
+<p><img alt="" src="/images/ssh-tunnel-6.jpeg" /></p>
+<!--more-->
+
+<h2 id="azure">人在江湖，想連回 Azure，有何選擇?</h2>
+<p>正常管控狀況下，你的服務都放在 Azure Virtual Network 內，你人在外面想要連進去，這時候有幾種做法</p>
+<ol>
+<li>優選 - <a href="https://learn.microsoft.com/en-us/azure/bastion/bastion-overview#sku">Azure Bastion</a>: 原生跳板服務，不用自己維護，可以 <code>az network bastion ssh</code> 或 <code>az network bastion rdp</code> 用 Native Client 連到內網主機</li>
+<li>中選 - Azure VPN Gateway: 無論透過 S2S VPN 或 P2S VPN，都可以連到內網主機，常見都是看到 S2S，而後者需要在電腦安裝 <a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-client">Azure VPN Client</a>，不知道為什麼比較少出現在選項中，不然其實這個選擇蠻安全</li>
+<li>普選 - 把玩 SSH: 今天文章就是要講這個，回歸到網路基本功，如何搭配既有的 Azure Firewall、一台具有 SSH Server 的虛擬機和網路知識來做到各種常規的開發測試</li>
+</ol>
+<h2 id="_1">常見架構</h2>
+<p><img alt="" src="/images/ssh-tunnel-1.png" /></p>
+<ol>
+<li>你的個人電腦: 基本上就是一台有 SSH Client 的電腦，可以是 Windows、Mac、Linux，然後這邊你可以先決定一個 Port 來作為待會的 <code>Dynamic Port Forwarding</code> 的使用，個人常用是 <code>1080</code></li>
+<li>Azure Firewall: 這邊假設你已經有一個 Azure Firewall，無論是 Basic、Standard、Premium 都可以，三個都支援 SNAT + DNAT 的能力，然後你對外的 Public IP 會綁在 Azure Firewall 上，最多可以在 1 台 Azure Firewall 上綁 250 個 Public IP</li>
+<li>Azure Firewall Policy: 這邊會需要撰寫 DNAT Policy 和 Network Policy (for SNAT)，第一次寫應該都會被欄位搞混和 Azure Virtual Network Transit 的處理方式搞混，譬如說 3 Virtual Network 連再一起的時候，是路由不過去的之類議題</li>
+<li>Azure Virtual Machine: 這台角色就是內網跳板機，只要有 SSH Server 即可，這邊有一些防禦機制，但會離題就不在這邊詳述了</li>
+<li>Web Service: 毫無懸念，就是一台在內網的 Web Server，我自己會遇到的狀況是 Azure Red Hat OpenShift 有自己的 Web Console，所以得要特別用這個文章的做法跳 SOCKS5 出來</li>
+<li>Azure Route Table 給 Spoke VNET: 路由表，如果在裡面撰寫特定的路由，這個行為又稱 UDR (User Defined Routes)，他綁定的單位是基於 <code>Subnet</code>，不是 <code>Virtual Network</code> ．如果想要讓從 Internet 進去的路由能夠正確地回去，這邊就需要撰寫 UDR 將路由指回去 Azure Firewall，意旨 0.0.0.0/0 的下一跳為 Network Virtual Appliances (Azure Firewall) 的 Private IP <code>10.99.99.4</code></li>
+<li>Azure Route Table 給 Azure Firewall: 這邊主要就是要設定讓 Azure Firewall 可以連 Internet 的能力</li>
+</ol>
+<p>我個人蠻推薦第一次接觸這個架構的人可以看 <a href="https://github.com/nicolgit/hub-and-spoke-playground">The Azure🌍 hub-and-spoke-playground</a> 圖文相當詳細，極推薦！</p>
+<h2 id="case-1-ssh">Case 1: 從外面安全地透過 SSH 跳進去內網主機</h2>
+<blockquote>
+<p>核心技術: DNAT</p>
+</blockquote>
+<p><img alt="" src="/images/ssh-tunnel-2.png" /></p>
+<p>在開始設定 DNAT 之前，你得要先確定 Spoke to Spoke 可以互相透過 Azure Firewall 傳輸，詳細可參考 <a href="https://github.com/nicolgit/hub-and-spoke-playground/blob/main/scenarios/ping-any-to-any-firewall.md">SOLUTION: Allows machines in ANY spoke to communicate with ANY machine in ANY other spoke (Azure Firewall)</a>，這邊就不贅述</p>
+<p>下面就是實際上的 DNAT 規則，相當經典</p>
+<table>
+<thead>
+<tr>
+<th>priority</th>
+<th>collection name</th>
+<th>rule name</th>
+<th>src</th>
+<th>port</th>
+<th>protocol</th>
+<th>destination</th>
+<th>translated address</th>
+<th>translated port</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>coll01</td>
+<td>ssh-restrict-to-rhel9</td>
+<td>4.5.6.7</td>
+<td>5566</td>
+<td>TCP</td>
+<td>1.2.3.4</td>
+<td>10.0.0.4</td>
+<td>22</td>
+<td>Dnat</td>
+</tr>
+</tbody>
+</table>
+<p>上面的規則白話就是: 限制 IP 來源 4.5.6.7 連線到 Firewall Public IP 的 5566 Port 上，做 DNAT 到 10.0.0.4 的 22 Port</p>
+<p>假設有設定好的話，你就可以在你的電腦上執行下面的指令，只要是在 4.5.6.7 以內，就可以正確的連線到你的內網主機了</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>pichuang@1.2.3.4<span class="w"> </span>-p<span class="w"> </span><span class="m">5566</span>
+</code></pre></div>
+<p>如果你不知道你的電腦的對外 IP 為何，可以用下列指令查詢</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>curl<span class="w"> </span>ifconfig.me
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="m">4</span>.5.6.7
+</code></pre></div>
+<p>若你不想每次登入都要打一大串，建議可以寫 <code>~/.ssh/config</code> 來讓你更方便的連線</p>
+<div class="highlight"><span class="filename">~/.ssh/config</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Host<span class="w"> </span>azhome
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
+</code></pre></div>
+<p>這樣就可以用 <code>ssh azhome</code> 來連線了</p>
+<h2 id="case-2-web-httpswebpichuanginfra">Case 2: 我想要看到 Web 頁面 https://web.pichuang.infra，但我內網機器都沒有瀏覽器，該怎麼辦?</h2>
+<blockquote>
+<p>核心技術: DNAT + SOCKS5</p>
+</blockquote>
+<p><img alt="" src="/images/ssh-tunnel-3.png" /></p>
+<p>ssh 其實有內建 SOCKS5 Proxy 的能力，只是要上參數 <code>-D</code> 給他，意旨 <code>Dynamic Port Forwarding</code>，這邊我們就用 <code>1080</code> 這個 Port 來當作 Proxy 的 Port</p>
+<div class="highlight"><span class="filename">socks5-command-using-ssh</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ssh<span class="w"> </span>-D<span class="w"> </span><span class="m">1080</span><span class="w"> </span>pichuang@1.2.3.4<span class="w"> </span>-p<span class="w"> </span><span class="m">5566</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># or</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ssh -D localhost:1080 pichuang@1.2.3.4 -p 5566</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># or</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># ssh -D 0.0.0.0:1080 pichuang@1.2.3.4 -p 5566</span>
+</code></pre></div>
+<p>登入進去後，你需要開啟你的瀏覽器，修改 Proxy 設定，我個人歷年都是用 <code>SwitchyOmega</code> 這個 Chrome Extension，他可以讓你在瀏覽器上快速切換 Proxy，同時也適用於 Edge，這邊就用 <code>socks5://127.0.0.1:1080</code> 來當作 Proxy 的設定，設定畫面如下</p>
+<p><img alt="" src="/images/ssh-tunnel-4.png" /></p>
+<p>這樣你就可以在你本地的瀏覽器可以看到 <code>https://web.pichuang.infra</code> 的頁面了</p>
+<p>當然也可以把設定寫到 <code>~/.ssh/config</code> 囉，多一行 <code>DynamicForward 1080</code> 即可</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Host<span class="w"> </span>azhome
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>DynamicForward<span class="w"> </span><span class="m">1080</span>
+</code></pre></div>
+<p>另外，總是有些服務他預設就是不走 IP 為主的，而是以 HTTP 為主，因為 SOCKS5 並不會幫忙做 DNS 解析和導流，倘若你有需要在本機做 DNS 解析的話，你得要自己在 <code>/etc/hosts</code> 把對應的 IP 和 FQDN 寫進去是一個比較簡易務實的做法，如下圖的對照</p>
+<p><img alt="" src="/images/ssh-tunnel-7.png" /></p>
+<div class="highlight"><span class="filename">/etc/hosts</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="m">10</span>.252.12.62<span class="w">     </span>console-openshift-console.apps.dr.aro.divecode.intranet
+</code></pre></div>
+<h2 id="case-3-azure-firewall-public-ip">Case 3: 我想要透過 Azure Firewall 的 Public IP 來連線到外面</h2>
+<blockquote>
+<p>核心技術: DNAT + SOCKS5 + SNAT</p>
+</blockquote>
+<p>倘若你透過這個方式去訪問 <code>https://ifconfig.me</code> 的話，因為出 Internet 會受 Azure Firewall SNAT 的影響，故會獲得到 Azure Firewall 的 Public IP: 1.2.3.4，如下圖</p>
+<p><img alt="" src="/images/ssh-tunnel-5.png" /></p>
+<p>如果你有開 Azure Firewall IDPS 的功能的話，流量都會被檢查到</p>
+<h2 id="case-4-ssh">Case 4: SSH 多段跳躍</h2>
+<blockquote>
+<p>核心技術: DNAT + SSH ProxyCommand</p>
+</blockquote>
+<p>這個會用到 ssh 內建的 <code>ProxyCommand</code> 的功能，也算實用技巧，個人建議是好好寫 <code>~/.ssh/config</code> 來管理，不然跳到後面會很亂</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Host<span class="w"> </span>azhome
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span>DynamicForward<span class="w"> </span><span class="m">1080</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Host<span class="w"> </span>target-vm
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">10</span>.0.0.5
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span>User<span class="w"> </span>pichuang
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">22</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span>ProxyCommand<span class="w"> </span>ssh<span class="w"> </span>-W<span class="w"> </span>%h:%p<span class="w"> </span>azhome
+</code></pre></div>
+<h2 id="_2">文後廢言</h2>
+<p>因為近期眼睛酸通，昨日去看眼科，醫生說我眼睛都充滿著血絲，是不是壓力太大了?</p>
+<p>OS: 沒想到連眼科醫生都看得出來 (?)</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/bastion/bastion-overview#sku">Azure Bastion SKU</a></li>
+<li><a href="https://github.com/nicolgit/hub-and-spoke-playground">The Azure🌍 hub-and-spoke-playground</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+    <script src="https://giscus.app/client.js"
+    data-repo="pichuang/pichuang.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnk3NzkzNTgwNw=="
+    data-category="General"
+    data-category-id="DIC_kwDOBKU0v84CT0Z2"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-TW"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
   </div>
 
           
@@ -1844,10 +2135,10 @@ Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful 
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "../assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8cc3bbd1.min.js"></script>
+      <script src="assets/javascripts/bundle.8cc3bbd1.min.js"></script>
       
     
   </body>

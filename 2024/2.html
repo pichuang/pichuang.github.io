@@ -12,11 +12,13 @@
         <meta name="author" content="Phil Huang">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/7/index.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/2024/2.html">
       
       
+        <link rel="prev" href="../sustainability.html">
       
-        <link rel="next" href="../author/url.html">
+      
+        <link rel="next" href="../2023.html">
       
       
         
@@ -30,7 +32,7 @@
     
     
       
-        <title>Index - Phil's Workspace</title>
+        <title>2024 - Phil's Workspace</title>
       
     
     
@@ -90,6 +92,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#2024" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -142,7 +149,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              2024
             
           </span>
         </div>
@@ -427,8 +434,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -451,14 +460,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
         
           
           <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
@@ -478,7 +485,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -495,10 +502,36 @@
   
   
     
+      
+    
   
   
     <li class="md-nav__item">
-      <a href="../2024.html" class="md-nav__link">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="../2024.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -513,6 +546,37 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ansible-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上班時間不夠用之 [A]nsible 加上 [A]zure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1620,7 +1684,7 @@
   <div class="md-content" data-md-component="content">
     <div class="md-content__inner">
       <header class="md-typeset">
-        
+        <h1 id="2024">2024</h1>
       </header>
       
         <article class="md-post md-post--excerpt">
@@ -1637,12 +1701,12 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
-          <time datetime="2023-02-03 00:00:00">20230203</time></li>
+          <time datetime="2024-01-24 00:00:00">20240124</time></li>
         
           <li class="md-meta__item">
             in
             
-              <a href="../azure.html" class="md-meta__link">azure</a></li>
+              <a href="../ansible.html" class="md-meta__link">ansible</a></li>
         
         
       </ul>
@@ -1650,97 +1714,13 @@
     </div>
   </header>
   <div class="md-post__content md-typeset">
-    <h2 id="azure-openai-serivce"><a class="toclink" href="../20230203-private-azure-openai-service-ra.html">私有 Azure OpenAI Serivce 預想架構規劃</a></h2>
-<details class="info" open="open">
-<summary>Info</summary>
-<p>此文是寫給廣大的 IT Infra 背景群眾看的，主要是提供落地架構設計參考，若你是想要知道 OpenAI 怎麼用的，此文並無涉及，可以參考官方文件 <a href="https://techcommunity.microsoft.com/t5/educator-developer-blog/azure-openai-is-now-generally-available/ba-p/3719177">Azure OpenAI is now generally available</a></p>
-</details>
-<p>2022/11 最驚嚇到我的事情就是 ChatGPT 這服務的誕生，簡直看到 <mark>科技奇異點</mark> ，然後沒想到這服務的母公司 OpenAI 居然是 Microsoft 投資的，我只能說真的是可喜可賀和感到哀傷。</p>
-<p>可喜可賀是我可以在很近的距離看到這技術將要創造的歷史，感到哀傷是 ChatGPT 樹立了一個相當驚人的技術屏障，都不知道以後新進或菜鳥工程師到底要怎麼跟這個競爭，但幸好若問他做特別需要專業性問答的事情，這服務目前有可能會回答錯誤或亂答，譬如說問它網路除錯或設計問題後，看起來我還不會失業 :&gt;</p>
-<p>下圖是標準工程師使用範例，本人對於 HTML 和 CSS 毫無理解，也不知道從何改，然後我就去問 ChatGPT 後，就改好了...</p>
-<p><img alt="" src="/images/chatgpt-demo.png" /></p>
+    <h2 id="ansible-azure"><a class="toclink" href="../20240124-ansible-on-azure.html">上班時間不夠用之 [A]nsible 加上 [A]zure</a></h2>
+<p>因為之前電腦編譯 <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> 慢到我沒辦法接受，所以前陣子 Apple 出 MBPR M3 Pro 之後，剛好幾年前買的 MBPR Intel 也是虛累累，就心一橫衝了一發，用了之後只能說果然還是 UNIX-like 系統溫馨，香</p>
+<p>目前使用 M3 Pro 下來，除了 podman machine 有點技術問題以外和 Container 編譯要從 x86 換 arm 很煩以外，其他都還好，連 Microsoft Defender for Enpoint 都有支援 M3 的版本 (下圖有真相 XD)</p>
+<p><img alt="" src="/images/defender-for-cloud-on-m3.png" /></p>
 
     <nav class="md-post__action">
-      <a href="../20230203-private-azure-openai-service-ra.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-02 00:00:00">20230202</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../azure.html" class="md-meta__link">azure</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-expressroute"><a class="toclink" href="../20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></h2>
-<p>最近打工打到雲端來了，目前順利活過了 6 個月，我只能說根本天天看網路架構議題，如果你是純雲端直接使用的，完全不需要跟地端網路接再一起的，你是不會有我這種煩惱，但如果你跟我一樣看混合網路架構 (備註:是地端+雲端，不是雲端+雲端) 的話，估計你應該跟我一樣都在滑鼠點點，開服務，對流量</p>
-<p>分享一下當初開始看 Azure Networking 的第一篇文章就是出至於 <a href="https://purple.telstra.com.au/blog/hub-and-spoke-network-topology-in-azure">Telstra Purple - Hub and Spoke network topology in Azure</a>，到現在為止，若是要用 Azure 做跨國網路架構參考性還是非常高的</p>
-<p><img alt="" src="https://blog.kloud.com.au/wp-content/uploads/2020/03/0103.hub_.and_.spoke_.lucian.example.v1.png" /></p>
-
-    <nav class="md-post__action">
-      <a href="../20230202-azure-expressroute-cross-region.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2022-10-05 00:00:00">20221005</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="pod"><a class="toclink" href="../20221005-k8s-gracefulrestart-pod.html">實現不停機的 Pod 更新方式</a></h2>
-<p><img alt="" src="https://learnk8s.io/a/55d21503055aaf9ef8a04d5e595ed505.png" />
-Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful shutdown and zero downtime deployments in Kubernetes</a></p>
-
-    <nav class="md-post__action">
-      <a href="../20221005-k8s-gracefulrestart-pod.html">
+      <a href="../20240124-ansible-on-azure.html">
         Continue reading
       </a>
     </nav>
@@ -1754,7 +1734,7 @@ Source from <a href="https://learnk8s.io/graceful-shutdown">Learnk8s - Graceful 
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../5/index.html">5</a> <a class="md-pagination__link" href="../6/index.html">6</a> <span class="md-pagination__current">7</span> <a class="md-pagination__link" href="../8/index.html">8</a> <a class="md-pagination__link" href="../9/index.html">9</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../18/index.html">18</a>
+  <a class="md-pagination__link" href="../2024.html">1</a> <span class="md-pagination__current">2</span>
 </nav>
         
       
