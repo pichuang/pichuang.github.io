@@ -1969,6 +1969,7 @@
 <a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">22</span>
 <a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span>ProxyCommand<span class="w"> </span>ssh<span class="w"> </span>-W<span class="w"> </span>%h:%p<span class="w"> </span>azhome
 </code></pre></div>
+<p>如果你是 Ansible 的愛用者，也可以基於<a href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">此文</a>，多新增 <code>ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q pichuang@1.2.3.4"'</code> 來跳</p>
 <h2 id="_2">文後廢言</h2>
 <p>因為近期眼睛酸通，昨日去看眼科，醫生說我眼睛都充滿著血絲，是不是壓力太大了?</p>
 <p>OS: 沒想到連眼科醫生都看得出來 (?)</p>
@@ -1976,6 +1977,7 @@
 <ul>
 <li><a href="https://learn.microsoft.com/en-us/azure/bastion/bastion-overview#sku">Azure Bastion SKU</a></li>
 <li><a href="https://github.com/nicolgit/hub-and-spoke-playground">The Azure🌍 hub-and-spoke-playground</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">Ansible - How do I configure a jump host to access servers that I have no direct access to?</a></li>
 </ul>
 
 
