@@ -12,13 +12,11 @@
         <meta name="author" content="Phil Huang">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/20240130-ssh-tunneling.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240203-own-chatgpt-ui-with-azure-openai.html">
       
       
-        <link rel="prev" href="20240127-azure-aztfexport.html">
+        <link rel="prev" href="20240130-ssh-tunneling.html">
       
-      
-        <link rel="next" href="20240203-own-chatgpt-ui-with-azure-openai.html">
       
       
         
@@ -32,7 +30,7 @@
     
     
       
-        <title>上班基本功: SSH 混搭 Azure Firewall - Phil's Workspace</title>
+        <title>想要自建 ChatGPT 服務嗎? - Phil's Workspace</title>
       
     
     
@@ -93,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ssh-azure-firewall" class="md-skip">
+        <a href="#chatgpt" class="md-skip">
           Skip to content
         </a>
       
@@ -149,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              上班基本功: SSH 混搭 Azure Firewall
+              想要自建 ChatGPT 服務嗎?
             
           </span>
         </div>
@@ -1673,7 +1671,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
-                        <time datetime="2024-01-30 00:00:00" class="md-ellipsis">20240130</time>
+                        <time datetime="2024-02-03 00:00:00" class="md-ellipsis">20240203</time>
                       </div>
                     </li>
                     
@@ -1684,7 +1682,7 @@
                           <span class="md-ellipsis">
                             in
                             
-                              <a href="networking.html">networking</a></span>
+                              <a href="azure.html">azure</a></span>
                         </div>
                       </li>
                     
@@ -1712,10 +1710,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#azure" class="md-nav__link">
+  <a href="#3-1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        人在江湖，想連回 Azure，有何選擇?
+        只需要 3 + 1 個必要材料
       
     </span>
   </a>
@@ -1726,54 +1724,266 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常見架構
+        部署流程重點提示
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="部署流程重點提示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-chatgpt-webui-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 選擇 ChatGPT WebUI Project
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#case-1-ssh" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-azure-openai-service" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 1: 從外面安全地透過 SSH 跳進去內網主機
+        2. 申請 Azure OpenAI Service
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#case-2-web-httpswebpichuanginfra" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#3-azure-container-app" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 2: 我想要看到 Web 頁面 https://web.pichuang.infra，但我內網機器都沒有瀏覽器，該怎麼辦?
+        3. 新增 Azure Container App
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 新增 Azure Container App">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-basis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Basis
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#case-3-azure-firewall-public-ip" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#32-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 3: 我想要透過 Azure Firewall 的 Public IP 來連線到外面
+        3.2 Container
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#case-4-ssh" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#33-ingress" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 4: SSH 多段跳躍
+        3.3 Ingress
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-azure-openai-key-next-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 設定 Azure OpenAI Key 和 Next Chat 通關密語
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 設定 Azure OpenAI Key 和 Next Chat 通關密語">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-add-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Add Secrets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-add-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Add Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-optional-add-custom-domain-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. (Optional) Add Custom Domain Name
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. (Optional) Add Custom Domain Name">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-setting-up-dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Setting Up DNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-check-dns-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Check DNS validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q&amp;A
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q&A">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-container-azure-red-hat-openshift-azure-kubernetes-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: 既然是 Container 服務, 為何不要用 Azure Red Hat OpenShift 或 Azure Kubernetes Service?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-domain-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: 我沒有自己的 Domain Name, 還可以用這個做法嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-nextchatgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: 我覺得 NextChatGPT 的通關密語太弱了, 有沒有更好的做法?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-nexchatgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: 如果我不用 NexChatGPT 這個專案, 想換成別的專案, 有什麼需要注意的地方嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: 費用很貴嗎?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q5: 費用很貴嗎?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#azure-container-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure Container App
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-openai-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure OpenAI Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1818,14 +2028,14 @@
       
       
       
-        <span class="md-tag">ssh</span>
+        <span class="md-tag">openai</span>
       
     
       
       
       
       
-        <span class="md-tag">networking</span>
+        <span class="md-tag">chatgpt</span>
       
     
       
@@ -1842,144 +2052,208 @@
   
 
 
-<h1 id="ssh-azure-firewall">上班基本功: SSH 混搭 Azure Firewall</h1>
-<p>本篇分享一下我個人上班常用 SSH 混搭 Azure Firewall 服用的跳板基本功</p>
-<p><img alt="" src="/images/ssh-tunnel-6.jpeg" /></p>
+<h1 id="chatgpt">想要自建 ChatGPT 服務嗎?</h1>
+<p><img alt="" src="/images/ca-0.png" /></p>
+<p>要訂閱 OpenAI ChatGPT Plus 一個月一個人費用需要 20 美元, 隨著一年內 Azure OpenAI 服務已經陸陸續續對齊提供了, 我想也是時候要把 ChatGPT Plus 退訂換成自己用 Azure OpenAI 架的 ChatGPT 服務起來自用了, 同時也觀察一下成本節約的狀況, 經過適當設計下, 單純自用的話, 還蠻出乎意料的便宜, 一個月還不到 1 美元</p>
 <!--more-->
 
-<h2 id="azure">人在江湖，想連回 Azure，有何選擇?</h2>
-<p>正常管控狀況下，你的服務都放在 Azure Virtual Network 內，你人在外面想要連進去，這時候有幾種做法</p>
+<h2 id="3-1">只需要 3 + 1 個必要材料</h2>
 <ol>
-<li>優選 - <a href="https://learn.microsoft.com/en-us/azure/bastion/bastion-overview#sku">Azure Bastion</a>: 原生跳板服務，不用自己維護，可以 <code>az network bastion ssh</code> 或 <code>az network bastion rdp</code> 用 Native Client 連到內網主機</li>
-<li>中選 - Azure VPN Gateway: 無論透過 S2S VPN 或 P2S VPN，都可以連到內網主機，常見都是看到 S2S，而後者需要在電腦安裝 <a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-client">Azure VPN Client</a>，不知道為什麼比較少出現在選項中，不然其實這個選擇蠻安全</li>
-<li>普選 - 把玩 SSH: 今天文章就是要講這個，回歸到網路基本功，如何搭配既有的 Azure Firewall、一台具有 SSH Server 的虛擬機和網路知識來做到各種常規的開發測試</li>
+<li>選擇 ChatGPT WebUI Project</li>
+<li>申請 Azure OpenAI Service</li>
+<li>部署 Azure Container App</li>
+<li>(Optional) 設定 Custom Domain Name</li>
 </ol>
-<h2 id="_1">常見架構</h2>
-<p><img alt="" src="/images/ssh-tunnel-1.png" /></p>
+<p>就能誕生出下面的服務喔~</p>
+<p><img alt="" src="/images/ca-00.png" /></p>
+<h2 id="_1">部署流程重點提示</h2>
+<p>因為正常沒人會想要看一個動作一個截圖, 所以下面的流程只截重要部分, 輔以文字說明, 大家可以自行試試</p>
+<h3 id="1-chatgpt-webui-project">1. 選擇 ChatGPT WebUI Project</h3>
+<p>這邊建議可以從 <a href="https://github.com/topics/chatgpt-ui">GitHub Toptics - chatgpt-ui</a> 上找到一個你喜歡且有支援 Azure OpenAI Service 的專案, 我個人選擇採用 <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web">ChatGPTNextWeb/ChatGPT-Next-Web</a> 這個專案, 也用了一段時間了, 支援的功能也相當多樣, 可以透過該網站看一下展示 <a href="https://app.nextchat.dev/">app.nextchat.dev</a></p>
+<p>另外選擇專案的時候, 要注意那個 Endpoint 和 Key 是不是要每一個 User 自己填進去, 建議還是放到 Backend 塞到環境變數處理比較好, 不要讓 User 自己填, 因為光金鑰管理就會有一堆問題</p>
+<p>當然還有一些類似的專案也可以做到一樣的事情</p>
+<ul>
+<li><a href="https://github.com/mckaywrigley/chatbot-ui">mckaywrigley/chatbot-ui</a>: 這個從保哥那邊看到的, 看起來也可參考</li>
+<li><a href="https://github.com/blrchen/chatgpt-lite">blrchen/chatgpt-lite</a>: 這專案印象沒錯的話, 應該是微軟同事寫的, 也可以用</li>
+</ul>
+<h3 id="2-azure-openai-service">2. 申請 Azure OpenAI Service</h3>
+<p><img alt="" src="/images/ca-8.png" /></p>
+<p>首先, 你得要先申請到 Azure OpenAI 的服務, 無論是 gpt-35 還是 gpt-4 都可以, 因為最近我才拿到 <code>gpt-4-32k</code> 的額度, 所以就趁升級系統的時候順便寫了此篇文章</p>
+<p>這邊要注意的是<code>部署名稱 (Deployment Name)</code>和<code>模型名稱 (Model Name)</code>的差異, 我個人習慣會把命名做區隔的話, 不然混再一起很難判斷是誰有問題, 如前者為 <code>deploymnet-gpt-4-32k</code>, 後者為 <code>gpt-4-32k</code></p>
+<p>根據 <a href="https://learn.microsoft.com/zh-tw/azure/ai-services/openai/reference#rest-api-versioning">Azure OpenAI Service REST API reference</a>, 那你要輸入 <code>AZURE_URL</code> 的變數則會變成下列格式, 而不需使用到 <code>Model Name</code>, 這點應該是大部分從 OpenAI 轉換到 Azure OpenAI 的人都會撞到的第一個問題</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># POST https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>https://pichuang.openai.azure.com/openai/deployments/deploymnet-gpt-4-32k
+</code></pre></div>
+<p>啊如果你有看到網址後面接 <code>Model Name</code> 的話, 那個是一個誤會, 因為設定的人 <code>Deployment Name</code> 取跟 <code>Model Name</code> 一樣的名字, 如圖的 <code>gpt-35-turbo-16k</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># POST https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>https://pichuang.openai.azure.com/openai/deployments/gpt-35-turbo-16k
+</code></pre></div>
+<h3 id="3-azure-container-app">3. 新增 Azure Container App</h3>
+<h4 id="31-basis">3.1 Basis</h4>
+<p><img alt="" src="/images/ca-1.png" /></p>
+<p>關於 <code>3</code>, 選擇鄰近區域, 這個有 2 個選擇, 一個是離 End user 近, 另一個是選離 Azure OpenAI Endpoint 的點近, 我個人是選擇離 End user 近的, 因為我個人相信 Microsoft Backbone (MSBB) 的能力, 精確的數字可以參考此文 <a href="https://learn.microsoft.com/en-us/azure/networking/azure-network-latency?tabs=APAC%2CJapan">Azure network round-trip latency statistics</a></p>
+<p>關於 <code>4</code>, 裡面有相當多可以選的地方, 強烈建議參考 <a href="https://learn.microsoft.com/en-us/azure/container-apps/environment#types">Azure Container Apps environments</a> 進行選擇, 簡單分類就是自己上班用選 <code>Consumption only</code>, 預期一堆人要用得選 <code>Workload profile</code> 或者是你可以考慮換成 Azure Kuberenetes Service 架構</p>
+<h4 id="32-container">3.2 Container</h4>
+<p><img alt="" src="/images/ca-2.png" /></p>
+<p>關於 <code>3 ~ 6</code>, 因為我使用的 ChatGPT WebUI 專案是用 <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web">ChatGPTNextWeb/ChatGPT-Next-Web</a>, 而他的 Container Images 是位於 <code>docker.io/yidadaa/chatgpt-next-web:latest</code>, 如果是個人用則把該填寫的欄位填進去即可, 但如果是企業用或者是一堆人用的話, 畢竟還是有安全疑慮需要處理, 建議另外拉去 <a href="https://learn.microsoft.com/en-us/azure/container-registry/container-registry-concepts">Azure Container Registry</a> 用 <a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/view-and-remediate-vulnerabilities-for-images">Microsoft Defender for Container</a> 掃一掃後再拉下來用</p>
+<p>關於 container image tag <code>latest</code>, 因為個人懶得盯著版本號, 所以才用 <code>latest</code>, 如果是企業用或者是給一堆人用的話, 建議還是用版本號, 和建立 Dev 環境, 確保升級不會有問題</p>
+<p>關於 Image Tags 可以去 <a href="https://hub.docker.com/r/yidadaa/chatgpt-next-web/tags">Docker Hub</a> 查看, 或者是可以使用 <code>skopeo</code> 指令的方式來看</p>
+<div class="highlight"><span class="filename">skopeo-inspect.sh</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>skopeo<span class="w"> </span>inspect<span class="w"> </span>docker://docker.io/yidadaa/chatgpt-next-web:latest<span class="w"> </span>--override-os<span class="w"> </span>linux<span class="w"> </span>--override-arch<span class="w"> </span>amd64<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.RepoTags&#39;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">[</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="s2">&quot;1.7.2&quot;</span>,
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="s2">&quot;latest&quot;</span>,
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="s2">&quot;v1.5&quot;</span>,
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="s2">&quot;v1.6&quot;</span>,
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>...
+</code></pre></div>
+<p>若把 <code>8~9</code> 也放進去參考的話, 以 Kubernetes 表示方式來看, 下面的設定會等價於畫面上所需的設定</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pod-container-app.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>---
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>apiVersion:<span class="w"> </span>v1
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>kind:<span class="w"> </span>Pod
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>metadata:
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span>name:<span class="w"> </span>container-nextchat
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>spec:
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span>containers:
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="hll"><span class="w">  </span>-<span class="w"> </span>name:<span class="w"> </span>container-nextchat
+</span><a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="hll"><span class="w">    </span>image:<span class="w"> </span>docker.io/yidadaa/chatgpt-next-web:latest
+</span><a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="hll"><span class="w">      </span>requests:
+</span><a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="hll"><span class="w">        </span>cpu:<span class="w"> </span><span class="s2">&quot;1&quot;</span>
+</span><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="hll"><span class="w">        </span>memory:<span class="w"> </span><span class="s2">&quot;2Gi&quot;</span>
+</span><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="hll"><span class="w">    </span>env:
+</span><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="hll"><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_URL
+</span><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="hll"><span class="w">      </span>value:<span class="w"> </span><span class="s2">&quot;https://pichuang.openai.azure.com/openai/deployments/deploymnet-gpt-4-32k&quot;</span>
+</span><a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="hll"><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_API_VERSION
+</span><a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="hll"><span class="w">      </span>value:<span class="w"> </span><span class="s2">&quot;2023-05-15&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="33-ingress">3.3 Ingress</h4>
+<p><img alt="" src="/images/ca-3.png" /></p>
+<p>關於 <code>2</code>, 因為本文會把服務放在 Internet 之上, 所以 <code>Ingress Traffic</code> 的選項選擇 "Accepting traffic from anywhere", 如果你不要讓這個服務放在外網的話, 則需要回到第一頁的 <code>Container Apps Environment</code> 要進行網路修改為 <code>Internal</code> 和綁上特定的 <code>Virtual Network</code></p>
+<p>關於 <code>3</code>, <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web">ChatGPTNextWeb/ChatGPT-Next-Web</a> 服務是 HTTP 為主的, 所以選擇 <code>HTTP</code> 即可</p>
+<p>關於 <code>6</code>, 建議關掉 <code>Insecure connections</code> 這個選項, 這樣可以確保連線都是走 HTTPs 為主</p>
+<p>關於 <code>7</code>, <code>Target Port</code> 需要填寫的是會被 Expose 出來的 Port, 通常可以從 <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/Dockerfile#L43">Dockefile</a> 上找到答案, 或者是看 <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web/blob/main/docker-compose.yml#L8">docker-compose</a> 上的 ports 也可以</p>
+<h3 id="4-azure-openai-key-next-chat">4. 設定 Azure OpenAI Key 和 Next Chat 通關密語</h3>
+<p>若要在 Azure Container App 上設定 Secrets, 如設定 Azure OpenAI Key 和通關密語等, 需要等建立起來後才能設定</p>
+<h4 id="41-add-secrets">4.1 Add Secrets</h4>
+<p><img alt="" src="/images/ca-4.png" /></p>
+<p>這邊建議會設定 2 個 Secrets, 名字可以先亂取, 分別是:</p>
 <ol>
-<li>你的個人電腦: 基本上就是一台有 SSH Client 的電腦，可以是 Windows、Mac、Linux，然後這邊你可以先決定一個 Port 來作為待會的 <code>Dynamic Port Forwarding</code> 的使用，個人常用是 <code>1080</code></li>
-<li>Azure Firewall: 這邊假設你已經有一個 Azure Firewall，無論是 Basic、Standard、Premium 都可以，三個都支援 SNAT + DNAT 的能力，然後你對外的 Public IP 會綁在 Azure Firewall 上，最多可以在 1 台 Azure Firewall 上綁 250 個 Public IP</li>
-<li>Azure Firewall Policy: 這邊會需要撰寫 DNAT Policy 和 Network Policy (for SNAT)，第一次寫應該都會被欄位搞混和 Azure Virtual Network Transit 的處理方式搞混，譬如說 3 Virtual Network 連再一起的時候，是路由不過去的之類議題</li>
-<li>Azure Virtual Machine: 這台角色就是內網跳板機，只要有 SSH Server 即可，這邊有一些防禦機制，但會離題就不在這邊詳述了</li>
-<li>Web Service: 毫無懸念，就是一台在內網的 Web Server，我自己會遇到的狀況是 Azure Red Hat OpenShift 有自己的 Web Console，所以得要特別用這個文章的做法跳 SOCKS5 出來</li>
-<li>Azure Route Table 給 Spoke VNET: 路由表，如果在裡面撰寫特定的路由，這個行為又稱 UDR (User Defined Routes)，他綁定的單位是基於 <code>Subnet</code>，不是 <code>Virtual Network</code> ．如果想要讓從 Internet 進去的路由能夠正確地回去，這邊就需要撰寫 UDR 將路由指回去 Azure Firewall，意旨 0.0.0.0/0 的下一跳為 Network Virtual Appliances (Azure Firewall) 的 Private IP <code>10.99.99.4</code></li>
-<li>Azure Route Table 給 Azure Firewall: 這邊主要就是要設定讓 Azure Firewall 可以連 Internet 的能力</li>
+<li>azure-api-key: 目的連接 Azure OpenAI Service 時需要使用的金鑰</li>
+<li>entry-code: 通關密語, 如果不設定或者是不使用 <a href="https://learn.microsoft.com/zh-tw/azure/container-apps/authentication">Authentication and authorization in Azure Container Apps</a>, 則會有任何人都可以直接去摸到這個網站, 導致 GPT Token 會被快速消耗, 詳細設定可參考 <a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web?tab=readme-ov-file#code-optional">ChatGPT-Next-Web - CODE</a></li>
 </ol>
-<p>我個人蠻推薦第一次接觸這個架構的人可以看 <a href="https://github.com/nicolgit/hub-and-spoke-playground">The Azure🌍 hub-and-spoke-playground</a> 圖文相當詳細，極推薦！</p>
-<h2 id="case-1-ssh">Case 1: 從外面安全地透過 SSH 跳進去內網主機</h2>
-<blockquote>
-<p>核心技術: DNAT</p>
-</blockquote>
-<p><img alt="" src="/images/ssh-tunnel-2.png" /></p>
-<p>在開始設定 DNAT 之前，你得要先確定 Spoke to Spoke 可以互相透過 Azure Firewall 傳輸，詳細可參考 <a href="https://github.com/nicolgit/hub-and-spoke-playground/blob/main/scenarios/ping-any-to-any-firewall.md">SOLUTION: Allows machines in ANY spoke to communicate with ANY machine in ANY other spoke (Azure Firewall)</a>，這邊就不贅述</p>
-<p>下面就是實際上的 DNAT 規則，相當經典</p>
-<table>
-<thead>
-<tr>
-<th>priority</th>
-<th>collection name</th>
-<th>rule name</th>
-<th>src</th>
-<th>port</th>
-<th>protocol</th>
-<th>destination</th>
-<th>translated address</th>
-<th>translated port</th>
-<th>action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1000</td>
-<td>coll01</td>
-<td>ssh-restrict-to-rhel9</td>
-<td>4.5.6.7</td>
-<td>5566</td>
-<td>TCP</td>
-<td>1.2.3.4</td>
-<td>10.0.0.4</td>
-<td>22</td>
-<td>Dnat</td>
-</tr>
-</tbody>
-</table>
-<p>上面的規則白話就是: 限制 IP 來源 4.5.6.7 連線到 Firewall Public IP 的 5566 Port 上，做 DNAT 到 10.0.0.4 的 22 Port</p>
-<p>假設有設定好的話，你就可以在你的電腦上執行下面的指令，只要是在 4.5.6.7 以內，就可以正確的連線到你的內網主機了</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>pichuang@1.2.3.4<span class="w"> </span>-p<span class="w"> </span><span class="m">5566</span>
+<p>這個畫面的設定效果, 跟在 Kubernetes 上建立 secret 設定 Opaque Secrets 的動作是等價的, 如下面表示:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>secret-continaer-app<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--from-literal<span class="o">=</span>azure-api-key<span class="o">=</span>YOUR_AZURE_OPENAI_KEY<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--from-literal<span class="o">=</span>entry-code<span class="o">=</span>YOUR_ENTRY_CODE
 </code></pre></div>
-<p>如果你不知道你的電腦的對外 IP 為何，可以用下列指令查詢</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>curl<span class="w"> </span>ifconfig.me
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="m">4</span>.5.6.7
-</code></pre></div>
-<p>若你不想每次登入都要打一大串，建議可以寫 <code>~/.ssh/config</code> 來讓你更方便的連線</p>
-<div class="highlight"><span class="filename">~/.ssh/config</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Host<span class="w"> </span>azhome
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
-</code></pre></div>
-<p>這樣就可以用 <code>ssh azhome</code> 來連線了</p>
-<h2 id="case-2-web-httpswebpichuanginfra">Case 2: 我想要看到 Web 頁面 https://web.pichuang.infra，但我內網機器都沒有瀏覽器，該怎麼辦?</h2>
-<blockquote>
-<p>核心技術: DNAT + SOCKS5</p>
-</blockquote>
-<p><img alt="" src="/images/ssh-tunnel-3.png" /></p>
-<p>ssh 其實有內建 SOCKS5 Proxy 的能力，只是要上參數 <code>-D</code> 給他，意旨 <code>Dynamic Port Forwarding</code>，這邊我們就用 <code>1080</code> 這個 Port 來當作 Proxy 的 Port</p>
-<div class="highlight"><span class="filename">socks5-command-using-ssh</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ssh<span class="w"> </span>-D<span class="w"> </span><span class="m">1080</span><span class="w"> </span>pichuang@1.2.3.4<span class="w"> </span>-p<span class="w"> </span><span class="m">5566</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># or</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ssh -D localhost:1080 pichuang@1.2.3.4 -p 5566</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># or</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># ssh -D 0.0.0.0:1080 pichuang@1.2.3.4 -p 5566</span>
-</code></pre></div>
-<p>登入進去後，你需要開啟你的瀏覽器，修改 Proxy 設定，我個人歷年都是用 <code>SwitchyOmega</code> 這個 Chrome Extension，他可以讓你在瀏覽器上快速切換 Proxy，同時也適用於 Edge，這邊就用 <code>socks5://127.0.0.1:1080</code> 來當作 Proxy 的設定，設定畫面如下</p>
-<p><img alt="" src="/images/ssh-tunnel-4.png" /></p>
-<p>這樣你就可以在你本地的瀏覽器可以看到 <code>https://web.pichuang.infra</code> 的頁面了</p>
-<p>當然也可以把設定寫到 <code>~/.ssh/config</code> 囉，多一行 <code>DynamicForward 1080</code> 即可</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Host<span class="w"> </span>azhome
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>DynamicForward<span class="w"> </span><span class="m">1080</span>
-</code></pre></div>
-<p>另外，總是有些服務他預設就是不走 IP 為主的，而是以 HTTP 為主，因為 SOCKS5 並不會幫忙做 DNS 解析和導流，倘若你有需要在本機做 DNS 解析的話，你得要自己在 <code>/etc/hosts</code> 把對應的 IP 和 FQDN 寫進去是一個比較簡易務實的做法，如下圖的對照</p>
-<p><img alt="" src="/images/ssh-tunnel-7.png" /></p>
-<div class="highlight"><span class="filename">/etc/hosts</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="m">10</span>.252.12.62<span class="w">     </span>console-openshift-console.apps.dr.aro.divecode.intranet
-</code></pre></div>
-<h2 id="case-3-azure-firewall-public-ip">Case 3: 我想要透過 Azure Firewall 的 Public IP 來連線到外面</h2>
-<blockquote>
-<p>核心技術: DNAT + SOCKS5 + SNAT</p>
-</blockquote>
-<p>倘若你透過這個方式去訪問 <code>https://ifconfig.me</code> 的話，因為出 Internet 會受 Azure Firewall SNAT 的影響，故會獲得到 Azure Firewall 的 Public IP: 1.2.3.4，如下圖</p>
-<p><img alt="" src="/images/ssh-tunnel-5.png" /></p>
-<p>如果你有開 Azure Firewall IDPS 的功能的話，流量都會被檢查到</p>
-<h2 id="case-4-ssh">Case 4: SSH 多段跳躍</h2>
-<blockquote>
-<p>核心技術: DNAT + SSH ProxyCommand</p>
-</blockquote>
-<p>這個會用到 ssh 內建的 <code>ProxyCommand</code> 的功能，也算實用技巧，個人建議是好好寫 <code>~/.ssh/config</code> 來管理，不然跳到後面會很亂</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Host<span class="w"> </span>azhome
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">1</span>.2.3.4
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">5566</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>User<span class="w"> </span>pichuang
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span>IdentityFile<span class="w"> </span>~/.ssh/id_rsa
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span>DynamicForward<span class="w"> </span><span class="m">1080</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Host<span class="w"> </span>target-vm
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span>HostName<span class="w"> </span><span class="m">10</span>.0.0.5
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span>User<span class="w"> </span>pichuang
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span>Port<span class="w"> </span><span class="m">22</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span>ProxyCommand<span class="w"> </span>ssh<span class="w"> </span>-W<span class="w"> </span>%h:%p<span class="w"> </span>azhome
-</code></pre></div>
-<p>如果你是 Ansible 的愛用者，也可以基於<a href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">此文</a>，多新增 <code>ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q pichuang@1.2.3.4"'</code> 來跳</p>
+<h4 id="42-add-environment-variables">4.2 Add Environment Variables</h4>
+<p><img alt="" src="/images/ca-5.png" /></p>
+<p>接下來需要把 <code>4.1 Add Secrets</code> 所建立的密鑰, 放到 <code>Environment Variables</code> 裡面, 這樣才能讓 Container App 使用到這幾個參數, 如果用 Kubernetes 表示方式來看, 下面的設定會等價於畫面上所需的設定:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pod-container-app.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>---
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>apiVersion:<span class="w"> </span>v1
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>kind:<span class="w"> </span>Pod
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>metadata:
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">  </span>name:<span class="w"> </span>container-nextchat
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>spec:
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span>containers:
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">  </span>-<span class="w"> </span>name:<span class="w"> </span>container-nextchat
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span>image:<span class="w"> </span>docker.io/yidadaa/chatgpt-next-web:latest
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">      </span>requests:
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">        </span>cpu:<span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">        </span>memory:<span class="w"> </span><span class="s2">&quot;2Gi&quot;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">    </span>env:
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_URL
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">      </span>value:<span class="w"> </span><span class="s2">&quot;https://pichuang.openai.azure.com/openai/deployments/deploymnet-gpt-4-32k&quot;</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_API_VERSION
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">      </span>value:<span class="w"> </span><span class="s2">&quot;2023-05-15&quot;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="hll"><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_API_KEY
+</span><a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="hll"><span class="w">      </span>valueFrom:
+</span><a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="hll"><span class="w">        </span>secretKeyRef:
+</span><a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="hll"><span class="w">          </span>name:<span class="w"> </span>secret-continaer-app
+</span><a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="hll"><span class="w">          </span>key:<span class="w"> </span>azure-api-key
+</span><a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="hll"><span class="w">    </span>-<span class="w"> </span>name:<span class="w"> </span>AZURE_ENTRY_CODE
+</span><a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="hll"><span class="w">      </span>valueFrom:
+</span><a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="hll"><span class="w">        </span>secretKeyRef:
+</span><a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="hll"><span class="w">          </span>name:<span class="w"> </span>secret-continaer-app
+</span><a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="hll"><span class="w">          </span>key:<span class="w"> </span>entry-code
+</span></code></pre></div></td></tr></table></div>
+<h3 id="5-optional-add-custom-domain-name">5. (Optional) Add Custom Domain Name</h3>
+<p>為了讓大家方便好存取, 建議都會放自己的 Domain 上去, 這樣可以讓大家更容易記住, Domain 的來源不一定是要從 Azure 上買, 或者是註冊到 Azure Public DNS Zone 的服務, 你只要確保該 Domain 是由你控制的即可</p>
+<p>我還是很推薦 Domain 或 Sub-domain 委派 (Delegation) 給 Azure Public DNS 管理, 要放對外服務的時候, 便宜方便還安全, 還是唯一一個 SLA 100% 的服務</p>
+<h4 id="51-setting-up-dns">5.1 Setting Up DNS</h4>
+<p><img alt="" src="/images/ca-6.png" /></p>
+<p>關於 <code>4</code>, 基於 <a href="https://learn.microsoft.com/en-us/azure/container-apps/custom-domains-managed-certificates">Custom domain names and free managed certificates in Azure Container Apps (preview)</a>, Azure Container App 會免費提供一張受 Azure 控管的 SSL 憑證</p>
+<p>關於 <code>5</code>, 這邊需要決定你的網站名稱要叫什麼, 如 <code>helloworld.pichuang.com.tw</code>, 之後要使用該服務的話則會需要使用 <code>https://helloworld.pichuang.com.tw</code> 來存取</p>
+<p>關於 <code>7~8</code>, 這個是你需要去你管理的 Domain 那邊, 分別把 CNAME 和 TXT 加進去到 Zone File 內, 然後等待 DNS 的更新後, 再按 Validate 才會生效</p>
+<h4 id="52-check-dns-validation">5.2 Check DNS validation</h4>
+<p><img alt="" src="/images/ca-7.png" /></p>
+<p>整體生效時間大概約略 15 分鐘, 正確運作的話你應該會看到上面的畫面, 這樣就可以用 <code>https://helloworld.pichuang.com.tw</code> 來存取你的 ChatGPT 服務了</p>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="q1-container-azure-red-hat-openshift-azure-kubernetes-service">Q1: 既然是 Container 服務, 為何不要用 Azure Red Hat OpenShift 或 Azure Kubernetes Service?</h3>
+<p>技術上兩者皆可以, 但我這個服務是設計成獨立服務使用, 不需要使用到 Kubernetes API 或 Ingress 相關的能力, 所以不選 Azure Kubernetes Serivce 或 Azure Red Hat OpenShift. 另一個理由就是公司沒發給我這麼多額度可以用, 超過會直接封帳號...因為我 2023/12/31 被封了一次</p>
+<h3 id="q2-domain-name">Q2: 我沒有自己的 Domain Name, 還可以用這個做法嗎?</h3>
+<p>可以, Azure Container App 會提供給你 <code>http://&lt;projectname&gt;.&lt;我也不知道是什麼意思的域名&gt;.&lt;區域&gt;.azurecontainerapps.io</code> 的網址, 你可以直接用這個網址來使用你的 ChatGPT. 順便一提, 他有包含 SSL 憑證, 所以你的連線是安全的</p>
+<p>倒是這年頭買一個自己的 Domain 很便宜呀, 找 Gandi 還是哪家買一個, 然後 nameserver 指到 Azure Public DNS 上, 大部分 Azure 服務有 Custom Domain 的能力, 有需要 TLS 的話, 都會順便幫你用 DigiCert 簽上去, 推薦買一個放上去或者是切一個 subdomain ns 指上去也可以</p>
+<p><img alt="" src="/images/digicert.png" /></p>
+<h3 id="q3-nextchatgpt">Q3: 我覺得 NextChatGPT 的通關密語太弱了, 有沒有更好的做法?</h3>
+<p>基於 <a href="https://learn.microsoft.com/zh-tw/azure/container-apps/authentication">Authentication and authorization in Azure Container Apps</a>, 你可以掛 Microsoft Entra ID 的認證方式上去, 這樣就可以用公司的帳號密碼才能登入, 這樣就不用擔心密碼太弱的問題了</p>
+<h3 id="q4-nexchatgpt">Q4: 如果我不用 NexChatGPT 這個專案, 想換成別的專案, 有什麼需要注意的地方嗎?</h3>
+<p>一般來說, 除了要先知道該專案是否有支援 Azure OpenAI 以外, 其次還會找看有沒有 <code>docker-compose.yaml</code> 可以看, 所有啟動所需要的資訊都會寫在裡面, 如 Environment Variables, port, volume 等, 再不行的話, 就是要分析 Dockerfile 和他的環境變數, 然後評估是不是有些變數過於敏感, 如 API Key 等, 需要放在 Azure Container App 的 Secret 或採用 Azure Key Vault 來存放, 提升安全性</p>
+<h3 id="q5">Q5: 費用很貴嗎?</h3>
+<p>我用量不是很大的那種, 不是天天都在研究 OpenAI 的使用技術, 所以每個月整體用量很少, 如果你跟我有一樣的行為模式, 可以參考下面 2 個 2024/01 的實際費用, 以美金計價</p>
+<h4 id="azure-container-app">Azure Container App</h4>
+<p><img alt="" src="/images/ca-cost-1.png" /></p>
+<h4 id="azure-openai-service">Azure OpenAI Service</h4>
+<p><img alt="" src="/images/ca-cost-2.png" /></p>
 <h2 id="_2">文後廢言</h2>
-<p>因為近期眼睛酸通，昨日去看眼科，醫生說我眼睛都充滿著血絲，是不是壓力太大了?</p>
-<p>OS: 沒想到連眼科醫生都看得出來 (?)</p>
+<p>過年來了, 這幾年的過年考題從 "女友呢?", "老婆在哪裡", "小朋友在哪裡?" 變成 "小朋友先有, 其他後面補沒關係 (疑?)", 真萬萬沒想到少子化問題已經高過一切了</p>
+<p>因為報導者之前有出過一篇 <a href="https://www.twreporter.org/a/foster-care-system-adoption-flow-and-rules">【收養為何那麼難】一年半的等待、單身和年齡潛規則，收養層層關卡的情與理</a> 的報導, 才發現收養這還真的是不容易</p>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://learn.microsoft.com/en-us/azure/bastion/bastion-overview#sku">Azure Bastion SKU</a></li>
-<li><a href="https://github.com/nicolgit/hub-and-spoke-playground">The Azure🌍 hub-and-spoke-playground</a></li>
-<li><a href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">Ansible - How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li><a href="https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web">ChatGPTNextWeb/ChatGPT-Next-Web</a></li>
+<li><a href="https://learn.microsoft.com/zh-tw/azure/container-apps/authentication">Authentication and authorization in Azure Container Apps</a></li>
+<li><a href="https://github.com/topics/chatgpt-ui">GitHub - ChatGPT</a></li>
 </ul>
 
 

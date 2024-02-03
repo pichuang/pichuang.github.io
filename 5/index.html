@@ -1637,6 +1637,54 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-04-17 00:00:00">20230417</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../sla.html" class="md-meta__link">sla</a></li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="composite-slas"><a class="toclink" href="../20230417-composite-sla.html">計算出正確的服務水平協議：探索 Composite SLAs 計算和架構設計</a></h2>
+<p>最近這幾周收到幾個想要做 SLA 99.999% 的案子，因涉及的服務眾多，所以故針對如何合理計算 SLA 和其架構設計先做一個紀錄，但這邊並不涉及資料最終一致性和對外網路的設計討論</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3pSue9nm3Bg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<h3 id="tldr"><a class="toclink" href="../20230417-composite-sla.html#tldr">TL;DR</a></h3>
+<ol>
+<li>相比單一服務 SLA 計算，複合 SLA (Composite SLA) 是更為合理的計算方式</li>
+<li>複合 SLA (Composite SLA) 會隨認列範圍不同而有所變化，就算是同一張架構圖</li>
+<li>若相依性服務越多，因可能失敗發生點多，則複合 SLA 會必然低於單一服務 SLA</li>
+<li>單區域架構提供多個備援作法可小幅提升整體 SLA</li>
+<li>多區域架構設計可以大幅提升整體 SLA，至少 2 個區域，至多 3 個區域</li>
+</ol>
+
+    <nav class="md-post__action">
+      <a href="../20230417-composite-sla.html">
+        Continue reading
+      </a>
+    </nav>
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-04-11 00:00:00">20230411</time></li>
         
           <li class="md-meta__item">
@@ -1709,45 +1757,6 @@
 
     <nav class="md-post__action">
       <a href="../20230316-openai-api-development-exp.html">
-        Continue reading
-      </a>
-    </nav>
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-03-06 00:00:00">20230306</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../networking.html" class="md-meta__link">networking</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="testinfra"><a class="toclink" href="../20230306-tdd-for-network-connectivity.html">運用 Testinfra 來確保網路連通性測試</a></h2>
-<p><img alt="Testinfra test your infrastructure" src="https://testinfra.readthedocs.io/en/latest/_static/logo.svg" /></p>
-<p>起源是因為做 Azure 網路架構設計，網路線拉完 (ExpressRoute、S2S VPN、VNet Peering 等) 之後，下一個需求多半都是要把 Firewall 開起來，希望所有的連線都要經過 Azure Firewall 確保連線安全性，但基於 Azure Networking 本身的特性和使用者的對於網路連通 (Network Connectivity) 的需求，身為一名記憶力不算特好的架構師，為了確保使用者講的跟實際上運作的結果是一樣的，這時候就要把早年在 Edgecore Network 時期講過的 <a href="https://speakerdeck.com/pichuang/netdevops-next-generation-network-engineer?slide=27">NetDevOps: Next-Generation Network Engineer</a> 拿來用用了</p>
-
-    <nav class="md-post__action">
-      <a href="../20230306-tdd-for-network-connectivity.html">
         Continue reading
       </a>
     </nav>
