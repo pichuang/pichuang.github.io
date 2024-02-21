@@ -1,0 +1,2354 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open Knowledge, Open Source, Open Mind">
+      
+      
+        <meta name="author" content="pichuang@cloudnative.tw (Phil Huang)">
+      
+      
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240206-podman-desktop-on-mac-m3.html">
+      
+      
+        <link rel="prev" href="20240203-own-chatgpt-ui-with-azure-openai.html">
+      
+      
+      
+        
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
+      
+      <link rel="icon" href="favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10+insiders-4.52.3">
+    
+    
+      
+        <title>Apple M3 上的 Podman Desktop 終於可以用啦! - 魂系架構 Phil's Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.fc8cf87c.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,300i,400,400i,700,700i%7COverpass+Mono+SemiBold:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans TC";--md-code-font:"Overpass Mono SemiBold"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-8MQRY98QB2"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-8MQRY98QB2",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-8MQRY98QB2",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#apple-m3-podman-desktop" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            魂系架構 Phil's Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Apple M3 上的 Podman Desktop 終於可以用啦!
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="wiki/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Wiki
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="azure-subnets.html" class="md-tabs__link">
+          
+  
+    
+  
+  Azure Visual Subnet Calculator
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="about.html" class="md-tabs__link">
+          
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    魂系架構 Phil's Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2024.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2023.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2022.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2021.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2020.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="2019.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="ansible.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="automation.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="azure.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    azure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="cncf.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    cncf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="container.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="homecloud.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    homecloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="kubernetes.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="linux.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="misc.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="networking.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="o11y.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    o11y
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="openai.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openai
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="openshift.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    openshift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="personal.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    personal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="sla.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="sustainability.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    sustainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    
+  
+    Authors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="author/url.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    
+  
+    Phil Huang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="wiki/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="azure-subnets.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure Visual Subnet Calculator
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="about.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="index.html" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://blog.pichuang.com.tw">Phil Huang</a>
+                        
+                      </strong>
+                      <br>
+                      Microsoft Senior Cloud Solution Architect | CNCF Ambassador
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2024-02-06 00:00:00" class="md-ellipsis">20240206</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="container.html">container</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+            
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#podman-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Podman Desktop 使用場景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Podman Desktop 使用場景">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 單獨跑一個 Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-container-pod-kubernetes-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 把 Container 轉換 Pod 塞到 Kubernetes cluster 環境上運行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-container-pod-podman-container-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 把 Container 轉換 Pod 塞到 Podman Container Engine 環境上運行
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 把 Container 轉換 Pod 塞到 Podman Container Engine 環境上運行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-kubernetes-yaml-podman-containe-enginer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 先把 Kubernetes YAML 在本機用 Podman Containe Enginer 運行起來
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-pod-deployment-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 再把 Pod 轉換成 Deployment 部署到 Kubernetes 上
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-oci-extenstion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 安裝相容 OCI 格式的 Extenstion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-container-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 編譯 Container Images
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q&amp;A
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q&A">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-docker-desktop-podman-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: Docker Desktop 和 Podman Desktop 怎麼挑?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-podman-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: 如果初次使用 podman, 但我指令或程式都寫 docker 該怎麼辦?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-podman-desktop-vs-docker-desktop-vs-lens-vs-k9s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: Podman Desktop v.s. Docker Desktop v.s. Lens v.s. k9s?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: 現行軟硬體版本資訊?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-podman-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: 如何安裝 Podman Desktop 和他的相依性套件?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-mirantis-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6: Mirantis 和 Docker 的關係?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-dev-container-docker-podman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q7: Dev Container 預設用 Docker 誒，怎麼改成 Podman?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文後廢言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">podman</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">kubernetes</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="apple-m3-podman-desktop">Apple M3 上的 Podman Desktop 終於可以用啦!</h1>
+<p><img alt="" src="https://podman-desktop.io/assets/images/renovations-21ad5798164b1bb1beceb19646b2a762.png" /></p>
+<p>如果你跟我一樣是 Apple M3 系列的使用者，平時有不少工作需要仰賴跑 Container 來完成的，那我相信你一定會對 2024/1/24 <a href="https://podman-desktop.io/blog/podman-desktop-release-1.7">Podman Desktop Release 1.7</a> 的釋出感到開心，這個版本修復了 QEMU on Apple M3 的問題，讓我們可以在 M3 上使用 Podman 跑 Container 了!</p>
+<!--more-->
+
+<h2 id="podman-desktop">Podman Desktop 使用場景</h2>
+<p><img alt="" src="/images/podman-desktop-1.png" /></p>
+<p>常見使用場景:</p>
+<ol>
+<li>單獨把一個 Container 放到 Podman Container Engine 上運行</li>
+<li>把 Container 轉成 Pod 放到 Local Kubernetes 環境上運行, 如 OpenShift Local / KIND / Minikube 上運行</li>
+<li>把 Container 轉成 Pod 放到 Podman Container Engine 環境上運行，然後再部署到 Kubernetes 上</li>
+<li>使用 Docker Desktop Extension 常見的功能，例如掃描漏洞等</li>
+<li>編譯 Container Images</li>
+</ol>
+<h3 id="1-container">1. 單獨跑一個 Container</h3>
+<p><img alt="" src="/images/podman-desktop-2.png" /></p>
+<p>一個相當經典的使用方式，這邊以我自己維護的 <a href="ghcr.io/pichuang/debug-container:master">pichuang/debug-container</a> 為例，上圖的操作會等同於下面指令</p>
+<div class="highlight"><span class="filename">podman-run</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>podman<span class="w"> </span>pull<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span>docker<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="nv">reference</span><span class="o">=</span>debug-container
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>$<span class="w"> </span>podman<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="nv">reference</span><span class="o">=</span>debug-container
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>REPOSITORY<span class="w">                        </span>TAG<span class="w">         </span>IMAGE<span class="w"> </span>ID<span class="w">      </span>CREATED<span class="w">       </span>SIZE
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>ghcr.io/pichuang/debug-container<span class="w">  </span>master<span class="w">      </span>127df4e7af3f<span class="w">  </span><span class="m">12</span><span class="w"> </span>hours<span class="w"> </span>ago<span class="w">  </span><span class="m">713</span><span class="w"> </span>MB
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>$<span class="w"> </span>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="o">[</span>root@2ae1a1c62ba3<span class="w"> </span>~<span class="o">]</span><span class="c1">#</span>
+</code></pre></div>
+<p><img alt="" src="/images/podman-desktop-3.png" /></p>
+<p>是毫無懸念地使用方式，跟指令的差異就是有 Desktop 可以用滑鼠點一點操作就完成了</p>
+<h3 id="2-container-pod-kubernetes-cluster">2. 把 Container 轉換 Pod 塞到 <code>Kubernetes cluster</code> 環境上運行</h3>
+<p><img alt="" src="/images/podman-desktop-4.png" /></p>
+<p>差異就是把定義好的 <code>debug-container.yaml</code> 用 <code>kubectl apply -f</code> 塞到指定的 <code>Kubernetes cluster</code> 上運行，要留意的事情是，這邊 Podman Desktop 不會顯示 Kubernetes 上的資訊，你得要用 <code>kubectl get pods</code> 來查看，上圖的操作會等同於下面指令</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">kubectl-apply</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>$<span class="w"> </span>kind<span class="w"> </span>get<span class="w"> </span>clusters
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>enabling<span class="w"> </span>experimental<span class="w"> </span>podman<span class="w"> </span>provider
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>kind-cluster
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>$<span class="w"> </span>kubectl<span class="w"> </span>cluster-info
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>Kubernetes<span class="w"> </span>control<span class="w"> </span>plane<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://127.0.0.1:63290
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>CoreDNS<span class="w"> </span>is<span class="w"> </span>running<span class="w"> </span>at<span class="w"> </span>https://127.0.0.1:63290/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="hll">$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>debug-container.yaml
+</span><a id="__codelineno-1-10" name="__codelineno-1-10"></a>pod/debug-container<span class="w"> </span>configured
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="hll">$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>default
+</span><a id="__codelineno-1-13" name="__codelineno-1-13"></a>NAME<span class="w">              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>debug-container<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>2m15s
+</code></pre></div></td></tr></table></div>
+<h3 id="3-container-pod-podman-container-engine">3. 把 Container 轉換 Pod 塞到 <code>Podman Container Engine</code> 環境上運行</h3>
+<h4 id="31-kubernetes-yaml-podman-containe-enginer">3.1 先把 Kubernetes YAML 在本機用 Podman Containe Enginer 運行起來</h4>
+<p><img alt="" src="/images/podman-desktop-5.png" /></p>
+<p>關於 <code>4</code>，podman 全名應為 Pod Manager，他本身設計基礎是以 Pod 為單位作為設計的，所以他可以支援把 Kubernetes 的 YAML 轉換成 Pod 並且直接用 Podman Container Engine 運行起來，相當適合你尚未把服務放到 Kubernetes 之前，單純想要對 Pod 這個範圍內的操作進行顆粒度較細的調教，這會節省很多時間，上圖的操作會等同於下面指令</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">podman-play-kube</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>$<span class="w"> </span>podman<span class="w"> </span>play<span class="w"> </span>kube<span class="w"> </span>./debug-container.yaml
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Pod:
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>90f1cc5b5affd866a360118f65bfaa840396e74f6bd6294b12e743ad0660d77b
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>Container:
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>1b092b950e1c2fbdb8b896dfc22a4b3d23c0ffe902c39d95a363cd098086e781
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="hll">$<span class="w"> </span>podman<span class="w"> </span>pod<span class="w"> </span>ps<span class="w"> </span>--ctr-names<span class="w"> </span>--ctr-ids
+</span><a id="__codelineno-2-8" name="__codelineno-2-8"></a>POD<span class="w"> </span>ID<span class="w">        </span>NAME<span class="w">             </span>STATUS<span class="w">      </span>CREATED<span class="w">         </span>INFRA<span class="w"> </span>ID<span class="w">      </span>IDS<span class="w">                        </span>NAMES
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>90f1cc5b5aff<span class="w">  </span>debug-container<span class="w">  </span>Running<span class="w">     </span><span class="m">12</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">  </span>b08f52f1aab7<span class="w">  </span>b08f52f1aab7,1b092b950e1c<span class="w">  </span>90f1cc5b5aff-infra,debug-container-debug-container
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="hll">$<span class="w"> </span>podman<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>1b092b950e1c<span class="w"> </span>/bin/bash
+</span><a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="o">[</span>root@debug-container<span class="w"> </span>~<span class="o">]</span><span class="c1">#</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="32-pod-deployment-kubernetes">3.2 再把 Pod 轉換成 Deployment 部署到 Kubernetes 上</h4>
+<p><img alt="" src="/images/podman-desktop-6.png" /></p>
+<p>關於 <code>5-6</code>，在 Pod 的欄位內，有支援將當前的 Pod 直接<code>產生 Pod YAML</code> 和<code>部署到指定的 Kubernetes 之上</code>，如果你是本機開發的話，會是一個相當方便的功能，點一點就可以跑到 Kubernetes 為底的環境運行了</p>
+<p><img alt="" src="/images/podman-desktop-7.png" /></p>
+<p>在<code>部署到指定的 Kuberentes 之上</code> 這個階段，雖然能做的事情不像 <code>kubectl apply</code> 自己下指令來的多樣，但就以 Pod 這個範圍的測試開發來講，是可以考慮使用的路線，真不行的話，你就自己產生 Deployment YAML 來部署就好了</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">podman-generate-kube-pod</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># podman generate kube podID</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1"># https://docs.podman.io/en/latest/markdown/podman-kube-generate.1.html</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="hll">$<span class="w"> </span>podman<span class="w"> </span>generate<span class="w"> </span>kube<span class="w"> </span>--type<span class="w"> </span>pod<span class="w"> </span>debug-container
+</span><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="c1"># Save the output of this file and use kubectl create -f to import</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="c1"># it into Kubernetes.</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="c1">#</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="c1"># Created with podman-4.8.3</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>apiVersion:<span class="w"> </span>v1
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="hll">kind:<span class="w"> </span>Pod
+</span><a id="__codelineno-3-10" name="__codelineno-3-10"></a>metadata:
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">  </span>creationTimestamp:<span class="w"> </span><span class="s2">&quot;2024-02-05T17:49:38Z&quot;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">  </span>labels:
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">  </span>name:<span class="w"> </span>debug-container
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>spec:
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">  </span>containers:
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">  </span>-<span class="w"> </span>args:
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span>-<span class="w"> </span><span class="k">while</span><span class="w"> </span>true<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">30</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span>command:
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">    </span>-<span class="w"> </span>/bin/bash
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">    </span>-<span class="w"> </span>-c
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">    </span>-<span class="w"> </span>--
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">    </span>image:<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">    </span>name:<span class="w"> </span>debug-container-debug-container
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">    </span>securityContext:<span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">  </span>restartPolicy:<span class="w"> </span>Always
+</code></pre></div></td></tr></table></div>
+<p>倘若你覺得這個 Pod 跑起來沒啥問題，想要換成用 Deployment 的方式跑，那你可以用下面指令，改一下 <code>--type deployment</code> 就可以或得到一個會動的 Deployment YAML，然後再隨需求細修參數即可</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">podman-generate-kube-deployment</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="hll">$<span class="w"> </span>podman<span class="w"> </span>generate<span class="w"> </span>kube<span class="w"> </span>--type<span class="w"> </span>deployment<span class="w"> </span>debug-container<span class="w"> </span>--service
+</span><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1"># Save the output of this file and use kubectl create -f to import</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="c1"># it into Kubernetes.</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1">#</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="c1"># Created with podman-4.8.3</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>apiVersion:<span class="w"> </span>v1
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="hll">kind:<span class="w"> </span>Service
+</span><a id="__codelineno-4-8" name="__codelineno-4-8"></a>metadata:
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">  </span>creationTimestamp:<span class="w"> </span><span class="s2">&quot;2024-02-05T17:47:00Z&quot;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">  </span>labels:
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">  </span>name:<span class="w"> </span>debug-container
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>spec:
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">  </span>selector:
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">    </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">  </span>type:<span class="w"> </span>NodePort
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>---
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>apiVersion:<span class="w"> </span>apps/v1
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="hll">kind:<span class="w"> </span>Deployment
+</span><a id="__codelineno-4-20" name="__codelineno-4-20"></a>metadata:
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">  </span>creationTimestamp:<span class="w"> </span><span class="s2">&quot;2024-02-05T17:47:00Z&quot;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">  </span>labels:
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">    </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">  </span>name:<span class="w"> </span>debug-container-deployment
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a>spec:
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">  </span>selector:
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">    </span>matchLabels:
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">      </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">  </span>template:
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">    </span>metadata:
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">      </span>creationTimestamp:<span class="w"> </span><span class="s2">&quot;2024-02-05T17:47:00Z&quot;</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">      </span>labels:
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">        </span>app:<span class="w"> </span>debug-container
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">      </span>name:<span class="w"> </span>debug-container
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">    </span>spec:
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">      </span>containers:
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">      </span>-<span class="w"> </span>args:
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="w">        </span>-<span class="w"> </span><span class="k">while</span><span class="w"> </span>true<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">30</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a><span class="w">        </span>command:
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a><span class="w">        </span>-<span class="w"> </span>/bin/bash
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a><span class="w">        </span>-<span class="w"> </span>-c
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a><span class="w">        </span>-<span class="w"> </span>--
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a><span class="w">        </span>image:<span class="w"> </span>ghcr.io/pichuang/debug-container:master
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a><span class="w">        </span>name:<span class="w"> </span>debug-container-debug-container
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a><span class="w">        </span>securityContext:<span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a><span class="w">      </span>restartPolicy:<span class="w"> </span>Always
+</code></pre></div></td></tr></table></div>
+<h3 id="4-oci-extenstion">4. 安裝相容 OCI 格式的 Extenstion</h3>
+<p><img alt="" src="/images/podman-desktop-8.png" /></p>
+<p>Podman Desktop 內建其實沒這 Aqua Trivy 功能，需要另外裝，故我想強調的事情是，這工具也支援安裝既有 Docker Desktop Extenstion，可以去 <a href="https://hub.docker.com/search?q=&amp;type=extension&amp;sort=pull_count&amp;order=desc">Dockerhub</a> 這邊找到需要的服務網址後裝進去</p>
+<p><img alt="" src="/images/podman-desktop-9.png" /></p>
+<p><img alt="" src="/images/podman-desktop-10.png" /></p>
+<p><img alt="" src="/images/podman-desktop-11.png" /></p>
+<p><img alt="" src="/images/podman-desktop-12.png" /></p>
+<h3 id="5-container-images">5. 編譯 Container Images</h3>
+<p><img alt="" src="/images/podman-desktop-13.png" /></p>
+<p>也是經典使用方式，但我還沒研究怎麼在筆電同時編出 aarch64 和 x86_64 想到再來補</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>podman<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-custom-image<span class="w"> </span>-f<span class="w"> </span>Dockerfile
+</code></pre></div>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="q1-docker-desktop-podman-desktop">Q1: Docker Desktop 和 Podman Desktop 怎麼挑?</h3>
+<p>我的看法還以<code>原廠售後支援</code> 和 <code>功能支援</code> 兩個角度來看</p>
+<ol>
+<li>
+<p>售後產品支援</p>
+<ul>
+<li>你如果是以 Docker 為主或者是有愛好的人，建議以 Docker / Docker Desktop 體系為主，Docker 原廠 (與 Mirantis 無關) 有提供 Docker Desktop 原廠產品售後支援</li>
+<li>你如果是以 Red Hat 體系或很清楚容器運作的人，建議以 Podman / Podman Desktop 體系為主，跟前者不太一樣的是，Red Hat 支援是以 Red Hat Enterprise Linux 產品角度支援，有中文支援</li>
+</ul>
+</li>
+<li>
+<p>功能支援</p>
+<p>基於此文 <a href="https://github.com/containers/podman/blob/main/transfer.md#missing-commands-in-podman">Missing commands</a>, 比較 <code>Missing commands in podman</code> 和 <code>Missing commands in docker</code> 內有沒有你本來就在用的指令，如果有的話，就可以用功能性評估進行選擇，因為歷史典故，所以都是看 <code>Missing commands in podman</code> 這個表格就好，只要裡面你看完都沒有你要用的指令，恭喜你，你兩邊都可以選，使用起來沒差</p>
+</li>
+</ol>
+<h3 id="q2-podman-docker">Q2: 如果初次使用 podman, 但我指令或程式都寫 docker 該怎麼辦?</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span><span class="nb">alias</span><span class="w"> </span><span class="nv">docker</span><span class="o">=</span>podman
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>which<span class="w"> </span>docker
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>docker:<span class="w"> </span>aliased<span class="w"> </span>to<span class="w"> </span>podman
+</code></pre></div>
+<p>這不是開玩笑的，認真這樣做</p>
+<h3 id="q3-podman-desktop-vs-docker-desktop-vs-lens-vs-k9s">Q3: Podman Desktop v.s. Docker Desktop v.s. Lens v.s. k9s?</h3>
+<p>你如果是維護 Kubernetes 的人，請看 Lens / k9s 是你的好選擇，主要他們都是針對 Kubernetes API 進行操作管理
+你如果是開發或打包 Container 程式部署的人，請看 Podman Desktop / Docker Desktop 為主</p>
+<h3 id="q4">Q4: 現行軟硬體版本資訊?</h3>
+<p>於 20240206 快照版本資訊</p>
+<ul>
+<li>Apple M3 Pro</li>
+<li>macOS 14.3</li>
+<li>Podman Desktop v1.7.0</li>
+<li>Podman v4.9.0</li>
+<li>OpenShift Local v2.32.0</li>
+</ul>
+<h3 id="q5-podman-desktop">Q5: 如何安裝 Podman Desktop 和他的相依性套件?</h3>
+<p>強烈建議從官網上先把 Podman Desktop 安裝好，然後再透過這個介面去安裝其他的，不然可能會遇到一些靈異現象</p>
+<p><a href="https://podman-desktop.io/downloads">https://podman-desktop.io/downloads</a></p>
+<h3 id="q6-mirantis-docker">Q6: Mirantis 和 Docker 的關係?</h3>
+<p>雖然 2019/11/13，Miratnis 併購 Docker，但目前兩家還是不一樣的公司，因為產品線不一樣</p>
+<p>基於 <a href="https://docs.mirantis.com/welcome/">Discover Mirantis Products Learn</a>，Mirantis 主要提供下列產品和專案</p>
+<ul>
+<li>Mirantis Container Cloud</li>
+<li>Mirantis Kubernetes Engine</li>
+<li>Mirantis Container Runtime (前身為 Docker Engine - Enterprise)</li>
+<li>Mirantis Secure Registry</li>
+<li>Mirantis OpenStack for OpenStack</li>
+<li>Lens IDE</li>
+<li>k0s</li>
+<li>Lagon</li>
+</ul>
+<p>基於 <a href="https://docs.docker.com/subscription/details/">Docker subscriptions and features</a>，Docker 主要提供下列產品和專案</p>
+<ul>
+<li>Docker Engine</li>
+<li>Docker compose</li>
+<li>Docker Kubernetes</li>
+<li>Docker Hub</li>
+<li>Docker Desktop</li>
+</ul>
+<p>當中就是 Docker Engine 的支援問題，按照 <a href="https://docs.docker.com/engine/install/#support">Docker Support</a> 的文件描述相當妙</p>
+<blockquote>
+<p><code>Docker doesn't provide support for Docker Engine. Docker provides support for Docker products, including Docker Desktop, which uses Docker Engine as one of its components.</code></p>
+</blockquote>
+<p>所以無論是 Docker Engine 還是 Docker Compose 的支援，都應該去找 Docker 原廠，而不是 Mirantis 原廠</p>
+<p>總結</p>
+<ul>
+<li>你是開發者，需要 <code>Docker Desktop</code> 和 <code>Docker Engine</code> 的使用支援，需要找 Docker 原廠訂閱服務</li>
+<li>你是維運者，需要受企業支援的 Container Rutime，那你應該要找 <code>Mirantis Container Runtime</code> 也就是 Docker-EE 路線，可參考 <a href="https://docs.mirantis.com/mcr/23.0/overview.html">Mirantis Container Runtime 的安裝文件</a>，而不是找 Docker 原廠</li>
+</ul>
+<h3 id="q7-dev-container-docker-podman">Q7: Dev Container 預設用 Docker 誒，怎麼改成 Podman?</h3>
+<p>很簡單, 下面一發解決</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>vim<span class="w"> </span>/usr/local/bin/docker
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">#!/bin/bash</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">exec</span><span class="w"> </span>podman<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>$<span class="w"> </span>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/docker
+</code></pre></div>
+<p>然後重開 VSCode 就好了</p>
+<h2 id="_1">文後廢言</h2>
+<p>最近看香格里拉·開拓異境，根本就是魂系列遊戲的動畫化，就想到其實我工作也是常遇到很多客戶的特規需求，常常加班用一些怪招研究測試半天，最終通過難關，忽然覺得我是個充滿著魂精神的系統架構師: 高自由度 (怪招多)、高難度 (客戶要求通常文件上都沒寫)、高挑戰 (自己挑燈夜戰搞出來)</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://podman-desktop.io/blog/podman-desktop-release-1.7">Podman Desktop Release 1.7</a></li>
+<li><a href="ghcr.io/pichuang/debug-container:master">pichuang/debug-container</a></li>
+<li><a href="https://docs.mirantis.com/welcome/">Discover Mirantis Products Learn</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+    <script src="https://giscus.app/client.js"
+    data-repo="pichuang/pichuang.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnk3NzkzNTgwNw=="
+    data-category="General"
+    data-category-id="DIC_kwDOBKU0v84CT0Z2"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-TW"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pichuang" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/phil-huang-09b09895" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@pichuang-tw" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="http://speakerdeck.com/pichuang" target="_blank" rel="noopener" title="speakerdeck.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M213.86 296H100a100 100 0 0 1 0-200h132.84a40 40 0 0 1 0 80H98c-26.47 0-26.45 40 0 40h113.82a100 100 0 0 1 0 200H40a40 40 0 0 1 0-80h173.86c26.48 0 26.46-40 0-40zM298 416a120.21 120.21 0 0 0 51.11-80h64.55a19.83 19.83 0 0 0 19.66-20V196a19.83 19.83 0 0 0-19.66-20H296.42a60.77 60.77 0 0 0 0-80h136.93c43.44 0 78.65 35.82 78.65 80v160c0 44.18-35.21 80-78.65 80z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.82b033e4.min.js"></script>
+      
+    
+  </body>
+</html>

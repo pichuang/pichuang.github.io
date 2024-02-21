@@ -1,0 +1,1391 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open Knowledge, Open Source, Open Mind">
+      
+      
+        <meta name="author" content="pichuang@cloudnative.tw (Phil Huang)">
+      
+      
+        <link rel="canonical" href="https://blog.pichuang.com.tw/azure-subnets-dev.html">
+      
+      
+      
+      
+        
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
+      
+      <link rel="icon" href="favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10+insiders-4.52.3">
+    
+    
+      
+        <title>Azure subnets dev - 魂系架構 Phil's Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.fc8cf87c.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,300i,400,400i,700,700i%7COverpass+Mono+SemiBold:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans TC";--md-code-font:"Overpass Mono SemiBold"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-8MQRY98QB2"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-8MQRY98QB2",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-8MQRY98QB2",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tips-for-azure-virtual-network" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            魂系架構 Phil's Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Azure subnets dev
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="wiki/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Wiki
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="azure-subnets.html" class="md-tabs__link">
+          
+  
+    
+  
+  Azure Visual Subnet Calculator
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="about.html" class="md-tabs__link">
+          
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
+
+    </a>
+    魂系架構 Phil's Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pichuang/pichuang.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    blog.pichuang.com.tw
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="wiki/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="azure-subnets.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    Azure Visual Subnet Calculator
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="about.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<html>
+
+<head>
+  <title> Visual Subnet Calculator (Azure Edition) </title>
+  <script language="javascript" type="text/javascript">
+    // <!--
+
+    var visibleColumns = {
+      subnetname: false,
+      subnet: true,
+      netmask: false,
+      range: false,
+      useable: true,
+      hosts: true,
+      divide: true,
+      join: true,
+    };
+
+    var curNetwork = 0;
+    var curMask = 0;
+
+    function updateNetwork() {
+      var newNetworkStr = document.forms['calc'].elements['network'].value;
+      var newMask = parseInt(document.forms['calc'].elements['netbits'].value);
+
+      var newNetwork = inet_aton(newNetworkStr);
+
+      if (newNetwork === null) {
+        alert('Invalid network address entered');
+        return;
+      }
+
+      var tmpNetwork = network_address(newNetwork, newMask);
+      if (newNetwork != tmpNetwork) {
+        alert('The network address entered is not on a network boundary for this mask.\nIt has been changed to ' + inet_ntoa(tmpNetwork) + '.');
+        newNetwork = tmpNetwork;
+        document.forms['calc'].elements['network'].value = inet_ntoa(tmpNetwork);
+      }
+
+      // <!-- Special for Azure Subnet -->
+      if (newMask < 0 || newMask > 29) {
+        alert('The network mask you have entered is invalid. This value should be less than 30');
+        return;
+      }
+
+      if (curMask == 0) {
+        curMask = newMask;
+        curNetwork = newNetwork;
+        startOver();
+      }
+      else if (curMask != newMask && confirm('You are changing the base network from /' + curMask + ' to /' + newMask + '. This will reset any changes you have made. Proceed?')) {
+        curMask = newMask;
+        curNetwork = newNetwork;
+
+        startOver();
+      }
+      else {
+        document.forms['calc'].elements['netbits'].value = curMask;
+        curNetwork = newNetwork;
+
+        recreateTables();
+      }
+    }
+
+    function startOver() {
+      rootSubnet = [0, 0, null];
+
+      recreateTables();
+    }
+
+    function recreateTables() {
+      // Update header visibility
+      for (const name in visibleColumns) {
+        console.log(name)
+        document.getElementById(name + 'Header').style.display = visibleColumns[name] ? 'table-cell' : 'none';
+      }
+
+      var calcbody = document.getElementById('calcbody');
+      if (!calcbody) {
+        alert('Body not found');
+        return;
+      }
+
+      while (calcbody.hasChildNodes()) {
+        calcbody.removeChild(calcbody.firstChild);
+      }
+
+      updateNumChildren(rootSubnet);
+      updateDepthChildren(rootSubnet);
+
+      createRow(calcbody, rootSubnet, curNetwork, curMask, [curMask, rootSubnet[1], rootSubnet], rootSubnet[0]);
+
+      document.getElementById('joinHeader').colSpan = (rootSubnet[0] > 0 ? rootSubnet[0] : 1);
+      //  document.getElementById('col_join').span = (rootSubnet[0] > 0 ? rootSubnet[0] : 1);
+
+      // 20240208
+      if (visibleColumns.subnetname) {
+        var subnetName = document.getElementById("subnetnameHeader").textContent;
+        localStorage.setItem("subnetnameHeader", subnetName);
+      }
+
+      /* Create the bookmark hyperlink */
+      var link = document.getElementById('saveLink');
+      if (link) {
+        link.href = 'azure-subnets.html?network=' + inet_ntoa(curNetwork) + '&mask=' + curMask + '&division=' + binToAscii(nodeToString(rootSubnet));
+      }
+    }
+
+    function nodeToString(node) {
+      if (node[2]) {
+        return '1' + nodeToString(node[2][0]) + nodeToString(node[2][1]);
+      }
+      else {
+        return '0';
+      }
+    }
+
+    function binToAscii(str) {
+      var curOut = '';
+      var curBit = 0;
+      var curChar = 0;
+
+      for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) == '1') {
+          curChar |= 1 << curBit;
+        }
+        curBit++;
+        if (curBit > 3) {
+          curOut += curChar.toString(16);
+          curChar = 0;
+          curBit = 0;
+        }
+      }
+      if (curBit > 0) {
+        curOut += curChar.toString(16);
+      }
+      return str.length + '.' + curOut;
+    }
+
+    function asciiToBin(str) {
+      var re = /([0-9]+)\.([0-9a-f]+)/;
+      var res = re.exec(str);
+      var len = res[1];
+      var encoded = res[2];
+      var out = '';
+      for (var i = 0; i < res[1]; i++) {
+        var ch = parseInt(res[2].charAt(Math.floor(i / 4)), 16);
+        var pos = i % 4;
+        out += (ch & (1 << pos) ? '1' : '0');
+      }
+      return out;
+    }
+
+    function createRow(calcbody, node, address, mask, labels, depth) {
+      if (node[2]) {
+        var newlabels = labels;
+        newlabels.push(mask + 1);
+        newlabels.push(node[2][0][1]);
+        newlabels.push(node[2][0]);
+        createRow(calcbody, node[2][0], address, mask + 1, newlabels, depth - 1);
+
+        newlabels = new Array();
+        newlabels.push(mask + 1);
+        newlabels.push(node[2][1][1]);
+        newlabels.push(node[2][1]);
+        createRow(calcbody, node[2][1], address + subnet_addresses(mask + 1), mask + 1, newlabels, depth - 1);
+      }
+      else {
+        var newRow = document.createElement('TR');
+        calcbody.appendChild(newRow);
+
+        /* subnet name */
+        if (visibleColumns.subnetname) {
+          var newCell = document.createElement('TD');
+          var subnetInput = document.createElement('input');
+          subnetInput.setAttribute('type', 'text');
+          subnetInput.setAttribute('name', 'subnetname');
+          subnetInput.setAttribute('size', '29');
+          subnetInput.setAttribute('maxlength', '80');
+          subnetInput.setAttribute('value', '');
+          newCell.appendChild(subnetInput)
+          newRow.appendChild(newCell);
+        }
+
+        /* subnet address */
+        if (visibleColumns.subnet) {
+          var newCell = document.createElement('TD');
+          newCell.appendChild(document.createTextNode(inet_ntoa(address) + '/' + mask));
+          newRow.appendChild(newCell);
+        }
+
+        var addressFirst = address;
+        var addressLast = subnet_last_address(address, mask);
+        /* Special for Azure Subnet */
+        /* Azure also reserves five IP addresses in each subnet for internal use: the first 4 and the 1 IP addresses. */
+        var useableFirst = address + 1 + 3;
+        var useableLast = addressLast - 1;
+        var numHosts;
+        var addressRange;
+        var usaebleRange;
+
+        if (mask == 32) {
+          addressRange = inet_ntoa(addressFirst);
+          useableRange = addressRange;
+          numHosts = 1;
+        }
+        else {
+          addressRange = inet_ntoa(addressFirst) + ' - ' + inet_ntoa(addressLast);
+          if (mask == 31) {
+            useableRange = addressRange;
+            numHosts = 2;
+          }
+          else {
+            useableRange = inet_ntoa(useableFirst) + ' - ' + inet_ntoa(useableLast);
+            numHosts = (1 + useableLast - useableFirst);
+          }
+        }
+
+        /* netmask */
+        if (visibleColumns.netmask) {
+          var newCell = document.createElement('TD');
+          newCell.appendChild(document.createTextNode(inet_ntoa(subnet_netmask(mask))));
+          newRow.appendChild(newCell);
+        }
+
+        /* range of addresses */
+        if (visibleColumns.range) {
+          var newCell = document.createElement('TD');
+          newCell.appendChild(document.createTextNode(addressRange));
+          newRow.appendChild(newCell);
+        }
+
+        /* useable addresses */
+        if (visibleColumns.useable) {
+          var newCell = document.createElement('TD');
+          newCell.appendChild(document.createTextNode(useableRange));
+          newRow.appendChild(newCell);
+        }
+
+        /* Hosts */
+        if (visibleColumns.hosts) {
+          var newCell = document.createElement('TD');
+          newCell.appendChild(document.createTextNode(numHosts));
+          newRow.appendChild(newCell);
+        }
+
+        /* actions */
+
+        if (visibleColumns.divide) {
+          var newCell = document.createElement('TD');
+          newRow.appendChild(newCell);
+
+          if (mask == 29) {
+            var newLink = document.createElement('SPAN');
+            newLink.className = 'disabledAction';
+            newLink.appendChild(document.createTextNode('Divide'));
+            newCell.appendChild(newLink);
+          }
+          else {
+            var newLink = document.createElement('A');
+            newLink.href = '#';
+            newLink.onclick = function () { divide(node); return false; }
+            newLink.appendChild(document.createTextNode('Divide'));
+            newCell.appendChild(newLink);
+          }
+        }
+
+        if (visibleColumns.join) {
+          var colspan = depth - node[0];
+
+          for (var i = (labels.length / 3) - 1; i >= 0; i--) {
+            var mask = labels[i * 3];
+            var rowspan = labels[(i * 3) + 1];
+            var joinnode = labels[(i * 3) + 2];
+
+            var newCell = document.createElement('TD');
+            newCell.rowSpan = (rowspan > 1 ? rowspan : 1);
+            newCell.colSpan = (colspan > 1 ? colspan : 1);
+
+            if (i == (labels.length / 3) - 1) {
+              newCell.className = 'maskSpan';
+            }
+            else {
+              newCell.className = 'maskSpanJoinable';
+              newCell.onclick = newJoin(joinnode);
+              //    newCell.onmouseover = function() { window.status = joinnode[0]+'---'+joinnode[1]+'---'+joinnode[2]+'>>>>>'+node[2];}
+            }
+
+            var newImg = document.createElement('IMG');
+            newImg.src = 'images/' + mask + '.gif';
+            newCell.appendChild(newImg);
+            newRow.appendChild(newCell);
+
+            colspan = 1; // reset for subsequent cells
+          }
+        }
+      }
+
+    }
+
+    /* This is necessary because 'joinnode' changes during the scope of the caller */
+    function newJoin(joinnode) {
+      return function () { join(joinnode) };
+    }
+
+    function divide(node) {
+      node[2] = new Array();
+      node[2][0] = [0, 0, null];
+      node[2][1] = [0, 0, null];
+      recreateTables();
+    }
+
+    function join(node) {
+      /* easy as pie */
+      node[2] = null;
+      recreateTables();
+    }
+
+    function updateNumChildren(node) {
+      if (node[2] == null) {
+        node[1] = 0;
+        return 1;
+      }
+      else {
+        node[1] = updateNumChildren(node[2][0]) + updateNumChildren(node[2][1]);
+        return node[1];
+      }
+    }
+
+    function updateDepthChildren(node) {
+      if (node[2] == null) {
+        node[0] = 0;
+        return 1;
+      }
+      else {
+        node[0] = updateDepthChildren(node[2][0]) + updateDepthChildren(node[2][1]);
+        return node[1];
+      }
+    }
+
+
+    var rootSubnet;
+
+    // each node is Array:
+    // [0] => depth of children, total number of visible children, children
+
+
+    function inet_ntoa(addrint) {
+      return ((addrint >> 24) & 0xff) + '.' +
+        ((addrint >> 16) & 0xff) + '.' +
+        ((addrint >> 8) & 0xff) + '.' +
+        (addrint & 0xff);
+    }
+
+    function inet_aton(addrstr) {
+      var re = /^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/;
+      var res = re.exec(addrstr);
+
+      if (res === null) {
+        return null;
+      }
+
+      for (var i = 1; i <= 4; i++) {
+        if (res[i] < 0 || res[i] > 255) {
+          return null;
+        }
+      }
+
+      return (res[1] << 24) | (res[2] << 16) | (res[3] << 8) | res[4];
+    }
+
+    function network_address(ip, mask) {
+      var maskbits = 0;
+      for (var i = 31 - mask; i >= 0; i--) {
+        ip &= ~1 << i;
+      }
+      return ip;
+    }
+
+    function subnet_addresses(mask) {
+      return 2 ** (32 - mask);
+    }
+
+    function subnet_last_address(subnet, mask) {
+      return subnet + subnet_addresses(mask) - 1;
+    }
+
+    function subnet_netmask(mask) {
+      return network_address(0xffffffff, mask);
+    }
+
+
+    function preloadSubnetImages() {
+      if (document.images) {
+        if (!document.preloadedImages) {
+          document.preloadedImages = new Array();
+        }
+
+        for (var i = 0; i <= 32; i++) {
+          var img = new Image();
+          img.src = 'images/' + i + '.gif';
+          document.preloadedImages.push(img);
+        }
+      }
+    }
+
+
+    function calcOnLoad() {
+      preloadSubnetImages();
+      args = parseQueryString();
+      if (args['network'] && args['mask'] && args['division']) {
+        document.forms['calc'].elements['network'].value = args['network'];
+        document.forms['calc'].elements['netbits'].value = args['mask'];
+        updateNetwork();
+        var division = asciiToBin(args['division']);
+        rootSubnet = [0, 0, null];
+        if (division != '0') {
+          loadNode(rootSubnet, division);
+        }
+        recreateTables();
+      }
+      else {
+        updateNetwork();
+      }
+
+      var subnetName = localStorage.getItem("subnetnameHeader");
+      if (subnetName) {
+        document.getElementById("subnetnameHeader").textContent = subnetName;
+      }
+    }
+
+    function loadNode(curNode, division) {
+      if (division.charAt(0) == '0') {
+        return division.substr(1);
+      }
+      else {
+        curNode[2] = new Array();
+        curNode[2][0] = [0, 0, null];
+        curNode[2][1] = [0, 0, null];
+
+        division = loadNode(curNode[2][0], division.substr(1));
+        division = loadNode(curNode[2][1], division);
+        return division;
+      }
+    }
+
+
+    function parseQueryString(str) {
+      str = str ? str : location.search;
+      var query = str.charAt(0) == '?' ? str.substring(1) : str;
+      var args = new Object();
+      if (query) {
+        var fields = query.split('&');
+        for (var f = 0; f < fields.length; f++) {
+          var field = fields[f].split('=');
+          args[unescape(field[0].replace(/\+/g, ' '))] =
+            unescape(field[1].replace(/\+/g, ' '));
+        }
+      }
+      return args;
+    }
+
+    window.onload = calcOnLoad;
+
+    function toggleColumn(cb) {
+      var colName = 'col_' + (cb.id.substr(3));
+      //  var col = document.getElementById(colName);
+
+      visibleColumns[cb.id.substr(3)] = cb.checked;
+
+      //  if (cb.checked) {
+      //    col.style.display = 'table-column';
+      //    col.style.visibility = 'visible';
+      //  }
+      //  else {
+      //    col.style.display = 'none';
+      //    col.style.visibility = 'collapse';
+      //  }
+      recreateTables(); /* because IE draws lines all over the place with border-collapse */
+    }
+
+    function copyLink() {
+      var copyText = document.getElementById("saveLink");
+      copyText.select();
+      document.execCommand("copy");
+    }
+
+    //-->
+  </script>
+
+  <style type="text/css">
+    H1 {
+      font-family: Arial, Verdana, sans-serif;
+      font-size: 18pt;
+    }
+
+    BODY {
+      font-family: Arial, Verdana, sans-serif;
+    }
+
+    P {
+      font-family: Arial, Verdana, sans-serif;
+      font-size: 75%;
+    }
+
+    .label {
+      font-family: Arial, Verdana, sans-serif;
+      font-size: 60%;
+    }
+
+    .calc {
+      font-family: Arial, Verdana, sans-serif;
+      font-size: 80%;
+      border-collapse: collapse;
+    }
+
+    .calc td,
+    .calc th {
+      border: 1px solid black;
+    }
+
+    .calc thead {
+      font-weight: bold;
+      background-color: #50e6ff;
+    }
+
+    .disabledAction {
+      color: #dddddd;
+    }
+
+    .maskSpan {
+      background-color: #ebebeb;
+      text-align: right;
+    }
+
+    .maskSpanJoinable {
+      background-color: #cccccc;
+      text-align: right;
+      cursor: pointer;
+    }
+
+    .maskSpanRotate {
+      filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1> Visual Subnet Calculator (Azure Edition) </h1>
+  <table width="100%" style="border: none; border-collapse: collapse;">
+    <tr valign=top>
+      <td>
+
+        <p>Enter the Azure Virtual Network (VNet) Address you wish to subnet:</p>
+
+        <form name="calc" onsubmit="updateNetwork(); return false;">
+
+          <table cellspacing="0">
+            <tr>
+              <td class="label">Network Address</td>
+              <td class="label">Mask bits</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="network" size="15" maxlength="15" value="192.168.1.0" style="border: 1px solid black;" /></td>
+              <td>
+                /
+                <input type="text" name="netbits" size="2" maxlength="2" value="24" style="border: 1px solid black;" />
+              </td>
+              <td><input type="submit" value="Update">
+                <input type="button" value="Reset"
+                  onclick="if (confirm('This will reset all subnet divisions you have made. Proceed?')) startOver();">
+              </td>
+            </tr>
+          </table>
+
+          <p>Show columns:
+            <input type="checkbox" id="cb_subnetname" onclick="toggleColumn(this)"><label for="cb_subnetname">Subnet
+              name</label>
+            <input type="checkbox" id="cb_subnet" checked onclick="toggleColumn(this)"><label for="cb_subnet">Subnet
+              address</label>
+            <input type="checkbox" id="cb_netmask" onclick="toggleColumn(this)"><label for="cb_netmask">Netmask</label>
+            <input type="checkbox" id="cb_range" onclick="toggleColumn(this)"><label for="cb_range">Range of
+              addresses</label>
+            <input type="checkbox" id="cb_useable" checked onclick="toggleColumn(this)"><label for="cb_useable">Azure
+              Subnet Useable IPs</label>
+            <input type="checkbox" id="cb_hosts" checked o1nclick="toggleColumn(this)"><label for="cb_hosts">Azure
+              Usable
+              Hosts</label>
+            <input type="checkbox" id="cb_divide" checked onclick="toggleColumn(this)"><label
+              for="cb_divide">Divide</label>
+            <input type="checkbox" id="cb_join" checked onclick="toggleColumn(this)"><label for="cb_join">Join</label>
+          </p>
+        </form>
+
+        <p>Click below to split and join subnets.<br>
+          If you wish to save this subnetting for later, copy the bookmark <a href="azure-subnets.html" id="saveLink"
+            onclick="copyLink()">this
+            hyperlink</a>.</p>
+
+        <br>
+        <hr noshade color="black" size="1">
+        <br>
+
+        <table class="calc" cellspacing="0" cellpadding="2">
+          <thead>
+            <tr>
+              <th id="subnetnameHeader">Subnet name</th>
+              <th id="subnetHeader">Subnet address</th>
+              <th id="netmaskHeader">Netmask</th>
+              <th id="rangeHeader">Range of addresses</th>
+              <th id="useableHeader">Azure Subnet Useable IPs</th>
+              <th id="hostsHeader">Azure Usable Hosts</th>
+              <th id="divideHeader">Divide</th>
+              <th id="joinHeader">Join</th>
+            </tr>
+          </thead>
+          <tbody id="calcbody">
+            <!--tr>
+<td>130.94.203.0/24</td>
+<td>130.94.203.0 - 130.94.203.255</td>
+<td>130.94.203.1 - 130.94.203.254 (254)</td>
+<td>Divide</td>
+</tr-->
+          </tbody>
+        </table>
+</body>
+
+</html>
+
+<h2 id="tips-for-azure-virtual-network">Tips for Azure Virtual Network</h2>
+<h3 id="azure-reserved-subnet-name">Azure Reserved Subnet Name</h3>
+<table>
+<thead>
+<tr>
+<th>Reserved Subnet Name</th>
+<th style="text-align: center;">min. Size of Subnet</th>
+<th style="text-align: center;">Max. Size of Subnet</th>
+<th style="text-align: center;">Recommand Size of Subnet</th>
+<th style="text-align: left;">Related Azure Services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub">GatewaySubnet</a></td>
+<td style="text-align: center;">/29</td>
+<td style="text-align: center;">/27</td>
+<td style="text-align: center;">/27</td>
+<td style="text-align: left;">Azure Virtual Network Gateway / ExpressRoute / Site-to-Site VPN</td>
+</tr>
+<tr>
+<td><a href="https://learn.microsoft.com/en-us/azure/route-server/quickstart-configure-route-server-portal#create-a-route-server-1">RouteServerSubnet</a></td>
+<td style="text-align: center;">/27</td>
+<td style="text-align: center;">/24</td>
+<td style="text-align: center;">/27</td>
+<td style="text-align: left;">Azure Route Server</td>
+</tr>
+<tr>
+<td><a href="https://learn.microsoft.com/en-us/azure/bastion/configuration-settings#subnet">AzureBastionSubnet</a></td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: center;">/24</td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: left;">Azure Bastion</td>
+</tr>
+<tr>
+<td><a href="https://learn.microsoft.com/en-us/azure/firewall/firewall-faq#why-does-azure-firewall-need-a--26-subnet-size">AzureFirewallSubnet</a></td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: left;">Azure Firewall</td>
+</tr>
+<tr>
+<td><a href="https://learn.microsoft.com/en-us/azure/firewall/forced-tunneling#forced-tunneling-configuration">AzureFirewallManagementSubnet</a></td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: center;">/16</td>
+<td style="text-align: center;">/26</td>
+<td style="text-align: left;">Azure Firewall Manager</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rule">Rule</h3>
+<ul>
+<li>
+<p>Based on <a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-faq#are-there-any-restrictions-on-using-ip-addresses-within-these-subnets">Are there any restrictions on using IP addresses within these subnets?</a>, Azure Subnet reserves 5 IP addresses in each subnet for internal use: <mark>the first 4 (Network ID, Default Gateway IP, Azure DNS reserved-1, Azure DNS reserved-2) and the last 1 (Network broadcast address)</mark> IP addresses.</p>
+</li>
+<li>
+<p>Based on  <a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-faq#how-small-and-how-large-can-vnets-and-subnets-be">Azure VMet - How small and how large can VNets and subnets be?</a>, The <mark>smallest supported IPv4 subnet is /29, and the largest is /2 (using CIDR subnet definitions)</mark>. IPv6 subnets must be exactly /64 in size.</p>
+</li>
+</ul>
+<h2 id="spotlight">Spotlight</h2>
+<div class="admonition note">
+<p class="admonition-title">Special Thanks to davidc + ChatGPT</p>
+<p>The source code for Azure Edition page has been forked and ported from <a href="https://github.com/davidc/subnets">davidc/subnets</a>. If you're searching for the original Visual Subnet Calculator, I encourage you to check out <a href="https://www.davidc.net/sites/default/subnets/subnets.html">Visual Subnet Calculator</a>. Furthermore, as I am not a front-end engineer, the project utilized <a href="https://openai.com/blog/chatgpt/">ChatGPT</a> for suggestions on modifications to HTML / CSS / Javascript.</p>
+</div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pichuang" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/phil-huang-09b09895" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@pichuang-tw" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="http://speakerdeck.com/pichuang" target="_blank" rel="noopener" title="speakerdeck.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M213.86 296H100a100 100 0 0 1 0-200h132.84a40 40 0 0 1 0 80H98c-26.47 0-26.45 40 0 40h113.82a100 100 0 0 1 0 200H40a40 40 0 0 1 0-80h173.86c26.48 0 26.46-40 0-40zM298 416a120.21 120.21 0 0 0 51.11-80h64.55a19.83 19.83 0 0 0 19.66-20V196a19.83 19.83 0 0 0-19.66-20H296.42a60.77 60.77 0 0 0 0-80h136.93c43.44 0 78.65 35.82 78.65 80v160c0 44.18-35.21 80-78.65 80z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.82b033e4.min.js"></script>
+      
+    
+  </body>
+</html>
