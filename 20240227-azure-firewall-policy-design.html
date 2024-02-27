@@ -1831,14 +1831,17 @@
 <ol>
 <li>1 個 Firewall Policy 可以包含 3 ~ 90 個 Rule Collection Group</li>
 <li>預設會有 3 個 Rule Collection Group: 100 DNAT Rule Collection Group, 200 Network Rule Collection Group, 300 Application Rule Collection Group 且不可刪除，但可以選擇不要用它</li>
-<li>以 Project 或特定的應用程式為單位，進行明確分類</li>
-<li>不同專案跳號以 100 為單位作為跳號基礎</li>
+<li>優先權號碼從 100 ~ 65000 皆可使用，但不可重複</li>
+<li>(建議) 以 Project 或特定的應用程式為最小單位，進行明確分類</li>
+<li>(建議) 不同專案跳號，以 100 為單位作為跳號基礎</li>
 </ol>
 <h3 id="rule-collecition">關於 Rule Collecition</h3>
 <ol>
 <li>1 個 Rule Collection Group 可以包含 1 ~ N 個 Rule Collection，檔案上限為 2MB</li>
 <li>每 1 個 Rule Collection 有 3 種類型選擇: DNAT Rule, Network Rule, Application Rule</li>
 <li>每 1 個 Rule Collection 有 2 個動作 (Action) 選擇，Allow 或 Deny，無法同時選擇</li>
+<li>優先權號碼從 100 ~ 65000 皆可使用，但不可重複</li>
+<li>雖然不同 Rule Collection Group 不可以有相同的優先權號碼，但旗下的不同的 Rule Collection 可以有相同的優先權號碼</li>
 <li>基於數字小的優先權高，數字大的優先權低，所以每一個分類需特別拆分 Deny 和 Allow 的 Rule Collection，並用優先權確保執行順序</li>
 </ol>
 <h3 id="rule">關於 Rule</h3>
