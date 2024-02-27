@@ -28,7 +28,7 @@
         <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10+insiders-4.52.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11+insiders-4.53.0">
     
     
       
@@ -36,7 +36,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.fc8cf87c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.458d28d0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ansible 如何除錯? 誰可以救救我?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bandwidth-throughput" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         Red Hat OpenShift v3.11 東西南北向網路探討
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift-services-pods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        從 Red Hat OpenShift 外部訪問 Services 或 Pods
       
     </span>
   </a>
@@ -1610,12 +1610,57 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2019-06-18 00:00:00">20190618</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../automation.html" class="md-meta__link">automation</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="ansible"><a class="toclink" href="../../20190618-ansible-troubleshooting.html">Ansible 如何除錯? 誰可以救救我?</a></h2>
+<p><img alt="" src="/images/ansible-logo.png" /></p>
+<p>可喜可賀，恭喜一下 Ansible 來到了 2.8 版號啦! 有興趣可以參考一下 <a href="https://github.com/ansible/ansible/blob/stable-2.8/changelogs/CHANGELOG-v2.8.rst">Release Note</a></p>
+<p>就個人經驗上，還蠻常遇到會寫 Ansible Playbook 的技術工程師，而他們的共通煩惱都是 Ansible 似乎疑難排解 (Trouble Shooting) 有些困難，常常遇到一個問題會看很久不知道怎麼下手開始除錯 (Debug)。本篇將分享一下筆者平時的作法，供廣大看倌們參考省下不少冤枉路。而如果你覺得我寫的看不太懂可以參考一下艦長的兩篇大作  <a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-1-c634f2963bc9">讓您安心執行-ansible-playbook-的小技巧-1</a> 、<a href="https://medium.com/laraveldojo/%E8%AE%93%E6%82%A8%E5%AE%89%E5%BF%83%E5%9F%B7%E8%A1%8C-ansible-playbook-%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7-2-856a60b19898">讓您安心執行-ansible-playbook-的小技巧-2</a></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20190618-ansible-troubleshooting.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2019-05-27 00:00:00">20190527</time></li>
         
           <li class="md-meta__item">
             in
             
               <a href="../../linux.html" class="md-meta__link">linux</a></li>
+        
         
         
       </ul>
@@ -1637,6 +1682,7 @@
           Continue reading
         </a>
       </nav>
+    
     
   </div>
 </article>
@@ -1663,6 +1709,7 @@
               <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
         
         
+        
       </ul>
       
     </div>
@@ -1683,50 +1730,6 @@
         </a>
       </nav>
     
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2019-03-21 00:00:00">20190321</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-services-pods"><a class="toclink" href="../../20190321-reach-out-services-and-pods-from-outside-into-openshift.html">從 Red Hat OpenShift 外部訪問 Services 或 Pods</a></h2>
-<p>Red Hat OpenShift v3.11 架構裡網路主要分為三大塊:</p>
-<ol>
-<li>Hosts subnet</li>
-<li>Service subnet</li>
-<li>Pod subnet</li>
-</ol>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20190321-reach-out-services-and-pods-from-outside-into-openshift.html">
-          Continue reading
-        </a>
-      </nav>
     
   </div>
 </article>
@@ -1738,7 +1741,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="16.html">16</a> <a class="md-pagination__link" href="17.html">17</a> <span class="md-pagination__current">18</span>
+  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="16.html">16</a> <a class="md-pagination__link" href="17.html">17</a> <span class="md-pagination__current">18</span> <a class="md-pagination__link" href="19.html">19</a>
 </nav>
         
       

@@ -28,7 +28,7 @@
         <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10+insiders-4.52.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11+insiders-4.53.0">
     
     
       
@@ -36,7 +36,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.fc8cf87c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.458d28d0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#namespace-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何條列出單一 Namespace 內的 Kubernetes 計算資源?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kubernetes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift-4-etcd" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一
       
     </span>
   </a>
@@ -1610,12 +1610,56 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-08-28 00:00:00">20200828</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="namespace-kubernetes"><a class="toclink" href="../../20200828-kubectl-view-allocations.html">如何條列出單一 Namespace 內的 Kubernetes 計算資源?</a></h2>
+<p>最近這一個月出了一些事，導致太久沒寫廢文。最近有個需求需要<code>逆向</code>研究出 Red Hat OpenShift 4 原生安裝後，它預設安裝一堆的 Namespace (在 OpenShift 稱作 Project，但在這邊可以視為一樣)，各自的 CPU / Memory / Storage 資源消耗多少，身為一位計算資源精算師，所以就有了下面這篇的紀錄</p>
+<p>本月無心力，無梗圖呈現</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20200828-kubectl-view-allocations.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-07-13 00:00:00">20200713</time></li>
         
           <li class="md-meta__item">
             in
             
               <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
         
         
       </ul>
@@ -1638,6 +1682,7 @@
           Continue reading
         </a>
       </nav>
+    
     
   </div>
 </article>
@@ -1664,6 +1709,7 @@
               <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
         
         
+        
       </ul>
       
     </div>
@@ -1681,46 +1727,6 @@
         </a>
       </nav>
     
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-28 00:00:00">20200528</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../../20200528-openshift-etcd-operator-1.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></h2>
-<p>打從 OpenShift 4 之後，etcd 的安裝變成是透過 <code>etcd-operator</code> 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄</p>
-<p><img alt="" src="/images/etcd-operator-overview.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20200528-openshift-etcd-operator-1.html">
-          Continue reading
-        </a>
-      </nav>
     
   </div>
 </article>
@@ -1732,7 +1738,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="9.html">9</a> <a class="md-pagination__link" href="10.html">10</a> <span class="md-pagination__current">11</span> <a class="md-pagination__link" href="12.html">12</a> <a class="md-pagination__link" href="13.html">13</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="18.html">18</a>
+  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="9.html">9</a> <a class="md-pagination__link" href="10.html">10</a> <span class="md-pagination__current">11</span> <a class="md-pagination__link" href="12.html">12</a> <a class="md-pagination__link" href="13.html">13</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="19.html">19</a>
 </nav>
         
       

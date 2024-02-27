@@ -28,7 +28,7 @@
         <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../feed_rss_updated.xml">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10+insiders-4.52.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11+insiders-4.53.0">
     
     
       
@@ -36,7 +36,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.fc8cf87c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.458d28d0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#red-hat-openshift-4-etcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#red-hat-openshift-pod-container" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         Red Hat OpenShift RBAC 最小權限實踐
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        當安裝完 Red Hat OpenShift 之後...
       
     </span>
   </a>
@@ -1610,12 +1610,56 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-05-28 00:00:00">20200528</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../../20200528-openshift-etcd-operator-1.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></h2>
+<p>打從 OpenShift 4 之後，etcd 的安裝變成是透過 <code>etcd-operator</code> 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄</p>
+<p><img alt="" src="/images/etcd-operator-overview.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20200528-openshift-etcd-operator-1.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-05-21 00:00:00">20200521</time></li>
         
           <li class="md-meta__item">
             in
             
               <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
+        
         
         
       </ul>
@@ -1638,6 +1682,7 @@
           Continue reading
         </a>
       </nav>
+    
     
   </div>
 </article>
@@ -1664,6 +1709,7 @@
               <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
         
         
+        
       </ul>
       
     </div>
@@ -1680,51 +1726,6 @@
         </a>
       </nav>
     
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-04-27 00:00:00">20200427</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift"><a class="toclink" href="../../20200427-openshift-with-coreos-part-5.html">當安裝完 Red Hat OpenShift 之後...</a></h2>
-<p>如果有朋友剛弄好 OpenShift 4 可能對於很多預設機制感到有點狐疑，這篇文章就是要來解釋，安裝完 OpenShift 4 後，最重要的小事 - 帳號權限認證 (Authentication)</p>
-<p>Red Hat OpenShift 的權限認證一如繼往都是採用角色型存取控制 (Role Based Access Control, RBAC)，這邊就要來準備開始務實一點的操作，本文先從簡單的把預設帳號置換開始做起</p>
-<p><img alt="" src="/images/rbac.png" /></p>
-<blockquote>
-<p>圖片出處: 【最終幻想7：重製版】4K電影剪輯版(後篇) - 零收集、電影式運鏡、完整劇情 - PS4 Pro增強模式 - Final Fantasy VII: REMAKE - 太空戰士7- Semenix出品</p>
-</blockquote>
-<p>話說大家也可以多多支持一下 <a href="https://www.youtube.com/watch?v=4CS9KvnVFs0">Semenix Gaming</a> -  大大的影片，我的圖片都是截他的頻道，錄的影片相當有水準，最近都在看它的影片當作自己有在打太七 Q_Q</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20200427-openshift-with-coreos-part-5.html">
-          Continue reading
-        </a>
-      </nav>
     
   </div>
 </article>
@@ -1736,7 +1737,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="10.html">10</a> <a class="md-pagination__link" href="11.html">11</a> <span class="md-pagination__current">12</span> <a class="md-pagination__link" href="13.html">13</a> <a class="md-pagination__link" href="14.html">14</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="18.html">18</a>
+  <a class="md-pagination__link" href="../url.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="10.html">10</a> <a class="md-pagination__link" href="11.html">11</a> <span class="md-pagination__current">12</span> <a class="md-pagination__link" href="13.html">13</a> <a class="md-pagination__link" href="14.html">14</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="19.html">19</a>
 </nav>
         
       
