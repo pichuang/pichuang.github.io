@@ -1735,6 +1735,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#q6-active-active-vpn-gateway-ecmp-equal-cost-multi-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6: Active-Active 狀態的 VPN Gateway 有沒有支援 ECMP (Equal Cost Multi-Path)?
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1971,7 +1982,9 @@
 <h3 id="q4-azure-vpn-gateway-2-public-ip-public-ip">Q4: Azure VPN Gateway 既然可以設定 2 個 Public IP，那適用於 Public IP 路由偏好嗎?</h3>
 <p>A4: 可以，但你需要於建立 VPN Gateway 之前先把 2 個 Public IP 先準備好，預設都是偏好 Microsoft 為主，讓使用者越快接到 Azure 網路越好</p>
 <h3 id="q5-azure-vpn-gateway-gatewaysubnet-azure-expressroute-gateway">Q5: 如果我有一個 Azure VPN Gateway 的話，已經使用了 GatewaySubnet，若後續需要再開一個 Azure ExpressRoute Gateway 的話，需要重新配網段嗎?</h3>
-<p>A5: 不用</p>
+<p>A5: 不用，預設都會把服務放在 GatewaySubnet 網段內</p>
+<h3 id="q6-active-active-vpn-gateway-ecmp-equal-cost-multi-path">Q6: Active-Active 狀態的 VPN Gateway 有沒有支援 ECMP (Equal Cost Multi-Path)?</h3>
+<p>A6: 有，僅限採用 BGP 模式，Static Route 是沒支援的，此外你地端設備無論是防火牆或 VPN 設備要自己處理非對稱路由 (Asymmetric Routing) 的問題，不然回來剛好走不同路，Firewall 沒特別設定的話會丟掉封包</p>
 <h2 id="_1">文後廢言</h2>
 <p>最近上工排時間，已經需要看農民曆選日子的階段了...如果搞其他服務我是覺得可以參考<code>營建類</code>，譬如說什麼安門、動土、上樑，豎井什麼的，但你如果是動網路的話，我最近的心得是要看<code>祭祀類</code>的，譬如說祈福、開光、普渡、祭祀之類的</p>
 <p>有些時候就是你準備 100 分，但總會有個你想都沒想過的事情發生</p>
