@@ -12,32 +12,32 @@
         <meta name="author" content="pichuang@cloudnative.tw (Phil Huang)">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/12/index.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/20240302-general-bgp-common-sense-in-azure-networking.html">
       
       
+        <link rel="prev" href="20240227-azure-firewall-policy-design.html">
       
-        <link rel="next" href="../author/url.html">
       
       
         
       
       
-        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../feed_rss_created.xml">
-        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../feed_rss_updated.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="feed_rss_updated.xml">
       
-      <link rel="icon" href="../favicon.ico">
+      <link rel="icon" href="favicon.ico">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11+insiders-4.53.0">
     
     
       
-        <title>Index - 魂系架構 Phil's Workspace</title>
+        <title>Azure Networking 之 BGP 普通常識 - 魂系架構 Phil's Workspace</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.458d28d0.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.458d28d0.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -58,7 +58,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -90,6 +90,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#azure-networking-bgp" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -102,7 +107,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="魂系架構 Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-header__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
@@ -122,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Azure Networking 之 BGP 普通常識
             
           </span>
         </div>
@@ -203,7 +208,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../index.html" class="md-tabs__link">
+        <a href="index.html" class="md-tabs__link">
           
   
     
@@ -223,7 +228,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../wiki/index.html" class="md-tabs__link">
+        <a href="wiki/index.html" class="md-tabs__link">
           
   
     
@@ -243,7 +248,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../azure-subnets.html" class="md-tabs__link">
+        <a href="azure-subnets.html" class="md-tabs__link">
           
   
     
@@ -263,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../about.html" class="md-tabs__link">
+        <a href="about.html" class="md-tabs__link">
           
   
     
@@ -293,7 +298,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -306,7 +313,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="魂系架構 Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
+    <a href="." title="魂系架構 Phil&#39;s Workspace" class="md-nav__button md-logo" aria-label="魂系架構 Phil's Workspace" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.97 5.92a.967.967 0 0 0-1.18-.68l-3.4.91-4.44-4.12-1.23.33 2.66 4.59-3.19.85-1.26-.98-.93.25 1.66 2.88 10.62-2.84c.52-.15.82-.68.69-1.19M21 10l-1 2h-5l-1-2 1-1h2V7h1v2h2l1 1m1 10v2H2v-2h13v-7h5v7h2Z"/></svg>
@@ -372,7 +379,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../index.html" class="md-nav__link ">
+            <a href="index.html" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -488,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2024.html" class="md-nav__link">
+      <a href="2024.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -517,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2023.html" class="md-nav__link">
+      <a href="2023.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -546,7 +553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2022.html" class="md-nav__link">
+      <a href="2022.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -575,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2021.html" class="md-nav__link">
+      <a href="2021.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -604,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2020.html" class="md-nav__link">
+      <a href="2020.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -633,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2019.html" class="md-nav__link">
+      <a href="2019.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -761,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ansible.html" class="md-nav__link">
+      <a href="ansible.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -790,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../automation.html" class="md-nav__link">
+      <a href="automation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -819,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../azure.html" class="md-nav__link">
+      <a href="azure.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -848,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cncf.html" class="md-nav__link">
+      <a href="cncf.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -877,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../container.html" class="md-nav__link">
+      <a href="container.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -906,7 +913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../homecloud.html" class="md-nav__link">
+      <a href="homecloud.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -935,7 +942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes.html" class="md-nav__link">
+      <a href="kubernetes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -964,7 +971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../linux.html" class="md-nav__link">
+      <a href="linux.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -993,7 +1000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../misc.html" class="md-nav__link">
+      <a href="misc.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1022,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../networking.html" class="md-nav__link">
+      <a href="networking.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1051,7 +1058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../o11y.html" class="md-nav__link">
+      <a href="o11y.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1080,7 +1087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openai.html" class="md-nav__link">
+      <a href="openai.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1109,7 +1116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../openshift.html" class="md-nav__link">
+      <a href="openshift.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1138,7 +1145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../personal.html" class="md-nav__link">
+      <a href="personal.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1167,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sla.html" class="md-nav__link">
+      <a href="sla.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1196,7 +1203,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sustainability.html" class="md-nav__link">
+      <a href="sustainability.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1294,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../author/url.html" class="md-nav__link">
+      <a href="author/url.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1360,7 +1367,7 @@
         
   
   
-    <a href="../wiki/index.html" class="md-nav__link">
+    <a href="wiki/index.html" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -1414,7 +1421,7 @@
         
   
   
-    <a href="../azure-subnets.html" class="md-nav__link">
+    <a href="azure-subnets.html" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -1470,7 +1477,7 @@
         
   
   
-    <a href="../about.html" class="md-nav__link">
+    <a href="about.html" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -1504,159 +1511,536 @@
             
           
           
-  <div class="md-content" data-md-component="content">
-    <div class="md-content__inner">
-      <header class="md-typeset">
-        
-      </header>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-29 00:00:00">20200529</time></li>
-        
-          <li class="md-meta__item">
-            in
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="index.html" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
             
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../20200529-openshift-etcd-operator-2.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</a></h2>
-<p>承襲上文 <a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a>，繼續針對硬碟的部分進行調整，畢竟 etcd 對<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">硬碟</a> IOPS 相當要求，建議用 SSD 比較好</p>
-<p>沒意外的，開場分享個 <a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a>，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說</p>
-<p>{% youtube PdyNQXpYknI %}</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20200529-openshift-etcd-operator-2.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-28 00:00:00">20200528</time></li>
-        
-          <li class="md-meta__item">
-            in
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://blog.pichuang.com.tw">Phil Huang</a>
+                        
+                      </strong>
+                      <br>
+                      Microsoft Senior Cloud Solution Architect | CNCF Ambassador
+                    </span>
+                  </div>
+                
+              </div>
             
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../20200528-openshift-etcd-operator-1.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></h2>
-<p>打從 OpenShift 4 之後，etcd 的安裝變成是透過 <code>etcd-operator</code> 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄</p>
-<p><img alt="" src="/images/etcd-operator-overview.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20200528-openshift-etcd-operator-1.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-21 00:00:00">20200521</time></li>
-        
-          <li class="md-meta__item">
-            in
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
+                        <time datetime="2024-03-03 00:00:00" class="md-ellipsis">20240303</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="azure.html">azure</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
             
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-pod-container"><a class="toclink" href="../20200521-openshift-with-coreos-part-7.html">Red Hat OpenShift Pod 與 Container 的愛恨情仇</a></h2>
-<p>這幾天有位客戶問了一個很不錯的問題</p>
-<blockquote>
-<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
-</blockquote>
-<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
-<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
-<p>{% youtube Kx110kqoHo0 %}</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20200521-openshift-with-coreos-part-7.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-      
-        
+          </nav>
           
+            
 
-
-
-<nav class="md-pagination">
-  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../10/index.html">10</a> <a class="md-pagination__link" href="../11/index.html">11</a> <span class="md-pagination__current">12</span> <a class="md-pagination__link" href="../13/index.html">13</a> <a class="md-pagination__link" href="../14/index.html">14</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/index.html">19</a>
-</nav>
-        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#azure-bgp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure 所保留的 BGP 號碼們
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#azure-asn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        詳細解析被 Azure 保留的 ASN 們
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="詳細解析被 Azure 保留的 ASN 們">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#as8075-asn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        關於 AS8075 - 你這一生都會遇到的 ASN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#as12076-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        關於 AS12076 - 就是條連向 Azure 的專線
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#as65515-azure-networking-private-asn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        關於 AS65515 - Azure Networking 架構設計上最重要的 Private ASN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#as65520-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        關於 AS65520 - 我其實也不知道為什麼文件沒解釋
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q&amp;A
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q&A">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-as65515-ibgp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: 那我可以把 AS65515 延伸到地端做 iBGP 嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-as12076-as65515" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: 如果我對 AS12076 和 AS65515 同一段路由，他會走哪一條?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-azure-vpn-gateway-2-public-ip-public-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: Azure VPN Gateway 既然可以設定 2 個 Public IP，那適用於 Public IP 路由偏好嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-azure-vpn-gateway-gatewaysubnet-azure-expressroute-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: 如果我有一個 Azure VPN Gateway 的話，已經使用了 GatewaySubnet，若後續需要再開一個 Azure ExpressRoute Gateway 的話，需要重新配網段嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文後廢言
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+          
+        </div>
+      </div>
     </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">vpn</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">azure</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="azure-networking-bgp">Azure Networking 之 BGP 普通常識</h1>
+<p>隨著雲地混合網路的需求提升，除了老招 Static Route 的招數依然可以用以外，為了讓整體路由管理變得比較像樣一點，過往可能多數人或公司很少接觸的 BGP 網路架構設計，從現在開始要把 BGP 這個動態路由協議當作是一般常識來看待了</p>
+<p><img alt="" src="/images/bgp-banner.png" /></p>
+<!--more-->
+
+<h2 id="azure-bgp">Azure 所保留的 BGP 號碼們</h2>
+<p>基於 <a href="https://www.iana.org/assignments/as-numbers/as-numbers.xhtml">IANA</a> 和 <a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-vpn-faq#what-asns-autonomous-system-numbers-can-i-use">Azure 保留 ASN</a>，下列整理出基於 16 bit 的預設以保留的 ASN 和其功用，建議在配 Private ASN 給地端設備時不要跟下面的 ASN 有所衝突，此外我這邊特別把 Microsoft 跟 Azure 特別拆開解釋，正確分類都是 Microsoft Corporation 才對，但為了辨識目的的不同，特此拆開</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Reserved by</th>
+<th style="text-align: center;">Public / Private</th>
+<th style="text-align: center;">ASN</th>
+<th style="text-align: left;">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Microsoft</td>
+<td style="text-align: center;">Public</td>
+<td style="text-align: center;">8074</td>
+<td style="text-align: left;">未公開用途</td>
+</tr>
+<tr>
+<td style="text-align: center;">Microsoft</td>
+<td style="text-align: center;">Public</td>
+<td style="text-align: center;"><mark>8075</mark></td>
+<td style="text-align: left;">Microsoft Global Network，<mark>你這一生都會用到他的</mark></td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Public</td>
+<td style="text-align: center;">12076</td>
+<td style="text-align: left;">預設給 ExpressRoute 使用．如果你接專線的話，才會遇到這個</td>
+</tr>
+<tr>
+<td style="text-align: center;">IANA</td>
+<td style="text-align: center;">Public</td>
+<td style="text-align: center;">23456</td>
+<td style="text-align: left;">基於 RFC6793，這個是給 AS_TRANS 之用的</td>
+</tr>
+<tr>
+<td style="text-align: center;">IANA</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">64496-64511</td>
+<td style="text-align: left;">基於 RFC5398，提供給撰寫文件和程式碼之用</td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;"><mark>65515</mark></td>
+<td style="text-align: left;"><mark>對網路團隊來說最重要的號碼</mark>，預設 Azure Private ASN，無論是 Azure Route Server / Azure vWAN / Azure VPN Gateway 建議都預設選擇他來使用</td>
+</tr>
+<tr>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65516</td>
+<td style="text-align: left;">雖然技術上地端可以用，但個人建議不要選這個，你看看上面再看看下面，沒必要擠這個</td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65517</td>
+<td style="text-align: left;">未公開用途，如果強制要用的話，部署服務會失敗</td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65518</td>
+<td style="text-align: left;">未公開用途，如果強制要用的話，部署服務會失敗</td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65519</td>
+<td style="text-align: left;">未公開用途，如果強制要用的話，部署服務會失敗</td>
+</tr>
+<tr>
+<td style="text-align: center;">Azure</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65520</td>
+<td style="text-align: left;">預設給 Azure vWAN 中的 vHub 交換路由用的</td>
+</tr>
+<tr>
+<td style="text-align: center;">IANA</td>
+<td style="text-align: center;">Private</td>
+<td style="text-align: center;">65535</td>
+<td style="text-align: left;">基於 RFC7300，保留最後一個 ASN</td>
+</tr>
+</tbody>
+</table>
+<p>此外 Azure VPN Gateway <a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-vpn-faq#can-i-use-32-bit-4-byte-asns">可以收 32-bit 的 ASN</a>，但 Microsoft 預設沒有針對這個進行保留，基於 RFC6996，你可以從 <code>4200000000-4294967294</code> 中間選擇私有 ASN 來使用</p>
+<h2 id="azure-asn">詳細解析被 Azure 保留的 ASN 們</h2>
+<h3 id="as8075-asn">關於 AS8075 - 你這一生都會遇到的 ASN</h3>
+<p><img alt="" src="/images/8075.png" /></p>
+<p>簡稱 <a href="https://learn.microsoft.com/en-us/azure/networking/microsoft-global-network">Microsoft Global Network</a>，舉凡你用 XBox Game Pass 連上網、Windows 要更新、或者是連線到 Azure Portal 都會走到這個 <code>AS8075</code>，至於路由的距離控制可以靠選擇 Public IP 中的路由偏好，詳細可以參考之前寫的簡報 <a href="https://speakerdeck.com/pichuang/20221220-azure-public-ip-lu-you-pian-hao-jiao-zhan-shou-ce-b5b41db7-39c8-4a11-8622-3305ddae93b2?slide=8">20221220 Azure Public IP 路由偏好教戰手冊</a></p>
+<p>這個範圍內的路由交換都算是在 Microsoft Backbone (MSBB) 的範疇內，所以你可以想像如果有服務放在 Azure 上對外，但是同時要跟其他 Azure 對外的服務溝通，就算走公網，他還是會在 <code>AS8075</code> 的範圍內，不會繞出去到別家的 IX，但因為 IP 範圍眾多，這邊 Azure 有特別做了一個 <a href="https://learn.microsoft.com/zh-tw/azure/virtual-network/service-tags-overview"><code>Service Tag</code></a> 機制讓你上防火牆設定或其他設定的時候比較好設定</p>
+<p><img alt="" src="/images/bgp-2.png" /></p>
+<p>如果像我是從別的地方連到 Azure 服務，如下圖，中間需要經過其他 IX (Internet eXchange) 才能到 <code>AS8075</code></p>
+<p><img alt="" src="/images/bgp-1.png" /></p>
+<h3 id="as12076-azure">關於 AS12076 - 就是條連向 Azure 的專線</h3>
+<p>這個號碼只有你在要開始接往 Microsoft 的專線，也就是 Azure ExpressRoute 的時候才會出現，之前其實我也有一篇文章在專門講 ExpressRoute，可參考 <a href="https://blog.pichuang.com.tw/20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></p>
+<p>基於強者 <a href="https://www.linkedin.com/posts/toni-pasanen-a303a16_azure-networking-activity-6966335056906735616-02Tc/?originalSubdomain=tw#">Toni Pasanen</a> 大大的圖，我改成台灣比較常見的架構</p>
+<p><img alt="" src="/images/12076.png" /></p>
+<p>有趣的事情是 12076 Peering 的點是在 MSEE 身上，而不是在 ExpressRoute Gateway 身上，意思是就算你沒有把 ExpressRoute Gateway 開起來，你還是能把 12076 跟你的地端設備做 BGP Peering</p>
+<p>此外這條線若規格有到的狀況下，也可以讓 Microsoft 365 和 Dynamic 365 的服務可以走專線跟地端連線，而不是走 AS8075 出去</p>
+<h3 id="as65515-azure-networking-private-asn">關於 AS65515 - Azure Networking 架構設計上最重要的 Private ASN</h3>
+<p><img alt="" src="/images/65515.png" /></p>
+<p><code>AS65515</code> 在 Azure 來說是一個相當重要的 ASN，反舉 Azure Route Server、Azure vWAN 預設都會使用到這個數字，雖然 Azure VPN Gateway 可以自行修改成想要的 Private ASN，但我個人強烈建議如果沒有特別需求，請一率使用 AS65515 當成預設 Private ASN</p>
+<p>這張圖算是常遇到的網路架構，譬如說家裡只有一個 PPPoE 只能綁 Static IP 或者是外地 Branch Office 只有 1 個 WAN IP 可用皆適用此圖，如果有 2 個 WAN Port 對上不同 ISP 的話，就是別張架構圖，但大體上大同小異</p>
+<p>這邊有個有趣的地方，這圖是採用 Active-Active Mode 的 VPN Gateway 和啟用 BGP 狀態，如果你採用 Loopback 介面作為 BGP Peer Update Source 的話，其實就算 IPSec Tunnel 有 2 條可以走，你還是可以用 Static Route 來控制 BGP Peering 的路徑，以上圖來看最多可以打 4 條 Static Route 上去確保任一條 IPSec Tunnel 線路斷掉的時候，BGP Peering 還是可以迅速恢復成 Establish 狀態，實測過的確蠻有效果的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: center;">VPN GW Insntace</th>
+<th style="text-align: center;">Destination</th>
+<th style="text-align: center;">Interface</th>
+<th style="text-align: left;">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">IN_0</td>
+<td style="text-align: center;">10.0.0.4/32</td>
+<td style="text-align: center;">VTI 1</td>
+<td style="text-align: left;">常見連線路線</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">IN_1</td>
+<td style="text-align: center;">10.0.0.5/32</td>
+<td style="text-align: center;">VTI 2</td>
+<td style="text-align: left;">常見連線路線</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">IN_0</td>
+<td style="text-align: center;">10.0.0.4/32</td>
+<td style="text-align: center;">VTI 2</td>
+<td style="text-align: left;">可走 IPSec Tunnel 2 連線到 IN_0 而不是 IN_1</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">IN_1</td>
+<td style="text-align: center;">10.0.0.5/32</td>
+<td style="text-align: center;">VTI 1</td>
+<td style="text-align: left;">可走 IPSec Tunnel 1 連線到 IN_1 而不是 IN_0</td>
+</tr>
+</tbody>
+</table>
+<p>下表是地端設備 BGP Summary 的長相</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>VRF<span class="w"> </span><span class="m">0</span><span class="w"> </span>BGP<span class="w"> </span>router<span class="w"> </span>identifier<span class="w"> </span>Y.Y.Y.Y,<span class="w"> </span><span class="nb">local</span><span class="w"> </span>AS<span class="w"> </span>number<span class="w"> </span><span class="m">64500</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>BGP<span class="w"> </span>table<span class="w"> </span>version<span class="w"> </span>is<span class="w"> </span><span class="m">132</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="m">2</span><span class="w"> </span>BGP<span class="w"> </span>AS-PATH<span class="w"> </span>entries
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="m">0</span><span class="w"> </span>BGP<span class="w"> </span>community<span class="w"> </span>entries
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Neighbor<span class="w">    </span>V<span class="w">         </span>AS<span class="w"> </span>MsgRcvd<span class="w"> </span>MsgSent<span class="w">   </span>TblVer<span class="w">  </span>InQ<span class="w"> </span>OutQ<span class="w"> </span>Up/Down<span class="w">  </span>State/PfxRcd
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="m">10</span>.0.0.4<span class="w">    </span><span class="m">4</span><span class="w">      </span><span class="m">65515</span><span class="w">   </span><span class="m">32816</span><span class="w">   </span><span class="m">32873</span><span class="w">      </span><span class="m">131</span><span class="w">    </span><span class="m">0</span><span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="m">03</span>:40:13<span class="w">        </span><span class="m">5</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="m">10</span>.0.0.5<span class="w">    </span><span class="m">4</span><span class="w">      </span><span class="m">65515</span><span class="w">   </span><span class="m">26617</span><span class="w">   </span><span class="m">26697</span><span class="w">      </span><span class="m">130</span><span class="w">    </span><span class="m">0</span><span class="w">    </span><span class="m">0</span><span class="w"> </span>1d20h26m<span class="w">        </span><span class="m">5</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Total<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>neighbors<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+<h3 id="as65520-">關於 AS65520 - 我其實也不知道為什麼文件沒解釋</h3>
+<p><img alt="" src="/images/65520.png" /></p>
+<p>雖然文件沒寫，這個號碼只會出現在你用 vWAN 然後有 vHub to vHub 的時候才會在路由表上面跳出來 AS65520 這個號碼，大體上你也沒辦法控制他，這邊只是解釋一下有它的存在，看路由表的時候才不會覺得被 BGP Hijacking 了</p>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="q1-tldr">Q1: TL;DR</h3>
+<p>A1: 反正記得選擇 <code>65515</code> 當作你在雲端的 Private ASN 就對了</p>
+<h3 id="q2-as65515-ibgp">Q2: 那我可以把 AS65515 延伸到地端做 iBGP 嗎?</h3>
+<p>A2: 不行，部署服務會失敗</p>
+<h3 id="q3-as12076-as65515">Q3: 如果我對 AS12076 和 AS65515 同一段路由，他會走哪一條?</h3>
+<p>A3: 這個問題比較複雜，扯到路由最佳化的選擇，之後再來寫文章解釋</p>
+<h3 id="q4-azure-vpn-gateway-2-public-ip-public-ip">Q4: Azure VPN Gateway 既然可以設定 2 個 Public IP，那適用於 Public IP 路由偏好嗎?</h3>
+<p>A4: 可以，但你需要於建立 VPN Gateway 之前先把 2 個 Public IP 先準備好，預設都是偏好 Microsoft 為主，讓使用者越快接到 Azure 網路越好</p>
+<h3 id="q5-azure-vpn-gateway-gatewaysubnet-azure-expressroute-gateway">Q5: 如果我有一個 Azure VPN Gateway 的話，已經使用了 GatewaySubnet，若後續需要再開一個 Azure ExpressRoute Gateway 的話，需要重新配網段嗎?</h3>
+<p>A5: 不用</p>
+<h2 id="_1">文後廢言</h2>
+<p>最近上工排時間，已經需要看農民曆選日子的階段了...如果搞其他服務我是覺得可以參考<code>營建類</code>，譬如說什麼安門、動土、上樑，豎井什麼的，但你如果是動網路的話，我最近的心得是要看<code>祭祀類</code>的，譬如說祈福、開光、普渡、祭祀之類的</p>
+<p>有些時候就是你準備 100 分，但總會有個你想都沒想過的事情發生</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+  <h2 id="__comments">Comments</h2>
+    <script src="https://giscus.app/client.js"
+    data-repo="pichuang/pichuang.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnk3NzkzNTgwNw=="
+    data-category="General"
+    data-category-id="DIC_kwDOBKU0v84CT0Z2"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-TW"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
   </div>
 
           
@@ -1742,10 +2126,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "../assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["announce.dismiss", "content.code.copy", "content.code.annotate", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.sections", "navigation.indexes", "navigation.expand", "navigation.prune", "navigation.top", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "header.autohide"], "search": "assets/javascripts/workers/search.1e90e0fb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.82b033e4.min.js"></script>
+      <script src="assets/javascripts/bundle.82b033e4.min.js"></script>
       
     
   </body>

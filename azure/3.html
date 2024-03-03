@@ -12,11 +12,13 @@
         <meta name="author" content="pichuang@cloudnative.tw (Phil Huang)">
       
       
-        <link rel="canonical" href="https://blog.pichuang.com.tw/12/index.html">
+        <link rel="canonical" href="https://blog.pichuang.com.tw/azure/3.html">
       
       
+        <link rel="prev" href="../automation.html">
       
-        <link rel="next" href="../author/url.html">
+      
+        <link rel="next" href="../cncf.html">
       
       
         
@@ -30,7 +32,7 @@
     
     
       
-        <title>Index - 魂系架構 Phil's Workspace</title>
+        <title>azure - 魂系架構 Phil's Workspace</title>
       
     
     
@@ -90,6 +92,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#azure" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -122,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              azure
             
           </span>
         </div>
@@ -665,8 +672,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -715,13 +724,11 @@
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" checked>
         
           
           <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
@@ -741,7 +748,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -816,10 +823,36 @@
   
   
     
+      
+    
   
   
     <li class="md-nav__item">
-      <a href="../azure.html" class="md-nav__link">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    
+  
+    azure
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="../azure.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -834,6 +867,37 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#azure-expressroute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1507,7 +1571,7 @@
   <div class="md-content" data-md-component="content">
     <div class="md-content__inner">
       <header class="md-typeset">
-        
+        <h1 id="azure">azure</h1>
       </header>
       
         <article class="md-post md-post--excerpt">
@@ -1524,12 +1588,12 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
-          <time datetime="2020-05-29 00:00:00">20200529</time></li>
+          <time datetime="2023-02-02 00:00:00">20230202</time></li>
         
           <li class="md-meta__item">
             in
             
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
+              <a href="../azure.html" class="md-meta__link">azure</a></li>
         
         
         
@@ -1538,105 +1602,14 @@
     </div>
   </header>
   <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../20200529-openshift-etcd-operator-2.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之二</a></h2>
-<p>承襲上文 <a href="https://blog.pichuang.com.tw/20200528-openshift-etcd-operator-1/">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a>，繼續針對硬碟的部分進行調整，畢竟 etcd 對<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/hardware.md#disks">硬碟</a> IOPS 相當要求，建議用 SSD 比較好</p>
-<p>沒意外的，開場分享個 <a href="https://www.openshift.com/blog/deploying-openshift-4.4-to-vmware-vsphere-7">Deploying OpenShift 4.4 to VMware vSphere 7</a>，整體上比較重要的是利用 VMware vSphere 7 裡面的 DRS (Dynamic Resource Scheduler) 及 NSX-T 的部分，之後有機會再說</p>
-<p>{% youtube PdyNQXpYknI %}</p>
+    <h2 id="azure-expressroute"><a class="toclink" href="../20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></h2>
+<p>最近打工打到雲端來了，目前順利活過了 6 個月，我只能說根本天天看網路架構議題，如果你是純雲端直接使用的，完全不需要跟地端網路接再一起的，你是不會有我這種煩惱，但如果你跟我一樣看混合網路架構 (備註:是地端+雲端，不是雲端+雲端) 的話，估計你應該跟我一樣都在滑鼠點點，開服務，對流量</p>
+<p>分享一下當初開始看 Azure Networking 的第一篇文章就是出至於 <a href="https://purple.telstra.com.au/blog/hub-and-spoke-network-topology-in-azure">Telstra Purple - Hub and Spoke network topology in Azure</a>，到現在為止，若是要用 Azure 做跨國網路架構參考性還是非常高的</p>
+<p><img alt="" src="https://blog.kloud.com.au/wp-content/uploads/2020/03/0103.hub_.and_.spoke_.lucian.example.v1.png" /></p>
 
     
       <nav class="md-post__action">
-        <a href="../20200529-openshift-etcd-operator-2.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-28 00:00:00">20200528</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-4-etcd"><a class="toclink" href="../20200528-openshift-etcd-operator-1.html">Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一</a></h2>
-<p>打從 OpenShift 4 之後，etcd 的安裝變成是透過 <code>etcd-operator</code> 來進行安裝的，預設狀況下一次會建立 3 個 etcd instances，然後把他們弄成一個 etcd cluster，本文會記錄一些關於 OpenShift 跟 etcd 之間的一些操作記錄</p>
-<p><img alt="" src="/images/etcd-operator-overview.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20200528-openshift-etcd-operator-1.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-21 00:00:00">20200521</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-pod-container"><a class="toclink" href="../20200521-openshift-with-coreos-part-7.html">Red Hat OpenShift Pod 與 Container 的愛恨情仇</a></h2>
-<p>這幾天有位客戶問了一個很不錯的問題</p>
-<blockquote>
-<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
-</blockquote>
-<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
-<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
-<p>{% youtube Kx110kqoHo0 %}</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20200521-openshift-with-coreos-part-7.html">
+        <a href="../20230202-azure-expressroute-cross-region.html">
           Continue reading
         </a>
       </nav>
@@ -1652,7 +1625,7 @@
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../index.html">1</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../10/index.html">10</a> <a class="md-pagination__link" href="../11/index.html">11</a> <span class="md-pagination__current">12</span> <a class="md-pagination__link" href="../13/index.html">13</a> <a class="md-pagination__link" href="../14/index.html">14</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="../19/index.html">19</a>
+  <a class="md-pagination__link" href="../azure.html">1</a> <a class="md-pagination__link" href="2.html">2</a> <span class="md-pagination__current">3</span>
 </nav>
         
       

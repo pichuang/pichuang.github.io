@@ -1524,6 +1524,53 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2021-11-29 00:00:00">20211129</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="kubernetes"><a class="toclink" href="../20211129-kubernetes-service-troubleshoot.html">為什麼我佈署的 Kubernetes 服務不會動!? 個人除錯思路分享</a></h2>
+<p>某週，下班前臨時被 S 學姊抓去看了一個 Kubernetes 服務為何不會正常作動，故身為學弟的我出了篇技術文希望記錄一下相關除錯思路給各位參考</p>
+<blockquote>
+<p>友人 A：覺得比搞 Kubernetes 還難的事情，大概就是談戀愛這件事了
+友人 B：Kubernetes 起碼跟他告白 (a.k.a. 聲明式宣告, Declarative)，它會最大滿足你期望狀態 (Desired State)，但跟妹子告白可能會被抓去警察局，順便送你一張跟騷法
+友人 C：這樣想想 Kubernetes 好像還比較和藹可親</p>
+</blockquote>
+
+    
+      <nav class="md-post__action">
+        <a href="../20211129-kubernetes-service-troubleshoot.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2021-11-12 00:00:00">20211112</time></li>
         
           <li class="md-meta__item">
@@ -1592,50 +1639,6 @@
     
       <nav class="md-post__action">
         <a href="../20201231-2020-personal-review.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-10-09 00:00:00">20201009</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="kubernetes-api"><a class="toclink" href="../20201009-kubernetes-api-communication.html">Kubernetes API 服務及跟各組件的交互關係</a></h2>
-<p>前陣子客戶那邊有個問題需要先了解 Kubernetes 從部署 Deployment 到實際上跟這些主要組件溝通的流程，不然很難進行 Troubleshooting (a.k.a. 觀落陰)。幸好本次研究有 3 位大大的一起參與 Max、地瓜、喜德，最終找到了一個跟現象毫無關係的根本問題 =_=，但因為過程算蠻難得的，特別記錄下來給大家參考參考</p>
-<p>照例講個雜事，Red Hat OpenShift 4.6 (等同 Kubernetes 1.19) 要出啦！這是一個可以一路用到 <code>2022 年 3 月</code> 的版本，各位 Infra 不用在為了更新和升級落淚了 Q_Q，有興趣者可以參考 <a href="https://speakerdeck.com/redhatopenshift/whats-new-in-openshift-container-platform-4-dot-6">What's New in OpenShift Container Platform 4.6</a></p>
-<p><img alt="" src="/images/ocp4-6-eus.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20201009-kubernetes-api-communication.html">
           Continue reading
         </a>
       </nav>

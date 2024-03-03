@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#testinfra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        運用 Testinfra 來確保網路連通性測試
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#iac" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         看 OpenAI 使用鈔能力招喚 Kubernetes 7500 台節點!!!
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#azure-vm" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        讓 Azure VM 對外連線的多種花樣
       
     </span>
   </a>
@@ -1610,6 +1610,49 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-03-06 00:00:00">20230306</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../networking.html" class="md-meta__link">networking</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="testinfra"><a class="toclink" href="../../20230306-tdd-for-network-connectivity.html">運用 Testinfra 來確保網路連通性測試</a></h2>
+<p><img alt="Testinfra test your infrastructure" src="https://testinfra.readthedocs.io/en/latest/_static/logo.svg" /></p>
+<p>起源是因為做 Azure 網路架構設計，網路線拉完 (ExpressRoute、S2S VPN、VNet Peering 等) 之後，下一個需求多半都是要把 Firewall 開起來，希望所有的連線都要經過 Azure Firewall 確保連線安全性，但基於 Azure Networking 本身的特性和使用者的對於網路連通 (Network Connectivity) 的需求，身為一名記憶力不算特好的架構師，為了確保使用者講的跟實際上運作的結果是一樣的，這時候就要把早年在 Edgecore Network 時期講過的 <a href="https://speakerdeck.com/pichuang/netdevops-next-generation-network-engineer?slide=27">NetDevOps: Next-Generation Network Engineer</a> 拿來用用了</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20230306-tdd-for-network-connectivity.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-03-01 00:00:00">20230301</time></li>
         
           <li class="md-meta__item">
@@ -1684,50 +1727,6 @@
     
       <nav class="md-post__action">
         <a href="../../20230214-openai-scaling-kubernetes-to-7500-nodes.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-10 00:00:00">20230210</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../azure.html" class="md-meta__link">azure</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-vm"><a class="toclink" href="../../20230209-azure-vm-outbound-methods.html">讓 Azure VM 對外連線的多種花樣</a></h2>
-<p>或許有些讀者知道小弟以前是專搞地端 Infra 服務的架構師，興趣就是專門看 Networking 和他相關連的服務，最近來到雲端之後，只能說雖然看起來都是一台 VM 連線出去到 Internet，但實際上眉角還蠻多的...倒是如果你是地端網路工程師的話，剛接觸 Azure 網路的話，蠻推薦基礎先從 <a href="https://learn.microsoft.com/en-us/training/paths/design-implement-microsoft-azure-networking-solutions-az-700/">AZ-700 Designing and Implementing Microsoft Azure Networking Solutions</a> 開始著手，保證你可以研究很久</p>
-<p>另外要特別感恩國外的大神 Toni Pasanen 寫了一堆文章讓我更清楚瞭解 Azure Networking 架構 <a href="https://nwktimes.blogspot.com/2023/01/Azure-Inet-Access.html">Toni Pasanen - Azure Networking Fundamentals: Internet Access with VM-Specific Public IP</a> 一圖解釋 Azure VM 對外網路連線方式，強烈推薦給大家</p>
-<p><img alt="" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPrrkanlUV66RmLukg_zajo1HRz2Mwtq108uPdWZ_uamYqWXmaoWdt1SSOKkH_jH036LzkpeaDklfeBJmBb3DQeBixjAOI35TV3AYD_iDEjpa7To2LDIXZmiaqiZLdgZJGcOL1S6-AvhfyT4EBuYtkS4_xN_pXdqMJ6VyJPgTg0ok7tbPOL2pYk3m_/w640-h310/1-new.jpg" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20230209-azure-vm-outbound-methods.html">
           Continue reading
         </a>
       </nav>

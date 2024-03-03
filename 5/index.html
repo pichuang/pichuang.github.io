@@ -1524,6 +1524,49 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-06-29 00:00:00">20230629</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../container.html" class="md-meta__link">container</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="debian-ubuntu"><a class="toclink" href="../20230629-debian-or-ubuntu.html">容器基礎映像檔要選 Debian 還是 Ubuntu?</a></h2>
+<p>來問問大家一個問題，以 Container Base Images 來說，以 Deb 體系來看，你覺得 Debian 比較安全還是 Ubuntu 比較安全?</p>
+<p><img alt="" src="/images/debian-distroless-ubuntu.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../20230629-debian-or-ubuntu.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-05-29 00:00:00">20230529</time></li>
         
           <li class="md-meta__item">
@@ -1589,58 +1632,6 @@
     
       <nav class="md-post__action">
         <a href="../20230515-deepdive-sig-scalability.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-04-17 00:00:00">20230417</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../sla.html" class="md-meta__link">sla</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="composite-slas"><a class="toclink" href="../20230417-composite-sla.html">計算出正確的服務水平協議：探索 Composite SLAs 計算和架構設計</a></h2>
-<p>最近這幾周收到幾個想要做 SLA 99.999% 的案子，因涉及的服務眾多，所以故針對如何合理計算 SLA 和其架構設計先做一個紀錄，但這邊並不涉及資料最終一致性和對外網路的設計討論</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/3pSue9nm3Bg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-<h3 id="tldr"><a class="toclink" href="../20230417-composite-sla.html#tldr">TL;DR</a></h3>
-<ol>
-<li>相比單一服務 SLA 計算，複合 SLA (Composite SLA) 是更為合理的計算方式</li>
-<li>複合 SLA (Composite SLA) 會隨認列範圍不同而有所變化，就算是同一張架構圖</li>
-<li>若相依性服務越多，因可能失敗發生點多，則複合 SLA 會必然低於單一服務 SLA</li>
-<li>單區域架構提供多個備援作法可小幅提升整體 SLA</li>
-<li>多區域架構設計可以大幅提升整體 SLA，至少 2 個區域，至多 3 個區域</li>
-</ol>
-
-    
-      <nav class="md-post__action">
-        <a href="../20230417-composite-sla.html">
           Continue reading
         </a>
       </nav>

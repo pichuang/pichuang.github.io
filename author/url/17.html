@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2019-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2019-4-pfsense" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         2019 大改造宅宅雲架構系列文-2 宅宅雲硬體介紹
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2019-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2019 大改造宅宅雲架構系列文-1 總綱及裝備清單
       
     </span>
   </a>
@@ -1624,6 +1624,52 @@
     </div>
   </header>
   <div class="md-post__content md-typeset">
+    <h2 id="2019-3"><a class="toclink" href="../../20191116-homelcloud-high-level-design-3.html">2019 大改造宅宅雲架構系列文-3 宅宅雲網路架構設計</a></h2>
+<p>2019 大改造宅宅雲系列文來到第 3 篇，有興趣想看前面兩篇的可以參考：
+1. <a href="https://blog.pichuang.com.tw/20191114-homelcloud-high-level-design-1/">2019 大改造宅宅雲架構系列文-1</a>：介紹大多數用錢包君威力扛回家的硬體設備和架構設計總體目標
+2. <a href="https://blog.pichuang.com.tw/20191115-homelcloud-high-level-design-2/">2019 大改造宅宅雲架構系列文-2</a>：介紹宅宅雲塔式伺服器硬體裝備</p>
+<p>而第三篇要來承續第二篇，講一下關於下圖藍色區塊 vcenter.phil.lab 那塊虛擬網路我個人是怎麼設計的</p>
+<p><img alt="" src="/images/homecloud-1.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20191116-homelcloud-high-level-design-3.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2019-11-16 00:00:00">20191116</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../homecloud.html" class="md-meta__link">homecloud</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
     <h2 id="2019-4-pfsense"><a class="toclink" href="../../20191116-homelcloud-high-level-design-4.html">2019 大改造宅宅雲架構系列文-4 pfSense</a></h2>
 <p>先前工作太忙、失戀打擊過大，以致懷疑人生，導致有陣子沒寫文章，最近 Red Hat 贊助小弟來魚尾獅王國上課，趁空擋把長久以來用的一些技術經驗寫下來分享給大家，<a href="https://blog.pichuang.com.tw/categories/infra/">2019 大改造宅宅雲架構系列文 快速傳送門</a>，歡迎大家把自己 HomeLab/HomeCloud 的經驗分享出來蕉流蕉流</p>
 <p><img alt="" src="/images/pfsense-logo.png" /></p>
@@ -1674,49 +1720,6 @@
     
       <nav class="md-post__action">
         <a href="../../20191115-homelcloud-high-level-design-2.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2019-11-14 00:00:00">20191114</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../homecloud.html" class="md-meta__link">homecloud</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="2019-1"><a class="toclink" href="../../20191114-homelcloud-high-level-design-1.html">2019 大改造宅宅雲架構系列文-1 總綱及裝備清單</a></h2>
-<p>最近這兩三年發現技術越變越快，而且還越變越多，等著別人給我資源學習，不如還是靠自己準備資源來做一些 Lab 性質的測試，但台北花費真的是太高了，薪水不太夠付電費，所以為了節省電費救救錢包君，所以把整個家裡的宅宅雲改造了一下。</p>
-<p>本系列文還蠻適合想要嘗試在家裡土砲基礎架構做一些奇怪測試的人交流，雖然我覺得應該蠻多人都知道相關的技術了，只是整合在一起的樣子可能不是很多人看過，反正就當心路歷程看看吧。</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20191114-homelcloud-high-level-design-1.html">
           Continue reading
         </a>
       </nav>
