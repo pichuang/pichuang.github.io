@@ -1900,7 +1900,7 @@
 <h2 id="azure-asn">詳細解析被 Azure 保留的 ASN 們</h2>
 <h3 id="as8075-asn">關於 AS8075 - 你這一生都會遇到的 ASN</h3>
 <p><img alt="" src="/images/8075.png" /></p>
-<p>簡稱 <a href="https://learn.microsoft.com/en-us/azure/networking/microsoft-global-network">Microsoft Global Network</a>，舉凡你用 XBox Game Pass 連上網、Windows 要更新、或者是連線到 Azure Portal 都會走到這個 <code>AS8075</code>，至於路由的距離控制可以靠選擇 Public IP 中的路由偏好，詳細可以參考之前寫的簡報 <a href="https://speakerdeck.com/pichuang/20221220-azure-public-ip-lu-you-pian-hao-jiao-zhan-shou-ce-b5b41db7-39c8-4a11-8622-3305ddae93b2?slide=8">20221220 Azure Public IP 路由偏好教戰手冊</a></p>
+<p>簡稱 <a href="https://learn.microsoft.com/en-us/azure/networking/microsoft-global-network">Microsoft Global Network</a>，舉凡你用 XBox Game Pass 連上網、Windows 要更新、或者是連線到 Azure Portal 都會走到這個 <code>AS8075</code>，至於路由的距離控制可以靠選擇 Public IP 中的路由偏好，詳細可以參考之前寫的簡報 <a href="https://speakerdeck.com/pichuang/20221220-azure-public-ip-lu-you-pian-hao-jiao-zhan-shou-ce-b5b41db7-39c8-4a11-8622-3305ddae93b2">20221220 Azure Public IP 路由偏好教戰手冊</a></p>
 <p>這個範圍內的路由交換都算是在 Microsoft Backbone (MSBB) 的範疇內，所以你可以想像如果有服務放在 Azure 上對外，但是同時要跟其他 Azure 對外的服務溝通，就算走公網，他還是會在 <code>AS8075</code> 的範圍內，不會繞出去到別家的 IX，但因為 IP 範圍眾多，這邊 Azure 有特別做了一個 <a href="https://learn.microsoft.com/zh-tw/azure/virtual-network/service-tags-overview"><code>Service Tag</code></a> 機制讓你上防火牆設定或其他設定的時候比較好設定</p>
 <p><img alt="" src="/images/bgp-2.png" /></p>
 <p>如果像我是從別的地方連到 Azure 服務，如下圖，中間需要經過其他 IX (Internet eXchange) 才能到 <code>AS8075</code></p>
