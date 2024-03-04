@@ -1899,7 +1899,7 @@
 <p>此外 Azure VPN Gateway <a href="https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-vpn-faq#can-i-use-32-bit-4-byte-asns">可以收 32-bit 的 ASN</a>，但 Microsoft 預設沒有針對這個進行保留，基於 RFC6996，你可以從 <code>4200000000-4294967294</code> 中間選擇私有 ASN 來使用</p>
 <h2 id="azure-asn">詳細解析被 Azure 保留的 ASN 們</h2>
 <h3 id="as8075-asn">關於 AS8075 - 你這一生都會遇到的 ASN</h3>
-<p><img alt="" src="/images/8075.png" /></p>
+<p><img alt="" src="/images/8075-1.png" /></p>
 <p>簡稱 <a href="https://learn.microsoft.com/en-us/azure/networking/microsoft-global-network">Microsoft Global Network</a>，舉凡你用 XBox Game Pass 連上網、Windows 要更新、或者是連線到 Azure Portal 都會走到這個 <code>AS8075</code>，至於路由的距離控制可以靠選擇 Public IP 中的路由偏好，詳細可以參考之前寫的簡報 <a href="https://speakerdeck.com/pichuang/20221220-azure-public-ip-lu-you-pian-hao-jiao-zhan-shou-ce-b5b41db7-39c8-4a11-8622-3305ddae93b2">20221220 Azure Public IP 路由偏好教戰手冊</a></p>
 <p>這個範圍內的路由交換都算是在 Microsoft Backbone (MSBB) 的範疇內，所以你可以想像如果有服務放在 Azure 上對外，但是同時要跟其他 Azure 對外的服務溝通，就算走公網，他還是會在 <code>AS8075</code> 的範圍內，不會繞出去到別家的 IX，但因為 IP 範圍眾多，這邊 Azure 有特別做了一個 <a href="https://learn.microsoft.com/zh-tw/azure/virtual-network/service-tags-overview"><code>Service Tag</code></a> 機制讓你上防火牆設定或其他設定的時候比較好設定</p>
 <p><img alt="" src="/images/bgp-2.png" /></p>
@@ -1908,11 +1908,11 @@
 <h3 id="as12076-azure">關於 AS12076 - 就是條連向 Azure 的專線</h3>
 <p>這個號碼只有你在要開始接往 Microsoft 的專線，也就是 Azure ExpressRoute 的時候才會出現，之前其實我也有一篇文章在專門講 ExpressRoute，可參考 <a href="https://blog.pichuang.com.tw/20230202-azure-expressroute-cross-region.html">滑鼠點點(?)之跨國 Azure ExpressRoute 網路架構</a></p>
 <p>基於強者 <a href="https://www.linkedin.com/posts/toni-pasanen-a303a16_azure-networking-activity-6966335056906735616-02Tc/?originalSubdomain=tw#">Toni Pasanen</a> 大大的圖，我改成台灣比較常見的架構</p>
-<p><img alt="" src="/images/12076.png" /></p>
+<p><img alt="" src="/images/12076-1.png" /></p>
 <p>有趣的事情是 12076 Peering 的點是在 MSEE 身上，而不是在 ExpressRoute Gateway 身上，意思是就算你沒有把 ExpressRoute Gateway 開起來，你還是能把 12076 跟你的地端設備做 BGP Peering</p>
 <p>此外這條線若規格有到的狀況下，也可以讓 Microsoft 365 和 Dynamic 365 的服務可以走專線跟地端連線，而不是走 AS8075 出去</p>
 <h3 id="as65515-azure-networking-private-asn">關於 AS65515 - Azure Networking 架構設計上最重要的 Private ASN</h3>
-<p><img alt="" src="/images/65515.png" /></p>
+<p><img alt="" src="/images/65515-1.png" /></p>
 <p><code>AS65515</code> 在 Azure 來說是一個相當重要的 ASN，反舉 Azure Route Server、Azure vWAN 預設都會使用到這個數字，雖然 Azure VPN Gateway 可以自行修改成想要的 Private ASN，但我個人強烈建議如果沒有特別需求，請一率使用 AS65515 當成預設 Private ASN</p>
 <p>這張圖算是常遇到的網路架構，譬如說家裡只有一個 PPPoE 只能綁 Static IP 或者是外地 Branch Office 只有 1 個 WAN IP 可用皆適用此圖，如果有 2 個 WAN Port 對上不同 ISP 的話，就是別張架構圖，但大體上大同小異</p>
 <p>這邊有個有趣的地方，這圖是採用 Active-Active Mode 的 VPN Gateway 和啟用 BGP 狀態，如果你採用 Loopback 介面作為 BGP Peer Update Source 的話，其實就算 IPSec Tunnel 有 2 條可以走，你還是可以用 Static Route 來控制 BGP Peering 的路徑，以上圖來看最多可以打 4 條 Static Route 上去確保任一條 IPSec Tunnel 線路斷掉的時候，BGP Peering 還是可以迅速恢復成 Establish 狀態，實測過的確蠻有效果的</p>
