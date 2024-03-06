@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aztfexport-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aztfexport - 從既有環境導出 Azure 資源狀態
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#k8sgpt-cncf-sandbox-project" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         上班時間不夠用之 [A]nsible 加上 [A]zure
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#azure-kubernetes-services-c1000k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        揪竟...Azure Kubernetes Services 的節點能不能提供 C1000K 的能力呢?
       
     </span>
   </a>
@@ -1610,6 +1610,53 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2024-01-27 00:00:00">20240127</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../azure.html" class="md-meta__link">azure</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="aztfexport-azure"><a class="toclink" href="../../20240127-azure-aztfexport.html">aztfexport - 從既有環境導出 Azure 資源狀態</a></h2>
+<blockquote>
+<p>A tool to bring existing Azure resources under Terraform's management</p>
+</blockquote>
+<p>因為這個 <a href="https://azure.github.io/aztfexport/#1">Microsoft Azure Export for Terraform</a> 小工具是以 <code>Resource Group</code> 為最大範圍而 <code>Resource</code> 為最小範圍 Export，而不是以 <code>Subscription</code>，所以在用的時候要先切換到對應的 <code>Subscription</code></p>
+<p>微軟官網文件有專門的頁面在介紹怎麼用 <a href="https://learn.microsoft.com/zh-tw/azure/developer/terraform/azure-export-for-terraform/export-terraform-overview">Microsoft Learn - 適用於 Terraform 的 Azure 導出概觀</a></p>
+<p><img alt="" src="./images/aztfexport-screenshot.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20240127-azure-aztfexport.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2024-01-25 00:00:00">20240125</time></li>
         
           <li class="md-meta__item">
@@ -1676,53 +1723,6 @@
     
       <nav class="md-post__action">
         <a href="../../20240124-ansible-on-azure.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-10-17 00:00:00">20231017</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-kubernetes-services-c1000k"><a class="toclink" href="../../20231027-aks-node-c1000k.html">揪竟...Azure Kubernetes Services 的節點能不能提供 C1000K 的能力呢?</a></h2>
-<blockquote>
-<p>Kubernetes is Cloud OS, Containers are Linux</p>
-</blockquote>
-<p><img alt="" src="/images/t2.jpg" /></p>
-<p>既前篇文章 <a href="https://blog.pichuang.com.tw/20231012-sustainability-remote-capture-packets.html">永續性軟體工程: 遠端抓封包實錄</a> 有提到降低不必要網路傳輸成本可有效減少碳排放，那我繼續基於 Green Foundation 所提出的<a href="https://learn.greensoftware.foundation/hardware-efficiency#increasing-device-utilization">綠色軟體實踐者 (Green Software Practitioner)</a> 當中的原則提升設備利用率 (Increasing device utilization) 來繼續延伸這個大議題</p>
-<p>盡力地提升單台節點所能服務的量體，減少資源浪費，從這個角度看，其實就是需要來探討 Azure Kuberenetes Service 預設提供的這些節點，本體到底夠不夠提供我們在大流量和高性能計算上所需的資源和調教，這邊就從經典的百萬並行連線 C1000K (Concurrent 1000K Connections) 來做為基準來探討</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20231027-aks-node-c1000k.html">
           Continue reading
         </a>
       </nav>

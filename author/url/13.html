@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#red-hat-openshift-pod-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Red Hat OpenShift Pod 與 Container 的愛恨情仇
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#red-hat-openshift-rbac" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         當安裝完 Red Hat OpenShift 之後...
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift-helm-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Red Hat OpenShift 官方支援 Helm 3 啦!
       
     </span>
   </a>
@@ -1610,6 +1610,54 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-05-21 00:00:00">20200521</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="red-hat-openshift-pod-container"><a class="toclink" href="../../20200521-openshift-with-coreos-part-7.html">Red Hat OpenShift Pod 與 Container 的愛恨情仇</a></h2>
+<p>這幾天有位客戶問了一個很不錯的問題</p>
+<blockquote>
+<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
+</blockquote>
+<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
+<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
+<p>{% youtube Kx110kqoHo0 %}</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20200521-openshift-with-coreos-part-7.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-05-02 00:00:00">20200502</time></li>
         
           <li class="md-meta__item">
@@ -1679,49 +1727,6 @@
     
       <nav class="md-post__action">
         <a href="../../20200427-openshift-with-coreos-part-5.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-04-26 00:00:00">20200426</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-helm-3"><a class="toclink" href="../../20200426-openshift-with-coreos-part-4.html">Red Hat OpenShift 官方支援 Helm 3 啦!</a></h2>
-<p>承襲上篇 <a href="https://blog.pichuang.com.tw/20200412-openshift-with-coreos-part-3/">愛的走馬看花 Red Hat CoreOS 與 Red Hat OpenShift Part 3</a> 精神，繼續寫一點東西，但因本週太忙了，只講一個大家都很關注的 Kubernetes 套件管理程式 - <code>Helm 3</code> 內容</p>
-<p><img alt="" src="/images/helm3-ocp4.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20200426-openshift-with-coreos-part-4.html">
           Continue reading
         </a>
       </nav>

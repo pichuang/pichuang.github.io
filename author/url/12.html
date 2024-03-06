@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kubernetes 部署在虛機好還是裸機好?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#red-hat-openshift-4-etcd" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         Red Hat OpenShift 4 的 etcd 之幾個你應該要知道的事之一
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#red-hat-openshift-pod-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Red Hat OpenShift Pod 與 Container 的愛恨情仇
       
     </span>
   </a>
@@ -1610,6 +1610,54 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2020-07-13 00:00:00">20200713</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="kubernetes"><a class="toclink" href="../../20200713-bm-and-vm-container-deployment-consideration.html">Kubernetes 部署在虛機好還是裸機好?</a></h2>
+<p>這幾週常被問到一個問題</p>
+<blockquote>
+<p>以技術觀點來看，請問容器 (Container) 或者是容器平台 (Kubernetes) 比較適合部署在虛擬環境 (VM) 中還是裸機環境中 (Bare Metal)?</p>
+</blockquote>
+<p><img alt="" src="/images/vm-vs-bm.jpg" /></p>
+<p>其實這個問題在十年前虛擬機技術剛出來的時候，也蠻多人做過架構及性能比較，時光快轉到現在的年代，來到容器的世代，相同的問題也被拿出來討論，本篇就是要特別講述一下關於這些架構上的比較分析、使用影響及建議採用的策略作法建議，這篇會採用比較中立的角度闡述，如果有觀點太偏頗的地方，可以私下跟我說及提供修改建議</p>
+<p>不免俗的我還是要來講一下本次新發現，三個感覺不會同框的公司 Microsoft + Red Hat + HPE 一起出了本架構書 <a href="https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50001963enw">HPE Reference Architecture for delivering insight across all your data with Microsoft SQL Server 2019 Big Data Clusters</a> 我覺得實在太玄了 XD 分享給大家</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20200713-bm-and-vm-container-deployment-consideration.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2020-05-29 00:00:00">20200529</time></li>
         
           <li class="md-meta__item">
@@ -1675,54 +1723,6 @@
     
       <nav class="md-post__action">
         <a href="../../20200528-openshift-etcd-operator-1.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2020-05-21 00:00:00">20200521</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../openshift.html" class="md-meta__link">openshift</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="red-hat-openshift-pod-container"><a class="toclink" href="../../20200521-openshift-with-coreos-part-7.html">Red Hat OpenShift Pod 與 Container 的愛恨情仇</a></h2>
-<p>這幾天有位客戶問了一個很不錯的問題</p>
-<blockquote>
-<p>如果在 1 個 Pod 裡面，有 2 個 Containers 的狀況下，OpenShift 該如何針對特定的 Container 進行操作?</p>
-</blockquote>
-<p>按照 Kuberentes 的設計，Kubernetes 最小單位是 Pod，而不是 Container，然而 1 個 Pod，可以有 1 個或多個的 Container 被包含在裡面，圖示可以參考 <a href="https://speakerdeck.com/pichuang/20190817-container-bare-metal-for-networking?slide=6">20190817 Container Bare Metal for Networking</a>，但實際上遇到多個 Container 被包含在 1 個 Pods 的時候，在 OpenShift 裡面是怎麼操作的呢? 秉持著本人遵循客戶驅動服務 (Customer Driven Service)，特別寫一篇記錄</p>
-<p>因為最近太累，懶得想梗圖，所以附上一個近期我覺得相當不錯的 Demo，在 OpenShift 裡面開 Windows Server 2019 起來做使用</p>
-<p>{% youtube Kx110kqoHo0 %}</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20200521-openshift-with-coreos-part-7.html">
           Continue reading
         </a>
       </nav>

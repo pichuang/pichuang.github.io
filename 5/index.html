@@ -1524,6 +1524,49 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-07-13 00:00:00">20230713</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="distroless-container-kubectl-debug"><a class="toclink" href="../20230713-distroless-container-debug.html">當遇到 Distroless Container 除錯要什麼沒什麼該怎麼辦? 你的好朋友 kubectl debug</a></h2>
+<p>這篇只有 Red Hat OpenShift 為主的使用者不用看，那個早在 v3.6 好幾年前就弄了一個 <code>oc debug</code> 出來了，但你若是一般 Kubernetes 發行版的，例如 Tanzu Kubernetes Grid 或 Azure Kubernetes Service 等，則可以參考一下此篇作法。主要是會用到 <a href="https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/">Ephemeral Containers</a> 和 <a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container">kubectl debug</a> 這兩個主要能力，而目前都是在 Kubernetes v1.25 標註 Stable 穩定狀態</p>
+<p><img alt="" src="/images/title-kubectl-debug.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../20230713-distroless-container-debug.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-06-29 00:00:00">20230629</time></li>
         
           <li class="md-meta__item">
@@ -1588,50 +1631,6 @@
     
       <nav class="md-post__action">
         <a href="../20230529-kubernetes-probe.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-05-15 00:00:00">20230515</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="sig-kubernetes-scability"><a class="toclink" href="../20230515-deepdive-sig-scalability.html">SIG Kubernetes Scability 多維度分析</a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bxY5Q5Eoj0s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-<p>前陣子剛好 Kubecon EU 2023 剛辦完，相關的影片也釋出到 <a href="https://www.youtube.com/playlist?list=PLj6h78yzYM2PyrvCoOii4rAopBswfz1p7">YouTube - KubeCon + CloudNativeCon Europe 2023</a> 上，共計 314 部，在當災厄林克破壞海拉魯大陸的同時，記得也要不忘持續學習</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../20230515-deepdive-sig-scalability.html">
           Continue reading
         </a>
       </nav>

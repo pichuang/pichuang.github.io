@@ -1359,6 +1359,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#sig-kubernetes-scability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIG Kubernetes Scability 多維度分析
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#composite-slas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1374,17 +1385,6 @@
     <span class="md-ellipsis">
       
         如何定義 Network Latency SLOs? 4 個設計原則與百分位數解析
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#openai-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        使用 OpenAI API 開發經驗分享
       
     </span>
   </a>
@@ -1610,6 +1610,50 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-05-15 00:00:00">20230515</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../kubernetes.html" class="md-meta__link">kubernetes</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="sig-kubernetes-scability"><a class="toclink" href="../../20230515-deepdive-sig-scalability.html">SIG Kubernetes Scability 多維度分析</a></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bxY5Q5Eoj0s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<p>前陣子剛好 Kubecon EU 2023 剛辦完，相關的影片也釋出到 <a href="https://www.youtube.com/playlist?list=PLj6h78yzYM2PyrvCoOii4rAopBswfz1p7">YouTube - KubeCon + CloudNativeCon Europe 2023</a> 上，共計 314 部，在當災厄林克破壞海拉魯大陸的同時，記得也要不忘持續學習</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../20230515-deepdive-sig-scalability.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-04-17 00:00:00">20230417</time></li>
         
           <li class="md-meta__item">
@@ -1688,58 +1732,6 @@
     
       <nav class="md-post__action">
         <a href="../../20230411-slo-latency.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-03-16 00:00:00">20230316</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../openai.html" class="md-meta__link">openai</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="openai-api"><a class="toclink" href="../../20230316-openai-api-development-exp.html">使用 OpenAI API 開發經驗分享</a></h2>
-<details class="note" open="open">
-<summary>Note</summary>
-<p>因 OpenAI 相關技術發展神速，本文有效時間可能不算太長，閱讀後務必要自行再用自身經驗驗證</p>
-</details>
-<p>很久沒寫 Python，但我本來只是想要研究一下 APM (Application Performance Monitoring) 怎麼順利地跑在 AKS 和 ARO 上，然後就不小心就把 Line Bot ft. OpenAI 寫一寫了，既然寫了就順便紀錄一下</p>
-<h3 id="tldr"><a class="toclink" href="../../20230316-openai-api-development-exp.html#tldr">TL;DR</a></h3>
-<ol>
-<li>Azure OpenAI Service 和 OpenAI 的 API 呼叫有可能會不一樣，務必要確認</li>
-<li>Error Handling 建議要做，不然你永遠只會收到 500 Internal Server Error</li>
-<li>私有網路連入方式，唯一選擇 Azure OpenAI Service</li>
-</ol>
-
-    
-      <nav class="md-post__action">
-        <a href="../../20230316-openai-api-development-exp.html">
           Continue reading
         </a>
       </nav>

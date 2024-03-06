@@ -1524,6 +1524,58 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2023-03-16 00:00:00">20230316</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../openai.html" class="md-meta__link">openai</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="openai-api"><a class="toclink" href="../20230316-openai-api-development-exp.html">使用 OpenAI API 開發經驗分享</a></h2>
+<details class="note" open="open">
+<summary>Note</summary>
+<p>因 OpenAI 相關技術發展神速，本文有效時間可能不算太長，閱讀後務必要自行再用自身經驗驗證</p>
+</details>
+<p>很久沒寫 Python，但我本來只是想要研究一下 APM (Application Performance Monitoring) 怎麼順利地跑在 AKS 和 ARO 上，然後就不小心就把 Line Bot ft. OpenAI 寫一寫了，既然寫了就順便紀錄一下</p>
+<h3 id="tldr"><a class="toclink" href="../20230316-openai-api-development-exp.html#tldr">TL;DR</a></h3>
+<ol>
+<li>Azure OpenAI Service 和 OpenAI 的 API 呼叫有可能會不一樣，務必要確認</li>
+<li>Error Handling 建議要做，不然你永遠只會收到 500 Internal Server Error</li>
+<li>私有網路連入方式，唯一選擇 Azure OpenAI Service</li>
+</ol>
+
+    
+      <nav class="md-post__action">
+        <a href="../20230316-openai-api-development-exp.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2023-03-06 00:00:00">20230306</time></li>
         
           <li class="md-meta__item">
@@ -1590,57 +1642,6 @@
     
       <nav class="md-post__action">
         <a href="../20230301-iac-personal-experiences.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-02-14 00:00:00">20230214</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../kubernetes.html" class="md-meta__link">kubernetes</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="openai-kubernetes-7500"><a class="toclink" href="../20230214-openai-scaling-kubernetes-to-7500-nodes.html">看 OpenAI 使用鈔能力招喚 Kubernetes 7500 台節點!!!</a></h2>
-<p><img alt="" src="/images/OpenAI_Logo.png" /></p>
-<details class="quote" open="open">
-<summary>Quote</summary>
-<p>從 2018 起，OpenAI 所採用的 Kubernetes 節點數量於 3 年內成長 300%</p>
-</details>
-<ul>
-<li>2017 <a href="https://kubernetes.io/case-studies/openai/">Kubernetes Case Study - OpenAI</a></li>
-<li>2018/01/18 OpenAI 發布 <a href="https://openai.com/blog/scaling-kubernetes-to-2500-nodes/">Scaling Kubernetes to 2500 Nodes</a></li>
-<li>2021/01/18 OpenAI 發布 <a href="https://openai.com/blog/scaling-kubernetes-to-7500-nodes/">Scaling Kubernetes to 7500 Nodes</a></li>
-</ul>
-
-    
-      <nav class="md-post__action">
-        <a href="../20230214-openai-scaling-kubernetes-to-7500-nodes.html">
           Continue reading
         </a>
       </nav>
