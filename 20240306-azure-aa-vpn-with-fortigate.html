@@ -1811,12 +1811,12 @@
   <a href="#8-bgp-establish" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8. 終場檢查 BGP Establish 狀態
+        8. 檢查 BGP Establish 狀態
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="8. 終場檢查 BGP Establish 狀態">
+    <nav class="md-nav" aria-label="8. 檢查 BGP Establish 狀態">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1847,15 +1847,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
+  <a href="#9" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8. 檢查路由表
+        9. 檢查路由表
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="8. 檢查路由表">
+    <nav class="md-nav" aria-label="9. 檢查路由表">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1940,6 +1940,28 @@
     <span class="md-ellipsis">
       
         Q4: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-azure-vpn-gateway-routing-weight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: Azure VPN Gateway 支不支援 Routing Weight 屬性?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-azure-vpn-gateway-bgp-med-multi-exit-discriminator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6: Azure VPN Gateway 支不支援 BGP MED (Multi-Exit Discriminator) 屬性?
       
     </span>
   </a>
@@ -2223,7 +2245,7 @@
 <span class="normal"><a href="#__codelineno-1-28">28</a></span>
 <span class="normal"><a href="#__codelineno-1-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># show vpn ipsec phase1-interface</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a>config<span class="w"> </span>vpn<span class="w"> </span>ipsec<span class="w"> </span>phase1-interface
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>edit<span class="w"> </span><span class="s2">&quot;azure-tunnel&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>edit<span class="w"> </span><span class="s2">&quot;azure-tunnel-1&quot;</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>interface<span class="w"> </span><span class="s2">&quot;wan1&quot;</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>ike-version<span class="w"> </span><span class="m">2</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>keylife<span class="w"> </span><span class="m">28800</span>
@@ -2394,8 +2416,8 @@
 <a id="__codelineno-3-51" name="__codelineno-3-51"></a>end
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>TCP MSS 送出要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
-<li>TCP MSS 接受要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
+<li>TCP MSS 要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
+<li>TCP MSS 要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
 </ol>
 <h3 id="4-ipsec-tunnel">4. 中場檢查一下 IPSec Tunnel 狀態</h3>
 <p>畢竟 BGP Peering 是基於 IPsec Tunnel 而成，如果沒有先把 IPsec 先搞好的話，後面不用做，所以這邊要進行檢查確認</p>
@@ -2607,7 +2629,7 @@
 <li>ECMP 啟用的狀況下，把這個開起來，同一個 TCP Session 可以從不同 Interface 進出</li>
 <li>預設 255, 但我改 10</li>
 </ol>
-<h3 id="8-bgp-establish">8. 終場檢查 BGP Establish 狀態</h3>
+<h3 id="8-bgp-establish">8. 檢查 BGP Establish 狀態</h3>
 <h4 id="fortigate_1">從 FortiGate 角度看</h4>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Check BGP Info</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
@@ -2705,7 +2727,7 @@
 </ol>
 <h4 id="azure_1">從 Azure 的角度看</h4>
 <p><img alt="" src="/images/checl-bgp-azure.png" /></p>
-<h3 id="8">8. 檢查路由表</h3>
+<h3 id="9">9. 檢查路由表</h3>
 <h4 id="fortigate_2">從 FortiGate 角度看</h4>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Check RIB from FortiGate</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
@@ -2760,6 +2782,68 @@
 <li>WAN Gateway IP</li>
 <li>Loopback IP</li>
 </ol>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show BGP info for network</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># get router info bgp network</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>VRF<span class="w"> </span><span class="m">0</span><span class="w"> </span>BGP<span class="w"> </span>table<span class="w"> </span>version<span class="w"> </span>is<span class="w"> </span><span class="m">132</span>,<span class="w"> </span><span class="nb">local</span><span class="w"> </span>router<span class="w"> </span>ID<span class="w"> </span>is<span class="w"> </span><span class="m">1</span>.2.3.4
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>Status<span class="w"> </span>codes:<span class="w"> </span>s<span class="w"> </span>suppressed,<span class="w"> </span>d<span class="w"> </span>damped,<span class="w"> </span>h<span class="w"> </span>history,<span class="w"> </span>*<span class="w"> </span>valid,<span class="w"> </span>&gt;<span class="w"> </span>best,<span class="w"> </span>i<span class="w"> </span>-<span class="w"> </span>internal,
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">              </span>S<span class="w"> </span>Stale
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>Origin<span class="w"> </span>codes:<span class="w"> </span>i<span class="w"> </span>-<span class="w"> </span>IGP,<span class="w"> </span>e<span class="w"> </span>-<span class="w"> </span>EGP,<span class="w"> </span>?<span class="w"> </span>-<span class="w"> </span>incomplete
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">   </span>Network<span class="w">          </span>Next<span class="w"> </span>Hop<span class="w">            </span>Metric<span class="w"> </span>LocPrf<span class="w"> </span>Weight<span class="w"> </span>RouteTag<span class="w"> </span>Path
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>*&gt;<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">        </span><span class="m">5</span>.6.7.254<span class="w">                          </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>*<span class="w">  </span><span class="m">10</span>.0.0.0/24<span class="w">      </span><span class="m">10</span>.0.0.4<span class="w">              </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/-&gt;
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>*&gt;<span class="w">                  </span><span class="m">10</span>.0.0.5<span class="w">              </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>*<span class="w">  </span><span class="m">10</span>.56.0.0/24<span class="w">     </span><span class="m">10</span>.0.0.4<span class="w">              </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/-&gt;
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>*&gt;<span class="w">                  </span><span class="m">10</span>.0.0.5<span class="w">              </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a>*&gt;<span class="w"> </span><span class="m">10</span>.0.0.4/32<span class="w">      </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a>*&gt;<span class="w"> </span><span class="m">10</span>.0.0.5/32<span class="w">      </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a>*&gt;<span class="w"> </span><span class="m">5</span>.6.7.8/32<span class="w">       </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a>*&gt;<span class="w"> </span><span class="m">5</span>.6.7.254/32<span class="w">     </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a>*&gt;<span class="w"> </span><span class="m">192</span>.168.200.0<span class="w">    </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a>*&gt;<span class="w"> </span><span class="m">1</span>.2.3.4/32<span class="w">       </span><span class="m">0</span>.0.0.0<span class="w">                            </span><span class="m">32768</span><span class="w">        </span><span class="m">0</span><span class="w"> </span>?<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a>Total<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>prefixes<span class="w"> </span><span class="m">15</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Check BGP info for route</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># get router info bgp network-longer-prefixes 10.56.0.0/24</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>VRF<span class="w"> </span><span class="m">0</span><span class="w"> </span>BGP<span class="w"> </span>table<span class="w"> </span>version<span class="w"> </span>is<span class="w"> </span><span class="m">132</span>,<span class="w"> </span><span class="nb">local</span><span class="w"> </span>router<span class="w"> </span>ID<span class="w"> </span>is<span class="w"> </span><span class="m">1</span>.2.3.4
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>Status<span class="w"> </span>codes:<span class="w"> </span>s<span class="w"> </span>suppressed,<span class="w"> </span>d<span class="w"> </span>damped,<span class="w"> </span>h<span class="w"> </span>history,<span class="w"> </span>*<span class="w"> </span>valid,<span class="w"> </span>&gt;<span class="w"> </span>best,<span class="w"> </span>i<span class="w"> </span>-<span class="w"> </span>internal,
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">              </span>S<span class="w"> </span>Stale
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>Origin<span class="w"> </span>codes:<span class="w"> </span>i<span class="w"> </span>-<span class="w"> </span>IGP,<span class="w"> </span>e<span class="w"> </span>-<span class="w"> </span>EGP,<span class="w"> </span>?<span class="w"> </span>-<span class="w"> </span>incomplete
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">   </span>Network<span class="w">          </span>Next<span class="w"> </span>Hop<span class="w">            </span>Metric<span class="w"> </span>LocPrf<span class="w"> </span>Weight<span class="w"> </span>RouteTag<span class="w"> </span>Path
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>*<span class="w">  </span><span class="m">10</span>.56.0.0/24<span class="w">     </span><span class="m">10</span>.0.0.4<span class="w">                 </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">        </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/-&gt;
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>*&gt;<span class="w">                  </span><span class="m">10</span>.0.0.5<span class="w">                 </span><span class="m">0</span><span class="w">             </span><span class="m">0</span><span class="w">        </span><span class="m">0</span><span class="w"> </span><span class="m">65515</span><span class="w"> </span>i<span class="w"> </span>&lt;-/1&gt;
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>Total<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>prefixes<span class="w"> </span><span class="m">1</span>
+</code></pre></div></td></tr></table></div>
 <h4 id="azure_2">從 Azure 的角度看</h4>
 <p>良心建議...你直接下載 Learned routed 用 Excel 看比較快</p>
 <p><img alt="" src="/images/learned-route-vpn.png" /></p>
@@ -2775,18 +2859,94 @@
 </ol>
 <p>因為大概 9 成問題都是被擋在 Firewall 漏寫規則...</p>
 <h3 id="q2-active-standby">Q2: 如果我不要讓這兩條路同時通，我只想做 Active Standby 的話呢?</h3>
-<p>A2: 下面有幾個 BGP Best Path Selection 的方式可供參考:</p>
-<ol>
-<li>BGP Communties: 建議要用，但他對於同</li>
-<li>AS Path Prepending: 常見套路</li>
-<li>Local Preference: 常見套路</li>
-<li>BGP MED: 可用，但我沒研究過</li>
-</ol>
-<p>目前 Azure 這邊設計常規都適用 AS Path Prepatnding 來控制，因為可以用 BGP 廣播路徑出去</p>
+<p>A2: 基於 <a href="https://docs.fortinet.com/document/fortigate/7.4.2/administration-guide/55339/troubleshooting-bgp">FortiGate - BGP path selection process</a> 和 <a href="https://networklessons.com/bgp/bgp-attributes-and-path-selection">BGP Attributes and Path Selection</a>，下面有幾個 BGP Best Path Selection 的方式可供參考:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Priority</th>
+<th style="text-align: center;">Attribute</th>
+<th style="text-align: left;">Note</th>
+<th style="text-align: left;">Personal Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Highest weight</td>
+<td style="text-align: left;">this attribute is local to the FortiGate</td>
+<td style="text-align: left;">Azure VPN Gateway 沒支援</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">Highest local preference</td>
+<td style="text-align: left;">Applicable within AS</td>
+<td style="text-align: left;">已知使用頻率第 1，但這個屬性沒辦法透過 eBGP 轉出去</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">Route originated by the local router</td>
+<td style="text-align: left;">next hop = 0.0.0.0</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">Shortest AS path length</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">已知使用頻率第 2，可以用 AS Path Prepanding 控制長度，可用，但建議用 BGP Communites 替代</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">lowest origin code</td>
+<td style="text-align: left;">IGP &gt; EGP &gt; incomplete</td>
+<td style="text-align: left;">已知使用頻率第 3</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">lowest MED</td>
+<td style="text-align: left;">Exchanged between autonomous systems</td>
+<td style="text-align: left;">已知使用頻率第 4，Azure VPN Gateway 沒支援</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">eBGP path over iBGP path</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">Path through the closest IGP neighbor</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">Oldest route for EBGP paths</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">the lowest neighbor BGP router ID</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">the lowest neighbor IP address</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>目前 Azure 這邊設計常規都是用 <mark>AS Path Prepatnding</mark> 來控制，其次 <mark>Local Preference</mark></p>
 <h3 id="q3-azure-azure-firewall-azure-firewall">Q3: 如果我在 Azure 上開 Azure Firewall，且我需要地端上雲都要經過 Azure Firewall 的話，我還需要動地端路由嗎?</h3>
-<p>A3: 地端不需要做任何變動，要動路由的部分，是要動雲端的</p>
+<p>A3: 地端不需要做任何變動，若要動路由的部分，是要動雲端的</p>
 <h3 id="q4-azure-vpn-gateway-bgp-bfd-bidirectional-forwarding-detection">Q4: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?</h3>
-<p>A4: 不支援，開了沒作用，但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
+<p>A4: 不支援，開了沒作用，替代方案是使用 <code>keepalives</code> 但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
+<h3 id="q5-azure-vpn-gateway-routing-weight">Q5: Azure VPN Gateway 支不支援 Routing Weight 屬性?</h3>
+<p>A5: 不支援，但 ExpressRoute Gateway 有支援</p>
+<h3 id="q6-azure-vpn-gateway-bgp-med-multi-exit-discriminator">Q6: Azure VPN Gateway 支不支援 BGP MED (Multi-Exit Discriminator) 屬性?</h3>
+<p>A6: 不支援</p>
 <h2 id="_2">文後廢言</h2>
 <p>不知道為什麼我來 Microsoft 上班，都比較熟別人家產品，畢竟上班五天，三天全部都來問我 Forti 技術問題，實在是...</p>
 <p>看看下次哪家要來工商一下地端設備讓我接</p>
