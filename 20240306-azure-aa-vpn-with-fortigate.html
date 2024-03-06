@@ -1935,6 +1935,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#q4-azure-vpn-gateway-bgp-bfd-bidirectional-forwarding-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2774,6 +2785,8 @@
 <p>目前 Azure 這邊設計常規都適用 AS Path Prepatnding 來控制，因為可以用 BGP 廣播路徑出去</p>
 <h3 id="q3-azure-azure-firewall-azure-firewall">Q3: 如果我在 Azure 上開 Azure Firewall，且我需要地端上雲都要經過 Azure Firewall 的話，我還需要動地端路由嗎?</h3>
 <p>A3: 地端不需要做任何變動，要動路由的部分，是要動雲端的</p>
+<h3 id="q4-azure-vpn-gateway-bgp-bfd-bidirectional-forwarding-detection">Q4: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?</h3>
+<p>A4: 不支援，開了沒作用，但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
 <h2 id="_2">文後廢言</h2>
 <p>不知道為什麼我來 Microsoft 上班，都比較熟別人家產品，畢竟上班五天，三天全部都來問我 Forti 技術問題，實在是...</p>
 <p>看看下次哪家要來工商一下地端設備讓我接</p>
