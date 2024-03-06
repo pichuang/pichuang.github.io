@@ -2571,23 +2571,25 @@
 <span class="normal"><a href="#__codelineno-7-14">14</a></span>
 <span class="normal"><a href="#__codelineno-7-15">15</a></span>
 <span class="normal"><a href="#__codelineno-7-16">16</a></span>
-<span class="normal"><a href="#__codelineno-7-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>config<span class="w"> </span>system<span class="w"> </span>settings
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>auxiliary-session<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (2)</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>asymroute<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (1)</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>sip-expectation<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>allow-subnet-overlap<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>ecmp-max-paths<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># (3)</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-dns-database<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-explicit-proxy<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-dynamic-routing<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-sslvpn-personal-bookmarks<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-sslvpn-realms<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-policy-based-ipsec<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-wireless-controller<span class="w"> </span>disable
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-switch-controller<span class="w"> </span>disable
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-fortiextender-controller<span class="w"> </span>disable
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-advanced-policy<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17"></a>end
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># show system settings</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>config<span class="w"> </span>system<span class="w"> </span>settings
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>auxiliary-session<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (2)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>asymroute<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (1)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>sip-expectation<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>allow-subnet-overlap<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>ecmp-max-paths<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># (3)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-dns-database<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-explicit-proxy<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-dynamic-routing<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-sslvpn-personal-bookmarks<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-sslvpn-realms<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-policy-based-ipsec<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-wireless-controller<span class="w"> </span>disable
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-switch-controller<span class="w"> </span>disable
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-fortiextender-controller<span class="w"> </span>disable
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>gui-advanced-policy<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>end
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>預設狀況是會關閉，如果不開的話，因為遇到非對稱路由問題，走另一條路的時候就會被 Firewall 丟掉</li>
