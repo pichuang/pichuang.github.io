@@ -1739,12 +1739,12 @@
   <a href="#4-ipsec-tunnel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 中場檢查一下 IPSec Tunnel 狀態
+        4. 中場檢查一下 IPsec Tunnel 狀態
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. 中場檢查一下 IPSec Tunnel 狀態">
+    <nav class="md-nav" aria-label="4. 中場檢查一下 IPsec Tunnel 狀態">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2039,7 +2039,7 @@
 
 
 <h1 id="azure-vpn-gateway-bgp-ecmp-fortigate">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</h1>
-<p>本文提供如何建立 IPSec VPN 及 BGP 連線路由，從地端 ForiGate 到 Azure VPN Gateway (Active-Active + BGP + ECMP) 過程</p>
+<p>本文提供如何建立 IPsec VPN 及 BGP 連線路由，從地端 ForiGate 到 Azure VPN Gateway (Active-Active + BGP + ECMP) 過程</p>
 <p><img alt="" src="/images/vpn-go.png" /></p>
 <p>我這天想了一下如果用 Tifa 的圖，可能涉及到 D&amp;I 條款，為了我扁扁的荷包著想，各位回家自己看電腦</p>
 <!--more-->
@@ -2071,7 +2071,7 @@
 <h3 id="2-azure-vpn-gateway">2. 建立 Azure VPN Gateway</h3>
 <p>因為 Azure VPN Gateway 的參數選擇會影響到後續架構的設計，我建議先從下面這種正常方式開局．也是最通用的架構</p>
 <ul>
-<li>2 個 Public IP 可以讓你建立 IPSec Tunnel</li>
+<li>2 個 Public IP 可以讓你建立 IPsec Tunnel</li>
 <li>啟用 BGP 並且設定 <code>AS65515</code> 為雲端的 AS Number，理由可參考此文 <a href="https://blog.pichuang.com.tw/20240302-general-bgp-common-sense-in-azure-networking.html">Azure Networking 之 BGP 普通常識</a></li>
 </ul>
 <p><img alt="" src="/images/aa-vpn.png" /></p>
@@ -2125,7 +2125,7 @@
 <p><img alt="" src="/images/conn-vpn.png" /></p>
 <p>這頁主要是在描述 Azure VPN Gateway 的具體參數要怎麼跟地端設備連接，基本上沒意外都是預設值，如果有問題的話，建議看你地端設備的 IPsec / IKE policy 有沒有什麼長得很不一樣的要特別調整，通常建立不起來的主要原因是兩邊的加密選擇對不起來，要特別調整</p>
 <h2 id="b-fortigate">B. 地端 FortiGate 方</h2>
-<p>因為我家只有 FortiGate 可以用，所以下面就以 FortiGate 的設備為主，如果你是其他家的設備也可以自行參考，我都是用基本設定，大部分應該都沒用什麼特殊的黑魔法</p>
+<p>因為我家只有 FortiGate 可以用，所以下面就以 FortiGate 的設備為主，如果你是其他家的設備也可以自行參考，我都是用基本設定，大部分都沒用什麼特殊的黑魔法</p>
 <p>此外，因為我本身也不是專精 FortiGate，都是受客戶驅動才去買了一台回家自己搞，如果有任何設定不合理或者是漏了，歡迎指正，我會非常感謝你，台灣很多甲方同行也會很多人會感謝你</p>
 <h3 id="0">0. 版本資訊</h3>
 <ul>
@@ -2419,7 +2419,7 @@
 <li>TCP MSS 要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
 <li>TCP MSS 要 1350，如果沒支援的參數的話，找一下 MTU 要 1400 bytes</li>
 </ol>
-<h3 id="4-ipsec-tunnel">4. 中場檢查一下 IPSec Tunnel 狀態</h3>
+<h3 id="4-ipsec-tunnel">4. 中場檢查一下 IPsec Tunnel 狀態</h3>
 <p>畢竟 BGP Peering 是基於 IPsec Tunnel 而成，如果沒有先把 IPsec 先搞好的話，後面不用做，所以這邊要進行檢查確認</p>
 <h4 id="fortigate">從 FortiGate 角度看</h4>
 <p>看到 <code>selectors(total,up): 1/1</code> 就是正常的</p>
@@ -2433,7 +2433,7 @@
 <p>看到 Local Network Gateway 中 Status 那一欄呈現 <code>Connected</code> 才是正確的</p>
 <p><img alt="" src="/images/check-ipsec.png" /></p>
 <h3 id="5-bgp">5. 使出普通 BGP 攻擊魔法</h3>
-<p>我還是需要申明一下，下面設定是我個人家裡的設定，可能不適用於你的環境，可自行調整，這邊只是提供參考，但如果你覺得哪裡設定怪怪的或有漏的，相當歡迎跟我講，我會修正來幫助更多辛苦的網路工程師</p>
+<p>我還是需要申明一下，下面設定是我個人家裡的設定，可能不適用於你的環境，可自行調整或提供建議</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Config BGP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
@@ -2483,8 +2483,7 @@
 <span class="normal"><a href="#__codelineno-5-47">47</a></span>
 <span class="normal"><a href="#__codelineno-5-48">48</a></span>
 <span class="normal"><a href="#__codelineno-5-49">49</a></span>
-<span class="normal"><a href="#__codelineno-5-50">50</a></span>
-<span class="normal"><a href="#__codelineno-5-51">51</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># show router bgp</span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>homecloud-fgt<span class="w"> </span><span class="c1"># show router bgp</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a>config<span class="w"> </span>router<span class="w"> </span>bgp
 <a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>as<span class="w"> </span><span class="m">65510</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>router-id<span class="w"> </span><span class="m">1</span>.2.3.4
@@ -2493,48 +2492,47 @@
 <a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>ebgp-multipath<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (3)</span>
 <a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>multipath-recursive-distance<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (4)</span>
 <a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>graceful-restart<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>graceful-restart-time<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># (14)</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>fast-external-failover<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (9)</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">    </span>config<span class="w"> </span>neighbor
-<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">        </span>edit<span class="w"> </span><span class="s2">&quot;10.0.0.5&quot;</span><span class="w"> </span><span class="c1"># (5)</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>advertisement-interval<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># (6)</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>ebgp-enforce-multihop<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (7)</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>link-down-failover<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (8)</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>soft-reconfiguration<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>capability-graceful-restart<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>interface<span class="w"> </span><span class="s2">&quot;azure-tunnel-2&quot;</span><span class="w"> </span><span class="c1"># (10)</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>remote-as<span class="w"> </span><span class="m">65515</span><span class="w"> </span><span class="c1"># (11)</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>update-source<span class="w"> </span><span class="s2">&quot;loopback&quot;</span><span class="w"> </span><span class="c1"># (12)</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">        </span>next
-<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">        </span>edit<span class="w"> </span><span class="s2">&quot;10.0.0.4&quot;</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>advertisement-interval<span class="w"> </span><span class="m">1</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>ebgp-enforce-multihop<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>link-down-failover<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>soft-reconfiguration<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>capability-graceful-restart<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>interface<span class="w"> </span><span class="s2">&quot;azure-tunnel-1&quot;</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>remote-as<span class="w"> </span><span class="m">65515</span>
-<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>update-source<span class="w"> </span><span class="s2">&quot;loopback&quot;</span>
-<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">        </span>next
-<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">    </span>end
-<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;connected&quot;</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>status<span class="w"> </span><span class="nb">enable</span>
-<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="w">    </span>end
-<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;rip&quot;</span>
-<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">    </span>end
-<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;ospf&quot;</span>
-<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">    </span>end
-<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;static&quot;</span>
-<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>status<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (13)</span>
-<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">    </span>end
-<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;isis&quot;</span>
-<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">    </span>end
-<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;connected&quot;</span>
-<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">    </span>end
-<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;rip&quot;</span>
-<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">    </span>end
-<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;ospf&quot;</span>
-<a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="w">    </span>end
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="nb">set</span><span class="w"> </span>fast-external-failover<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (9)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">    </span>config<span class="w"> </span>neighbor
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">        </span>edit<span class="w"> </span><span class="s2">&quot;10.0.0.5&quot;</span><span class="w"> </span><span class="c1"># (5)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>advertisement-interval<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># (6)</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>ebgp-enforce-multihop<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (7)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>link-down-failover<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (8)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>soft-reconfiguration<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>capability-graceful-restart<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>interface<span class="w"> </span><span class="s2">&quot;azure-tunnel-2&quot;</span><span class="w"> </span><span class="c1"># (10)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>remote-as<span class="w"> </span><span class="m">65515</span><span class="w"> </span><span class="c1"># (11)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>update-source<span class="w"> </span><span class="s2">&quot;loopback&quot;</span><span class="w"> </span><span class="c1"># (12)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">        </span>next
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">        </span>edit<span class="w"> </span><span class="s2">&quot;10.0.0.4&quot;</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>advertisement-interval<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>ebgp-enforce-multihop<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>link-down-failover<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>soft-reconfiguration<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>capability-graceful-restart<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>interface<span class="w"> </span><span class="s2">&quot;azure-tunnel-1&quot;</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>remote-as<span class="w"> </span><span class="m">65515</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">            </span><span class="nb">set</span><span class="w"> </span>update-source<span class="w"> </span><span class="s2">&quot;loopback&quot;</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">        </span>next
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">    </span>end
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;connected&quot;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>status<span class="w"> </span><span class="nb">enable</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">    </span>end
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;rip&quot;</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="w">    </span>end
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;ospf&quot;</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="w">    </span>end
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;static&quot;</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">        </span><span class="nb">set</span><span class="w"> </span>status<span class="w"> </span><span class="nb">enable</span><span class="w"> </span><span class="c1"># (13)</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">    </span>end
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">    </span>config<span class="w"> </span>redistribute<span class="w"> </span><span class="s2">&quot;isis&quot;</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">    </span>end
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;connected&quot;</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">    </span>end
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;rip&quot;</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">    </span>end
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">    </span>config<span class="w"> </span>redistribute6<span class="w"> </span><span class="s2">&quot;ospf&quot;</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="w">    </span>end
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>目前有強者我客戶實測調到這數字 Failover 時間很好，我之前是設定 10</li>
@@ -2550,7 +2548,6 @@
 <li>Azure VPN Gateway 所設定的 BGP ASN</li>
 <li>要特別指定 loopback 作為 BGP Peer 的 Update Source</li>
 <li>BGP Peering 路由我是用 Static Route 放的，所以這個要勾，你如果是別的方式 redistribute 路由，就自行調整</li>
-<li>graceful-restart-time 須小於或等於 holdtime-timer</li>
 </ol>
 <h3 id="6-static-route">6. 上 Static Route</h3>
 <p>這邊是為了要做 BGP Peering 之用，我需要放路由指向特定的 Interface，如果你有其他熟悉的方式可以達到同樣的效果，也可以用其他方式，這邊只是提供參考</p>
