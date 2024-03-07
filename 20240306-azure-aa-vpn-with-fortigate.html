@@ -18,6 +18,8 @@
         <link rel="prev" href="20240302-general-bgp-common-sense-in-azure-networking.html">
       
       
+        <link rel="next" href="20240307-azure-aa-vpn-symmetric-with-fortigate.html">
+      
       
         
       
@@ -1947,21 +1949,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#q5-azure-vpn-gateway-routing-weight" class="md-nav__link">
+  <a href="#q5-ips-ecmp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Q5: Azure VPN Gateway 支不支援 Routing Weight 屬性?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q6-azure-vpn-gateway-bgp-med-multi-exit-discriminator" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Q6: Azure VPN Gateway 支不支援 BGP MED (Multi-Exit Discriminator) 屬性?
+        Q5: 我地端有 IPS 之類的服務，做 ECMP 不會有問題嗎?
       
     </span>
   </a>
@@ -2863,94 +2854,13 @@
 </ol>
 <p>因為大概 9 成問題都是被擋在 Firewall 漏寫規則...</p>
 <h3 id="q2-active-standby">Q2: 如果我不要讓這兩條路同時通，我只想做 Active Standby 的話呢?</h3>
-<p>A2: 基於 <a href="https://docs.fortinet.com/document/fortigate/7.4.2/administration-guide/55339/troubleshooting-bgp">FortiGate - BGP path selection process</a> 和 <a href="https://networklessons.com/bgp/bgp-attributes-and-path-selection">BGP Attributes and Path Selection</a>，下面有幾個 BGP Best Path Selection 的方式可供參考:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Priority</th>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: left;">Note</th>
-<th style="text-align: left;">Personal Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">Highest weight</td>
-<td style="text-align: left;">this attribute is local to the FortiGate</td>
-<td style="text-align: left;">地端設備可調，但 Azure VPN Gateway 沒支援無法改</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">Highest local preference</td>
-<td style="text-align: left;">Applicable within AS</td>
-<td style="text-align: left;">已知使用頻率第 1，但這個屬性沒辦法透過 eBGP 轉出去</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">Route originated by the local router</td>
-<td style="text-align: left;">next hop = 0.0.0.0</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">Shortest AS path length</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">已知使用頻率第 2，可以用 AS Path Prepanding 控制長度，可用，但建議用 BGP Communites 替代</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">lowest origin code</td>
-<td style="text-align: left;">IGP &gt; EGP &gt; incomplete</td>
-<td style="text-align: left;">已知使用頻率第 3</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">lowest MED</td>
-<td style="text-align: left;">Exchanged between autonomous systems</td>
-<td style="text-align: left;">已知使用頻率第 4，Azure VPN Gateway 沒支援</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">eBGP path over iBGP path</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">Path through the closest IGP neighbor</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">Oldest route for EBGP paths</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">the lowest neighbor BGP router ID</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">the lowest neighbor IP address</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
-<p>目前 Azure 這邊設計常規都是用 <mark>AS Path Prepatnding</mark> 來控制，其次 <mark>Local Preference</mark></p>
+<p>A2: 請洽 <a href="https://blog.pichuang.com.tw/20240307-azure-aa-vpn-symmetric-with-fortigate.html">魂系架構 Phil's Workspace Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例</a></p>
 <h3 id="q3-azure-azure-firewall-azure-firewall">Q3: 如果我在 Azure 上開 Azure Firewall，且我需要地端上雲都要經過 Azure Firewall 的話，我還需要動地端路由嗎?</h3>
 <p>A3: 地端不需要做任何變動，若要動路由的部分，是要動雲端的</p>
 <h3 id="q4-azure-vpn-gateway-bgp-bfd-bidirectional-forwarding-detection">Q4: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?</h3>
 <p>A4: 不支援，開了沒作用，替代方案是使用 <code>keepalives</code> 但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
-<h3 id="q5-azure-vpn-gateway-routing-weight">Q5: Azure VPN Gateway 支不支援 Routing Weight 屬性?</h3>
-<p>A5: 不支援，但 ExpressRoute Gateway 有支援</p>
-<h3 id="q6-azure-vpn-gateway-bgp-med-multi-exit-discriminator">Q6: Azure VPN Gateway 支不支援 BGP MED (Multi-Exit Discriminator) 屬性?</h3>
-<p>A6: 不支援</p>
+<h3 id="q5-ips-ecmp">Q5: 我地端有 IPS 之類的服務，做 ECMP 不會有問題嗎?</h3>
+<p>A7: 有可能會有去回不同路的問題，如果防火牆不願意放行的話，你只能看對稱路由的架構了，也就是去回同路，請參考 <a href="https://blog.pichuang.com.tw/20240307-azure-aa-vpn-symmetric-with-fortigate.html">魂系架構 Phil's Workspace Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例</a></p>
 <h2 id="_2">文後廢言</h2>
 <p>不知道為什麼我來 Microsoft 上班，都比較熟別人家產品，畢竟上班五天，三天全部都來問我 Forti 技術問題，實在是...</p>
 <p>看看下次哪家要來工商一下地端設備讓我接</p>
@@ -2963,6 +2873,7 @@
 <li><a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-asymmetric-routing-and/ta-p/194040#:~:text=If%20a%20FortiGate%20recognizes%20the%20response%20packets%2C%20but,packets%20or%20drops%20the%20session%20when%20this%20happens.">Technical Tip: Differences between asymmetric routing and auxiliary sessions</a></li>
 <li><a href="https://thisbridgeistheroot.com/blog/how-to-win-at-the-bgp-best-path-selection-algorithm-and-influence-neighbors">How to Win at the BGP Best Path Selection Algorithm and Influence Neighbors</a></li>
 <li><a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-BGP-AS-Path-Prepending-Configuration-Example/ta-p/194522">Technical Tip: BGP AS-Path Prepending Configuration Example</a></li>
+<li><a href="https://blog.pichuang.com.tw/20240307-azure-aa-vpn-symmetric-with-fortigate.html">魂系架構 Phil's Workspace Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例</a></li>
 </ul>
 
 

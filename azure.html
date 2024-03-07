@@ -886,6 +886,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#azure-vpn-gateway-bgp-fortigate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#azure-vpn-gateway-bgp-ecmp-fortigate" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -901,17 +912,6 @@
     <span class="md-ellipsis">
       
         Azure Networking 之 BGP 普通常識
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#azure-firewall-policy-rule" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Azure Firewall Policy Rule 設計和執行邏輯
       
     </span>
   </a>
@@ -1612,6 +1612,49 @@
     <div class="md-post__meta md-meta">
       <ul class="md-meta__list">
         <li class="md-meta__item">
+          <time datetime="2024-03-07 00:00:00">20240307</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="azure.html" class="md-meta__link">azure</a></li>
+        
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="azure-vpn-gateway-bgp-fortigate"><a class="toclink" href="20240307-azure-aa-vpn-symmetric-with-fortigate.html">Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例</a></h2>
+<p>本文提供如何建立 IPsec VPN 及 BGP 連線路由，從地端 ForiGate 到 Azure VPN Gateway (Active-Active + BGP + 線路備援) 過程，適合你地端有 IPS 會遇到非對稱路由的問題時，你可以改採用 Active / Stand 線路架構，倘若你有想要參考 ECMP 的做法，可參閱之前寫的文章 <a href="https://blog.pichuang.com.tw/20240306-azure-aa-vpn-with-fortigate.html">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</a></p>
+<p><img alt="" src="/images/vpn-go-2.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="20240307-azure-aa-vpn-symmetric-with-fortigate.html">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
           <time datetime="2024-03-06 00:00:00">20240306</time></li>
         
           <li class="md-meta__item">
@@ -1677,49 +1720,6 @@
     
       <nav class="md-post__action">
         <a href="20240302-general-bgp-common-sense-in-azure-networking.html">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/5253671" alt="Phil Huang">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-02-27 00:00:00">20240227</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="azure.html" class="md-meta__link">azure</a></li>
-        
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="azure-firewall-policy-rule"><a class="toclink" href="20240227-azure-firewall-policy-design.html">Azure Firewall Policy Rule 設計和執行邏輯</a></h2>
-<p>記錄一下，幫助一下曾經跟我一樣陷入以人類之軀對過 Azure Firewall Policy 規則的偉大戰士們</p>
-<p><img alt="" src="/images/azfw-banner.png" /></p>
-
-    
-      <nav class="md-post__action">
-        <a href="20240227-azure-firewall-policy-design.html">
           Continue reading
         </a>
       </nav>
