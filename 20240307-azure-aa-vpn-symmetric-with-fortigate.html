@@ -2040,6 +2040,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#q5-vpn-gateway-active-standby-mode-active-active-mode-2-vpn-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: 如果原先 VPN Gateway 原先是 Active-Standby Mode, 我換成 Active-Active Mode 會不會要付 2 個 VPN Gateway 成本的問題?
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2111,7 +2122,7 @@
 
 
 <h1 id="azure-vpn-gateway-bgp-fortigate">Azure VPN Gateway 實踐 BGP + 線路備援: 以 FortiGate 為例</h1>
-<p>本文提供如何建立 IPsec VPN 及 BGP 連線路由，從地端 ForiGate 到 Azure VPN Gateway (Active-Active + BGP + 線路備援) 過程，適合你地端有 IPS 會遇到非對稱路由的問題時，你可以改採用 Active / Stand 線路架構，倘若你有想要參考 ECMP 的做法，可參閱之前寫的文章 <a href="https://blog.pichuang.com.tw/20240306-azure-aa-vpn-with-fortigate.html">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</a></p>
+<p>本文提供如何建立 IPsec VPN 及 BGP 連線路由，從地端 ForiGate 到 Azure VPN Gateway (Active-Active + BGP + 線路備援) 過程，適合你地端有 IPS 會遇到非對稱路由的問題時，你可以改採用 Active / Standby 線路架構，倘若你有想要參考 ECMP 的做法，可參閱之前寫的文章 <a href="https://blog.pichuang.com.tw/20240306-azure-aa-vpn-with-fortigate.html">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</a></p>
 <p><img alt="" src="/images/vpn-go-2.png" /></p>
 <!--more-->
 
@@ -3264,11 +3275,14 @@
 </ol>
 <p>因為大概 9 成問題都是被擋在 Firewall 漏寫規則...</p>
 <h3 id="q2-azure-azure-firewall-azure-firewall">Q2: 如果我在 Azure 上開 Azure Firewall，且我需要地端上雲都要經過 Azure Firewall 的話，我還需要動地端路由嗎?</h3>
-<p>A3: 地端不需要做任何變動，若要動路由的部分，是要動雲端的</p>
+<p>A2: 地端不需要做任何變動，若要動路由的部分，是要動雲端的</p>
 <h3 id="q3-azure-vpn-gateway-bgp-bfd-bidirectional-forwarding-detection">Q3: Azure VPN Gateway 開啟 BGP 的狀態下，支援 BFD (Bidirectional Forwarding Detection) 嗎?</h3>
-<p>A4: 不支援，開了沒作用，替代方案是使用 <code>keepalives</code> 但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
+<p>A3: 不支援，開了沒作用，替代方案是使用 <code>keepalives</code> 但 ExpressRoute Gateway 有支援，所以還是可以在 Loopback 上開 BFD 起來</p>
 <h3 id="q4-ecmp-azure-vpn-gateway">Q4: 如果我想要做 ECMP 架構的話，Azure VPN Gateway 支援嗎?</h3>
-<p>A5: 支援，因為 Azure VPN Gateway 原生設計是無狀態的，所以只要無論哪個介面進去或出來他都不會擋，故地端網路設計得當是可以支援，可參考 <a href="https://blog.pichuang.com.tw/20240306-azure-aa-vpn-with-fortigate.html">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</a></p>
+<p>A4: 支援，因為 Azure VPN Gateway 原生設計是無狀態的，所以只要無論哪個介面進去或出來他都不會擋，故地端網路設計得當是可以支援，可參考 <a href="https://blog.pichuang.com.tw/20240306-azure-aa-vpn-with-fortigate.html">Azure VPN Gateway 實踐 BGP + ECMP: 以 FortiGate 為例</a></p>
+<h3 id="q5-vpn-gateway-active-standby-mode-active-active-mode-2-vpn-gateway">Q5: 如果原先 VPN Gateway 原先是 Active-Standby Mode, 我換成 Active-Active Mode 會不會要付 2 個 VPN Gateway 成本的問題?</h3>
+<p>A5: 依據 <a href="https://learn.microsoft.com/zh-tw/azure/vpn-gateway/vpn-gateway-vpn-faq#is-there-an-additional-cost-for-setting-up-a-vpn-gateway-as-active-active">Azure VPN Gateway FAQ - 將 VPN 閘道設定為主動-主動是否有額外的成本？</a></p>
+<p>本身不會, 但因為需要多綁一個 Public IP (Standard, Static), 所以每月僅會多 3.65 美元的費用</p>
 <h2 id="_2">文後廢言</h2>
 <p>私心希望 Forti 爸爸看到文章可以支持一下開源社群 Q_Q</p>
 <h2 id="references">References</h2>
