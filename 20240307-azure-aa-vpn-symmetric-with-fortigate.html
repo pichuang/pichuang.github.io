@@ -2551,7 +2551,7 @@
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>預設 Local Preference 為 100，然後數字越高越優先走，這邊就是針對 Active Tunnel 設定 Local Preference 為 200</li>
-<li>因為要讓其他鄰居知道 Standby Tunnel 的 AS_Path 比較長，所以特別用 AS Path Prepanding 多設定一次自己的 ASN</li>
+<li>因為要讓其他鄰居知道 Standby Tunnel 的 AS_Path 比較長，所以特別用 AS Path Prepending 多設定一次自己的 ASN</li>
 </ol>
 <h3 id="6-bgp">6. 使出普通 BGP 攻擊魔法</h3>
 <p>我還是需要申明一下，下面設定是我個人家裡的設定，可能不適用於你的環境，可自行調整或提供建議</p>
@@ -2674,7 +2674,7 @@
 <li>要特別指定 loopback 作為 BGP Peer 的 Update Source</li>
 <li>BGP Peering 路由我是用 Static Route 放的，所以這個要勾，你如果是別的方式 redistribute 路由，就自行調整</li>
 <li>主要控制從其他鄰居接收到的路由，可以透過調整 Local Preference 來提升路由優先權，保持出站也是對稱路由 (Symmetric Routing)</li>
-<li>主要控制自己發送給鄰居的路由，可以透過調整 AS Path Prepanding 來影響鄰居對你的入站流量 (inbound) 的選擇</li>
+<li>主要控制自己發送給鄰居的路由，可以透過調整 AS Path Prepending 來影響鄰居對你的入站流量 (inbound) 的選擇</li>
 </ol>
 <h3 id="7-static-route">7. 上 Static Route</h3>
 <p>這邊是為了要做 BGP Peering 之用，我需要放路由指向特定的 Interface，如果你有其他熟悉的方式可以達到同樣的效果，也可以用其他方式，這邊只是提供參考</p>
@@ -3195,7 +3195,7 @@
 <td style="text-align: center;">✅ 可加可收</td>
 <td style="text-align: center;">✅ 可收，但自己不能加</td>
 <td style="text-align: center;">✅ 可收，但自己不能加</td>
-<td style="text-align: center;">已知使用頻率第 2，Azure 主要推薦用 AS Path Prepanding 控制路由，但建議用 BGP Communites 替代</td>
+<td style="text-align: center;">已知使用頻率第 2，Azure 主要推薦用 AS Path Prepending 控制路由，但建議用 BGP Communites 替代</td>
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
