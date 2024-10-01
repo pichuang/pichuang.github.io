@@ -115,6 +115,9 @@
       if (link) {
         link.href = 'azure-subnets.html?network=' + inet_ntoa(curNetwork) + '&mask=' + curMask + '&division=' + binToAscii(nodeToString(rootSubnet));
       }
+
+      // 添加這一行來重新調用 addCopyFunctionality 函數
+      addCopyFunctionality();
     }
 
     function nodeToString(node) {
@@ -196,6 +199,7 @@
         /* subnet address */
         if (visibleColumns.subnet) {
           var newCell = document.createElement('TD');
+          newCell.className = 'copyable'; // 添加 copyable 類別
           newCell.appendChild(document.createTextNode(inet_ntoa(address) + '/' + mask));
           newRow.appendChild(newCell);
         }
