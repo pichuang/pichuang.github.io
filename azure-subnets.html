@@ -536,7 +536,8 @@
       var table = document.querySelector('.calc');
       html2canvas(table, {
         backgroundColor: '#ffffff', // 設置背景顏色為白色
-        scale: 2, // 提高解析度
+        scale: window.devicePixelRatio, // 使用設備像素比來提高解析度
+        useCORS: true, // 確保跨域資源可以被加載
         onrendered: function(canvas) {
           var link = document.createElement('a');
           link.href = canvas.toDataURL('image/png');
