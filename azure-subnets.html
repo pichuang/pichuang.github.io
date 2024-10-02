@@ -5,21 +5,20 @@
   <title> Visual Subnet Calculator (Azure Edition) </title>
   <meta name="author" content="Phil Huang <phil.huang@microsoft.com>">
   <meta name="github" content="github.com/pichuang">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" defer></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MQRY98QB2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-8MQRY98QB2');
   </script>
-  <script language="javascript" type="text/javascript">
+  <script language="javascript" type="text/javascript" defer>
     // <!--
 
     var visibleColumns = {
-      subnetname: true, // 修改為 true 以預設開啟 Subnet Name 欄位
+      subnetname: true, // Set to true to enable Subnet Name column by default
       subnet: true,
       netmask: false,
       range: false,
@@ -33,8 +32,9 @@
     var curMask = 0;
 
     function updateNetwork() {
-      var newNetworkStr = document.forms['calc'].elements['network'].value;
-      var newMask = parseInt(document.forms['calc'].elements['netbits'].value);
+      var form = document.forms['calc'];
+      var newNetworkStr = form.elements['network'].value;
+      var newMask = parseInt(form.elements['netbits'].value);
 
       var newNetwork = inet_aton(newNetworkStr);
 
@@ -47,7 +47,7 @@
       if (newNetwork != tmpNetwork) {
         alert('The network address entered is not on a network boundary for this mask.\nIt has been changed to ' + inet_ntoa(tmpNetwork) + '.');
         newNetwork = tmpNetwork;
-        document.forms['calc'].elements['network'].value = inet_ntoa(tmpNetwork);
+        form.elements['network'].value = inet_ntoa(tmpNetwork);
       }
 
       // <!-- Special for Azure Subnet -->
@@ -64,20 +64,17 @@
       else if (curMask != newMask && confirm('You are changing the base network from /' + curMask + ' to /' + newMask + '. This will reset any changes you have made. Proceed?')) {
         curMask = newMask;
         curNetwork = newNetwork;
-
         startOver();
       }
       else {
-        document.forms['calc'].elements['netbits'].value = curMask;
+        form.elements['netbits'].value = curMask;
         curNetwork = newNetwork;
-
         recreateTables();
       }
     }
 
     function startOver() {
       rootSubnet = [0, 0, null];
-
       recreateTables();
     }
 
@@ -93,14 +90,10 @@
         return;
       }
 
-      // 保留已經輸入的子網名稱
-      var existingSubnetNames = [];
-      var subnetNameInputs = document.getElementsByName('subnetname');
-      for (var i = 0; i < subnetNameInputs.length; i++) {
-        existingSubnetNames.push(subnetNameInputs[i].value);
-      }
+      // Preserve entered subnet names
+      var existingSubnetNames = Array.from(document.getElementsByName('subnetname')).map(input => input.value);
 
-      while (calcbody.hasChildNodes()) {
+      while (calcbody.firstChild) {
         calcbody.removeChild(calcbody.firstChild);
       }
 
@@ -111,13 +104,12 @@
 
       document.getElementById('joinHeader').colSpan = (rootSubnet[0] > 0 ? rootSubnet[0] : 1);
 
-      // 重新設置已經輸入的子網名稱
-      subnetNameInputs = document.getElementsByName('subnetname');
-      for (var i = 0; i < existingSubnetNames.length; i++) {
-        if (subnetNameInputs[i]) {
-          subnetNameInputs[i].value = existingSubnetNames[i];
+      // Restore entered subnet names
+      document.getElementsByName('subnetname').forEach((input, i) => {
+        if (existingSubnetNames[i]) {
+          input.value = existingSubnetNames[i];
         }
-      }
+      });
 
       // Create the bookmark hyperlink
       var link = document.getElementById('saveLink');
@@ -125,7 +117,7 @@
         link.href = 'azure-subnets.html?network=' + inet_ntoa(curNetwork) + '&mask=' + curMask + '&division=' + binToAscii(nodeToString(rootSubnet));
       }
 
-      // 添加這一行來重新調用 addCopyFunctionality 數
+      // Add this line to re-call addCopyFunctionality
       addCopyFunctionality();
     }
 
@@ -200,7 +192,7 @@
           subnetInput.setAttribute('name', 'subnetname');
           subnetInput.setAttribute('size', '29');
           subnetInput.setAttribute('maxlength', '80');
-          subnetInput.setAttribute('value', node[3] || ''); // 保留 Subnet Name
+          subnetInput.setAttribute('value', node[3] || ''); // Preserve Subnet Name
           newCell.appendChild(subnetInput);
           newRow.appendChild(newCell);
         }
@@ -208,7 +200,7 @@
         /* subnet address */
         if (visibleColumns.subnet) {
           var newCell = document.createElement('TD');
-          newCell.className = 'copyable'; // 添加 copyable 類別
+          newCell.className = 'copyable'; // Add copyable class
           newCell.appendChild(document.createTextNode(inet_ntoa(address) + '/' + mask));
           newRow.appendChild(newCell);
         }
@@ -328,13 +320,13 @@
     }
 
     function divide(node) {
-      // 保留 Subnet Name
+      // Preserve Subnet Name
       if (visibleColumns.subnetname) {
         var subnetNameInputs = document.getElementsByName('subnetname');
         var parentSubnetName = subnetNameInputs[0] ? subnetNameInputs[0].value : '';
         node[2] = new Array();
         for (var i = 0; i < 2; i++) {
-          node[2][i] = [0, 0, null, '']; // 新增的行保持空白
+          node[2][i] = [0, 0, null, '']; // New rows remain blank
         }
       } else {
         node[2] = new Array();
@@ -537,20 +529,17 @@
     }
 
     function addCopyFunctionality() {
-      var cells = document.querySelectorAll(".copyable");
-      cells.forEach(function (cell) {
-        cell.addEventListener("click", function () {
-          copyTextToClipboard(cell.textContent);
-        });
+      document.querySelectorAll(".copyable").forEach(cell => {
+        cell.addEventListener("click", () => copyTextToClipboard(cell.textContent));
       });
     }
 
     function downloadTableAsPNG() {
       var table = document.querySelector('.calc');
       html2canvas(table, {
-        backgroundColor: '#ffffff', // 設置背景顏色為白色
-        scale: window.devicePixelRatio, // 使用設備像素比來提高解析度
-        useCORS: true, // 確保跨域資源可以被加載
+        backgroundColor: '#ffffff', // Set background color to white
+        scale: window.devicePixelRatio, // Use device pixel ratio to improve resolution
+        useCORS: true, // Ensure cross-origin resources can be loaded
         onrendered: function(canvas) {
           var link = document.createElement('a');
           link.href = canvas.toDataURL('image/png');
@@ -604,14 +593,14 @@
 
     .calc td {
       border: 1px solid black;
-      background-color: white; /* 設置背景顏色為白色 */
-      color: black; /* 設置文字顏色為黑色 */
+      background-color: white; /* Set background color to white */
+      color: black; /* Set text color to black */
     }
 
     .calc th {
       border: 1px solid black;
-      background-color: #50e6ff; /* 保持表頭背景顏色 */
-      color: black; /* 設置表頭文字顏色為黑色 */
+      background-color: #50e6ff; /* Keep table header background color */
+      color: black; /* Set table header text color to black */
     }
 
     .calc thead {
@@ -654,12 +643,12 @@
       font-family: Arial, sans-serif;
       font-size: 14px;
       overflow: hidden;
-      padding: 5px; /* 調整 padding 以縮小間隔 */
-      word-break: break-word; /* 允許文字換行 */
-      white-space: normal; /* 允許文字換行 */
-      background-color: white; /* 設置背景顏色為白色 */
-      color: black; /* 設置文字顏色為黑色 */
-      width: 20%; /* 設置每個欄位的寬度為 20% */
+      padding: 5px; /* Adjust padding to reduce spacing */
+      word-break: break-word; /* Allow text wrapping */
+      white-space: normal; /* Allow text wrapping */
+      background-color: white; /* Set background color to white */
+      color: black; /* Set text color to black */
+      width: 20%; /* Set width of each column to 20% */
     }
 
     .tg th {
@@ -697,9 +686,9 @@
       }
     }
 
-    /* 新增的樣式以縮小表格上下的文字空白 */
+    /* Added style to reduce spacing above and below the table */
     .tg-wrap {
-      margin: 10px 0; /* 調整 margin 以縮小上下空白 */
+      margin: 10px 0; /* Adjust margin to reduce spacing */
     }
   </style>
 </head>
